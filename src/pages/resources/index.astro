@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
 import { RESOURCE_CATEGORIES } from '../../config';
 
 const universities = (await getCollection('universities')).sort((a, b) =>
@@ -46,7 +47,15 @@ const byCategory = RESOURCE_CATEGORIES.map((c) => ({
   items: all.filter((m) => m.category === c.id),
 })).filter((c) => c.items.length > 0);
 
+const withVideos = universities
+  .map((u) => ({
+    university: u,
+    items: u.data.videos,
+  }))
+  .filter((g) => g.items.length > 0);
+
 const total = all.length;
+const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
 ---
 
 <BaseLayout
@@ -57,22 +66,25 @@ const total = all.length;
     <div class="page-hero">
       <h1>资料库</h1>
       <p>
-        每所大学的资料都挂在各自名下，按类别归档：培养方案、保研政策、奖学金、选课教学、新生指南、校园生活、竞赛。
+        文件资料与视频资料分开归档。文件按大学挂在各自名下、按类别归类；视频同样按大学存放。
         其他学校后续直接往对应类别中添加即可。
       </p>
     </div>
 
     <div class="tab-bar" role="tablist">
       <button class="tab-btn active" data-view="by-university" role="tab" aria-selected="true">
-        按大学
+        文件 · 按大学
       </button>
       <button class="tab-btn" data-view="by-category" role="tab" aria-selected="false">
-        按类别
+        文件 · 按类别
+      </button>
+      <button class="tab-btn" data-view="videos" role="tab" aria-selected="false">
+        视频资料
       </button>
     </div>
 
     <p class="result-count">
-      共 {total} 份资料 · {withMaterials.length} 所学校已收录
+      文件资料 {total} 份 · {withMaterials.length} 所学校已收录；视频 {totalVideos} 个
     </p>
 
     <div id="by-university">
@@ -137,6 +149,25 @@ const total = all.length;
         </section>
       ))}
     </div>
+
+    <div id="videos" hidden>
+      {withVideos.map((group) => (
+        <section class="section">
+          <div class="section-head">
+            <h2>
+              <a href={`/universities/${group.university.id}/`}>{group.university.data.name}</a>
+            </h2>
+            <span class="small muted">{group.items.length} 个视频</span>
+          </div>
+          <div class="grid grid-videos">
+            {group.items.map((video) => <VideoEmbed video={video} />)}
+          </div>
+        </section>
+      ))}
+      {withVideos.length === 0 && (
+        <p class="muted">暂无视频资料，欢迎投稿。</p>
+      )}
+    </div>
   </div>
 </BaseLayout>
 
@@ -145,6 +176,7 @@ const total = all.length;
   const views = {
     'by-university': document.getElementById('by-university'),
     'by-category': document.getElementById('by-category'),
+    videos: document.getElementById('videos'),
   };
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
