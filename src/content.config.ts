@@ -1,5 +1,11 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { RESOURCE_CATEGORIES } from './config';
+
+const resourceCategoryIds = RESOURCE_CATEGORIES.map((c) => c.id) as [
+  string,
+  ...string[],
+];
 
 const item = z.object({
   title: z.string(),
@@ -73,9 +79,10 @@ const universities = defineCollection({
     materials: z
       .array(
         z.object({
+          category: z.enum(resourceCategoryIds),
           title: z.string(),
           description: z.string().default(''),
-          type: z.enum(['pdf', 'doc', 'ppt', '其他']).default('其他'),
+          type: z.enum(['pdf', 'doc', 'ppt', 'xlsx', '其他']).default('其他'),
           link: z.string(),
           code: z.string().optional(),
         }),

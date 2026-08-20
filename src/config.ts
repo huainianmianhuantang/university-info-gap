@@ -31,3 +31,19 @@ export const SECTIONS = [
 
 /** 未来可扩充的学校层次（当前只收录 985） */
 export const LEVELS = ['985', '211', '双一流', '普通'] as const;
+
+/**
+ * 资料库类别：所有学校的资料都归入这些类别，
+ * 新学校只需往对应类别中添加条目即可。
+ */
+export const RESOURCE_CATEGORIES = [
+  { id: 'training-plan', label: '培养方案', description: '各学院本科生专业培养方案与专业简介' },
+  { id: 'postgrad-rec', label: '保研政策', description: '推荐免试攻读研究生实施细则与通知' },
+  { id: 'scholarship', label: '奖学金与评优', description: '综合素质评价与奖学金评定办法' },
+  { id: 'courses', label: '选课与教学', description: '课程分级办法、选课手册、选修课榜单与教材' },
+  { id: 'freshman', label: '新生指南', description: '新生入学指南与入学教育材料' },
+  { id: 'campus-life', label: '校园生活', description: '宿舍、食堂与本地生活攻略' },
+  { id: 'competition', label: '竞赛', description: '学科竞赛分类与参赛指南' },
+] as const;
+
+export type ResourceCategoryId = (typeof RESOURCE_CATEGORIES)[number]['id'];

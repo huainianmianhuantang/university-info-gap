@@ -36,7 +36,16 @@ npm run preview
 ## 如何添加视频与资料
 
 - **视频**：目前支持 B 站嵌入。在 `videos` 里填 `platform: bilibili` 和 `id`（B 站 BV 号）即可；优酷/腾讯可在 `src/components/VideoEmbed.astro` 中扩展。
-- **资料**：把文件上传到网盘，在 `materials` 里填链接与提取码。
+- **资料**：有两种方式——
+  - 站内文件：把文件放进 `public/resources/<学校简称>/`，在 `materials` 里填站内路径（如 `/resources/neu/xxx.pdf`）；
+  - 网盘链接：在 `materials` 里填外链与提取码（`code`）。
+  - 每条资料必须填 `category`（类别），取值见 `src/config.ts` 的 `RESOURCE_CATEGORIES`：
+    培养方案 `training-plan` / 保研政策 `postgrad-rec` / 奖学金与评优 `scholarship` /
+    选课与教学 `courses` / 新生指南 `freshman` / 校园生活 `campus-life` / 竞赛 `competition`。
+  - 全站"资料库"页面（`/resources/`）会自动按类别汇总所有学校的资料，无需额外维护。
+
+> 注意：站内大文件会显著增大 Git 仓库体积（当前东北大学资料约 212MB）。
+> 正式上线时建议将大文件迁移到网盘或对象存储，站内只保留小文件。
 
 ## 投稿与联系方式
 
@@ -56,6 +65,7 @@ src/
   pages/                    # 首页、大学库、详情页、文章、投稿、关于
   styles/global.css         # 全站样式
 public/                     # 静态资源（图标、封面图）
+  resources/<学校>/          # 学校资料文件（东北大学示例）
 ```
 
 ## 内容声明

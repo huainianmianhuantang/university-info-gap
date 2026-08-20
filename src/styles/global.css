@@ -530,6 +530,12 @@ svg {
   text-transform: uppercase;
 }
 
+.school-chip {
+  background: var(--primary-soft);
+  color: var(--primary);
+  text-transform: none;
+}
+
 .btn {
   display: inline-block;
   background: var(--primary);

@@ -68,11 +68,13 @@ classes:
 materials:
   - title: 大一高数重点整理（示例）
     description: 示例资料：期末复习重点与典型题
+    category: courses
     type: pdf
     link: https://pan.example.com/hust-math
     code: hust01
   - title: 启明学院选拔经验（示例）
     description: 示例资料：二次选拔面试流程复盘
+    category: training-plan
     type: doc
     link: https://pan.example.com/hust-qiming
     code: qm2026

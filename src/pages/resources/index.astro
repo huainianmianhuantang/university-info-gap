@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { RESOURCE_CATEGORIES } from '../../config';
+
+const universities = await getCollection('universities');
+
+interface ResourceItem {
+  category: string;
+  title: string;
+  description: string;
+  type: string;
+  link: string;
+  code?: string;
+  school: string;
+}
+
+const all = universities.flatMap<ResourceItem>((u) =>
+  u.data.materials.map((m) => ({
+    category: m.category,
+    title: m.title,
+    description: m.description,
+    type: m.type,
+    link: m.link,
+    code: m.code,
+    school: u.data.name,
+  })),
+);
+
+const byCategory = RESOURCE_CATEGORIES.map((c) => ({
+  ...c,
+  items: all.filter((m) => m.category === c.id),
+})).filter((c) => c.items.length > 0);
+
+const total = all.length;
+---
+
+<BaseLayout
+  title="资料库"
+  description={`按类别整理的大学内部资料库，当前共 ${total} 份资料，覆盖培养方案、保研、选课、生活等。`}
+>
+  <div class="container page">
+    <div class="page-hero">
+      <h1>资料库</h1>
+      <p>
+        所有学校的资料按类别统一归档：培养方案、保研政策、奖学金、选课教学、新生指南、校园生活、竞赛。
+        其他学校后续直接往对应类别中添加即可。
+      </p>
+    </div>
+
+    <p class="result-count">共 {total} 份资料 · {universities.length} 所学校</p>
+
+    {byCategory.map((cat) => (
+      <section class="section">
+        <div class="section-head">
+          <h2>{cat.label}</h2>
+          <span class="small muted">{cat.items.length} 份</span>
+        </div>
+        <p class="small muted" style="margin-top:-8px;">{cat.description}</p>
+        <div
+          class="grid"
+          style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"
+        >
+          {cat.items.map((m) => (
+            <div class="card material-card">
+              <div class="title-row">
+                <h3>{m.title}</h3>
+                <span class="type-chip">{m.type}</span>
+                <span class="type-chip school-chip">{m.school}</span>
+              </div>
+              <p>{m.description}</p>
+              {m.code && <p>提取码：<strong>{m.code}</strong></p>}
+              <a class="btn" href={m.link} target="_blank" rel="noopener">
+                {m.link.startsWith('/') ? '查看文件' : '获取资料'}
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

@@ -68,11 +68,13 @@ classes:
 materials:
   - title: 通识课避坑清单（示例）
     description: 示例资料：热门通识课评价与选课建议
+    category: courses
     type: doc
     link: https://pan.example.com/whu-ge
     code: whu25
   - title: 弘毅学堂报考指引（示例）
     description: 示例资料：二次选拔流程与面试经验
+    category: training-plan
     type: pdf
     link: https://pan.example.com/whu-hongyi
     code: hy2026

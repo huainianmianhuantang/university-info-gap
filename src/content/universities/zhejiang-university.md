@@ -68,11 +68,13 @@ classes:
 materials:
   - title: 高数复习笔记（示例）
     description: 示例资料：高数期末复习要点整理（pdf）
+    category: courses
     type: pdf
     link: https://pan.example.com/zju-math
     code: zju24
   - title: 大类分流经验帖（示例）
     description: 示例资料：紫金港大类分流流程与避坑提醒
+    category: training-plan
     type: doc
     link: https://pan.example.com/zju-major
     code: div24

@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBlock from '../../components/SectionBlock.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
-import { SECTIONS } from '../../config';
+import { RESOURCE_CATEGORIES } from '../../config';
 
 export async function getStaticPaths() {
   const universities = await getCollection('universities');
@@ -27,6 +27,11 @@ const tabs = [
   ...(u.materials.length ? [{ id: 'materials', label: '学习资料' }] : []),
   ...(u.videos.length ? [{ id: 'videos', label: '视频' }] : []),
 ];
+
+const materialsByCategory = RESOURCE_CATEGORIES.map((c) => ({
+  ...c,
+  items: u.materials.filter((m) => m.category === c.id),
+})).filter((c) => c.items.length > 0);
 ---
 
 <BaseLayout
@@ -147,20 +152,32 @@ const tabs = [
     {u.materials.length > 0 && (
       <section id="materials" class="card section-block">
         <h2>学习资料</h2>
-        <p>以下为示例资料条目：替换为真实网盘链接与提取码即可。</p>
-        <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
-          {u.materials.map((m) => (
-            <div class="card material-card">
-              <div class="title-row">
-                <h3>{m.title}</h3>
-                <span class="type-chip">{m.type}</span>
-              </div>
-              <p>{m.description}</p>
-              {m.code && <p>提取码：<strong>{m.code}</strong></p>}
-              <a class="btn" href={m.link} target="_blank" rel="noopener">获取资料</a>
+        {materialsByCategory.map((cat) => (
+          <div style="margin-bottom: 22px;">
+            <h3 style="font-size:16px;margin:18px 0 10px;">{cat.label}</h3>
+            <div
+              class="grid"
+              style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"
+            >
+              {cat.items.map((m) => (
+                <div class="card material-card">
+                  <div class="title-row">
+                    <h3>{m.title}</h3>
+                    <span class="type-chip">{m.type}</span>
+                  </div>
+                  <p>{m.description}</p>
+                  {m.code && <p>提取码：<strong>{m.code}</strong></p>}
+                  <a class="btn" href={m.link} target="_blank" rel="noopener">
+                    {m.link.startsWith('/') ? '查看文件' : '获取资料'}
+                  </a>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+        <p class="small muted">
+          全部学校资料统一收录于 <a href="/resources/">资料库</a>，欢迎投稿补充。
+        </p>
       </section>
     )}
 
