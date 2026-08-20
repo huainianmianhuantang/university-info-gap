@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  university: CollectionEntry<'universities'>;
+}
+
+const { university } = Astro.props;
+const u = university.data;
+---
+
+<a class="card university-card" href={`/universities/${university.id}/`}>
+  <img class="university-cover" src={u.cover} alt={`${u.name} 封面`} loading="lazy" />
+  <div class="university-body">
+    <div class="university-title">
+      {u.name}
+      {u.nameEn && <span class="university-en">{u.nameEn}</span>}
+    </div>
+    <div class="chip-row">
+      {u.levels.map((level) => (
+        <span class={`chip level-${level}`}>{level}</span>
+      ))}
+      {u.tags.map((tag) => (
+        <span class="chip">{tag}</span>
+      ))}
+    </div>
+    <p class="university-brief">{u.brief}</p>
+    <div class="university-meta">
+      <span>{u.province} · {u.city}</span>
+      <span>{u.type}类</span>
+      {u.established && <span>建校 {u.established} 年</span>}
+    </div>
+  </div>
+</a>

@@ -1,0 +1,121 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import UniversityCard from '../../components/UniversityCard.astro';
+import { LEVELS } from '../../config';
+
+const universities = (await getCollection('universities')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name, 'zh'),
+);
+const provinces = [...new Set(universities.map((u) => u.data.province))].sort(
+  (a, b) => a.localeCompare(b, 'zh'),
+);
+const types = [...new Set(universities.map((u) => u.data.type))].sort((a, b) =>
+  a.localeCompare(b, 'zh'),
+);
+const initialQuery = Astro.url.searchParams.get('q') ?? '';
+---
+
+<BaseLayout title="大学库" description="按省份、层次、类型筛选与搜索 985 高校。">
+  <div class="container page">
+    <div class="page-hero">
+      <h1>大学库</h1>
+      <p>当前收录 {universities.length} 所 985 高校，每所大学的政策、实况与资料都在详情页里。</p>
+    </div>
+
+    <form class="card filters" id="filters" method="get" action="/universities/">
+      <div class="filter-group">
+        <input
+          type="search"
+          id="q"
+          name="q"
+          placeholder="搜索大学名称 / 标签…"
+          value={initialQuery}
+          aria-label="搜索大学"
+        />
+      </div>
+      <div class="filter-group">
+        <label>
+          省份
+          <select id="province">
+            <option value="">全部省份</option>
+            {provinces.map((p) => <option value={p}>{p}</option>)}
+          </select>
+        </label>
+      </div>
+      <div class="filter-group">
+        <label>
+          类型
+          <select id="type">
+            <option value="">全部类型</option>
+            {types.map((t) => <option value={t}>{t}</option>)}
+          </select>
+        </label>
+      </div>
+      <div class="filter-group">
+        <span class="small muted">层次：</span>
+        {LEVELS.map((level) => (
+          <label>
+            <input type="checkbox" class="level" value={level} />
+            {level}
+          </label>
+        ))}
+      </div>
+    </form>
+
+    <p class="result-count" id="resultCount">共 {universities.length} 所大学</p>
+
+    <div class="grid grid-universities" id="universityGrid">
+      {universities.map((u) => (
+        <div
+          class:list={['u-item']}
+          data-name={u.data.name}
+          data-tags={[...u.data.levels, ...u.data.tags].join(' ')}
+          data-province={u.data.province}
+          data-type={u.data.type}
+          data-levels={u.data.levels.join(' ')}
+        >
+          <UniversityCard university={u} />
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const grid = document.getElementById('universityGrid');
+  const count = document.getElementById('resultCount');
+  const qInput = document.getElementById('q');
+  const provinceSelect = document.getElementById('province');
+  const typeSelect = document.getElementById('type');
+  const levelChecks = Array.from(document.querySelectorAll('.level'));
+  const items = Array.from(grid?.querySelectorAll('.u-item') ?? []);
+
+  function applyFilters() {
+    const keyword = (qInput?.value ?? '').trim().toLowerCase();
+    const province = provinceSelect?.value ?? '';
+    const type = typeSelect?.value ?? '';
+    const selectedLevels = levelChecks.filter((c) => c.checked).map((c) => c.value);
+
+    let visible = 0;
+    for (const item of items) {
+      const name = item.dataset.name ?? '';
+      const tags = item.dataset.tags ?? '';
+      const levels = (item.dataset.levels ?? '').split(' ');
+      const okKeyword = !keyword || name.toLowerCase().includes(keyword) || tags.toLowerCase().includes(keyword);
+      const okProvince = !province || item.dataset.province === province;
+      const okType = !type || item.dataset.type === type;
+      const okLevel = selectedLevels.length === 0 || selectedLevels.some((l) => levels.includes(l));
+      const ok = okKeyword && okProvince && okType && okLevel;
+      item.style.display = ok ? '' : 'none';
+      if (ok) visible++;
+    }
+    if (count) count.textContent = `共 ${visible} 所大学`;
+  }
+
+  qInput?.addEventListener('input', applyFilters);
+  provinceSelect?.addEventListener('change', applyFilters);
+  typeSelect?.addEventListener('change', applyFilters);
+  levelChecks.forEach((c) => c.addEventListener('change', applyFilters));
+  applyFilters();
+</script>

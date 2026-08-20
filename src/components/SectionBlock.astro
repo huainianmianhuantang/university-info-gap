@@ -1,0 +1,41 @@
+---
+interface Item {
+  title: string;
+  content: string;
+}
+
+interface Props {
+  id: string;
+  title: string;
+  summary?: string;
+  items?: Item[];
+  sources?: string[];
+}
+
+const { id, title, summary, items = [], sources = [] } = Astro.props;
+---
+
+<section id={id} class="card section-block">
+  <h2>{title}</h2>
+  {summary && <p>{summary}</p>}
+  {items.length > 0 && (
+    <ul class="point-list">
+      {items.map((item) => (
+        <li class="point-item">
+          <strong>{item.title}</strong>
+          <p>{item.content}</p>
+        </li>
+      ))}
+    </ul>
+  )}
+  {sources.length > 0 && (
+    <div class="sources">
+      信息来源：
+      <ul>
+        {sources.map((source) => (
+          <li>{source}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+</section>

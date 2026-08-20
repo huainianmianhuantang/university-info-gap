@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT } from '../config';
+
+const categories = [
+  '学校概况',
+  '转专业政策',
+  '二次选拔',
+  '培养计划',
+  '寝室情况',
+  '上课情况',
+  '学习资料',
+  '视频',
+  '其他',
+];
+---
+
+<BaseLayout title="我要投稿" description="分享你所知道的高校一手信息。">
+  <div class="container page">
+    <div class="page-hero">
+      <h1>我要投稿</h1>
+      <p>你在读的大学，就是别人最想知道的“信息差”。欢迎分享一手信息，我们会审核后发布并注明来源。</p>
+    </div>
+
+    <div class="note-banner">
+      📮 投稿须知：请注明信息来源；资料类内容请确保你有权分享；涉及版权的内容请提供原始出处链接。
+    </div>
+
+    <form class="card form-card" id="submitForm">
+      <div class="form-field">
+        <label for="school">学校名称 *</label>
+        <input id="school" name="school" type="text" required placeholder="如：浙江大学" />
+      </div>
+      <div class="form-field">
+        <label for="category">栏目 *</label>
+        <select id="category" name="category">
+          {categories.map((c) => <option value={c}>{c}</option>)}
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="title">标题 *</label>
+        <input id="title" name="title" type="text" required placeholder="一句话概括，如：2026 年转专业政策要点" />
+      </div>
+      <div class="form-field">
+        <label for="content">内容 / 链接 *</label>
+        <textarea id="content" name="content" required placeholder="详细描述，或填写资料链接、视频链接、提取码等"></textarea>
+      </div>
+      <div class="form-field">
+        <label for="contact">你的联系方式（邮箱 / 微信，便于我们核实与反馈）</label>
+        <input id="contact" name="contact" type="text" placeholder={CONTACT.email} />
+      </div>
+      <button class="btn" type="submit">生成投稿邮件</button>
+      <p class="hint">
+        点击后会自动打开你的邮件客户端并填好内容。你也可以直接发邮件到
+        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>，
+        或添加微信 <strong>{CONTACT.wechat}</strong>。
+      </p>
+    </form>
+  </div>
+</BaseLayout>
+
+<script define:vars={{ submitEmail: CONTACT.email }}>
+  const form = document.getElementById('submitForm');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const school = data.get('school')?.toString().trim() ?? '';
+    const category = data.get('category')?.toString() ?? '';
+    const title = data.get('title')?.toString().trim() ?? '';
+    const content = data.get('content')?.toString().trim() ?? '';
+    const contact = data.get('contact')?.toString().trim() ?? '';
+    const body = [
+      `学校：${school}`,
+      `栏目：${category}`,
+      `标题：${title}`,
+      '',
+      `内容：${content}`,
+      '',
+      `联系方式：${contact}`,
+    ].join('\n');
+    window.location.href = `mailto:${submitEmail}?subject=${encodeURIComponent(
+      `【投稿】${school} - ${title}`,
+    )}&body=${encodeURIComponent(body)}`;
+  });
+</script>

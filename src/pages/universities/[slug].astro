@@ -1,0 +1,178 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionBlock from '../../components/SectionBlock.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import { SECTIONS } from '../../config';
+
+export async function getStaticPaths() {
+  const universities = await getCollection('universities');
+  return universities.map((u) => ({
+    params: { slug: u.id },
+    props: { university: u },
+  }));
+}
+
+const { university } = Astro.props;
+const u = university.data;
+const { Content } = await render(university);
+
+const tabs = [
+  { id: 'overview', label: '概况' },
+  ...(u.transferPolicy ? [{ id: 'transfer', label: '转专业' }] : []),
+  ...(u.secondarySelection ? [{ id: 'secondary', label: '二次选拔' }] : []),
+  ...(u.trainingPlan ? [{ id: 'training', label: '培养计划' }] : []),
+  ...(u.dorm ? [{ id: 'dorm', label: '寝室' }] : []),
+  ...(u.classes ? [{ id: 'classes', label: '上课' }] : []),
+  ...(u.materials.length ? [{ id: 'materials', label: '学习资料' }] : []),
+  ...(u.videos.length ? [{ id: 'videos', label: '视频' }] : []),
+];
+---
+
+<BaseLayout
+  title={u.name}
+  description={`${u.name}（${u.nameEn ?? ''}）概况、转专业政策、二次选拔、培养计划、寝室与上课实况、学习资料。`}
+>
+  <div class="container page">
+    <div class="uni-hero">
+      <h1>{u.name}</h1>
+      {u.nameEn && <div class="uni-en">{u.nameEn}</div>}
+      <div class="chip-row">
+        {u.levels.map((level) => <span class={`chip level-${level}`}>{level}</span>)}
+        {u.tags.map((tag) => <span class="chip">{tag}</span>)}
+      </div>
+      <div class="university-meta">
+        <span>{u.province} · {u.city}</span>
+        <span>{u.type}类</span>
+        {u.established && <span>建校 {u.established} 年</span>}
+      </div>
+      {u.campuses.length > 0 && (
+        <div class="university-meta">校区：{u.campuses.join(' / ')}</div>
+      )}
+    </div>
+
+    <div class="note-banner">
+      ⚠️ 本页为<strong>示例内容</strong>，仅用于展示网站结构；正式上线前所有信息需人工核实。
+    </div>
+
+    <nav class="uni-tabs" aria-label="栏目导航">
+      {tabs.map((tab) => (
+        <a href={`#${tab.id}`}>{tab.label}</a>
+      ))}
+    </nav>
+
+    <section id="overview" class="card section-block">
+      <h2>学校概况</h2>
+      <div class="prose">
+        <Content />
+      </div>
+    </section>
+
+    {u.transferPolicy && (
+      <SectionBlock
+        id="transfer"
+        title="转专业政策"
+        summary={u.transferPolicy.summary}
+        items={u.transferPolicy.points}
+        sources={u.transferPolicy.sources}
+      />
+    )}
+
+    {u.secondarySelection && (
+      <section id="secondary" class="card section-block">
+        <h2>二次选拔</h2>
+        {u.secondarySelection.summary && <p>{u.secondarySelection.summary}</p>}
+        <ul class="point-list">
+          {u.secondarySelection.programs.map((p) => (
+            <li class="point-item">
+              <strong>{p.name}</strong>
+              <p>{p.content}</p>
+            </li>
+          ))}
+        </ul>
+        {u.secondarySelection.sources.length > 0 && (
+          <div class="sources">
+            信息来源：
+            <ul>
+              {u.secondarySelection.sources.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+        )}
+      </section>
+    )}
+
+    {u.trainingPlan && (
+      <SectionBlock
+        id="training"
+        title="专业培养计划"
+        summary={u.trainingPlan.summary}
+        items={u.trainingPlan.points}
+        sources={u.trainingPlan.sources}
+      />
+    )}
+
+    {u.dorm && (
+      <section id="dorm" class="card section-block">
+        <h2>寝室情况</h2>
+        {u.dorm.summary && <p>{u.dorm.summary}</p>}
+        <ul class="point-list">
+          {u.dorm.items.map((item) => (
+            <li class="point-item">
+              <strong>{item.name}</strong>
+              <p>{item.content}</p>
+            </li>
+          ))}
+        </ul>
+        {u.dorm.sources.length > 0 && (
+          <div class="sources">
+            信息来源：
+            <ul>
+              {u.dorm.sources.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+        )}
+      </section>
+    )}
+
+    {u.classes && (
+      <SectionBlock
+        id="classes"
+        title="上课情况"
+        summary={u.classes.summary}
+        items={u.classes.points}
+        sources={u.classes.sources}
+      />
+    )}
+
+    {u.materials.length > 0 && (
+      <section id="materials" class="card section-block">
+        <h2>学习资料</h2>
+        <p>以下为示例资料条目：替换为真实网盘链接与提取码即可。</p>
+        <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+          {u.materials.map((m) => (
+            <div class="card material-card">
+              <div class="title-row">
+                <h3>{m.title}</h3>
+                <span class="type-chip">{m.type}</span>
+              </div>
+              <p>{m.description}</p>
+              {m.code && <p>提取码：<strong>{m.code}</strong></p>}
+              <a class="btn" href={m.link} target="_blank" rel="noopener">获取资料</a>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {u.videos.length > 0 && (
+      <section id="videos" class="section">
+        <div class="section-head">
+          <h2>视频</h2>
+        </div>
+        <div class="grid grid-videos">
+          {u.videos.map((video) => <VideoEmbed video={video} />)}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

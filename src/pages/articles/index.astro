@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../utils';
+
+const articles = (await getCollection('articles')).sort((a, b) =>
+  b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<BaseLayout title="专题文章" description="转专业攻略、培养计划解读等选校干货。">
+  <div class="container page">
+    <div class="page-hero">
+      <h1>专题文章</h1>
+      <p>政策解读、选校思路与过来人经验，帮你少走弯路。</p>
+    </div>
+    <div class="grid grid-articles">
+      {articles.map((article) => (
+        <a class="card article-card" href={`/articles/${article.id}/`}>
+          <h3>{article.data.title}</h3>
+          <p>{article.data.summary}</p>
+          <span class="date">{formatDate(article.data.date)} · {article.data.tags.join(' / ')}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

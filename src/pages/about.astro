@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT, LEVELS } from '../config';
+---
+
+<BaseLayout title="关于本站" description="大学信息差网站的定位、声明与未来规划。">
+  <div class="container page">
+    <div class="page-hero">
+      <h1>关于本站</h1>
+      <p>把每所大学的真实信息放在同一张页面上，让选校不再是猜谜。</p>
+    </div>
+
+    <section class="card section-block">
+      <h2>我们做什么</h2>
+      <p class="prose">
+        高考选校时，官方招生页说得太多，校园论坛又藏得太深。我们按大学整理
+        <strong>学校概况、转专业政策、二次选拔、专业培养计划、寝室情况、上课情况、学习资料与视频</strong>，
+        并用统一的格式呈现，方便横向比较。
+      </p>
+      <p class="prose">
+        当前阶段只收录 <strong>985 高校</strong>，但内容结构已为 211、双一流、普通高校预留，
+        后续按 {LEVELS.join(' / ')} 逐步扩充。
+      </p>
+    </section>
+
+    <section class="card section-block">
+      <h2>内容声明</h2>
+      <ul class="prose">
+        <li>站内政策类信息请以各高校教务部门官方发布为准，政策每年可能调整。</li>
+        <li>在校生投稿的主观体验仅代表个人看法，仅供参考。</li>
+        <li>学习资料仅收录投稿人拥有或已获授权的内容；转载内容会标注来源。</li>
+        <li>如发现错误或侵权内容，请联系我们，我们会在核实后尽快修正或删除。</li>
+      </ul>
+    </section>
+
+    <section class="card section-block">
+      <h2>联系我们</h2>
+      <p class="prose">
+        邮箱：<a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        <br />
+        微信：{CONTACT.wechat}
+        <br />
+        如果你有想补充的大学或栏目，欢迎到 <a href="/submit/">投稿页</a> 提交。
+      </p>
+    </section>
+
+    <section class="card section-block">
+      <h2>未来规划</h2>
+      <ul class="prose">
+        <li>扩充至 211、双一流及更多高校</li>
+        <li>上线在线投稿后台与内容审核流程</li>
+        <li>支持按专业、分数段等维度检索</li>
+        <li>增加校园实拍、官方直播回放等视频内容</li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

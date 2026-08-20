@@ -1,0 +1,27 @@
+---
+import { SITE } from '../config';
+
+const links = [
+  { href: '/', label: '首页' },
+  { href: '/universities/', label: '大学库' },
+  { href: '/articles/', label: '专题文章' },
+  { href: '/submit/', label: '我要投稿' },
+  { href: '/about/', label: '关于本站' },
+];
+---
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="/">
+      <span class="logo-mark">信</span>
+      <span>{SITE.title}</span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      {links.map((link) => (
+        <a href={link.href} aria-current={Astro.url.pathname === link.href ? 'page' : undefined}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>

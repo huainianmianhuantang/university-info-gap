@@ -1,0 +1,44 @@
+---
+interface Video {
+  title: string;
+  platform: 'bilibili' | 'youku' | 'tencent' | '其他';
+  id: string;
+  url?: string;
+  source: string;
+  description: string;
+}
+
+const { video } = Astro.props as { video: Video };
+
+const embedUrl = video.platform === 'bilibili' && video.id
+  ? `https://player.bilibili.com/player.html?bvid=${video.id}&page=1&high_quality=1&danmaku=0`
+  : null;
+
+const fallbackUrl = video.url || (video.id ? `https://www.bilibili.com/video/${video.id}` : null);
+---
+
+<div class="card video-card">
+  <div class="video-frame-wrap">
+    {embedUrl ? (
+      <iframe
+        src={embedUrl}
+        title={video.title}
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer"
+      ></iframe>
+    ) : (
+      <div class="video-placeholder">
+        <div>
+          <p>示例视频（待替换）</p>
+          {fallbackUrl && <a href={fallbackUrl} target="_blank" rel="noopener">前往原平台观看 →</a>}
+        </div>
+      </div>
+    )}
+  </div>
+  <div class="video-body">
+    <h3>{video.title}</h3>
+    {video.source && <p>来源：{video.source}</p>}
+    {video.description && <p>{video.description}</p>}
+  </div>
+</div>

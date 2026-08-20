@@ -1,0 +1,102 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UniversityCard from '../components/UniversityCard.astro';
+import { SITE } from '../config';
+import { formatDate } from '../utils';
+
+const universities = (await getCollection('universities')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name, 'zh'),
+);
+const articles = (await getCollection('articles')).sort((a, b) =>
+  b.data.date.getTime() - a.data.date.getTime(),
+);
+const featured = universities.filter((u) => u.data.featured);
+const showcase = (featured.length ? featured : universities).slice(0, 3);
+
+const categories = [
+  { icon: '⇄', label: '转专业政策', desc: '申请条件、考核方式、名额限制', href: '/universities/' },
+  { icon: '★', label: '二次选拔', desc: '实验班、基地班、拔尖计划', href: '/universities/' },
+  { icon: '床', label: '寝室与上课', desc: '几人间、独卫空调、课程体验', href: '/universities/' },
+  { icon: '▤', label: '资料与视频', desc: '网盘资料、校园实拍与分享', href: '/universities/' },
+];
+---
+
+<BaseLayout>
+  <div class="container page">
+    <section class="hero">
+      <h1>选大学，先看清“信息差”</h1>
+      <p>
+        {SITE.description}
+      </p>
+      <form class="hero-search" action="/universities/" method="get">
+        <input
+          type="search"
+          name="q"
+          placeholder="搜索大学，如：浙江大学、武汉、理工…"
+          aria-label="搜索大学"
+        />
+        <button type="submit">搜索</button>
+      </form>
+      <div class="hero-stats">
+        <span>收录 {universities.length} 所 985 高校（持续扩充）</span>
+        <span>8 大信息栏目</span>
+        <span>全部内容人工核实后发布</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>重点大学</h2>
+        <a class="more" href="/universities/">查看全部 →</a>
+      </div>
+      <div class="grid grid-universities">
+        {showcase.map((u) => <UniversityCard university={u} />)}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>你想了解什么？</h2>
+      </div>
+      <div class="grid grid-categories">
+        {categories.map((c) => (
+          <a class="card category-card" href={c.href}>
+            <div class="category-icon">{c.icon}</div>
+            <h3>{c.label}</h3>
+            <p>{c.desc}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>最新文章</h2>
+        <a class="more" href="/articles/">更多 →</a>
+      </div>
+      <div class="grid grid-articles">
+        {articles.slice(0, 3).map((article) => (
+          <a class="card article-card" href={`/articles/${article.id}/`}>
+            <h3>{article.data.title}</h3>
+            <p>{article.data.summary}</p>
+            <span class="date">{formatDate(article.data.date)} · {article.data.tags.join(' / ')}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section card section-block">
+      <h2>这个网站是做什么的？</h2>
+      <p class="prose">
+        高考选校最大的痛点，是网上的信息要么太官方、要么太零散。我们把每所大学的
+        <strong>转专业政策、二次选拔、培养计划、寝室实况、上课体验、学习资料和视频</strong>
+        整理到同一张页面里，方便对比。
+      </p>
+      <p class="prose">
+        内容由在校生与家长共同投稿、人工审核后发布。如果你有一手信息，欢迎
+        <a href="/submit/">投稿</a>；若发现错误，也请告诉我们，我们会尽快修正。
+      </p>
+    </section>
+  </div>
+</BaseLayout>
