@@ -32,6 +32,8 @@ const materialsByCategory = RESOURCE_CATEGORIES.map((c) => ({
   ...c,
   items: u.materials.filter((m) => m.category === c.id),
 })).filter((c) => c.items.length > 0);
+
+const hasCloudMaterials = u.materials.some((m) => m.link.includes('pan.'));
 ---
 
 <BaseLayout
@@ -152,6 +154,11 @@ const materialsByCategory = RESOURCE_CATEGORIES.map((c) => ({
     {u.materials.length > 0 && (
       <section id="materials" class="card section-block">
         <h2>学习资料</h2>
+        {hasCloudMaterials && (
+          <div class="note-banner">
+            🗂️ 部分资料存放于网盘：点击"获取资料"打开网盘，输入对应提取码即可查看或下载。
+          </div>
+        )}
         {materialsByCategory.map((cat) => (
           <div style="margin-bottom: 22px;">
             <h3 style="font-size:16px;margin:18px 0 10px;">{cat.label}</h3>

@@ -18,147 +18,176 @@ materials:
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/工商管理学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 信息科学与工程学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/信息科学与工程学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 理学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/理学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 机械工程与自动化学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/机械工程与自动化学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 文法学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/文法学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 软件学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/软件学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 冶金学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/冶金学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 马克思主义学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/马克思主义学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 医学与生物信息工程学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/医学与生物信息工程学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 外国语学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/外国语学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 生命科学与健康学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/生命科学与健康学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 江河建筑学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/江河建筑学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 机器人科学与工程学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
     type: pdf
-    link: /resources/neu/机器人科学与工程学院本科生各专业培养方案.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 专业简介汇总（方案打印）
     description: 各专业简介汇总文档
     category: training-plan
     type: doc
-    link: /resources/neu/东北大学方案打印.docx
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 理学院保研实施细则（化学拔尖班）2026
     description: 2026 年推荐免试攻读研究生实施细则
     category: postgrad-rec
     type: pdf
-    link: /resources/neu/【理学院-保研】2026年推荐优秀应届本科毕业生免试攻读研究生实施细则（化学拔尖班）.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 生命科学与健康学院保研通知 2026
     description: 2026 年推荐免试攻读研究生工作通知
     category: postgrad-rec
     type: pdf
-    link: /resources/neu/【生命科学与健康学院-保研】关于做好2026年推荐优秀应届本科毕业生免试攻读研究生工作的通知.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 信息学院保研实施细则 2025
     description: 2025 年推荐免试攻读研究生工作实施细则
     category: postgrad-rec
     type: pdf
-    link: /resources/neu/【信息学院-保研】2025年推荐优秀应届本科毕业生免试攻读研究生工作实施细则.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 材料学院本科生综合素质评价实施办法
     description: 材料院字〔2024〕4 号
     category: scholarship
     type: pdf
-    link: /resources/neu/材料科学与工程学院本科生综合素质评价实施办法.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 资源与土木工程学院本科生奖学金评定实施办法
     description: 学院奖学金评定办法
     category: scholarship
     type: pdf
-    link: /resources/neu/资源与土木工程学院本科生奖学金评定实施办法.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 《大学英语》课程分级教学实施办法（试行）
     description: 官方通知 PDF
     category: courses
     type: pdf
-    link: /resources/neu/关于印发《东北大学〈大学英语〉课程分级教学实施办法（试行）》的通知.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 东北大学本科生选课指导手册
     description: 官方选课指导
     category: courses
     type: pdf
-    link: /resources/neu/东北大学本科生选课指导手册.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 选修课榜单（学生整理）
     description: 学长学姐整理的选修课神榜/黑榜（含讨论区）
     category: courses
     type: xlsx
-    link: /resources/neu/选修课榜单 ver.230810.2313.xlsx
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 东大高数（上）习题全解指南（答案）
     description: 高数教材配套习题答案
     category: courses
     type: pdf
-    link: /resources/neu/东大高数(上)习题全解指南(答案).pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 《高等数学（上）》东北大学
     description: 学校教材电子版
     category: courses
     type: pdf
-    link: /resources/neu/《高等数学(上)》东北大学.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 新生入学指南 freshman4NEU 2026
     description: 2026 级新生入学指南
     category: freshman
     type: pdf
-    link: /resources/neu/freshman4NEU_2026.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 新生入学宣讲 PPT（8.12）
     description: 新生入学教育宣讲课件
     category: freshman
     type: ppt
-    link: /resources/neu/8.12新生入学讲.pptx
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 东北大学宿舍床尺寸
     description: 宿舍床铺尺寸参考（买床品前必看）
     category: campus-life
     type: pdf
-    link: /resources/neu/东北大学宿舍床尺寸.pdf
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 沈阳美食必吃榜
     description: 沈阳本地美食清单
     category: campus-life
     type: xlsx
-    link: /resources/neu/沈阳美食必吃榜.xlsx
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
   - title: 竞赛星级分类
     description: 学科竞赛等级与分类参考
     category: competition
     type: doc
-    link: /resources/neu/竞赛星级分类.docx
+    link: https://pan.quark.cn/s/96875988ef30
+    code: DKVL
 ---
 
 东北大学创建于 1923 年，校训为"自强不息，知行合一"，是教育部直属的全国重点大学，位列"双一流"建设高校名单。
