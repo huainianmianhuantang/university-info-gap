@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBlock from '../../components/SectionBlock.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
-import { RESOURCE_CATEGORIES } from '../../config';
+import { RESOURCE_CATEGORIES, SECTIONS } from '../../config';
 
 export async function getStaticPaths() {
   const universities = await getCollection('universities');
@@ -34,6 +34,17 @@ const materialsByCategory = RESOURCE_CATEGORIES.map((c) => ({
 })).filter((c) => c.items.length > 0);
 
 const hasCloudMaterials = u.materials.some((m) => m.link.includes('pan.'));
+
+const missingSections = SECTIONS.filter((s) => {
+  if (s.id === 'transfer') return !u.transferPolicy;
+  if (s.id === 'secondary') return !u.secondarySelection;
+  if (s.id === 'training') return !u.trainingPlan;
+  if (s.id === 'dorm') return !u.dorm;
+  if (s.id === 'classes') return !u.classes;
+  if (s.id === 'materials') return u.materials.length === 0;
+  if (s.id === 'videos') return u.videos.length === 0;
+  return false;
+});
 ---
 
 <BaseLayout
@@ -195,6 +206,23 @@ const hasCloudMaterials = u.materials.some((m) => m.link.includes('pan.'));
         </div>
         <div class="grid grid-videos">
           {u.videos.map((video) => <VideoEmbed video={video} />)}
+        </div>
+      </section>
+    )}
+
+    {missingSections.length > 0 && (
+      <section class="card section-block">
+        <h2>待补充信息</h2>
+        <p>
+          以下栏目尚未收录内容，欢迎
+          <a href="/submit/">投稿</a>补充一手信息（政策原文、实拍、资料等）：
+        </p>
+        <div class="chip-row">
+          {missingSections.map((s) => (
+            <a class="chip" href="/submit/" style="text-decoration:none;">
+              ＋ {s.label}
+            </a>
+          ))}
         </div>
       </section>
     )}
