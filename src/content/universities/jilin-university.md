@@ -12,6 +12,14 @@ campuses: ['前卫校区', '南岭校区', '新民校区', '朝阳校区', '南�
 brief: 吉林大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-jilin-university.svg
+
+videos:
+  - title: 2024 招生宣传片《青春向北》
+    platform: bilibili
+    id: BV1Yy411Y7ke
+    source: 吉林大学官方账号
+    description: 有梦想编织青春才绚烂，有选择才是青春无憾。
+
 ---
 
 吉林大学组建于 2000 年（前身可追溯至 1946 年），是学科门类最齐全的综合性大学之一。

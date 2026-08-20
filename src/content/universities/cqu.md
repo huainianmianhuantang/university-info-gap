@@ -12,6 +12,14 @@ campuses: ['A区', 'B区', 'C区', '虎溪校区']
 brief: 重庆大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-cqu.svg
+
+videos:
+  - title: 2025 招生宣传片《笔承日新》
+    platform: bilibili
+    id: BV1mdK6zZEQi
+    source: 重庆大学官方账号
+    description: 重庆大学邀您共执时代之笔。
+
 ---
 
 重庆大学创建于 1929 年，机械、电气、建筑等工科方向在西南地区实力突出。

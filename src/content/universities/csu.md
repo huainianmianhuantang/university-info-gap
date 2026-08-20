@@ -12,6 +12,14 @@ campuses: ['校本部', '南校区', '铁道校区', '湘雅校区']
 brief: 中南大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-csu.svg
+
+videos:
+  - title: 中南大学宣传片《光荫里的中南》
+    platform: bilibili
+    id: BV1cN4y1z7ai
+    source: B站转载（UP：马克思微博）
+    description: 中南大学校园宣传片（非招生办原发，待核实）。
+
 ---
 
 中南大学 2000 年由原中南工业大学、湖南医科大学等合并组建，冶金、材料、临床医学等学科实力突出。

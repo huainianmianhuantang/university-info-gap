@@ -12,6 +12,14 @@ campuses: ['一校区', '二校区']
 brief: 哈尔滨工业大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-hit.svg
+
+videos:
+  - title: 2025 招生宣传片《参天》
+    platform: bilibili
+    id: BV1w6TXzHEJ5
+    source: 哈尔滨工业大学官方账号
+    description: 哈工大 2025 年招生宣传片。
+
 ---
 
 哈尔滨工业大学创建于 1920 年，被誉为"工程师的摇篮"，航天与工程学科实力顶尖。

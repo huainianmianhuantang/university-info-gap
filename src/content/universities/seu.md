@@ -12,6 +12,14 @@ campuses: ['四牌楼校区', '九龙湖校区', '丁家桥校区']
 brief: 东南大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-seu.svg
+
+videos:
+  - title: 招生宣传片《至善宣言》
+    platform: bilibili
+    id: BV1VYN6e3EKC
+    source: B站转载（UP：LA丶Memba）
+    description: 东南大学招生宣传片。
+
 ---
 
 东南大学溯源于 1902 年的三江师范学堂，建筑、电子、信息等工科方向实力突出。

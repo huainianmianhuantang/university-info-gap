@@ -12,6 +12,14 @@ campuses: ['五山校区', '大学城校区', '广州国际校区']
 brief: 华南理工大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-scut.svg
+
+videos:
+  - title: 2022 本科招生宣传片《你，就是未来》
+    platform: bilibili
+    id: BV1ci4y1X7SN
+    source: 华南理工大学招生办公室
+    description: 趁年轻，肆意奋斗！你，就是未来！
+
 ---
 
 华南理工大学创建于 1952 年，华南地区工科强校，轻工、建筑、材料等学科实力突出。

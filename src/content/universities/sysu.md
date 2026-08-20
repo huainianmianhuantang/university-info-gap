@@ -12,6 +12,14 @@ campuses: ['南校园', '北校园', '东校园', '深圳校区', '珠海校区'
 brief: 中山大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-sysu.svg
+
+videos:
+  - title: 2025 招生微电影《一个理由》
+    platform: bilibili
+    id: BV1a5MmzoEYv
+    source: 中山大学教务部招生办公室
+    description: 你为什么报中大？是为了一个理想的前程。
+
 ---
 
 中山大学由孙中山先生于 1924 年创办，岭南地区顶尖综合性大学，医学、管理学、哲学等学科实力突出。

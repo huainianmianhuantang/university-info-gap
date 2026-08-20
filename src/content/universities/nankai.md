@@ -12,6 +12,14 @@ campuses: ['八里台校区', '津南校区']
 brief: 南开大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-nankai.svg
+
+videos:
+  - title: 2019 招生宣传片《遇见南开》
+    platform: bilibili
+    id: BV114411G7Vi
+    source: 南开大学官方账号
+    description: 遇见南开，遇见更好的自己。
+
 ---
 
 南开大学创建于 1919 年，校训"允公允能，日新月异"，化学、数学、经济等学科底蕴深厚。

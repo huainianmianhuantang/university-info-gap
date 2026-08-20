@@ -12,6 +12,14 @@ campuses: ['中关村校区']
 brief: 中国人民大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-renmin-university.svg
+
+videos:
+  - title: 2024 招生宣传片
+    platform: bilibili
+    id: BV18e3aeFESo
+    source: B站转载（UP：炎究生）
+    description: 中国人民大学 2024 年招生宣传片。
+
 ---
 
 中国人民大学成立于 1937 年，以人文社会科学见长，法学、经济学、新闻学等学科声誉卓著。

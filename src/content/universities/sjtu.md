@@ -12,6 +12,14 @@ campuses: ['闵行校区', '徐汇校区']
 brief: 上海交通大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-sjtu.svg
+
+videos:
+  - title: 2019 招生宣传片
+    platform: bilibili
+    id: BV1X7411u722
+    source: B站转载（UP：江南制造总局）
+    description: 上海交通大学 2019 年招生宣传片。
+
 ---
 
 上海交通大学前身是 1896 年创办的南洋公学，工科底蕴深厚，船舶、机械、电子信息等学科顶尖。

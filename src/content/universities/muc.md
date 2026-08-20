@@ -12,6 +12,13 @@ campuses: ['海淀校区', '丰台校区']
 brief: 中央民族大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-muc.svg
+
+videos:
+  - title: 2025 招生宣传片《美，生生不息》
+    platform: bilibili
+    id: BV1JdKuztEts
+    source: 中央民族大学官方账号
+    description: 有一种美，生生不息。2025，我们在民大期待一个你。
 ---
 
 中央民族大学成立于 1941 年，是我国民族类高等教育的最高学府，民族学、社会学等学科特色鲜明。

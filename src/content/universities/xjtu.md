@@ -12,6 +12,14 @@ campuses: ['兴庆校区', '雁塔校区', '创新港校区']
 brief: 西安交通大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-xjtu.svg
+
+videos:
+  - title: 2024 招生宣传片《朝着太阳生长》
+    platform: bilibili
+    id: BV1fS411w7x5
+    source: 西安交通大学官方账号
+    description: 一起追光而行，向阳而生。
+
 ---
 
 西安交通大学前身是 1896 年创办的南洋公学，管理、电气、机械等学科实力突出。

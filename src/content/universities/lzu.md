@@ -12,6 +12,14 @@ campuses: ['城关校区', '榆中校区']
 brief: 兰州大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-lzu.svg
+
+videos:
+  - title: 2022 招生宣传片《你的决定》
+    platform: bilibili
+    id: BV1Bv4y1g7b5
+    source: 兰州大学官方账号
+    description: 这是你人生独树一帜的决定。
+
 ---
 
 兰州大学前身是 1909 年创办的甘肃法政学堂，化学、草学、生态学等基础学科实力突出。

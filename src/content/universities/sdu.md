@@ -12,6 +12,14 @@ campuses: ['中心校区', '洪家楼校区', '趵突泉校区', '千佛山校�
 brief: 山东大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-sdu.svg
+
+videos:
+  - title: 本科招生宣传片《朝夕遇见你》
+    platform: bilibili
+    id: BV165411R7te
+    source: B站转载（UP：雄博士教育王于）
+    description: 山迎你来，山大朝夕预见你。
+
 ---
 
 山东大学前身是 1901 年创办的山东大学堂，数学、中国语言文学、临床医学等学科底蕴深厚。

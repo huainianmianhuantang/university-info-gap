@@ -12,6 +12,14 @@ campuses: ['中关村校区', '良乡校区']
 brief: 北京理工大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-bit.svg
+
+videos:
+  - title: 2023 招生宣传片《北极星》
+    platform: bilibili
+    id: BV1kL411i7ng
+    source: B站转载（UP：芙芙喜欢吃小蛋糕）
+    description: 北理工愿成为你从云层冲出的北极星光。
+
 ---
 
 北京理工大学源于 1940 年创办的自然科学院，兵器、车辆、信息等工科方向实力突出。

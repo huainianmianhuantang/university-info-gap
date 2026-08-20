@@ -188,6 +188,13 @@ materials:
     type: doc
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
+
+videos:
+  - title: 2025 招生宣传片《人生课题》
+    platform: bilibili
+    id: BV1YFTyz2Eez
+    source: 东北大学官方账号
+    description: 人生的课题不是考卷，每一个因选择而诞生的困惑，都有被称作“希望”的另一面。
 ---
 
 东北大学创建于 1923 年，校训为"自强不息，知行合一"，是教育部直属的全国重点大学，位列"双一流"建设高校名单。

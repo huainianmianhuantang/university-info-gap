@@ -12,6 +12,14 @@ campuses: ['清水河校区', '沙河校区']
 brief: 电子科技大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-uestc.svg
+
+videos:
+  - title: 2020 招生宣传片《我在电子科技大学等你》
+    platform: bilibili
+    id: BV18C4y1b7vE
+    source: 电子科技大学招生办公室
+    description: 欢迎报考电子科技大学！
+
 ---
 
 电子科技大学创建于 1956 年，电子信息类学科全国顶尖，被誉为"中国电子类院校的排头兵"。

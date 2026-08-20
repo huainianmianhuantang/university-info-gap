@@ -12,6 +12,14 @@ campuses: ['崂山校区', '鱼山校区', '浮山校区']
 brief: 中国海洋大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-ouc.svg
+
+videos:
+  - title: 中国海洋大学招生宣传片
+    platform: bilibili
+    id: BV1ub411g7Kh
+    source: B站转载（UP：海之子计算机408考研）
+    description: 欢迎来到中国海洋大学，开启一段寻找自我的旅程。
+
 ---
 
 中国海洋大学创建于 1924 年，是我国海洋与水产类学科最强的综合性大学。

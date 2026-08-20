@@ -12,6 +12,14 @@ campuses: ['南校区', '北校区']
 brief: 湖南大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-hunan-university.svg
+
+videos:
+  - title: 2018 招生宣传片《约麓山·千年学府等你来》
+    platform: bilibili
+    id: BV1JE411C7tb
+    source: 湖南大学党委宣传部
+    description: 从湖南大学走向世界。
+
 ---
 
 湖南大学办学始于岳麓书院（976 年），1903 年改制为湖南高等学堂，建筑、机械等学科实力突出。

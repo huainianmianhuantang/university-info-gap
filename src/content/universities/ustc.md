@@ -12,6 +12,14 @@ campuses: ['东校区', '西校区', '高新校区']
 brief: 中国科学技术大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-ustc.svg
+
+videos:
+  - title: 2024 招生宣传片《来科大，你就能！》
+    platform: bilibili
+    id: BV1Bf421D7wE
+    source: 中国科学技术大学官方账号
+    description: 来科大能怎样？来科大，你就能！
+
 ---
 
 中国科学技术大学创建于 1958 年，依托中国科学院办学，理科基础研究实力顶尖，学风严谨。

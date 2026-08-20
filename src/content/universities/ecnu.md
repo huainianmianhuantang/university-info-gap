@@ -12,6 +12,14 @@ campuses: ['中山北路校区', '闵行校区']
 brief: 华东师范大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-ecnu.svg
+
+videos:
+  - title: 2022 招生宣传片《卓越之路》
+    platform: bilibili
+    id: BV1YP4y1Z7Md
+    source: 华东师范大学官方账号
+    description: 华东师范大学 2022 年招生宣传片。
+
 ---
 
 华东师范大学成立于 1951 年，教育学、心理学、地理学等学科实力突出，是国内师范类顶尖高校之一。

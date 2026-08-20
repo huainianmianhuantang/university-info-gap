@@ -12,6 +12,14 @@ campuses: ['东校区', '西校区']
 brief: 中国农业大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-cau.svg
+
+videos:
+  - title: 2024 招生宣传片《看见》
+    platform: bilibili
+    id: BV11A3aenELn
+    source: B站转载（UP：炎究生）
+    description: 2024 年中国农业大学招生宣传片。
+
 ---
 
 中国农业大学肇始于 1905 年的京师大学堂农科大学，是我国农林类顶尖高校。

@@ -12,6 +12,14 @@ campuses: ['学院路校区', '沙河校区']
 brief: 北京航空航天大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-buaa.svg
+
+videos:
+  - title: 2023 招生宣传片《择一凌云志》
+    platform: bilibili
+    id: BV19s4y1i7Uc
+    source: B站转载（UP：青蓝Seiran）
+    description: 那些让你选择一以贯之、一往无前的会是什么？
+
 ---
 
 北京航空航天大学创建于 1952 年，航空航天与信息技术特色鲜明，是国防七子之一。

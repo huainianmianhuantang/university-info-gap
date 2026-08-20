@@ -12,6 +12,14 @@ campuses: ['鼓楼校区', '仙林校区']
 brief: 南京大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-nju.svg
+
+videos:
+  - title: 2020 双一流宣传片（30 院唯美视频）
+    platform: bilibili
+    id: BV11a4y1v7yk
+    source: B站转载（UP：不夕得）
+    description: 南京大学——因为想见，终会遇见。
+
 ---
 
 南京大学溯源于 1902 年创办的三江师范学堂，天文学、地质学、文理科基础研究实力顶尖。

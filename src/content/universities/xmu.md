@@ -12,6 +12,14 @@ campuses: ['思明校区', '翔安校区']
 brief: 厦门大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-xmu.svg
+
+videos:
+  - title: 2025 招生宣传片《学在厦大 2》
+    platform: bilibili
+    id: BV1kAKNz7E6S
+    source: 厦门大学招生与考试办公室
+    description: 自强不息，止于至善。
+
 ---
 
 厦门大学由爱国华侨陈嘉庚先生于 1921 年创办，校园临海，经济、管理、化学等学科声誉卓著。

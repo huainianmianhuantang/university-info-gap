@@ -12,6 +12,14 @@ campuses: ['友谊校区', '长安校区']
 brief: 西北工业大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-npu.svg
+
+videos:
+  - title: 2024 招生宣传片《铸·锋芒》
+    platform: bilibili
+    id: BV1QJ4m1g7pW
+    source: 西北工业大学官方账号
+    description: 铸国之重器，造利剑尖兵。
+
 ---
 
 西北工业大学源于 1938 年，航空、航天、航海"三航"特色鲜明，是国防七子之一。

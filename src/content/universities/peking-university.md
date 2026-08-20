@@ -12,6 +12,14 @@ campuses: ['燕园校区']
 brief: 北京大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-peking-university.svg
+
+videos:
+  - title: 2024 招生宣传片《一朵小花》
+    platform: bilibili
+    id: BV1AJ34eNETf
+    source: B站转载（UP：炎究生）
+    description: 每朵小花都有花期，每段人生都会绽放。
+
 ---
 
 北京大学创办于 1898 年，初名京师大学堂，是中国近现代第一所国立综合性大学。人文社科、理科基础学科实力顶尖，校训"爱国、进步、民主、科学"。

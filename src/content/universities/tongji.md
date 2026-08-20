@@ -12,6 +12,14 @@ campuses: ['四平路校区', '嘉定校区']
 brief: 同济大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-tongji.svg
+
+videos:
+  - title: 2024 招生宣传片《不凡》
+    platform: bilibili
+    id: BV1VM4m1m7y4
+    source: 同济大学官方账号
+    description: 选择同济，我们陪你体验不凡青春。
+
 ---
 
 同济大学创建于 1907 年，土木建筑类学科全国顶尖，德语区合作资源丰富。

@@ -12,6 +12,13 @@ campuses: ['邯郸校区', '江湾校区', '枫林校区', '张江校区']
 brief: 复旦大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-fudan.svg
+
+videos:
+  - title: 2026 本科生招生宣传片《无用之用》
+    platform: bilibili
+    id: BV1kf7S6oEsD
+    source: 复旦大学官方账号
+    description: 心之所向，无用之用，方为大用。
 ---
 
 复旦大学创建于 1905 年，是上海顶尖综合性大学，人文社科与基础医学实力突出。

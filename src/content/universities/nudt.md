@@ -12,6 +12,14 @@ campuses: ['长沙校区']
 brief: 国防科技大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-nudt.svg
+
+videos:
+  - title: 招生短片《国防科大的夏》
+    platform: bilibili
+    id: BV1oh411P7Pu
+    source: B站转载（UP：我的大学MyUniversity）
+    description: 在国防科大一起远赴心中理想。
+
 ---
 
 国防科技大学创建于 1953 年，是中央军委直属的综合性军事院校，计算机、航天等学科实力顶尖。

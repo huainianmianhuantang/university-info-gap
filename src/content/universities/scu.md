@@ -12,6 +12,14 @@ campuses: ['望江校区', '江安校区', '华西校区']
 brief: 四川大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-scu.svg
+
+videos:
+  - title: 2024 招生宣传片《青春同行》
+    platform: bilibili
+    id: BV1L1421C72m
+    source: 四川大学官方账号
+    description: 岷山巍峨，锦水含章。今日少年，未来栋梁。
+
 ---
 
 四川大学肇始于 1896 年的四川中西学堂，文理工医协调发展，口腔医学全国顶尖。
