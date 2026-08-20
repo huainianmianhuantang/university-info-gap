@@ -222,7 +222,13 @@ svg {
 }
 
 .grid-videos {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .grid-videos {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ---------- 大学卡片 ---------- */
@@ -875,5 +881,9 @@ svg {
 
   .form-card {
     padding: 18px 16px;
+  }
+
+  .grid-videos {
+    grid-template-columns: 1fr;
   }
 }
