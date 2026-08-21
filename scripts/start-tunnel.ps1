@@ -1,24 +1,27 @@
-$exe = Join-Path $env:TEMP 'cloudflared\cloudflared.exe'
 $logDir = Join-Path $env:TEMP 'cloudflared'
+$logFile = Join-Path $logDir 'tunnel.log'
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 
-if (-not (Test-Path $exe) -or (Get-Item $exe).Length -lt 50000000) {
-  Write-Output 'Downloading cloudflared (about 60MB)...'
-  Invoke-WebRequest -Uri 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe' -OutFile $exe -UseBasicParsing -TimeoutSec 600
+Get-Process -Name cloudflared -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+Start-Sleep -Milliseconds 500
+Remove-Item -LiteralPath $logFile -Force -ErrorAction SilentlyContinue
+
+$runExe = Join-Path $logDir ('cf-' + [guid]::NewGuid().ToString('N').Substring(0, 12) + '.exe')
+Write-Output 'Downloading cloudflared (about 60MB)...'
+& curl.exe -L -sS --retry 3 -o $runExe 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe'
+if (-not (Test-Path $runExe) -or (Get-Item $runExe).Length -lt 50000000) {
+  Write-Output 'DOWNLOAD_FAILED'
+  exit 1
 }
 
-$stdout = Join-Path $logDir 'tunnel.log'
-$stderr = Join-Path $logDir 'tunnel.err'
-Remove-Item -LiteralPath $stdout, $stderr -Force -ErrorAction SilentlyContinue
-
-$p = Start-Process -FilePath $exe -ArgumentList @('tunnel','--url','http://localhost:4321','--no-autoupdate') -WindowStyle Hidden -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+$p = Start-Process -FilePath $runExe -ArgumentList @('tunnel','--url','http://localhost:4321','--no-autoupdate','--logfile',$logFile) -WindowStyle Hidden -PassThru
 Write-Output "Tunnel PID=$($p.Id)"
 
 $url = $null
-for ($i = 0; $i -lt 60; $i++) {
+for ($i = 0; $i -lt 90; $i++) {
   Start-Sleep -Seconds 2
-  if (Test-Path $stdout) {
-    $content = Get-Content -LiteralPath $stdout -Raw -ErrorAction SilentlyContinue
+  if (Test-Path $logFile) {
+    $content = Get-Content -LiteralPath $logFile -Raw -ErrorAction SilentlyContinue
     $m = [regex]::Match($content, 'https://[a-z0-9-]+\.trycloudflare\.com')
     if ($m.Success) { $url = $m.Value; break }
   }
@@ -27,7 +30,8 @@ for ($i = 0; $i -lt 60; $i++) {
 
 if ($url) {
   Write-Output "URL=$url"
+  Write-Output "PID=$($p.Id)"
 } else {
   Write-Output 'NO_URL'
-  if (Test-Path $stderr) { Get-Content -LiteralPath $stderr -Tail 10 }
+  if (Test-Path $logFile) { Get-Content -LiteralPath $logFile -Tail 20 }
 }
