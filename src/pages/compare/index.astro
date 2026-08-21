@@ -46,9 +46,11 @@ const schools = (await getCollection('universities')).map((u) => ({
     </div>
 
     <div id="compareApp">
-      <p class="muted" id="compareEmpty">
-        还没有选择学校。前往<a href="/universities/">大学库</a>勾选 2-3 所后对比。
-      </p>
+      <div class="card empty-state" id="compareEmpty">
+        <span class="empty-emoji">⚖️</span>
+        <p id="compareEmptyText">还没有选择学校。前往大学库勾选 2-3 所后对比。</p>
+        <a class="btn btn-primary" href="/universities/">去大学库勾选 →</a>
+      </div>
       <div class="table-wrap" id="compareTableWrap" hidden>
         <p class="table-swipe-hint">← 左右滑动查看更多列 →</p>
         <table class="compare-table" id="compareTable"></table>
@@ -100,6 +102,14 @@ import { scopedKey } from '../../lib/account';
 
   if (picked.length < 2) {
     empty.hidden = false;
+    const text = document.getElementById('compareEmptyText');
+    if (text) {
+      if (picked.length === 1) {
+        text.innerHTML = `已选择 1 所（${picked[0].name}），再去大学库勾选 1-2 所即可并排对比。`;
+      } else {
+        text.innerHTML = '还没有选择学校。前往大学库勾选 2-3 所后并排对比。';
+      }
+    }
   } else {
     empty.hidden = true;
     wrap.hidden = false;

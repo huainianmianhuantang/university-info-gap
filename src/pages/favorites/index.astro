@@ -34,10 +34,14 @@ const schools = (await getCollection('universities')).map((u) => ({
     </div>
 
     <div id="favApp">
-      <p class="muted" id="favEmpty" hidden>
-        还没有收藏任何学校。去<a href="/universities/">大学库</a>逛逛，点卡片左上角 ★ 收藏；
-        或者先做一次<a href="/quiz/">选校测评</a>，把推荐学校一键收藏。
-      </p>
+      <div class="card empty-state" id="favEmpty" hidden>
+        <span class="empty-emoji">⭐</span>
+        <p>还没有收藏任何学校。去大学库逛逛，点卡片左上角 ★ 收藏；或先做一次选校测评，把推荐学校一键收藏。</p>
+        <div class="empty-actions">
+          <a class="btn btn-primary" href="/universities/">去大学库 →</a>
+          <a class="btn btn-ghost" href="/quiz/">先做测评</a>
+        </div>
+      </div>
       <div class="card filters" id="favFilters" hidden>
         <div class="filter-group">
           <input type="search" id="favSearch" placeholder="搜索收藏的学校…" aria-label="搜索收藏" />
