@@ -2505,3 +2505,133 @@ html[data-theme='dark'] .prose pre {
 .logo:hover {
   transform: translateY(-1px) scale(1.02);
 }
+
+/* ---------- 首页页面背景：呼吸式光点与镜头圆环 ---------- */
+:root {
+  --deco-blue: rgba(31, 94, 255, 0.1);
+  --deco-line: rgba(31, 94, 255, 0.16);
+  --deco-dot: rgba(31, 94, 255, 0.2);
+}
+
+html[data-theme='dark'] {
+  --deco-blue: rgba(122, 176, 255, 0.12);
+  --deco-line: rgba(160, 200, 255, 0.15);
+  --deco-dot: rgba(140, 190, 255, 0.22);
+}
+
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-breath {
+  position: absolute;
+  border-radius: 50%;
+  animation: bg-breath 8s ease-in-out infinite;
+}
+
+.bg-breath-1 {
+  width: 560px;
+  height: 560px;
+  top: -140px;
+  right: -80px;
+  background: radial-gradient(circle, var(--deco-blue) 0%, transparent 68%);
+}
+
+.bg-breath-2 {
+  width: 720px;
+  height: 720px;
+  left: -200px;
+  bottom: -180px;
+  background: radial-gradient(circle, var(--deco-blue) 0%, transparent 66%);
+  animation-delay: 2s;
+}
+
+@keyframes bg-breath {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.bg-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid var(--deco-line);
+  animation: bg-ring-breathe 7s ease-in-out infinite;
+}
+
+.bg-ring-1 {
+  width: 72px;
+  height: 72px;
+  left: 7%;
+  top: 22%;
+}
+
+.bg-ring-2 {
+  width: 88px;
+  height: 88px;
+  right: 6%;
+  top: 48%;
+  animation-delay: 0.8s;
+}
+
+.bg-ring-3 {
+  width: 64px;
+  height: 64px;
+  left: 9%;
+  bottom: 14%;
+  animation-delay: 1.6s;
+}
+
+@keyframes bg-ring-breathe {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+.bg-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--deco-dot);
+  animation: bg-dot-breathe 6s ease-in-out infinite;
+}
+
+@keyframes bg-dot-breathe {
+  0%,
+  100% {
+    transform: translateY(3px) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-3px) scale(1.18);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .bg-breath,
+  .bg-ring {
+    display: none;
+  }
+
+  .page-bg > .bg-dot:nth-child(n + 12) {
+    display: none;
+  }
+
+  .bg-dot {
+    opacity: 0.55;
+  }
+}
