@@ -13,7 +13,7 @@ brief: 农科特色鲜明，中国西北现代农业教育的重要基地。
 featured: false
 cover: /images/logo-nwafu-512.webp
 materials:
-  - title: "西北农林科技大学资源环境学院转专业考核办法"
+  - title: "西北农林科技大学资源环境学院转专业考核办法（2025-2026学年）"
     description: 学院级本科生转专业考核办法官方文件
     category: transfer-policy
     type: pdf

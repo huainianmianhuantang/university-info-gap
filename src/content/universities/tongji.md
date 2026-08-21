@@ -14,7 +14,7 @@ featured: false
 cover: /images/logo-tongji-512.webp
 
 materials:
-  - title: "同济大学主修专业确认、转专业与转学（信息公开）"
+  - title: "同济大学主修专业确认、转专业与转学（信息公开，2024年）"
     description: 信息公开网公布的转专业与转学相关规定
     category: transfer-policy
     type: 其他

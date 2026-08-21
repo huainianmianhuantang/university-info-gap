@@ -19,7 +19,7 @@ materials:
     category: transfer-policy
     type: pdf
     link: https://dean.pku.edu.cn/userfiles/upload/ckeditor/202604171727177356.pdf
-  - title: "北京大学本科生学籍管理有关规定（含转专业、保研办法）"
+  - title: "北京大学本科生学籍管理有关规定（含转专业、保研办法，2022年汇编）"
     description: 学籍管理汇编，收录《转院（系）转专业实施办法（试行）》与推免工作实施办法
     category: transfer-policy
     type: pdf

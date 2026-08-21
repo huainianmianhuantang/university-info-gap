@@ -18,7 +18,7 @@ materials:
     description: 校方发布的转大类（专业）管理办法全文
     category: transfer-policy
     type: pdf
-    link: http://pjteach.dlut.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1137103147&wbfileid=E26EBAD715B8E9085B8AAB0930927F34
+    link: https://pjteach.dlut.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1137103147&wbfileid=E26EBAD715B8E9085B8AAB0930927F34
   - title: "大连理工大学本科招生章程（招生网汇总）"
     description: 本科生招生网发布的历年本科招生章程
     category: admission

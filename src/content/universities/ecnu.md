@@ -14,7 +14,7 @@ featured: false
 cover: /images/logo-ecnu-512.webp
 
 materials:
-  - title: "华东师范大学本科生转专业介绍"
+  - title: "华东师范大学本科生转专业介绍（2025年更新）"
     description: 招生网发布的转专业类型、时间与流程介绍
     category: transfer-policy
     type: 其他

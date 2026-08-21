@@ -18,7 +18,7 @@ materials:
     description: 校方发布的 2026 招生新政，明确大类分流专业任选、转专业无次数与名额统一上限
     category: transfer-policy
     type: 其他
-    link: http://news.tju.edu.cn/info/1003/601499.htm
+    link: https://news.tju.edu.cn/info/1003/601499.htm
   - title: "天津大学2026年本科生招生章程"
     description: 2026 年本科生招生章程官方发布页
     category: admission

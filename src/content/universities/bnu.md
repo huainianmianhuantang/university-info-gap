@@ -14,7 +14,7 @@ featured: false
 cover: /images/logo-bnu-512.webp
 
 materials:
-  - title: "北京师范大学本科生转专业管理办法"
+  - title: "北京师范大学本科生转专业管理办法（2025年印发）"
     description: 校方发布的《本科生转专业管理办法》全文
     category: transfer-policy
     type: 其他

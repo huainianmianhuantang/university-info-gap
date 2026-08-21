@@ -14,17 +14,16 @@ featured: false
 cover: /images/logo-huazhong-ust-512.webp
 
 transferPolicy:
-  summary: 工科专业间转专业机会较多，转入口径与名额因学院而异。（示例内容，需以教务通知为准）
+  summary: 按“申请—考核”进行：2024 级起每生限报一个转入专业（类），运动训练、艺术类等特殊类型不参与；部分学院转出不设名额上限，热门学院以笔试 + 面试择优接收。
   points:
-    - title: 申请时间
-      content: 一般在大一结束集中开放申请，部分学院接受大二申请。
+    - title: 申请资格
+      content: 面向普通全日制在籍本科生（招生简章明确不可转专业者除外），每生限报一个志愿；运动训练、艺术类专业学生不得申请。
     - title: 考核方式
-      content: 常见形式为笔试（数学/物理等）+ 面试，结合第一学年成绩。
-    - title: 热门专业
-      content: 计算机、电气等热门专业转入竞争激烈，建议提前准备。
+      content: 由接收学院组织，常见为笔试（数学/物理等）+ 面试，并结合第一学年成绩综合评定。
+    - title: 名额与竞争
+      content: 热门学院（计算机、机电等）拟接收人数有限、竞争激烈；部分学院转出人数不设限制，具体以当年通知为准。
   sources:
-    - 示例：来源于网络公开信息，需核实
-
+    - 关于做好2024级本科生学科大类及院（系）内转专业工作的通知（华科本科生院）
 secondarySelection:
   summary: 启明学院等平台面向优秀新生开展入校后二次选拔。（示例内容）
   programs:
@@ -66,24 +65,11 @@ classes:
     - 示例：来源于在校生经验分享
 
 materials:
-  - title: 大一高数重点整理（示例）
-    description: 示例资料：期末复习重点与典型题
-    category: courses
-    type: pdf
-    link: https://pan.example.com/hust-math
-    code: hust01
-  - title: 启明学院选拔经验（示例）
-    description: 示例资料：二次选拔面试流程复盘
-    category: training-plan
-    type: doc
-    link: https://pan.example.com/hust-qiming
-    code: qm2026
-
   - title: "华中科技大学2024级本科生学科大类及院内转专业工作通知"
     description: 关于做好 2024 级本科生学科大类及院（系）内转专业工作的通知
     category: transfer-policy
     type: 其他
-    link: http://sjic.hust.edu.cn/info/1230/14151.htm
+    link: https://sjic.hust.edu.cn/info/1230/14151.htm
   - title: "华中科技大学2026年普通本科招生章程"
     description: 2026 年普通本科招生章程官方发布页
     category: admission

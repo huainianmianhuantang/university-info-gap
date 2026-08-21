@@ -14,17 +14,17 @@ featured: true
 cover: /images/logo-zhejiang-university-512.webp
 
 transferPolicy:
-  summary: 转专业以“申请—考核”为主，多数专业允许大一、大二申请，热门专业竞争激烈。（示例内容，需以教务处通知为准）
+  summary: 按《浙江大学本科生主修专业确认及转专业管理办法》（浙大发本〔2025〕28号）执行：转出基本无门槛，转入由学院按细则考核（多数看绩点与学分要求，部分组织面试/笔试），每年秋冬学期集中开放申请。
   points:
     - title: 申请时间
-      content: 一般在大一结束和大二结束各有一次申请窗口，具体以当年教务通知为准。
+      content: 通常在学年秋冬学期集中组织，大一寒假、大二等节点均可申请，具体以学院通知为准。
     - title: 申请条件
-      content: 通常要求无挂科记录，部分专业会看绩点排名并组织面试或笔试。
-    - title: 名额与限制
-      content: 转入名额由目标专业给出，热门专业名额少、竞争大；部分特殊类型（如定向、艺术类）可能受限。
+      content: 多数学院要求已修学分达到门槛（如每长学期不低于 20 学分）、成绩合格；部分学院对绩点或必修课完成比例有要求。
+    - title: 转出与限制
+      content: 除招生规定与特殊类型外，转出基本无限制；转入名额由目标专业给出，热门专业竞争激烈，学院可组织考核。
   sources:
-    - 示例：来源于网络公开信息，正式上线前需对照学校教务处核实
-
+    - 浙江大学本科生主修专业确认及转专业管理办法（浙大发本〔2025〕28号）
+    - 建筑工程学院2026-2027学年秋冬学期本科生转专业工作通知（浙江大学）
 secondarySelection:
   summary: 入校后可通过二次选拔进入荣誉学院或特色班。（示例内容）
   programs:
@@ -66,19 +66,6 @@ classes:
     - 示例：来源于在校生经验分享
 
 materials:
-  - title: 高数复习笔记（示例）
-    description: 示例资料：高数期末复习要点整理（pdf）
-    category: courses
-    type: pdf
-    link: https://pan.example.com/zju-math
-    code: zju24
-  - title: 大类分流经验帖（示例）
-    description: 示例资料：紫金港大类分流流程与避坑提醒
-    category: training-plan
-    type: doc
-    link: https://pan.example.com/zju-major
-    code: div24
-
   - title: "浙江大学建筑工程学院2026-2027学年秋冬学期转专业工作通知"
     description: 依据《本科生主修专业确认及转专业管理办法》发布的学院转专业安排
     category: transfer-policy

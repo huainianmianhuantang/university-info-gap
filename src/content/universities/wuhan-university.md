@@ -14,17 +14,17 @@ featured: true
 cover: /images/logo-wuhan-university-512.webp
 
 transferPolicy:
-  summary: 转专业政策相对灵活，一般在大一、大二开放申请窗口。（示例内容，需以教务通知为准）
+  summary: 转专业/转学院以学院考核为主，申请集中在春季学期开学初；2025 年首轮跨学院申请成功率超 70%，未获转者还可参加第二轮（29 个学院开放）。
   points:
     - title: 申请窗口
-      content: 通常大一结束时有一次集中申请机会，部分学院大二仍可申请。
+      content: 一般在春季学期第一至三周集中受理，逾期不再受理；具体时间以学校通知为准。
     - title: 考核方式
-      content: 多数专业组织笔试或面试，结合平时成绩综合评定。
+      content: 各学院制定细则并组织笔试或面试，结合在读成绩综合评定；热门学院接收比例逐年提升。
     - title: 注意事项
-      content: 转入热门专业难度大，建议提前了解目标专业的接收名额与往届录取情况。
+      content: 每位学生通常限报一个志愿，部分学院有年级、成绩或转出限制，申请前请查阅学院当年细则。
   sources:
-    - 示例：来源于网络公开信息，需核实
-
+    - 学校2025年转专业、转学院工作收官报道（武汉大学新闻网）
+    - 经济与管理学院2025年转专业工作实施细则（武汉大学）
 secondarySelection:
   summary: 弘毅学堂等荣誉培养平台面向新生与低年级学生二次选拔。（示例内容）
   programs:
@@ -66,19 +66,6 @@ classes:
     - 示例：来源于在校生经验分享
 
 materials:
-  - title: 通识课避坑清单（示例）
-    description: 示例资料：热门通识课评价与选课建议
-    category: courses
-    type: doc
-    link: https://pan.example.com/whu-ge
-    code: whu25
-  - title: 弘毅学堂报考指引（示例）
-    description: 示例资料：二次选拔流程与面试经验
-    category: training-plan
-    type: pdf
-    link: https://pan.example.com/whu-hongyi
-    code: hy2026
-
   - title: "武汉大学经济与管理学院2025年转专业工作实施细则"
     description: 学院级转专业实施细则，含申请条件与考核流程
     category: transfer-policy

@@ -14,7 +14,7 @@ featured: false
 cover: /images/logo-sysu-512.webp
 
 materials:
-  - title: "中山大学本科生申报转专业常见问题解答"
+  - title: "中山大学本科生申报转专业常见问题解答（2023年更新）"
     description: 教务部发布的转专业资格与流程官方解答
     category: transfer-policy
     type: 其他

@@ -18,7 +18,7 @@ materials:
     description: 依据《本科生专业选择管理办法》制定的学部转专业实施细则
     category: transfer-policy
     type: pdf
-    link: http://life.hit.edu.cn/_upload/article/files/14/2c/a633ebde42c997c3d75b86214749/5beb6036-1bb1-4716-a717-baec65e3bef9.pdf
+    link: https://life.hit.edu.cn/_upload/article/files/14/2c/a633ebde42c997c3d75b86214749/5beb6036-1bb1-4716-a717-baec65e3bef9.pdf
   - title: "哈尔滨工业大学2026年本科招生章程"
     description: 2026 年本科招生章程官方发布页
     category: admission

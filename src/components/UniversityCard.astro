@@ -7,10 +7,16 @@ interface Props {
 
 const { university } = Astro.props;
 const u = university.data;
+const cover512 = u.cover.includes('.webp')
+  ? u.cover.replace(/\.webp$/, '-512.webp')
+  : undefined;
+const srcset = cover512
+  ? `${cover512} 512w, ${u.cover} 1024w`
+  : undefined;
 ---
 
 <a class="card university-card" href={`/universities/${university.id}/`}>
-  <img class="university-cover" src={u.cover} alt={`${u.name} 校徽`} loading="lazy" width="512" height="512" decoding="async" onerror="this.onerror=null;this.src='/images/og-default.svg'" />
+  <img class="university-cover" src={u.cover} srcset={srcset} sizes="(max-width: 640px) 92vw, 320px" alt={`${u.name} 校徽`} loading="lazy" width="512" height="512" decoding="async" onerror="this.onerror=null;this.src='/images/og-default.svg'" />
   <div class="university-body">
     <div class="university-title">
       {u.name}
