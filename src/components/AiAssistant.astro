@@ -28,6 +28,8 @@
 </div>
 
 <script>
+  import { getProfile } from '../lib/account';
+
   const KEY = 'ai-chat';
   const fab = document.getElementById('aiFab') as HTMLButtonElement;
   const dock = document.getElementById('aiDock') as HTMLButtonElement;
@@ -77,8 +79,12 @@
     if (history.length === 0) {
       const hi = document.createElement('div');
       hi.className = 'ai-msg assistant ai-hello';
+      const profile = getProfile();
       hi.innerHTML =
-        '你好呀，我是小助手 🤖 可以问我：这个网站怎么用、怎么选专业方向、<strong>转专业</strong>要注意什么……';
+        (profile
+          ? `你好呀 ${profile.nickname}，我是小助手 🤖 `
+          : '你好呀，我是小助手 🤖 ') +
+        '可以问我：这个网站怎么用、怎么选专业方向、<strong>转专业</strong>要注意什么……';
       msgs.appendChild(hi);
     } else {
       history.forEach((m) => addMsg(m.role, m.content));

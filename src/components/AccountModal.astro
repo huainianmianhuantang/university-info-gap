@@ -60,7 +60,7 @@
     input.id = id;
     input.type = type;
     input.placeholder = placeholder;
-    input.autocomplete = extra;
+    input.autocomplete = extra || 'off';
     wrap.appendChild(input);
     return wrap;
   }
