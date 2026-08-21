@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-cqu-512.webp
 
 materials:
+  - title: "重庆大学2025版本科各专业人才培养方案（土木工程学院）"
+    description: 土木工程学院官网发布的 2025 版本科各专业人才培养方案（适用于 2025 级）
+    category: training-plan
+    type: 其他
+    link: https://civil.cqu.edu.cn/info/1257/20061.htm
+  - title: "重庆大学2023级集成电路设计与集成系统本科培养方案"
+    description: 微电子与通信工程学院官网发布的 2023 级集成电路设计与集成系统培养方案
+    category: training-plan
+    type: pdf
+    link: http://www.ccee.cqu.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1343593663&wbfileid=14573135
+  - title: "重庆大学2022级车辆工程本科培养方案"
+    description: 机械与运载工程学院官网发布的 2022 级车辆工程培养方案 PDF
+    category: training-plan
+    type: pdf
+    link: https://cme.cqu.edu.cn/__local/A/56/FC/B82984D5C21AAC235559CA1D87B_73781A75_AEC1C.pdf
   - title: "重庆大学普通本科学生转专业管理办法"
     description: 校方发布的转专业管理办法全文
     category: transfer-policy

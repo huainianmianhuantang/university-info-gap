@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-sysu-512.webp
 
 materials:
+  - title: "中山大学2019级本科培养方案修订说明与通知"
+    description: 教务部关于组织开展 2019 年本科专业培养方案制订与修订工作的通知
+    category: training-plan
+    type: 其他
+    link: https://jwb.sysu.edu.cn/article/178
+  - title: "中山大学网络空间安全学院本科生培养方案"
+    description: 网络空间安全学院本科生培养板块，含各年级培养方案入口
+    category: training-plan
+    type: 其他
+    link: https://scst.sysu.edu.cn/undergraduate/
   - title: "中山大学本科生申报转专业常见问题解答（2023年更新）"
     description: 教务部发布的转专业资格与流程官方解答
     category: transfer-policy

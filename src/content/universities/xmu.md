@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-xmu-512.webp
 
 materials:
+  - title: "厦门大学信息学院2022级本科各专业培养方案"
+    description: 信息学院官网发布的 2022 级计算机、网安、人工智能等专业培养方案页
+    category: training-plan
+    type: 其他
+    link: https://informatics.xmu.edu.cn/info/1075/2962.htm
+  - title: "厦门大学电子科学与技术学院本科专业培养方案"
+    description: 电子科学与技术学院发布的电子信息工程等专业 2019-2021 级培养方案页
+    category: training-plan
+    type: 其他
+    link: https://ese.xmu.edu.cn/info/1032/15499.htm
   - title: "厦门大学2024-2025学年第二学期转专业工作安排通知"
     description: 教务处发布的学期转专业工作安排通知
     category: transfer-policy

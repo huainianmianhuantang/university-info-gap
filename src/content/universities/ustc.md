@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-ustc-512.webp
 
 materials:
+  - title: "中国科学技术大学2024年本科学习指南"
+    description: 教务处编印的 2024 本科学习指南 PDF，含培养方案指引与教学管理规定
+    category: training-plan
+    type: pdf
+    link: https://www.teach.ustc.edu.cn/wp-content/uploads/2024/08/2024%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97.pdf
+  - title: "中国科学技术大学2020级本科教育培养计划修订方案"
+    description: 教务处教学〔2021〕14号，本科教育培养计划修订方案官方 PDF
+    category: training-plan
+    type: pdf
+    link: https://www.teach.ustc.edu.cn/wp-content/uploads/2021/05/%e4%b8%ad%e5%9b%bd%e7%a7%91%e5%ad%a6%e6%8a%80%e6%9c%af%e5%a4%a7%e5%ad%a6%e6%9c%ac%e7%a7%91%e6%95%99%e8%82%b2%e5%9f%b9%e5%85%bb%e8%ae%a1%e5%88%92%e4%bf%ae%e8%ae%a2%e6%96%b9%e6%a1%88.pdf
+  - title: "中国科学技术大学本科培养方案查询系统"
+    description: 教务处培养方案在线查询系统，可按院系专业查询现行培养计划
+    category: training-plan
+    type: 其他
+    link: https://catalog.ustc.edu.cn/plan
   - title: "中国科学技术大学本科生学习指南（含专业选择说明）"
     description: 官方学习指南，含全校性专业选择与转专业说明
     category: transfer-policy

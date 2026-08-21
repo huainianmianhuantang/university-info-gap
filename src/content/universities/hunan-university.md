@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-hunan-university-512.webp
 
 materials:
+  - title: "湖南大学2024版本科专业培养方案修订指导意见（湖大教字〔2023〕65号）"
+    description: 教务处发布的 2024 版本科专业培养方案修订指导意见
+    category: training-plan
+    type: 其他
+    link: https://jwc.hnu.edu.cn/info/1141/12014.htm
+  - title: "湖南大学本科专业培养方案修订意见（湖大教字〔2019〕29号）"
+    description: 教务处发布的 2019 版本科专业培养方案修订意见，含课程体系框架
+    category: training-plan
+    type: 其他
+    link: http://jwc.hnu.edu.cn/info/1141/8897.htm
+  - title: "湖南大学本科专业培养方案与教学计划管理办法"
+    description: 湖大教字〔2015〕39号，培养方案与教学计划管理官方办法
+    category: training-plan
+    type: 其他
+    link: http://jwc.hnu.edu.cn/info/1141/1536.htm
   - title: "湖南大学工商管理学院2026年本科生转专业工作细则"
     description: 学院级转专业（专业分流）工作细则
     category: transfer-policy

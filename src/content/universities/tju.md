@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-tju-512.webp
 
 materials:
+  - title: "天津大学2024级本科生培养方案（管理与经济学部）"
+    description: 管理与经济学部官网发布的 2024 级财务管理、电子商务等专业培养方案页
+    category: training-plan
+    type: 其他
+    link: http://come.tju.edu.cn/info/1044/11113.htm
+  - title: "天津大学软件工程专业培养方案（2022-2025级）"
+    description: 智能与计算学部官网发布的软件工程专业各年级培养方案页
+    category: training-plan
+    type: 其他
+    link: http://scs.tju.edu.cn/info/1551/1611.htm
+  - title: "天津大学本科指导性培养计划（2024级，智能与计算学部）"
+    description: 计算机科学与技术（拔尖班）等专业 2024 级指导性培养计划官方 PDF
+    category: training-plan
+    type: pdf
+    link: http://cic.tju.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1518250116&wbfileid=E9684EC6E48887B5B73EE7582FE42419
   - title: "2026年“天大四条”招生新政（含转专业政策）"
     description: 校方发布的 2026 招生新政，明确大类分流专业任选、转专业无次数与名额统一上限
     category: transfer-policy

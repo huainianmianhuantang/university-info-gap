@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-lzu-512.webp
 
 materials:
+  - title: "兰州大学2023版本科人才培养方案修订工作方案"
+    description: 教务处印发的 2023 版本科人才培养方案修订工作方案（校教发〔2022〕22号）
+    category: training-plan
+    type: 其他
+    link: https://jwc.lzu.edu.cn/lzupage/2022/05/06/N20220506085330.html
+  - title: "兰州大学管理学院2023版本科专业人才培养方案"
+    description: 管理学院官网发布的 2023 版各本科专业人才培养方案
+    category: training-plan
+    type: 其他
+    link: https://ms.lzu.edu.cn/jxxm/bk/tzgg/content_11600
+  - title: "兰州大学“基础学科拔尖学生培养试验计划”物理学专业人才培养方案"
+    description: 萃英学院拔尖计划物理学专业人才培养方案官方 PDF
+    category: training-plan
+    type: pdf
+    link: https://cycollege.lzu.edu.cn/__local/9/22/85/DF3FBAD2FD7B38E33BBEA83B861_AF5C466A_15586B.pdf
   - title: "兰州大学本科生转专业管理办法（2025年修订）"
     description: 2025 年 5 月校长办公会议审议通过的转专业管理办法全文
     category: transfer-policy

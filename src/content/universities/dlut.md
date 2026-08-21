@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-dlut-512.webp
 
 materials:
+  - title: "大连理工大学交通工程专业本科培养方案"
+    description: 建设工程学部官网发布的交通工程专业培养方案
+    category: training-plan
+    type: 其他
+    link: http://sche.dlut.edu.cn/info/1026/16175.htm
+  - title: "大连理工大学本科培养方案实施与管理办法（教学管理文件汇编）"
+    description: 本科教学管理文件汇编，含培养方案实施与管理办法
+    category: training-plan
+    type: pdf
+    link: http://dgc.dlut.edu.cn/__local/9/8D/40/8220BE4DF840ABE493EAE05F38B_50D4B891_1DD28D.pdf
   - title: "大连理工大学本科生转大类（专业）管理办法"
     description: 校方发布的转大类（专业）管理办法全文
     category: transfer-policy

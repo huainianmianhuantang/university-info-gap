@@ -66,6 +66,16 @@ classes:
     - 示例：来源于在校生经验分享
 
 materials:
+  - title: "武汉大学本科人才培养方案（本科生院专栏）"
+    description: 本科生院本科人才培养方案专栏，含中英文培养方案与课程大纲查询入口
+    category: training-plan
+    type: 其他
+    link: https://uc.whu.edu.cn/js/kchjxgg/bkrcpyfa.htm
+  - title: "武汉大学弘毅学堂各年级培养方案"
+    description: 弘毅学堂官网发布的 2021-2025 级培养方案（试行）汇总页
+    category: training-plan
+    type: 其他
+    link: https://hyxt.whu.edu.cn/rcpy/pyfa.htm
   - title: "武汉大学经济与管理学院2025年转专业工作实施细则"
     description: 学院级转专业实施细则，含申请条件与考核流程
     category: transfer-policy

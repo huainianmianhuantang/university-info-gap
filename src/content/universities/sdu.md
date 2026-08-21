@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-sdu-512.webp
 
 materials:
+  - title: "山东大学法学、政治学与行政学专业培养方案（2025版）"
+    description: 纪检监察学院官网发布的 2025 版本科专业培养方案
+    category: training-plan
+    type: 其他
+    link: https://dis.wh.sdu.edu.cn/bkspy/pyfa.htm
+  - title: "山东大学本科专业培养方案（数学与应用数学等专业）"
+    description: 本科生院公开的本科专业培养方案 PDF，含数学与应用数学等专业课程体系
+    category: training-plan
+    type: pdf
+    link: https://www.bkjx.sdu.edu.cn/__local/C/22/37/E92121AB38CC43FBBD6A514D79D_482B7486_B6F35.pdf?e=.pdf
+  - title: "山东大学2025级各专业培养方案课程体系（海洋学院）"
+    description: 海洋学院官网发布的 2025 级各专业培养方案课程体系与毕业学分说明
+    category: training-plan
+    type: 其他
+    link: https://mc.wh.sdu.edu.cn/info/1062/3235.htm
   - title: "山东大学2024年春季学期本科生转专业工作通知"
     description: 教务处发布的学期转专业工作通知
     category: transfer-policy

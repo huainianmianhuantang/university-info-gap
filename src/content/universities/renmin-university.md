@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-renmin-university-512.webp
 
 materials:
+  - title: "中国人民大学数学学院2021级本科生培养方案"
+    description: 数学学院官网发布的 2021 级本科生培养方案，含数学与应用数学等专业方案
+    category: training-plan
+    type: pdf
+    link: http://math.ruc.edu.cn/docs/2021-11/758dc40f646e4d2983735c7540f7fd81.pdf
+  - title: "中国人民大学外国语学院本科生培养方案（2019）"
+    description: 外国语学院本科生培养方案官方 PDF
+    category: training-plan
+    type: pdf
+    link: http://fl.ruc.edu.cn/docs/2019-09/c58bd110e34a44b0a034841da717c189.pdf
+  - title: "中国人民大学法政与社会科学大类本科生培养方案（2020）"
+    description: 法政与社会科学大类本科生培养方案官方 PDF
+    category: training-plan
+    type: pdf
+    link: http://jcr.ruc.edu.cn/uploads/soft/201019/10-19_144818-7.pdf
   - title: "中国人民大学中法学院2025年度本科生转专业管理工作实施细则"
     description: 依据《中国人民大学本科生转专业管理办法》制定的学院实施细则
     category: transfer-policy

@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-nju-512.webp
 
 materials:
+  - title: "南京大学2021版本科人才培养方案和指导性教育教学计划（教务页面）"
+    description: 教务处 2021 版人才培养方案启动与论证通知，含“三元四维”人才培养体系说明
+    category: training-plan
+    type: 其他
+    link: https://jw.nju.edu.cn/dd/7e/c24774a515454/page.htm
+  - title: "南京大学建筑与城市规划学院2021版人才培养方案及指导性教学计划"
+    description: 学院官网发布的 2021 版人才培养方案及指导性教学计划页面
+    category: training-plan
+    type: 其他
+    link: https://arch.nju.edu.cn/rcpy/bks/jzghsyb/index.html
   - title: "南京大学学生手册（含专业准入与转专业细则）"
     description: 官方学生手册，含专业准入准出与转专业相关规定
     category: transfer-policy

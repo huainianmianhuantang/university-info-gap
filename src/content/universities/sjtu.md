@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-sjtu-512.webp
 
 materials:
+  - title: "上海交通大学本科人才培养方案修订指导性意见（2025）"
+    description: 教务处 2025 年发布的本科人才培养方案修订指导意见，含培养方案构成与学分框架
+    category: training-plan
+    type: 其他
+    link: https://www.jwc.sjtu.edu.cn/info/3631/121651.htm
+  - title: "上海交通大学关于落实“101计划”加强专业建设的指导意见"
+    description: 教务处〔2025〕1号，含持续优化培养方案、专业建设相关要求
+    category: training-plan
+    type: 其他
+    link: https://jwc.sjtu.edu.cn/info/3631/121421.htm
   - title: "上海交通大学2025年本科生转专业工作通知"
     description: 教务处发布的转专业工作通知，附实施办法与时间安排
     category: transfer-policy

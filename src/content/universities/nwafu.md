@@ -13,6 +13,16 @@ brief: 农科特色鲜明，中国西北现代农业教育的重要基地。
 featured: false
 cover: /images/logo-nwafu-512.webp
 materials:
+  - title: "西北农林科技大学2022级本科培养方案（教务处专业建设栏目）"
+    description: 教务处专业建设栏目发布的农学、植物科学与技术、种子科学与工程等专业培养方案
+    category: training-plan
+    type: 其他
+    link: https://jiaowu.nwsuaf.edu.cn/jxjsB/zyB/15a95efa1e6c4267b64e55c84759e43c.htm
+  - title: "西北农林科技大学关于修订本科人才培养方案的指导意见（2025）"
+    description: 校发文件，2025 年校长办公会议审议通过的本科人才培养方案修订指导意见
+    category: training-plan
+    type: pdf
+    link: https://zhxy.nwsuaf.edu.cn/docs/2025-04/376a0ff2131347cba8a48ca05402a5d3.pdf
   - title: "西北农林科技大学资源环境学院转专业考核办法（2025-2026学年）"
     description: 学院级本科生转专业考核办法官方文件
     category: transfer-policy

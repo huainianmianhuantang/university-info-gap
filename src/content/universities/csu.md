@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-csu-512.webp
 
 materials:
+  - title: "中南大学本科教学工作基本要求（含培养方案管理规定）"
+    description: 本科生院发布的教学工作基本要求，第一章为培养方案制定与执行规定
+    category: training-plan
+    type: 其他
+    link: https://bksy.csu.edu.cn/info/1168/3345.htm
+  - title: "中南大学2012版本科专业培养方案（上中下册）"
+    description: 本科生院上级文件栏目收录的 2012 版本科专业培养方案汇编
+    category: training-plan
+    type: 其他
+    link: https://bksy.csu.edu.cn/ssjgy.jsp?a71280t=130&a71280p=12&a71280c=15&urltype=tree.TreeTempUrl&wbtreeid=1156
+  - title: "中南大学土木工程专业2018版本科培养方案（修订版）"
+    description: 土木工程学院官网发布的土木工程专业本科培养方案
+    category: training-plan
+    type: 其他
+    link: https://civil.csu.edu.cn/bksjy/7.htm
   - title: "中南大学机电工程学院2025级本科生转专业接收实施细则"
     description: 学院级转专业接收实施细则
     category: transfer-policy

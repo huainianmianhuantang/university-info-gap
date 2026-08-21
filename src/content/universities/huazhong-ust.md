@@ -65,6 +65,16 @@ classes:
     - 示例：来源于在校生经验分享
 
 materials:
+  - title: "华中科技大学2024级本科专业人才培养方案（土木与水利类）"
+    description: 土木与水利工程学院发布的 2024 级本科专业人才培养方案 PDF
+    category: training-plan
+    type: pdf
+    link: http://civil.hust.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1322301378&wbfileid=13264437
+  - title: "华中科技大学本科专业人才培养方案质量标准（本科生院〔2024〕16号）"
+    description: 本科生院发布的人才培养方案质量标准文件
+    category: training-plan
+    type: 其他
+    link: http://cpa.hust.edu.cn/info/2261/13402.htm
   - title: "华中科技大学2024级本科生学科大类及院内转专业工作通知"
     description: 关于做好 2024 级本科生学科大类及院（系）内转专业工作的通知
     category: transfer-policy

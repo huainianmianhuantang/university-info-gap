@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-jilin-university-512.webp
 
 materials:
+  - title: "吉林大学2022版本科培养方案（材料科学与工程学院）"
+    description: 材料科学与工程学院官网发布的 2022 版本科培养方案页
+    category: training-plan
+    type: 其他
+    link: http://dmse.jlu.edu.cn/info/1059/3503.htm
+  - title: "吉林大学2024版本科教学培养方案（建设工程学院）"
+    description: 建设工程学院官网发布的 2024 版本科教学培养方案 PDF
+    category: training-plan
+    type: 其他
+    link: https://const.jlu.edu.cn/info/1018/7601.htm
+  - title: "吉林大学本科培养方案管理规定"
+    description: 校教字〔2016〕63号，本科培养方案管理规定官方文件
+    category: training-plan
+    type: pdf
+    link: http://mae.jlu.edu.cn/wenjian/xjz201663.pdf
   - title: "吉林大学2026年本科生集中考核转专业工作通知"
     description: 关于开展 2026 年本科生集中考核转专业工作的通知
     category: transfer-policy

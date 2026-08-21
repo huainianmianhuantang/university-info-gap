@@ -66,6 +66,21 @@ classes:
     - 示例：来源于在校生经验分享
 
 materials:
+  - title: "2024级食品科学与工程专业培养方案"
+    description: 农业与生物技术学院官网发布的 2024 级专业培养方案 PDF
+    category: training-plan
+    type: pdf
+    link: http://www.caefs.zju.edu.cn/_upload/article/files/f0/5b/0d8cfbdc494b9cd2308ad8ffdfc6/7e431338-a881-44ec-ab65-05c95a0bd29b.pdf
+  - title: "2024级计算机科学与技术（图灵班）专业培养方案"
+    description: 计算机学院图灵班官网发布的 2024 级培养方案页
+    category: training-plan
+    type: 其他
+    link: http://www.cs.zju.edu.cn/turingclass_cn/2024/1015/c52007a2974898/pagem.htm
+  - title: "2022级电气工程学院各专业培养方案"
+    description: 电气工程学院官网发布的 2022 级各专业培养方案汇编页
+    category: training-plan
+    type: 其他
+    link: http://ee.zju.edu.cn/_t1502/2022/1209/c32468a2700975/page.psp
   - title: "浙江大学建筑工程学院2026-2027学年秋冬学期转专业工作通知"
     description: 依据《本科生主修专业确认及转专业管理办法》发布的学院转专业安排
     category: transfer-policy

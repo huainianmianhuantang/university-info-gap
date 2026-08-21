@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-scut-512.webp
 
 materials:
+  - title: "华南理工大学生物科学与工程学院培养方案栏目"
+    description: 学院官网发布的 2025 级、2022 级本科综合培养方案（含强基计划班）
+    category: training-plan
+    type: 其他
+    link: https://www2.scut.edu.cn/biology/pyfa/list1.htm
+  - title: "华南理工大学2022级本科综合培养方案（信息公开）"
+    description: 信息公开网发布的 2022 级本科综合培养方案说明与文件
+    category: training-plan
+    type: 其他
+    link: https://xxgk.scut.edu.cn/2023/0112/c66a46121/page.htm
+  - title: "华南理工大学本科综合培养计划管理规定"
+    description: 学校官方发布的本科综合培养计划管理规定
+    category: training-plan
+    type: 其他
+    link: https://xxgk.scut.edu.cn/2021/1009/c132a2272/page.htm
   - title: "华南理工大学计算机科学与工程学院2026年自主转专业工作方案"
     description: 学院级接收 2026 年本科生自主转专业工作方案
     category: transfer-policy

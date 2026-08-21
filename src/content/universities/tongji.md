@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-tongji-512.webp
 
 materials:
+  - title: "同济大学本科生院培养方案列表"
+    description: 本科生院官网培养方案栏目，可查询全校各学院各专业培养方案
+    category: training-plan
+    type: 其他
+    link: https://jwc.tongji.edu.cn/_t1272/pyfa/list.psp
+  - title: "同济大学本科生学程、辅修专业/辅修学位培养方案模板"
+    description: 教务处发布的培养方案修订要求与学程/辅修培养方案模板 PDF
+    category: training-plan
+    type: pdf
+    link: https://deanoffi.tongji.edu.cn/_upload/article/files/82/97/f4a725474b4aa50518a1640bd678/b50bc301-ba78-4acf-a6f4-f9898c4f2554.pdf
   - title: "同济大学主修专业确认、转专业与转学（信息公开，2024年）"
     description: 信息公开网公布的转专业与转学相关规定
     category: transfer-policy

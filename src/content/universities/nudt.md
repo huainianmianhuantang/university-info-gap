@@ -13,6 +13,17 @@ brief: 军事科技特色鲜明的国防名校，前身可溯至 1953 年创办�
 featured: false
 cover: /images/logo-nudt.png
 
+materials:
+  - title: "国防科技大学2024年招收普通高中毕业生计划（生长军官本科学员）"
+    description: 招生网官方发布，含各专业大类培养模式、分流安排与专业介绍
+    category: training-plan
+    type: 其他
+    link: https://www.nudt.edu.cn/bkzs/tzgg/53d4457a77b049ecb3faf1492ab10e7b.htm
+  - title: "国防科技大学2025年招收普通高中毕业生计划（无军籍地方本科生）"
+    description: 招生网官方发布，含天河拔尖班等特色班培养模式说明
+    category: training-plan
+    type: 其他
+    link: https://www.nudt.edu.cn/bkzs/xxgk/tzgg/ec6254cd0f57405fa786c4bd807c49e0.htm
 videos:
   - title: "招生短片《国防科大的夏》"
     platform: bilibili

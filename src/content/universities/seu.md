@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-seu-512.webp
 
 materials:
+  - title: "东南大学2025级本科专业培养方案（能源与环境学院）"
+    description: 能源与环境学院官网发布的 2025 级能源与动力工程、环境工程等专业培养方案页
+    category: training-plan
+    type: 其他
+    link: https://power.seu.edu.cn/_t1654/2026/0312/c9323a557929/page.psp
+  - title: "东南大学2021级本科人才培养方案（土木工程学院）"
+    description: 土木工程学院官网发布的 2021 级土木工程、工程管理等专业培养方案页
+    category: training-plan
+    type: 其他
+    link: https://civil.seu.edu.cn/2021/1017/c20027a386523/pagem.htm
   - title: "东南大学全日制本科生转专业工作实施办法"
     description: 教务处发布的转专业工作实施办法全文
     category: transfer-policy

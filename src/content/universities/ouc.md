@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-ouc-512.webp
 
 materials:
+  - title: "中国海洋大学2024版本科专业人才培养方案"
+    description: 教务处发布的 2024 版本科专业人才培养方案（zip 压缩包）
+    category: training-plan
+    type: 其他
+    link: http://jwc.ouc.edu.cn/2025/0908/c6811a505680/page.htm
+  - title: "中国海洋大学本科专业人才培养方案列表（2022/2024版）"
+    description: 教务处本科专业人才培养方案栏目，收录 2022 版、2024 版培养方案
+    category: training-plan
+    type: 其他
+    link: http://jwc.ouc.edu.cn/bkzyrcpyfa/list.htm
   - title: "中国海洋大学2026年春季学期转换院系、班级学习拟通过名单公示"
     description: 教务处公布的 2026 年春季学期转换院系（转专业）拟通过学生名单
     category: transfer-policy

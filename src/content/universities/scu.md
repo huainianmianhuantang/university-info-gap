@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-scu-512.webp
 
 materials:
+  - title: "四川大学本科创新人才培养方案"
+    description: 校网发布的本科创新人才培养方案官方 PDF，含各学科门类学分结构
+    category: training-plan
+    type: pdf
+    link: http://www.scu.edu.cn/__local/0/0C/AA/93F1E91034835409357CD3AA38B_33987B0A_22CEB.pdf?e=.pdf
+  - title: "四川大学匹兹堡学院各年级培养方案"
+    description: 匹兹堡学院官网发布的 2022-2024 级各专业培养方案汇总页
+    category: training-plan
+    type: 其他
+    link: https://scupi.scu.edu.cn/%E6%95%99%E5%AD%A6%E6%95%99%E5%8A%A1/%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88
+  - title: "四川大学机械工程学院2022级各专业教学计划"
+    description: 机械工程学院官网发布的 2022 级各专业教学计划页
+    category: training-plan
+    type: 其他
+    link: https://msec.scu.edu.cn/info/1087/2532.htm
   - title: "四川大学建筑与环境学院2026年本科生转专业工作实施方案"
     description: 学院级转专业工作实施方案
     category: transfer-policy

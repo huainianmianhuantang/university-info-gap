@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-bit-512.webp
 
 materials:
+  - title: "北京理工大学2025级在招本科专业设置及培养方案"
+    description: 教务部发布的 2025 级在招本科专业设置及培养方案页面
+    category: training-plan
+    type: 其他
+    link: https://jwb.bit.edu.cn//dlpy/zysz/86d5031a8c3f4704b6d9ca1f605b24a5.htm
+  - title: "北京理工大学2023级在招本科专业设置及培养方案"
+    description: 教务部发布的 2023 级在招本科专业设置及培养方案页面
+    category: training-plan
+    type: 其他
+    link: https://jwb.bit.edu.cn/dlpy/zysz/a45637815a954503b86ec12c74b840e2.htm
   - title: "北京理工大学材料学院2025-2026学年本科生转专业实施细则"
     description: 学院级转专业实施细则，含接收名额与考核要求
     category: transfer-policy

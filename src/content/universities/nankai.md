@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-nankai-512.webp
 
 materials:
+  - title: "南开大学2021年本科专业培养方案修订工作方案"
+    description: 教务处发布的 2021 年本科专业培养方案修订工作方案官方 PDF
+    category: training-plan
+    type: pdf
+    link: https://jwc.nankai.edu.cn/_upload/article/files/a3/de/da6be45b4c3ea81d393380a2dd02/69592bc8-862b-4ba3-83ae-2777d866f8b1.pdf
+  - title: "南开大学本科专业培养方案模板与编订指南"
+    description: 教务处发布的本科专业培养方案模板及编订指南（含大类方案模板）
+    category: training-plan
+    type: doc
+    link: https://jwc.nankai.edu.cn/_upload/article/files/a3/de/da6be45b4c3ea81d393380a2dd02/8bdb683a-65df-4293-bab2-254fec4d2928.docx
   - title: "南开大学2026年本科生转专业工作通知"
     description: 教务部发布的年度转专业工作通知（含申请范围与安排）
     category: transfer-policy

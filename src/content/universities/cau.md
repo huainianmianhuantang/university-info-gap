@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-cau-512.webp
 
 materials:
+  - title: "中国农业大学本科人才培养方案修订指导意见（中农大教字〔2022〕6号）"
+    description: 校方发布的本科人才培养方案修订指导意见官方 PDF
+    category: training-plan
+    type: pdf
+    link: https://jwc.cau.edu.cn/module/download/downfile.jsp?classid=0&filename=4ec3b0ee1212412caf8b81585f6cdb6e.pdf
+  - title: "中国农业大学食品科学与营养工程学院本科人才培养方案"
+    description: 食品科学与营养工程学院各专业本科人才培养方案（教务处公开文档）
+    category: training-plan
+    type: doc
+    link: https://jwc.cau.edu.cn/module/download/downfile.jsp?classid=0&filename=1546a7dc54c14098b1da45d89d088a57.docx
   - title: "中国农业大学2025-2026学年春季学期转专业工作通知"
     description: 本科生院发布的学期转专业工作通知
     category: transfer-policy

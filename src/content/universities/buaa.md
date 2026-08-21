@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-buaa-512.webp
 
 materials:
+  - title: "北京航空航天大学2025级计算机科学与技术专业培养方案"
+    description: 北京学院官网发布的 2025 级计算机科学与技术专业培养方案
+    category: training-plan
+    type: 其他
+    link: https://beijing.buaa.edu.cn/info/1017/2743.htm
+  - title: "北京航空航天大学本科指导性培养方案（信息类）"
+    description: 工科试验班类（信息类）本科指导性培养方案官方 PDF，含大类培养目标与课程体系
+    category: training-plan
+    type: pdf
+    link: https://bhc.buaa.edu.cn/__local/7/66/AF/7031EDEB3FAD4139E7D23913B6F_E924D6E0_7158D.pdf
   - title: "关于2025级本科生跨大类转专业工作安排的通知"
     description: 教务部发布的跨大类转专业工作安排通知
     category: transfer-policy

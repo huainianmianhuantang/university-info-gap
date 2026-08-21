@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-fudan-512.webp
 
 materials:
+  - title: "复旦大学2024年本科教学培养方案"
+    description: 2024 版全校本科教学培养方案汇编（含各学院专业培养要求与课程体系）
+    category: training-plan
+    type: pdf
+    link: https://jwc.fudan.edu.cn/_upload/article/files/83/6c/8a3c080c4f8991024f4b59ad4f1b/a5fbd7c6-a589-4638-a379-cc2297ca3ea6.pdf
+  - title: "复旦大学2023年本科教学培养方案"
+    description: 2023 版全校本科教学培养方案汇编（含各学院专业培养要求与课程体系）
+    category: training-plan
+    type: pdf
+    link: https://jwc.fudan.edu.cn/_upload/article/files/83/6c/8a3c080c4f8991024f4b59ad4f1b/64d23c13-0465-4619-bd18-9e491594f850.pdf
+  - title: "复旦大学2022年本科教学培养方案（含查阅指南）"
+    description: 2022 版全校本科教学培养方案，含“2+X”培养体系管理办法与查阅指南
+    category: training-plan
+    type: pdf
+    link: https://jwc.fudan.edu.cn/_upload/article/files/83/6c/8a3c080c4f8991024f4b59ad4f1b/dbd0128c-4f78-44ff-b726-01503f089243.pdf
   - title: "复旦大学本科生转专业实施细则"
     description: 教务处发布的转专业实施细则，含申请条件、考核与学分认定
     category: transfer-policy

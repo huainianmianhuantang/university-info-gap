@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-xjtu-512.webp
 
 materials:
+  - title: "西安交通大学计算机科学与技术专业培养方案（2019版）"
+    description: 计算机学院官网发布的计算机科学与技术专业培养方案官方 PDF
+    category: training-plan
+    type: pdf
+    link: http://www.cs.xjtu.edu.cn/__local/6/BF/72/F3B7CBE5AC68D0F8D34951D38C9_690DEE09_8E91C.pdf?e=.pdf
+  - title: "西安交通大学本科生三类培养模式实施细则（电气类培养方案）"
+    description: 电气学院培养方案 PDF，含常规型/科学研究型/交叉融合型三类培养模式说明
+    category: training-plan
+    type: pdf
+    link: http://ele.xjtu.edu.cn/__local/F/F5/C0/DA3FCF7F145FAA7BEA5AC859BFF_0D2505A3_2422CF.pdf
+  - title: "西安交通大学教务处培养方案相关通知"
+    description: 教务处官网培养方案修订与越杰计划等通知页面
+    category: training-plan
+    type: 其他
+    link: http://jwc.xjtu.edu.cn/info/1176/6184.htm
   - title: "西安交通大学2024年物理学院本科生转专业工作实施方案"
     description: 依据《本科生转专业实施细则》制定的学院实施方案
     category: transfer-policy

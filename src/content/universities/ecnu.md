@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-ecnu-512.webp
 
 materials:
+  - title: "华东师范大学2024级本科培养方案（教务部）"
+    description: 教务部发布的 2024 级本科培养方案（分上下中下册 PDF）
+    category: training-plan
+    type: 其他
+    link: https://bksy.ecnu.edu.cn/3c/56/c40565a670806/page.htm
+  - title: "华东师范大学2024本科生培养方案参考格式（信息公开）"
+    description: 信息公开网发布的本科生培养方案编制参考格式与核心素养说明 PDF
+    category: training-plan
+    type: pdf
+    link: https://xxgk.ecnu.edu.cn/_upload/article/files/22/82/3a7735614e6ab4b0e179d6669ba7/b782ab15-e4f8-4282-9589-196be00b094f.pdf
   - title: "华东师范大学本科生转专业介绍（2025年更新）"
     description: 招生网发布的转专业类型、时间与流程介绍
     category: transfer-policy

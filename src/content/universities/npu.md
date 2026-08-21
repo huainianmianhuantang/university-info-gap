@@ -14,6 +14,16 @@ featured: false
 cover: /images/logo-npu-512.webp
 
 materials:
+  - title: "西北工业大学能源动力类2024级本科人才培养方案"
+    description: 动力与能源学院官网发布的 2024 级本科人才培养方案
+    category: training-plan
+    type: pdf
+    link: https://dongneng.nwpu.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1769638200&wbfileid=E0013182D486ED08D0B0AAF1045F1862
+  - title: "西北工业大学物理类强基计划2025级本科人才培养方案"
+    description: 物理学院官网发布的物理类“强基计划”2025 级本科人才培养方案
+    category: training-plan
+    type: pdf
+    link: https://physics.nwpu.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1890602322&wbfileid=00712FECF3BAD3653EF4C7EA9D039EC8
   - title: "西北工业大学化学与化工学院2026年转专业考核结果公示"
     description: 依据《本科生转专业实施办法》开展的 2026 年转专业工作公示
     category: transfer-policy

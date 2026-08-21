@@ -14,6 +14,16 @@ featured: true
 cover: /images/logo-tsinghua-university-512.webp
 
 materials:
+  - title: "清华大学物理系物理学专业本科培养方案"
+    description: 校网公开的物理学专业培养方案 PDF，含培养目标、学分结构与课程计划
+    category: training-plan
+    type: pdf
+    link: https://www.tsinghua.edu.cn/jxjywj/bksjywj/37-wulixue.pdf
+  - title: "清华大学强基计划招生专业培养方案"
+    description: 招生网发布的强基计划各专业培养方案，含书院制培养体系说明
+    category: training-plan
+    type: pdf
+    link: https://www.admissions.tsinghua.edu.cn/__local/4/96/D4/43BEB22C4E671DD9E9FC5FB8388_81E09F24_3D049.pdf?e=.pdf
   - title: "清华大学本科生学籍管理规定（含转专业条款）"
     description: 校方发布的本科生学籍管理规定，第七章为转专业与转学规则
     category: transfer-policy

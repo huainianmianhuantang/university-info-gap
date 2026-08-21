@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-hit-512.webp
 
 materials:
+  - title: "哈尔滨工业大学2022版培养方案（适用2024级及以后）"
+    description: 人文社科与法学学院 22 版培养方案列表页，含各专业培养方案
+    category: training-plan
+    type: 其他
+    link: http://rwskxb.hit.edu.cn/2024jjyhpyfa/list.htm
+  - title: "哈尔滨工业大学社会学专业2022版本科生培养方案"
+    description: 人文与社会科学学院官网发布的社会学专业培养方案页
+    category: training-plan
+    type: 其他
+    link: https://rwxy.hit.edu.cn/2023/1012/c19750a330783/page.htm
+  - title: "哈尔滨工业大学土木工程专业本科生培养方案（2016版修订）"
+    description: 土木工程学院官网发布的土木工程等专业培养方案页
+    category: training-plan
+    type: 其他
+    link: https://civil.hit.edu.cn/2021/1111/c8470a264542/page.htm
   - title: "哈尔滨工业大学生命科学和医学学部转专业实施细则"
     description: 依据《本科生专业选择管理办法》制定的学部转专业实施细则
     category: transfer-policy

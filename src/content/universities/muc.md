@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-muc-512.webp
 
 materials:
+  - title: "中央民族大学法学本科人才培养方案"
+    description: 法学院官网发布的法学本科人才培养方案官方 PDF
+    category: training-plan
+    type: pdf
+    link: https://law.muc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1779811220&wbfileid=F376D877EBD06B662061E225A908A070
+  - title: "中央民族大学教育学本科专业人才培养方案"
+    description: 教育学院官网发布的教育学本科专业人才培养方案
+    category: training-plan
+    type: 其他
+    link: https://edu.muc.edu.cn/xspy/zsgz/bkszs1.htm
+  - title: "中央民族大学本科专业人才培养方案（2022版）修订指南与解读"
+    description: 校网新闻发布的 2022 版人才培养方案修订指南与培训解读
+    category: training-plan
+    type: 其他
+    link: https://news.muc.edu.cn/info/1201/21433.htm
   - title: "中央民族大学本科生专业调整实施办法"
     description: 校方发布的本科生专业调整（转专业）实施办法
     category: transfer-policy

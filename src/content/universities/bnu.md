@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-bnu-512.webp
 
 materials:
+  - title: "北京师范大学关于优化公费师范生培养方案的通知"
+    description: 教务部 2024 年通知，含本研衔接公费师范生培养方案指导意见与模板
+    category: training-plan
+    type: 其他
+    link: https://jwb.bnu.edu.cn/jsjy/jspymsgg/61a0ebd0d43544218387361f84ca9ff6.htm
+  - title: "北京师范大学本科生培养方案专栏（教务部）"
+    description: 教务部培养方案专栏，说明各专业培养方案查询方式
+    category: training-plan
+    type: 其他
+    link: https://jwb.bnu.edu.cn/zyykc/pyfa/bkspyfa/7fe8c2702419432aa19611fb89cba589.htm
+  - title: "北京师范大学未来教育学院本科生培养方案管理办法"
+    description: 未来教育学院培养方案管理官方文件 PDF
+    category: training-plan
+    type: pdf
+    link: https://cef.bnu.edu.cn/docs/20190823182602996857.pdf
   - title: "北京师范大学本科生转专业管理办法（2025年印发）"
     description: 校方发布的《本科生转专业管理办法》全文
     category: transfer-policy

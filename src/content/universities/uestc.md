@@ -14,6 +14,21 @@ featured: false
 cover: /images/logo-uestc-512.webp
 
 materials:
+  - title: "电子科技大学2025级本科培养方案"
+    description: 教务处官网发布的 2025 级本科培养方案官方 PDF（含修订指导意见与专业一览）
+    category: training-plan
+    type: pdf
+    link: https://www.jwc.uestc.edu.cn/data/uestcfile/202510/%E7%94%B5%E5%AD%90%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A62025%E7%BA%A7%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88.pdf
+  - title: "电子科技大学教务处培养方案栏目"
+    description: 教务处培养方案栏目，收录 2015-2019 级等历年本科人才培养方案
+    category: training-plan
+    type: 其他
+    link: https://www.jwc.uestc.edu.cn/list/245
+  - title: "电子科技大学2020级本科人才培养方案（计算机学院）"
+    description: 计算机科学与工程学院官网发布的 2020 级计算机类等专业培养方案页
+    category: training-plan
+    type: 其他
+    link: https://www.scse.uestc.edu.cn/info/1039/10871.htm
   - title: "电子科技大学信息与通信工程学院本科生专业确认实施细则"
     description: 学院专业确认与转专业实施细则（依据学校 2026 年转专业工作通知）
     category: transfer-policy
