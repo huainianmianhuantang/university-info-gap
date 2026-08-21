@@ -6,6 +6,7 @@ const universities = (await getCollection('universities')).map((u) => ({
   id: u.id,
   name: u.data.name,
   nameEn: u.data.nameEn ?? '',
+  cover: u.data.cover,
   type: u.data.type,
   province: u.data.province,
   city: u.data.city,
@@ -167,6 +168,13 @@ const materials = (await getCollection('universities')).flatMap((u) =>
       const a = document.createElement('a');
       a.className = 'card university-card';
       a.href = `/universities/${u.id}/`;
+      const img = document.createElement('img');
+      img.className = 'university-cover';
+      img.src = u.cover;
+      img.alt = `${u.name} 校徽`;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      a.appendChild(img);
       const body = document.createElement('div');
       body.className = 'university-body';
       body.innerHTML = `<h3>${mark(u.name)}</h3><p class="small muted">${esc(u.type)} · ${esc(u.province)} ${esc(u.city)}</p><p class="small">${mark(u.brief)}</p>`;
