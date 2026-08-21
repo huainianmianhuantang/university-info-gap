@@ -2181,3 +2181,154 @@ html[data-theme='dark'] .prose pre {
   background: #1a2740;
   color: #cfe0f5;
 }
+
+/* ---------- 动感交互：悬浮提升（影视飓风风格） ---------- */
+:root {
+  --shadow-hover: 0 16px 38px rgba(30, 41, 59, 0.14);
+  --ease-pop: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 交互卡片统一弹跳过渡 */
+.university-card,
+.category-card,
+.article-card,
+.video-card,
+.material-card,
+.compare-check,
+.hero-steps a,
+.acct-chip {
+  transition:
+    transform 0.28s var(--ease-pop),
+    box-shadow 0.28s var(--ease-pop),
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.university-card:hover,
+.category-card:hover,
+.article-card:hover,
+.video-card:hover,
+.material-card:hover,
+.compare-check:hover,
+.hero-steps a:hover,
+.acct-chip:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 大学卡片封面轻微放大 */
+.university-cover {
+  transition: transform 0.4s var(--ease-pop);
+}
+
+.university-card:hover .university-cover {
+  transform: scale(1.05);
+}
+
+/* 测评选项：明显浮起 + 选中态发光 */
+.quiz-option {
+  transition:
+    transform 0.22s var(--ease-pop),
+    box-shadow 0.22s var(--ease-pop),
+    border-color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.quiz-option:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-hover);
+}
+
+.quiz-option.selected:hover {
+  transform: translateY(-3px) scale(1.01);
+}
+
+/* 按钮：悬浮浮起、按下回弹 */
+.btn {
+  transition:
+    transform 0.2s var(--ease-pop),
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(31, 94, 255, 0.18);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+}
+
+/* 导航：下划线滑入 + 上浮 */
+.nav a {
+  position: relative;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s var(--ease-pop);
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s var(--ease-pop);
+}
+
+.nav a:hover::after,
+.nav a[aria-current='page']::after {
+  transform: scaleX(1);
+}
+
+.nav a:hover {
+  transform: translateY(-1px);
+}
+
+/* 标签 / 筛选按钮：放大 + 上浮 */
+.chip,
+.video-filter-btn {
+  transition:
+    transform 0.2s var(--ease-pop),
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.chip:hover,
+.video-filter-btn:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: var(--shadow);
+}
+
+/* 页内锚点标签 */
+.uni-tabs a {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s var(--ease-pop);
+}
+
+.uni-tabs a:hover {
+  transform: translateY(-2px);
+}
+
+/* Logo 轻跃 */
+.logo {
+  transition: transform 0.2s var(--ease-pop);
+}
+
+.logo:hover {
+  transform: translateY(-1px) scale(1.02);
+}
