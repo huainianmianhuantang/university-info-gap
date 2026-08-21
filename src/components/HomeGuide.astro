@@ -1,0 +1,323 @@
+<section class="home-guide" id="guide">
+  <div class="guide-head">
+    <span class="guide-mascot" id="guideMascot">🐣</span>
+    <div class="guide-head-text">
+      <h2>第一次来？30 秒认识本站</h2>
+      <p>点一点下面的卡片，看看这里能帮你做什么</p>
+    </div>
+    <button class="guide-toggle" id="guideToggle" type="button" aria-label="收起或展开">−</button>
+  </div>
+  <div class="guide-steps" id="guideSteps">
+    <button class="guide-step" data-step="0" type="button"><span>🏫</span>逛大学库</button>
+    <button class="guide-step" data-step="1" type="button"><span>🎬</span>看实拍视频</button>
+    <button class="guide-step" data-step="2" type="button"><span>🧩</span>测评找方向</button>
+    <button class="guide-step" data-step="3" type="button"><span>📁</span>资料与对比</button>
+  </div>
+  <div class="guide-detail" id="guideDetail">
+    <b id="guideDetailTitle"></b>
+    <p id="guideDetailDesc"></p>
+    <a class="btn btn-primary" id="guideDetailCta" href="#">去试试 →</a>
+  </div>
+  <div class="guide-foot">
+    <button class="guide-done" id="guideDone" type="button">完成，我知道了 ✓</button>
+  </div>
+</section>
+
+<script>
+  const KEY = 'guide-done';
+  const section = document.getElementById('guide') as HTMLElement;
+  const stepsWrap = document.getElementById('guideSteps') as HTMLElement;
+  const detail = document.getElementById('guideDetail') as HTMLElement;
+  const detailTitle = document.getElementById('guideDetailTitle') as HTMLElement;
+  const detailDesc = document.getElementById('guideDetailDesc') as HTMLElement;
+  const detailCta = document.getElementById('guideDetailCta') as HTMLAnchorElement;
+  const toggle = document.getElementById('guideToggle') as HTMLButtonElement;
+  const done = document.getElementById('guideDone') as HTMLButtonElement;
+  const mascot = document.getElementById('guideMascot') as HTMLElement;
+
+  const STEPS = [
+    {
+      emoji: '🏫',
+      title: '逛大学库',
+      desc: '39 所 985 的概况、校徽、转专业政策、寝室上课，全部摊在一张页面上。',
+      cta: '去大学库 →',
+      href: '/universities/',
+    },
+    {
+      emoji: '🎬',
+      title: '看实拍视频',
+      desc: '宿舍、食堂、课堂实拍 + 官方宣传片，眼见为实，选校不靠想象。',
+      cta: '去看视频 →',
+      href: '/resources/',
+    },
+    {
+      emoji: '🧩',
+      title: '测评找方向',
+      desc: '12 道趣味题 + AI 建议，测出适合你的专业方向和匹配高校。',
+      cta: '开始测评 →',
+      href: '/quiz/',
+    },
+    {
+      emoji: '📁',
+      title: '资料与对比',
+      desc: '培养方案、保研细则、选课手册等一手资料，还能把 2-3 所学校并排对比。',
+      cta: '去资料库 →',
+      href: '/compare/',
+    },
+  ];
+
+  let current = 0;
+
+  function remember() {
+    try {
+      localStorage.setItem(KEY, '1');
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function setStep(i: number) {
+    current = i;
+    const s = STEPS[i];
+    mascot.textContent = s.emoji;
+    detailTitle.textContent = s.title;
+    detailDesc.textContent = s.desc;
+    detailCta.textContent = s.cta;
+    detailCta.href = s.href;
+    Array.from(stepsWrap.querySelectorAll('.guide-step')).forEach((b, idx) => {
+      b.classList.toggle('on', idx === i);
+    });
+  }
+
+  function collapse() {
+    section.classList.add('guide-collapsed');
+    toggle.textContent = '+';
+    toggle.setAttribute('aria-label', '展开新手介绍');
+  }
+
+  function expand(silent = false) {
+    section.classList.remove('guide-collapsed');
+    toggle.textContent = '−';
+    toggle.setAttribute('aria-label', '收起新手介绍');
+    if (!silent) {
+      requestAnimationFrame(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    }
+  }
+
+  stepsWrap.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('.guide-step');
+    if (!btn) return;
+    setStep(Number((btn as HTMLElement).dataset.step));
+  });
+
+  toggle.addEventListener('click', () => {
+    if (section.classList.contains('guide-collapsed')) {
+      expand();
+    } else {
+      remember();
+      collapse();
+    }
+  });
+
+  done.addEventListener('click', () => {
+    remember();
+    collapse();
+  });
+
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#guide') expand();
+  });
+
+  setStep(0);
+
+  let finished = false;
+  try {
+    finished = localStorage.getItem(KEY) === '1';
+  } catch {
+    finished = false;
+  }
+
+  if (finished && window.location.hash !== '#guide') {
+    collapse();
+  } else if (window.location.hash === '#guide') {
+    expand();
+    setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+  }
+</script>
+
+<style>
+  .home-guide {
+    margin-top: 24px;
+    padding: 20px 22px 18px;
+    border-radius: 22px;
+    background:
+      radial-gradient(120% 180% at 0% 0%, var(--primary-soft) 0%, transparent 45%),
+      linear-gradient(135deg, var(--surface), var(--surface-soft));
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .guide-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .guide-mascot {
+    font-size: 34px;
+    line-height: 1;
+    animation: guide-bounce 2.4s ease-in-out infinite;
+  }
+  @keyframes guide-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+  .guide-head-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .guide-head-text h2 {
+    margin: 0;
+    font-size: 19px;
+  }
+  .guide-head-text p {
+    margin: 2px 0 0;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+  .guide-toggle {
+    border: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--surface-soft);
+    color: var(--text-secondary);
+    font-size: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .guide-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .guide-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 13px 8px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    background: var(--card-bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+  }
+  .guide-step span {
+    font-size: 24px;
+  }
+  .guide-step:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow);
+  }
+  .guide-step.on {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+  }
+  .guide-detail {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .guide-detail b {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .guide-detail p {
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .guide-detail .btn {
+    flex-shrink: 0;
+  }
+  .guide-foot {
+    margin-top: 12px;
+    text-align: right;
+  }
+  .guide-done {
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 16px;
+    background: var(--surface-soft);
+    color: var(--text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .guide-done:hover {
+    color: var(--primary);
+  }
+  .home-guide.guide-collapsed {
+    padding: 14px 18px;
+  }
+  .home-guide.guide-collapsed .guide-mascot {
+    animation: none;
+  }
+  .home-guide.guide-collapsed .guide-head-text h2 {
+    font-size: 16px;
+  }
+  .home-guide.guide-collapsed .guide-head-text p,
+  .home-guide.guide-collapsed .guide-detail,
+  .home-guide.guide-collapsed .guide-foot {
+    display: none;
+  }
+  .home-guide.guide-collapsed .guide-steps {
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 12px;
+  }
+  .home-guide.guide-collapsed .guide-step {
+    flex-direction: row;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 8px;
+    border-radius: 999px;
+    font-size: 13px;
+  }
+  .home-guide.guide-collapsed .guide-step span {
+    font-size: 17px;
+  }
+  @media (max-width: 640px) {
+    .home-guide {
+      padding: 16px 14px 14px;
+    }
+    .guide-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .home-guide.guide-collapsed .guide-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .guide-detail {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .guide-detail p {
+      min-width: 0;
+    }
+  }
+</style>

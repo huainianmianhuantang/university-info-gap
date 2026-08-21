@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import UniversityCard from '../components/UniversityCard.astro';
-import HomeTour from '../components/HomeTour.astro';
+import HomeGuide from '../components/HomeGuide.astro';
 import { SITE } from '../config';
 import { formatDate } from '../utils';
 
@@ -65,12 +65,9 @@ const categories = [
         <span>{totalMaterials} 份学习资料</span>
         <span>专题文章 {articles.length} 篇</span>
       </div>
-      <div class="hero-steps">
-        <a href="/universities/"><b>① 逛大学库</b><span>按省份/类型筛选</span></a>
-        <a href="/resources/"><b>② 看真实视频</b><span>宿舍/课堂实拍</span></a>
-        <a href="/quiz/"><b>③ 测评找方向</b><span>AI 推荐专业与学校</span></a>
-      </div>
     </section>
+
+    <HomeGuide />
 
     <section class="section">
       <div class="section-head">
@@ -171,7 +168,6 @@ const categories = [
       </p>
     </section>
   </div>
-  <HomeTour />
 </BaseLayout>
 
 <script define:vars={{ schoolBriefs }}>
