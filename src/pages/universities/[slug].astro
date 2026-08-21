@@ -100,7 +100,7 @@ const related = allUniversities
       <a href="/">首页</a> › <a href="/universities/">大学库</a> › <span>{u.name}</span>
     </nav>
     <div class="uni-hero">
-      <img class="uni-emblem" src={u.cover} alt={`${u.name} 校徽`} loading="eager" width="96" height="96" decoding="async" fetchpriority="high" />
+      <img class="uni-emblem" src={u.cover} alt={`${u.name} 校徽`} loading="eager" width="96" height="96" decoding="async" fetchpriority="high" onerror="this.onerror=null;this.src='/images/og-default.svg'" />
       <div class="uni-hero-info">
       <h1>{u.name}</h1>
       <button class="fav-btn" id="favBtn" type="button" aria-pressed="false">☆ 收藏</button>
@@ -267,7 +267,12 @@ const related = allUniversities
                     <span class="type-chip">{m.type}</span>
                   </div>
                   <p>{m.description}</p>
-                  {m.code && <p>提取码：<strong>{m.code}</strong></p>}
+                  {m.code && (
+                    <p>
+                      提取码：<strong>{m.code}</strong>{' '}
+                      <button class="btn btn-ghost btn-xs" type="button" data-copy-code={m.code}>复制</button>
+                    </p>
+                  )}
                   <a
                     class="btn"
                     href={(m.link.startsWith('/') || m.link.startsWith('http')) ? m.link : '#'}
@@ -351,6 +356,14 @@ const related = allUniversities
   }
 
   const favBtn = document.getElementById('favBtn');
+  document.querySelectorAll('[data-copy-code]').forEach((b) => {
+    b.addEventListener('click', () => {
+      navigator.clipboard
+        ?.writeText((b as HTMLElement).dataset.copyCode ?? '')
+        .then(() => window.showToast?.('提取码已复制'))
+        .catch(() => {});
+    });
+  });
   const FAV_KEY = 'fav-universities';
   const slug = window.location.pathname.split('/').filter(Boolean)[1] ?? '';
   let favs = new Set();

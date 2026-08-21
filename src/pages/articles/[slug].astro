@@ -19,6 +19,10 @@ const all = (await getCollection('articles')).sort(
 const idx = all.findIndex((a) => a.id === article.id);
 const prev = idx > 0 ? all[idx - 1] : null;
 const next = idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
+const readMinutes = Math.max(
+  2,
+  Math.round(article.body.replace(/[#\s\-*[\]()`>|]/g, '').length / 400),
+);
 ---
 
 <BaseLayout title={article.data.title} description={article.data.summary}>
@@ -31,13 +35,14 @@ const next = idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
     keywords: article.data.tags.join(','),
   })}></script>
   <div class="container page">
+    <div class="reading-progress" id="readingProgress"></div>
     <nav class="breadcrumb" aria-label="面包屑">
       <a href="/">首页</a> › <a href="/articles/">专题文章</a> › <span>{article.data.title}</span>
     </nav>
     <article class="card article-single">
       <h1>{article.data.title}</h1>
       <div class="meta-line">
-        {formatDate(article.data.date)} · {article.data.tags.join(' / ')}
+        {formatDate(article.data.date)} · {article.data.tags.join(' / ')} · 约 {readMinutes} 分钟阅读
       </div>
       <div class="prose">
         <Content />
@@ -52,3 +57,14 @@ const next = idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
     </nav>
   </div>
 </BaseLayout>
+
+<script>
+  const bar = document.getElementById('readingProgress');
+  function updateProgress() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p = max > 0 ? (window.scrollY / max) * 100 : 0;
+    if (bar) bar.style.width = `${Math.min(100, p)}%`;
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>

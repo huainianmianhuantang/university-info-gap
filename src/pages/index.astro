@@ -60,10 +60,16 @@ const categories = [
         <a class="btn btn-primary" href="/quiz/">🎯 2 分钟测一测适合什么专业与学校</a>
       </div>
       <div class="hero-stats">
-        <span>收录 {universities.length} 所 985 高校</span>
-        <span>{totalVideos} 条校园/政策视频</span>
-        <span>{totalMaterials} 份学习资料</span>
-        <span>专题文章 {articles.length} 篇</span>
+        <span>收录 <b class="stat-num" data-count={universities.length}>0</b> 所 985 高校</span>
+        <span><b class="stat-num" data-count={totalVideos}>0</b> 条校园/政策视频</span>
+        <span><b class="stat-num" data-count={totalMaterials}>0</b> 份学习资料</span>
+        <span>专题文章 <b class="stat-num" data-count={articles.length}>0</b> 篇</span>
+      </div>
+      <div>
+        <span class="hero-badge">🔄 内容持续更新中</span>
+      </div>
+      <div>
+        <a class="hero-scroll" href="#guide" aria-label="向下查看新手介绍">↓</a>
       </div>
     </section>
 
@@ -72,7 +78,10 @@ const categories = [
     <section class="section">
       <div class="section-head">
         <h2>重点大学</h2>
-        <a class="more" href="/universities/">查看全部 →</a>
+        <div class="section-links">
+          <a class="more" href="/articles/985-city-map/">985 是什么？→</a>
+          <a class="more" href="/universities/">查看全部 →</a>
+        </div>
       </div>
       <div class="grid grid-universities">
         {showcase.map((u) => <UniversityCard university={u} />)}
@@ -204,4 +213,35 @@ const categories = [
     }
     if (recentSection) recentSection.hidden = true;
   });
+
+  const statNums = document.querySelectorAll('.stat-num');
+  const animateCount = (el: Element) => {
+    const target = Number((el as HTMLElement).dataset.count || 0);
+    const dur = 900;
+    const t0 = performance.now();
+    const step = (t: number) => {
+      const p = Math.min(1, (t - t0) / dur);
+      el.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            animateCount(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+    statNums.forEach((n) => io.observe(n));
+  } else {
+    statNums.forEach((n) => {
+      n.textContent = String((n as HTMLElement).dataset.count ?? '0');
+    });
+  }
 </script>

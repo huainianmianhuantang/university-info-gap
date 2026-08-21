@@ -126,6 +126,7 @@ const categories = [
     window.location.href = `mailto:${submitEmail}?subject=${encodeURIComponent(
       `【投稿】${school} - ${title}`,
     )}&body=${encodeURIComponent(body)}`;
+    window.showToast?.('已为你打开邮件客户端，投稿内容已填好');
   });
 
   copySubmit?.addEventListener('click', () => {

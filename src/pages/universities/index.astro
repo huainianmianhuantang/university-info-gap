@@ -317,7 +317,15 @@ const slugs = universities.map((u) => u.id);
   tagFilter?.addEventListener('change', applyFilters);
   levelChecks.forEach((c) => c.addEventListener('change', applyFilters));
   compareBoxes.forEach((c) => c.addEventListener('change', updateCompare));
+  const SORT_KEY = 'sortBy-memory';
+  try {
+    const savedSort = localStorage.getItem(SORT_KEY);
+    if (savedSort && sortSelect) sortSelect.value = savedSort;
+  } catch { /* ignore */ }
   sortSelect?.addEventListener('change', applySort);
+  sortSelect?.addEventListener('change', () => {
+    try { localStorage.setItem(SORT_KEY, sortSelect.value); } catch { /* ignore */ }
+  });
   favOnly?.addEventListener('change', applyFilters);
   videoOnly?.addEventListener('change', applyFilters);
   materialOnly?.addEventListener('change', applyFilters);

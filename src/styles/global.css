@@ -432,6 +432,12 @@ html[data-theme='dark'] mark {
   margin-bottom: 16px;
 }
 
+.section-links {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+}
+
 .section-head h2 {
   margin: 0;
   font-size: 22px;
@@ -1951,4 +1957,115 @@ input,
 select,
 textarea {
   touch-action: manipulation;
+}
+
+/* ---------- 阅读进度条 ---------- */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 70;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.1s linear;
+}
+
+/* ---------- 大学卡片悬停箭头 ---------- */
+.card-arrow {
+  display: none;
+  margin-top: 8px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.university-card:hover .card-arrow {
+  display: block;
+  animation: card-arrow-in 0.2s ease;
+}
+
+@keyframes card-arrow-in {
+  from {
+    transform: translateX(-4px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* ---------- hero 徽标与滚动箭头 ---------- */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 12.5px;
+  margin-top: 12px;
+}
+
+.hero-scroll {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-top: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  text-decoration: none;
+  animation: hero-scroll-bounce 1.8s ease-in-out infinite;
+}
+
+.hero-scroll:hover {
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+@keyframes hero-scroll-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* ---------- 统计数字动画 ---------- */
+.stat-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 交互反馈 ---------- */
+.btn:active,
+button:active {
+  transform: scale(0.98);
+}
+
+.btn-xs {
+  padding: 3px 10px;
+  font-size: 12px;
+}
+
+.material-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.material-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---------- 深色模式代码块适配 ---------- */
+html[data-theme='dark'] .prose code,
+html[data-theme='dark'] .prose pre {
+  background: #1a2740;
+  color: #cfe0f5;
 }

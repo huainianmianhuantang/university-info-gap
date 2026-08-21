@@ -10,7 +10,7 @@ const u = university.data;
 ---
 
 <a class="card university-card" href={`/universities/${university.id}/`}>
-  <img class="university-cover" src={u.cover} alt={`${u.name} 校徽`} loading="lazy" width="512" height="512" decoding="async" />
+  <img class="university-cover" src={u.cover} alt={`${u.name} 校徽`} loading="lazy" width="512" height="512" decoding="async" onerror="this.onerror=null;this.src='/images/og-default.svg'" />
   <div class="university-body">
     <div class="university-title">
       {u.name}
@@ -34,5 +34,6 @@ const u = university.data;
       <span class="stat-chip">🎬 {u.videos.length} 视频</span>
       <span class="stat-chip">📄 {u.materials.length} 资料</span>
     </div>
+    <span class="card-arrow">查看详情 →</span>
   </div>
 </a>

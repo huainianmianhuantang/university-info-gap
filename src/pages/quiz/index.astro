@@ -98,6 +98,7 @@ const schools = (await getCollection('universities')).map((u) => ({
           <div class="result-section-head">
             <h3>AI 建议</h3>
             <button class="btn btn-ghost" id="regenBtn" type="button" hidden>换一批建议</button>
+            <button class="btn btn-ghost" id="copyAdviceBtn" type="button">复制建议</button>
           </div>
           <div class="advice-box" id="resultAdvice"></div>
           <p class="small muted" id="adviceBadge">AI 建议生成中…</p>
@@ -153,6 +154,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const shareBtn = document.getElementById('shareBtn');
   const printResultBtn = document.getElementById('printResult');
   const regenBtn = document.getElementById('regenBtn');
+  const copyAdviceBtn = document.getElementById('copyAdviceBtn');
 
   async function fetchLLMAdvice(answers, result) {
     const resp = await fetch('/api/advice', {
@@ -562,6 +564,18 @@ const schools = (await getCollection('universities')).map((u) => ({
   rankInput?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') rankApply?.click();
   });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key < '1' || e.key > '9') return;
+    const tag = (e.target as HTMLElement)?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    const quizCard = document.getElementById('quizCard');
+    const resultCard = document.getElementById('resultCard');
+    if (quizCard?.hidden || !resultCard?.hidden) return;
+    const opts = Array.from(document.querySelectorAll('#quizOptions .quiz-option'));
+    const idx = Number(e.key) - 1;
+    if (idx < opts.length) (opts[idx] as HTMLButtonElement).click();
+  });
   copyBtn.addEventListener('click', () => {
     const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
     if (!saved) return;
@@ -584,6 +598,19 @@ const schools = (await getCollection('universities')).map((u) => ({
         window.showToast?.('结果已复制到剪贴板');
         setTimeout(() => (copyBtn.textContent = '复制结果'), 1600);
       })
+      .catch(() => {});
+  });
+
+  copyAdviceBtn?.addEventListener('click', () => {
+    const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
+    const text = saved?.advice?.text || '';
+    if (!text) {
+      window.showToast?.('暂无建议内容');
+      return;
+    }
+    navigator.clipboard
+      ?.writeText(text)
+      .then(() => window.showToast?.('建议已复制'))
       .catch(() => {});
   });
 
