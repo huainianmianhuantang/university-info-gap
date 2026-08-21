@@ -392,6 +392,50 @@ const schools = (await getCollection('universities')).map((u) => ({
     }
     const maxScore = result.schools[0]?.score ?? 1;
     result.schools.forEach((s) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'u-item';
+      const actions = document.createElement('div');
+      actions.className = 'result-actions result-card-actions';
+      const favBtn = document.createElement('button');
+      favBtn.type = 'button';
+      favBtn.className = 'btn btn-ghost';
+      favBtn.textContent = '☆ 收藏';
+      favBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        try {
+          const favs = new Set(JSON.parse(localStorage.getItem('fav-universities') || '[]'));
+          if (favs.has(s.profile.id)) favs.delete(s.profile.id);
+          else favs.add(s.profile.id);
+          localStorage.setItem('fav-universities', JSON.stringify([...favs]));
+          favBtn.textContent = favs.has(s.profile.id) ? '★ 已收藏' : '☆ 收藏';
+        } catch {
+          /* ignore */
+        }
+      });
+      const cmpBtn = document.createElement('button');
+      cmpBtn.type = 'button';
+      cmpBtn.className = 'btn btn-ghost';
+      cmpBtn.textContent = '＋ 对比';
+      cmpBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        try {
+          const list = JSON.parse(localStorage.getItem('compare-list') || '[]');
+          if (list.includes(s.profile.id)) {
+            const next = list.filter((x) => x !== s.profile.id);
+            localStorage.setItem('compare-list', JSON.stringify(next));
+            cmpBtn.textContent = '＋ 对比';
+          } else {
+            const next = list.length >= 3 ? [...list.slice(1), s.profile.id] : [...list, s.profile.id];
+            localStorage.setItem('compare-list', JSON.stringify(next));
+            cmpBtn.textContent = `已选 ${next.length}/3`;
+          }
+        } catch {
+          /* ignore */
+        }
+      });
+      actions.appendChild(favBtn);
+      actions.appendChild(cmpBtn);
+      wrap.appendChild(actions);
       const a = document.createElement('a');
       a.className = 'card university-card';
       a.href = `/universities/${s.profile.id}/`;
@@ -415,7 +459,8 @@ const schools = (await getCollection('universities')).map((u) => ({
         <div class="chip-row"><span class="chip result-chip">匹配度 ${pct}%</span>${tierHtml}</div>
       `;
       a.appendChild(body);
-      schoolsEl.appendChild(a);
+      wrap.appendChild(a);
+      schoolsEl.appendChild(wrap);
     });
   }
 

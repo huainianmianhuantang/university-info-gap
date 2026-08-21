@@ -113,7 +113,38 @@ const schools = (await getCollection('universities')).map((u) => ({
     hr.appendChild(th);
     picked.forEach((s) => {
       const c = document.createElement('th');
-      c.innerHTML = `<a href="/universities/${s.id}/">${s.name}</a>`;
+      const link = document.createElement('a');
+      link.href = `/universities/${s.id}/`;
+      link.textContent = s.name;
+      c.appendChild(link);
+      const favBtn = document.createElement('button');
+      favBtn.type = 'button';
+      favBtn.className = 'btn btn-ghost cmp-fav';
+      let favs = [];
+      try {
+        favs = JSON.parse(localStorage.getItem('fav-universities') || '[]');
+      } catch {
+        favs = [];
+      }
+      favBtn.textContent = favs.includes(s.id) ? '★' : '☆';
+      favBtn.title = '收藏该学校';
+      favBtn.addEventListener('click', () => {
+        let list = [];
+        try {
+          list = JSON.parse(localStorage.getItem('fav-universities') || '[]');
+        } catch {
+          list = [];
+        }
+        if (list.includes(s.id)) list = list.filter((x) => x !== s.id);
+        else list.push(s.id);
+        try {
+          localStorage.setItem('fav-universities', JSON.stringify(list));
+        } catch {
+          /* ignore */
+        }
+        favBtn.textContent = list.includes(s.id) ? '★' : '☆';
+      });
+      c.appendChild(favBtn);
       hr.appendChild(c);
     });
     head.appendChild(hr);

@@ -107,6 +107,7 @@ const related = allUniversities
         ＋ 加入对比
       </button>
       <a class="btn btn-primary" id="detailCompareLink" href="/compare/" hidden>去对比 →</a>
+      <button class="btn btn-ghost" id="copyPageLink" type="button">复制链接</button>
       {u.nameEn && <div class="uni-en">{u.nameEn}</div>}
       <div class="chip-row">
         {u.levels.map((level) => <span class={`chip level-${level}`}>{level}</span>)}
@@ -389,4 +390,15 @@ const related = allUniversities
     updateCmp();
   });
   updateCmp();
+
+  const copyPageBtn = document.getElementById('copyPageLink');
+  copyPageBtn?.addEventListener('click', () => {
+    navigator.clipboard
+      ?.writeText(window.location.href)
+      .then(() => {
+        copyPageBtn.textContent = '已复制 ✓';
+        setTimeout(() => (copyPageBtn.textContent = '复制链接'), 1600);
+      })
+      .catch(() => {});
+  });
 </script>

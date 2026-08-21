@@ -56,6 +56,8 @@ const currentPath = Astro.url.pathname;
   const applyTheme = (t) => {
     document.documentElement.setAttribute('data-theme', t);
     if (themeBtn) themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#0d1526' : '#1f5eff');
     try {
       localStorage.setItem('theme', t);
     } catch {

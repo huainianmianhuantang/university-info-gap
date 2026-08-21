@@ -24,6 +24,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
     <div class="page-hero">
       <h1>大学库</h1>
       <p>当前收录 {universities.length} 所 985 高校，每所大学的政策、实况与资料都在详情页里。</p>
+      <button class="btn btn-ghost" id="viewToggle" type="button">列表视图</button>
     </div>
 
     <form class="card filters" id="filters" method="get" action="/universities/">
@@ -162,6 +163,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const favOnly = document.getElementById('favOnly');
   const videoOnly = document.getElementById('videoOnly');
   const materialOnly = document.getElementById('materialOnly');
+  const viewToggle = document.getElementById('viewToggle');
   const favBoxes = Array.from(document.querySelectorAll('.fav-box'));
 
   const FAV_KEY = 'fav-universities';
@@ -273,6 +275,23 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   favOnly?.addEventListener('change', applyFilters);
   videoOnly?.addEventListener('change', applyFilters);
   materialOnly?.addEventListener('change', applyFilters);
+  viewToggle?.addEventListener('click', () => {
+    const listMode = grid?.classList.toggle('list-view') ?? false;
+    if (viewToggle) viewToggle.textContent = listMode ? '卡片视图' : '列表视图';
+    try {
+      localStorage.setItem('uni-view', listMode ? 'list' : 'card');
+    } catch {
+      /* ignore */
+    }
+  });
+  try {
+    if (localStorage.getItem('uni-view') === 'list' && grid && viewToggle) {
+      grid.classList.add('list-view');
+      viewToggle.textContent = '卡片视图';
+    }
+  } catch {
+    /* ignore */
+  }
   applyFilters();
   applySort();
   updateCompare();

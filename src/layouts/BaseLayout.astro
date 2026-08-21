@@ -44,6 +44,11 @@ const pageDescription = description ?? SITE.description;
     </main>
     <Footer />
     <button class="back-to-top" id="backToTop" aria-label="回到顶部" hidden>↑</button>
+    <div class="install-banner" id="installBanner" hidden>
+      <span>📱 把「{SITE.title}」装到桌面，随时查大学</span>
+      <button class="btn btn-primary" id="installBtn" type="button">安装</button>
+      <button class="install-close" id="installClose" type="button" aria-label="关闭">×</button>
+    </div>
   </body>
 </html>
 
@@ -63,4 +68,27 @@ const pageDescription = description ?? SITE.description;
     onScroll();
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
+
+  let deferredPrompt = null;
+  const installBanner = document.getElementById('installBanner');
+  const installBtn = document.getElementById('installBtn');
+  const installClose = document.getElementById('installClose');
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (installBanner) installBanner.hidden = false;
+  });
+  installBtn?.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    if (installBanner) installBanner.hidden = true;
+  });
+  installClose?.addEventListener('click', () => {
+    if (installBanner) installBanner.hidden = true;
+  });
+  window.addEventListener('appinstalled', () => {
+    if (installBanner) installBanner.hidden = true;
+  });
 </script>

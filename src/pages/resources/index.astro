@@ -257,6 +257,30 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
   const videoSearch = document.getElementById('videoSearch');
   const videoGroups = Array.from(document.querySelectorAll('.video-group'));
   const videoSummary = document.querySelector('.video-summary');
+  const OPEN_KEY = 'open-video-groups';
+  let openSet = new Set();
+  try {
+    openSet = new Set(JSON.parse(localStorage.getItem(OPEN_KEY) || '[]'));
+  } catch {
+    openSet = new Set();
+  }
+  videoGroups.forEach((g, i) => {
+    const name = g.querySelector('summary a')?.textContent?.trim() ?? `g${i}`;
+    if (openSet.size > 0) {
+      g.open = openSet.has(name);
+    } else if (i < 5) {
+      g.open = true;
+    }
+    g.addEventListener('toggle', () => {
+      if (g.open) openSet.add(name);
+      else openSet.delete(name);
+      try {
+        localStorage.setItem(OPEN_KEY, JSON.stringify([...openSet]));
+      } catch {
+        /* ignore */
+      }
+    });
+  });
   videoSearch?.addEventListener('input', () => {
     const kw = videoSearch.value.trim().toLowerCase();
     let visible = 0;

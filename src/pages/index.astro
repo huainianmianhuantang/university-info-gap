@@ -14,6 +14,7 @@ const articles = (await getCollection('articles')).sort((a, b) =>
 const featured = universities.filter((u) => u.data.featured);
 const showcase = (featured.length ? featured : universities).slice(0, 3);
 const totalVideos = universities.reduce((n, u) => n + u.data.videos.length, 0);
+const topicTags = [...new Set(articles.flatMap((a) => a.data.tags))].slice(0, 12);
 const schoolBriefs = universities.map((u) => ({ id: u.id, name: u.data.name }));
 
 const categories = [
@@ -112,6 +113,17 @@ const categories = [
             <p>{article.data.summary}</p>
             <span class="date">{formatDate(article.data.date)} · {article.data.tags.join(' / ')}</span>
           </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>热门话题</h2>
+      </div>
+      <div class="chip-row">
+        {topicTags.map((t) => (
+          <a class="chip" href={`/search/?q=${encodeURIComponent(t)}`}>{t}</a>
         ))}
       </div>
     </section>
