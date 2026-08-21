@@ -3029,3 +3029,76 @@ html {
     padding: 28px 18px;
   }
 }
+
+/* ---------- 手机端第二轮：溢出防护与触控硬化 ---------- */
+html,
+body {
+  overflow-x: clip;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body,
+.prose,
+.university-brief,
+.material-card p,
+.article-card p,
+.card p,
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
+}
+
+.prose pre {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.prose table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .more,
+  .uni-tabs a,
+  .result-chip,
+  .back-to-top {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-scroll {
+    width: 44px;
+    height: 44px;
+  }
+
+  .guide-step,
+  .guide-toggle,
+  .guide-done {
+    min-height: 44px;
+  }
+
+  .section {
+    margin-top: 32px;
+  }
+
+  .section-block {
+    padding: 16px 14px 12px;
+  }
+
+  .material-card {
+    padding: 12px 14px;
+  }
+
+  .article-card {
+    padding: 14px;
+  }
+}
