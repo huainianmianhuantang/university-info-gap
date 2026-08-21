@@ -130,3 +130,13 @@
 - [x] 测评结果区增加 aria-live 无障碍提示。
 - [x] 投稿表单增加“信息来源/出处”字段。
 - [x] README/REPORT 同步更新。
+
+## 十二、安全与漏洞修复（2026-08-21）
+
+- [x] **高危**：`scripts/test-deepseek.mjs` 曾把 DeepSeek API Key 写死并提交进 Git；已删除文件并用 `git filter-branch` 重写全部 51 个提交，清理 `refs/original` 与 reflog，`git grep` 全历史确认 Key 已不可见。**建议用户到 DeepSeek 后台重置该 Key**（曾出现在对话与历史提交中）。
+- [x] `/api/advice` 加固：同源校验（跨域 POST 返回 403）、内存限流（每来源每分钟 12 次）、问卷参数/推荐学校数量校验、错误响应移除 `keySet` 信息泄露。
+- [x] 资料/视频链接消毒：非 `http(s)` 或站内路径的链接统一降级为 `#`，防止 `javascript:` 等危险协议。
+- [x] 修复测评历史重复记录（规则建议 + LLM 建议各存一条 → 只存最终一条）。
+- [x] 修复“重新测评”后位次分档状态未重置。
+- [x] 收藏导出文案使用 `window.location.origin`，不再写死 localhost。
+- [x] 内链检查：2081 个本地链接 0 失效。

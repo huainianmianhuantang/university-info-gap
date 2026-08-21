@@ -18,7 +18,12 @@ const embedUrl = video.platform === 'bilibili' && video.id
   ? `https://player.bilibili.com/player.html?bvid=${video.id}&page=1&high_quality=1&danmaku=0`
   : null;
 
-const fallbackUrl = video.url || (video.id ? `https://www.bilibili.com/video/${video.id}` : null);
+const fallbackUrl =
+  video.url && /^https?:\/\//.test(video.url)
+    ? video.url
+    : video.id
+      ? `https://www.bilibili.com/video/${video.id}`
+      : null;
 ---
 
 <div class:list={['card', 'video-card', className]} data-tags={(video.tags ?? []).join(' ')}>

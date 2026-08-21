@@ -3,6 +3,42 @@ import { AI_API_KEY, AI_BASE_URL, AI_MODEL } from 'astro:env/server';
 
 export const prerender = false;
 
+/** 简易内存限流：每个来源每分钟最多 12 次，防止接口被滥用消耗 API 预算 */
+const hitMap = new Map<string, number[]>();
+const RATE_LIMIT = 12;
+const WINDOW_MS = 60_000;
+
+function rateLimited(source: string): boolean {
+  const now = Date.now();
+  const hits = (hitMap.get(source) ?? []).filter((t) => now - t < WINDOW_MS);
+  if (hits.length >= RATE_LIMIT) {
+    hitMap.set(source, hits);
+    return true;
+  }
+  hits.push(now);
+  hitMap.set(source, hits);
+  return false;
+}
+
+function requestSource(request: Request): string {
+  return (
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    request.headers.get('x-real-ip') ||
+    'local'
+  );
+}
+
+function sameOrigin(request: Request): boolean {
+  const origin = request.headers.get('origin');
+  if (!origin) return true; // 无 Origin 的请求（如 curl）按同源处理
+  try {
+    const host = request.headers.get('host') ?? '';
+    return new URL(origin).host === host;
+  } catch {
+    return false;
+  }
+}
+
 // 运行时从环境变量读取配置（不把 Key 打进构建产物）。
 // 开发时加载项目根目录 .env；生产环境由部署平台注入环境变量。
 if (typeof process !== 'undefined') {
@@ -70,6 +106,12 @@ function buildPrompt(body: AdviceBody): string {
 }
 
 export async function POST({ request }): Promise<Response> {
+  if (!sameOrigin(request)) {
+    return json({ error: '跨域请求被拒绝' }, 403);
+  }
+  if (rateLimited(requestSource(request))) {
+    return json({ error: '请求过于频繁，请稍后再试' }, 429);
+  }
   const key = AI_API_KEY || (typeof process !== 'undefined' ? process.env.AI_API_KEY : undefined);
   const base = (AI_BASE_URL || 'https://api.deepseek.com').replace(/\/$/, '');
   const model = AI_MODEL || 'deepseek-chat';
@@ -87,6 +129,17 @@ export async function POST({ request }): Promise<Response> {
       { error: '参数格式错误', detail: e instanceof Error ? e.message : String(e) },
       400,
     );
+  }
+  const answers = body.answers ?? {};
+  if (
+    typeof answers !== 'object' ||
+    Object.keys(answers).length > 20 ||
+    Object.values(answers).some((v) => typeof v !== 'number')
+  ) {
+    return json({ error: '问卷参数不合法' }, 400);
+  }
+  if (Array.isArray(body.result?.schools) && body.result.schools.length > 12) {
+    return json({ error: '推荐学校数量不合法' }, 400);
   }
 
   try {
@@ -122,7 +175,7 @@ export async function POST({ request }): Promise<Response> {
     const err = e instanceof Error ? e : new Error(String(e));
     const cause = (err.cause as { message?: string } | undefined)?.message;
     return json(
-      { error: err.message, cause: cause ?? null, keySet: Boolean(key) },
+      { error: err.message, cause: cause ?? null },
       502,
     );
   }

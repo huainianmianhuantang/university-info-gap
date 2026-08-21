@@ -268,7 +268,12 @@ const related = allUniversities
                   </div>
                   <p>{m.description}</p>
                   {m.code && <p>提取码：<strong>{m.code}</strong></p>}
-                  <a class="btn" href={m.link} target="_blank" rel="noopener">
+                  <a
+                    class="btn"
+                    href={(m.link.startsWith('/') || m.link.startsWith('http')) ? m.link : '#'}
+                    target="_blank"
+                    rel="noopener"
+                  >
                     {m.link.startsWith('/') ? '查看文件' : '获取资料'}
                   </a>
                   <button

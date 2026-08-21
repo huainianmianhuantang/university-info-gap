@@ -315,7 +315,6 @@ const schools = (await getCollection('universities')).map((u) => ({
       /* ignore */
     }
     showResult(saved);
-    saveHistory(saved);
 
     try {
       const advice = await fetchLLMAdvice(state.answers, result);
@@ -327,7 +326,6 @@ const schools = (await getCollection('universities')).map((u) => ({
           /* ignore */
         }
         showResult(saved);
-        saveHistory(saved);
       } else {
         const badge = document.getElementById('adviceBadge');
         if (badge) badge.textContent = 'AI 建议（规则引擎生成）';
@@ -336,6 +334,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       const badge = document.getElementById('adviceBadge');
       if (badge) badge.textContent = 'AI 建议（规则引擎生成）';
     }
+    saveHistory(saved);
   }
 
   function showResult(saved) {
@@ -498,6 +497,9 @@ const schools = (await getCollection('universities')).map((u) => ({
   function restart() {
     state.step = 0;
     state.answers = {};
+    state.rank = null;
+    if (rankInput) rankInput.value = '';
+    if (rankWarn) rankWarn.hidden = true;
     try {
       localStorage.removeItem(LS_ANSWERS);
       localStorage.removeItem(LS_RESULT);

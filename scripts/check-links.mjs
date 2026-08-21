@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const dist = path.resolve('dist/client');
+const dist = path.resolve('dist');
 const files = [];
 function walk(dir) {
   for (const f of fs.readdirSync(dir, { withFileTypes: true })) {

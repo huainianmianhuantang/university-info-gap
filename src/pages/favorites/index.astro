@@ -226,7 +226,7 @@ const schools = (await getCollection('universities')).map((u) => ({
     const text =
       `我的大学收藏清单（${new Date().toLocaleDateString('zh-CN')}）\n` +
       picked.map((s) => `- ${s.name}（${s.type} · ${s.province} ${s.city}）`).join('\n') +
-      '\n来源：象牙塔透视镜 https://localhost:4321';
+      `\n来源：象牙塔透视镜 ${window.location.origin}`;
     navigator.clipboard
       ?.writeText(text)
       .then(() => {

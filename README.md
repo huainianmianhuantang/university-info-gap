@@ -30,6 +30,7 @@ npm run preview
 - **其他**：详情页官方渠道入口、随机逛一所、测评进度恢复、对比无参回退本地选择、清空本地数据。
 - **维护**：`scripts/check-links.mjs` 全站内链检查、`scripts/resize-logos.mjs` 校徽压缩、`scripts/restart-dev.ps1` 重启开发服务器。
 - **无障碍/细节**：aria-live 结果区、对比表 caption/scope、跳过导航、文章 Article 结构化数据。
+- **安全**：API Key 仅存 `.env`（不入库）；`/api/advice` 含同源校验与限流；提交前可用 `scripts/check-links.mjs` 检查内链。
 - **专题文章**：转专业指南、培养方案阅读方法、宿舍视频甄别、测评使用说明等。
 
 ## 如何新增一所大学
