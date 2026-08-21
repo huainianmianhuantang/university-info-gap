@@ -11,7 +11,7 @@ established: 1911
 campuses: ['清华园校区']
 brief: 工科长期位居国内前列的综合性研究型大学，校训“自强不息、厚德载物”。
 featured: true
-cover: /images/cover-tsinghua-university.svg
+cover: /images/logo-tsinghua-university.webp
 
 videos:
   - title: "2024 招生宣传片《奇迹》"

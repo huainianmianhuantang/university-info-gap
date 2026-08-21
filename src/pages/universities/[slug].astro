@@ -77,6 +77,8 @@ const related = allUniversities
   })}></script>
   <div class="container page">
     <div class="uni-hero">
+      <img class="uni-emblem" src={u.cover} alt={`${u.name} 校徽`} loading="eager" />
+      <div class="uni-hero-info">
       <h1>{u.name}</h1>
       <button class="fav-btn" id="favBtn" type="button" aria-pressed="false">☆ 收藏</button>
       {u.nameEn && <div class="uni-en">{u.nameEn}</div>}
@@ -92,6 +94,7 @@ const related = allUniversities
       {u.campuses.length > 0 && (
         <div class="university-meta">校区：{u.campuses.join(' / ')}</div>
       )}
+      </div>
     </div>
 
     <div class="note-banner">

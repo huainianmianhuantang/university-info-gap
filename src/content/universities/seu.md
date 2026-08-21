@@ -11,7 +11,7 @@ established: 1902
 campuses: ['四牌楼校区', '九龙湖校区', '丁家桥校区']
 brief: 建筑土木电子见长的工科强校，校训“止于至善”。
 featured: false
-cover: /images/cover-seu.svg
+cover: /images/logo-seu.webp
 
 videos:
   - title: "招生宣传片《至善宣言》"

@@ -11,7 +11,7 @@ established: 1909
 campuses: ['城关校区', '榆中校区']
 brief: 西北地区老牌综合性大学，草学、化学等学科实力突出。
 featured: false
-cover: /images/cover-lzu.svg
+cover: /images/logo-lzu.webp
 
 videos:
   - title: "2022 招生宣传片《你的决定》"

@@ -11,7 +11,7 @@ established: 1924
 campuses: ['崂山校区', '鱼山校区', '浮山校区']
 brief: 以海洋和水产学科为特色的大学，校训“海纳百川、取则行远”。
 featured: false
-cover: /images/cover-ouc.svg
+cover: /images/logo-ouc.webp
 
 videos:
   - title: "中国海洋大学招生宣传片"

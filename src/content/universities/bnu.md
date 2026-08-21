@@ -11,7 +11,7 @@ established: 1902
 campuses: ['海淀校区', '昌平校区']
 brief: 以教师教育、教育科学和文理基础学科为主要特色的全国重点大学。
 featured: false
-cover: /images/cover-bnu.svg
+cover: /images/logo-bnu.webp
 
 videos:
   - title: "男寝公共浴室大合唱？北师大海华苑6人间宿舍实拍"

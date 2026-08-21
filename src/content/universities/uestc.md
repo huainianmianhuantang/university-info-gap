@@ -11,7 +11,7 @@ established: 1956
 campuses: ['清水河校区', '沙河校区']
 brief: 电子信息领域的特色强校，校训“求实求真、大气大为”。
 featured: false
-cover: /images/cover-uestc.svg
+cover: /images/logo-uestc.webp
 
 videos:
   - title: "2020 招生宣传片《我在电子科技大学等你》"

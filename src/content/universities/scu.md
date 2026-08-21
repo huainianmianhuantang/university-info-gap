@@ -11,7 +11,7 @@ established: 1896
 campuses: ['望江校区', '江安校区', '华西校区']
 brief: 文理医均衡发展，华西口腔医学全国闻名。
 featured: false
-cover: /images/cover-scu.svg
+cover: /images/logo-scu.webp
 
 videos:
   - title: "2024 招生宣传片《青春同行》"

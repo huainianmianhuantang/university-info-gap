@@ -11,7 +11,7 @@ established: 1902
 campuses: ['鼓楼校区', '仙林校区']
 brief: 文理基础扎实的百年名校，天文、地质、文学等学科传统深厚。
 featured: false
-cover: /images/cover-nju.svg
+cover: /images/logo-nju.webp
 
 videos:
   - title: "2020 双一流宣传片（30 院唯美视频）"

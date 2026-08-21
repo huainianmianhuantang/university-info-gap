@@ -11,7 +11,7 @@ established: 1952
 campuses: ['校本部', '南校区', '铁道校区', '湘雅校区']
 brief: 2000 年合并组建的综合性大学，医学、冶金、材料、铁道特色鲜明。
 featured: false
-cover: /images/cover-csu.svg
+cover: /images/logo-csu.webp
 
 videos:
   - title: "中南大学宣传片《光荫里的中南》"

@@ -11,7 +11,7 @@ established: 1937
 campuses: ['中关村校区']
 brief: 人文社会科学领域的顶尖学府，校训“实事求是”。
 featured: false
-cover: /images/cover-renmin-university.svg
+cover: /images/logo-renmin-university.webp
 
 videos:
   - title: "2024 招生宣传片"

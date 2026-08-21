@@ -11,7 +11,7 @@ established: 1951
 campuses: ['中山北路校区', '闵行校区']
 brief: 师范教育传统深厚的综合性大学，心理学与教育学优势明显。
 featured: false
-cover: /images/cover-ecnu.svg
+cover: /images/logo-ecnu.webp
 
 videos:
   - title: "2022 招生宣传片《卓越之路》"

@@ -11,7 +11,7 @@ established: 1920
 campuses: ['一校区', '二校区']
 brief: 航天特色鲜明的工科名校，校训“规格严格、功夫到家”。
 featured: false
-cover: /images/cover-hit.svg
+cover: /images/logo-hit.webp
 
 videos:
   - title: "2025 招生宣传片《参天》"

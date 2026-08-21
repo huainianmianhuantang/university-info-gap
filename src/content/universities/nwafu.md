@@ -11,7 +11,7 @@ established: 1934
 campuses: ['北校区', '南校区']
 brief: 农科特色鲜明，中国西北现代农业教育的重要基地。
 featured: false
-cover: /images/cover-nwafu.svg
+cover: /images/logo-nwafu.webp
 videos:
   - title: "招生减章但是西农｜新生宿舍"
     platform: bilibili

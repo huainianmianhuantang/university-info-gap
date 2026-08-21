@@ -1,0 +1,311 @@
+{
+  "peking-university": {
+    "name": "北京大学",
+    "home": "https://www.pku.edu.cn",
+    "status": "ok",
+    "url": "https://www.pku.edu.cn/pku_logo_red.png",
+    "file": "logo-peking-university.png",
+    "bytes": 25869
+  },
+  "tsinghua-university": {
+    "name": "清华大学",
+    "home": "https://www.tsinghua.edu.cn",
+    "status": "ok",
+    "url": "https://www.tsinghua.edu.cn/image/logo180.png",
+    "file": "logo-tsinghua-university.png",
+    "bytes": 7875
+  },
+  "renmin-university": {
+    "name": "中国人民大学",
+    "home": "https://www.ruc.edu.cn",
+    "status": "ok",
+    "url": "https://www.ruc.edu.cn/template/1/out/imgs/red-logo.png",
+    "file": "logo-renmin-university.png",
+    "bytes": 59151
+  },
+  "buaa": {
+    "name": "北京航空航天大学",
+    "home": "https://www.buaa.edu.cn",
+    "status": "ok",
+    "url": "https://www.buaa.edu.cn/images/logo.png",
+    "file": "logo-buaa.png",
+    "bytes": 9816
+  },
+  "bit": {
+    "name": "北京理工大学",
+    "home": "https://www.bit.edu.cn",
+    "status": "ok",
+    "url": "https://www.bit.edu.cn/images/gb20190805/asideLogo1.svg",
+    "file": "logo-bit.svg",
+    "bytes": 59120
+  },
+  "cau": {
+    "name": "中国农业大学",
+    "home": "https://www.cau.edu.cn",
+    "status": "ok",
+    "url": "https://www.cau.edu.cn/static2022/images/logo2.svg",
+    "file": "logo-cau.svg",
+    "bytes": 69487
+  },
+  "bnu": {
+    "name": "北京师范大学",
+    "home": "https://www.bnu.edu.cn",
+    "status": "ok",
+    "url": "https://www.bnu.edu.cn/images/logo1.png",
+    "file": "logo-bnu.png",
+    "bytes": 36890
+  },
+  "muc": {
+    "name": "中央民族大学",
+    "home": "https://www.muc.edu.cn",
+    "status": "ok",
+    "url": "https://www.muc.edu.cn/images/logo.png",
+    "file": "logo-muc.png",
+    "bytes": 20689
+  },
+  "nankai": {
+    "name": "南开大学",
+    "home": "https://www.nankai.edu.cn",
+    "status": "ok",
+    "url": "https://www.nankai.edu.cn/_upload/tpl/02/58/600/template600/images/logo.png",
+    "file": "logo-nankai.png",
+    "bytes": 10720
+  },
+  "tju": {
+    "name": "天津大学",
+    "home": "https://www.tju.edu.cn",
+    "status": "ok",
+    "url": "https://www.tju.edu.cn/images/tjulogo.png",
+    "file": "logo-tju.png",
+    "bytes": 110389
+  },
+  "dlut": {
+    "name": "大连理工大学",
+    "home": "https://www.dlut.edu.cn",
+    "status": "ok",
+    "url": "https://www.dlut.edu.cn/images/logo.svg",
+    "file": "logo-dlut.svg",
+    "bytes": 33803
+  },
+  "jilin-university": {
+    "name": "吉林大学",
+    "home": "https://www.jlu.edu.cn",
+    "status": "ok",
+    "url": "https://www.jlu.edu.cn/images/logo.jpg",
+    "file": "logo-jilin-university.jpg",
+    "bytes": 23498
+  },
+  "hit": {
+    "name": "哈尔滨工业大学",
+    "home": "https://www.hit.edu.cn",
+    "status": "ok",
+    "url": "https://www.hit.edu.cn/_upload/site/00/ee/238/logo.png",
+    "file": "logo-hit.png",
+    "bytes": 109992
+  },
+  "fudan": {
+    "name": "复旦大学",
+    "home": "https://www.fudan.edu.cn",
+    "status": "ok",
+    "url": "https://www.fudan.edu.cn/_upload/site/00/02/2/logo.png",
+    "file": "logo-fudan.png",
+    "bytes": 23011
+  },
+  "sjtu": {
+    "name": "上海交通大学",
+    "home": "https://www.sjtu.edu.cn",
+    "status": "ok",
+    "url": "https://www.sjtu.edu.cn/resource/assets/img/ico/favicon.png",
+    "file": "logo-sjtu.png",
+    "bytes": 18544
+  },
+  "tongji": {
+    "name": "同济大学",
+    "home": "https://www.tongji.edu.cn",
+    "status": "ok",
+    "url": "https://www.tongji.edu.cn/images/logo.png",
+    "file": "logo-tongji.png",
+    "bytes": 11590
+  },
+  "ecnu": {
+    "name": "华东师范大学",
+    "home": "https://www.ecnu.edu.cn",
+    "status": "ok",
+    "url": "https://www.ecnu.edu.cn/images/logo.svg",
+    "file": "logo-ecnu.svg",
+    "bytes": 23562
+  },
+  "nju": {
+    "name": "南京大学",
+    "home": "https://www.nju.edu.cn",
+    "status": "ok",
+    "url": "https://www.nju.edu.cn/images/footer_logo.svg",
+    "file": "logo-nju.svg",
+    "bytes": 43171
+  },
+  "seu": {
+    "name": "东南大学",
+    "home": "https://www.seu.edu.cn",
+    "status": "ok",
+    "url": "https://www.seu.edu.cn/_upload/tpl/0b/59/2905/template2905/images/mlogo.png",
+    "file": "logo-seu.png",
+    "bytes": 13003
+  },
+  "ustc": {
+    "name": "中国科学技术大学",
+    "home": "https://www.ustc.edu.cn",
+    "status": "ok",
+    "url": "https://www.ustc.edu.cn/news/images/logo.svg",
+    "file": "logo-ustc.svg",
+    "bytes": 200991
+  },
+  "xmu": {
+    "name": "厦门大学",
+    "home": "https://www.xmu.edu.cn",
+    "status": "ok",
+    "url": "https://www.xmu.edu.cn/images/logo.png",
+    "file": "logo-xmu.png",
+    "bytes": 13525
+  },
+  "sdu": {
+    "name": "山东大学",
+    "home": "https://www.sdu.edu.cn",
+    "status": "ok",
+    "url": "https://www.sdu.edu.cn/images/logo.svg",
+    "file": "logo-sdu.svg",
+    "bytes": 21541
+  },
+  "ouc": {
+    "name": "中国海洋大学",
+    "home": "https://www.ouc.edu.cn",
+    "status": "ok",
+    "url": "https://www.ouc.edu.cn/_upload/tpl/0c/00/3072/template3072/images/logo.svg",
+    "file": "logo-ouc.svg",
+    "bytes": 44689
+  },
+  "hunan-university": {
+    "name": "湖南大学",
+    "home": "https://www.hnu.edu.cn",
+    "status": "ok",
+    "url": "https://www.hnu.edu.cn/images/logo.png",
+    "file": "logo-hunan-university.png",
+    "bytes": 9156
+  },
+  "csu": {
+    "name": "中南大学",
+    "home": "https://www.csu.edu.cn",
+    "status": "ok",
+    "url": "https://www.csu.edu.cn/images/logo.png",
+    "file": "logo-csu.png",
+    "bytes": 73714
+  },
+  "sysu": {
+    "name": "中山大学",
+    "home": "https://www.sysu.edu.cn",
+    "status": "ok",
+    "url": "https://www.sysu.edu.cn/images/zhuzhanLOGO.png",
+    "file": "logo-sysu.png",
+    "bytes": 26468
+  },
+  "scut": {
+    "name": "华南理工大学",
+    "home": "https://www.scut.edu.cn",
+    "status": "no_candidate",
+    "url": null,
+    "file": null
+  },
+  "cqu": {
+    "name": "重庆大学",
+    "home": "https://www.cqu.edu.cn",
+    "status": "ok",
+    "url": "https://www.cqu.edu.cn/images/logo1.png",
+    "file": "logo-cqu.png",
+    "bytes": 12302
+  },
+  "scu": {
+    "name": "四川大学",
+    "home": "https://www.scu.edu.cn",
+    "status": "no_candidate",
+    "url": null,
+    "file": null
+  },
+  "uestc": {
+    "name": "电子科技大学",
+    "home": "https://www.uestc.edu.cn",
+    "status": "ok",
+    "url": "https://www.uestc.edu.cn/images/1.png",
+    "file": "logo-uestc.png",
+    "bytes": 1150
+  },
+  "xjtu": {
+    "name": "西安交通大学",
+    "home": "https://www.xjtu.edu.cn",
+    "status": "ok",
+    "url": "https://www.xjtu.edu.cn/img/logo_pic99.png",
+    "file": "logo-xjtu.png",
+    "bytes": 13816
+  },
+  "npu": {
+    "name": "西北工业大学",
+    "home": "https://www.nwpu.edu.cn",
+    "status": "ok",
+    "url": "https://www.nwpu.edu.cn/images/logo2.png",
+    "file": "logo-npu.png",
+    "bytes": 32490
+  },
+  "nwafu": {
+    "name": "西北农林科技大学",
+    "home": "https://www.nwafu.edu.cn",
+    "status": "ok",
+    "url": "https://www.nwafu.edu.cn/images/logo.png",
+    "file": "logo-nwafu.png",
+    "bytes": 7211
+  },
+  "lzu": {
+    "name": "兰州大学",
+    "home": "https://www.lzu.edu.cn",
+    "status": "error",
+    "url": null,
+    "file": null,
+    "error": "HTTP 412"
+  },
+  "nudt": {
+    "name": "国防科技大学",
+    "home": "https://www.nudt.edu.cn",
+    "status": "ok",
+    "url": "https://www.nudt.edu.cn/images/logo.svg",
+    "file": "logo-nudt.svg",
+    "bytes": 120124
+  },
+  "northeastern-university": {
+    "name": "东北大学",
+    "home": "https://www.neu.edu.cn",
+    "status": "ok",
+    "url": "https://www.neu.edu.cn/images/libpic/logo2.png",
+    "file": "logo-northeastern-university.png",
+    "bytes": 11420
+  },
+  "zhejiang-university": {
+    "name": "浙江大学",
+    "home": "https://www.zju.edu.cn",
+    "status": "no_candidate",
+    "url": null,
+    "file": null
+  },
+  "huazhong-ust": {
+    "name": "华中科技大学",
+    "home": "https://www.hust.edu.cn",
+    "status": "ok",
+    "url": "https://www.hust.edu.cn/images/logo20240628.png",
+    "file": "logo-huazhong-ust.png",
+    "bytes": 18235
+  },
+  "wuhan-university": {
+    "name": "武汉大学",
+    "home": "https://www.whu.edu.cn",
+    "status": "ok",
+    "url": "https://www.whu.edu.cn/new2024/js/logo.png",
+    "file": "logo-wuhan-university.png",
+    "bytes": 98197
+  }
+}

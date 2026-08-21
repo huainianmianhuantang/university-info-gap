@@ -11,7 +11,7 @@ established: 1929
 campuses: ['A区', 'B区', 'C区', '虎溪校区']
 brief: 西南地区综合性大学，建筑、电气、机械等工科传统深厚。
 featured: false
-cover: /images/cover-cqu.svg
+cover: /images/logo-cqu.webp
 
 videos:
   - title: "2025 招生宣传片《笔承日新》"

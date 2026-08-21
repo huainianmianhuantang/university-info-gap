@@ -11,7 +11,7 @@ established: 1952
 campuses: ['五山校区', '大学城校区', '广州国际校区']
 brief: 华南地区老牌工科强校，轻工、建筑、材料等方向突出。
 featured: false
-cover: /images/cover-scut.svg
+cover: /images/logo-scut.webp
 
 videos:
   - title: "2022 本科招生宣传片《你，就是未来》"

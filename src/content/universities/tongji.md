@@ -11,7 +11,7 @@ established: 1907
 campuses: ['四平路校区', '嘉定校区']
 brief: 以土木建筑闻名的综合性大学，校训“同舟共济”。
 featured: false
-cover: /images/cover-tongji.svg
+cover: /images/logo-tongji.webp
 
 videos:
   - title: "2024 招生宣传片《不凡》"

@@ -11,7 +11,7 @@ established: 1949
 campuses: ['凌水校区']
 brief: 东北地区老牌工科强校，化工、机械、土木等方向突出。
 featured: false
-cover: /images/cover-dlut.svg
+cover: /images/logo-dlut.webp
 
 videos:
   - title: "欢迎报考大连理工大学"

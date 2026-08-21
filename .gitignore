@@ -4,6 +4,7 @@ dist/
 .DS_Store
 *.log
 scripts/*.err
+scripts/_tmp/
 .env
 .env.*
 !.env.example

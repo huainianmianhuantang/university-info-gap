@@ -11,7 +11,7 @@ established: 1921
 campuses: ['思明校区', '翔安校区']
 brief: 陈嘉庚先生创办的百年名校，校训“自强不息、止于至善”。
 featured: false
-cover: /images/cover-xmu.svg
+cover: /images/logo-xmu.webp
 
 videos:
   - title: "2025 招生宣传片《学在厦大 2》"

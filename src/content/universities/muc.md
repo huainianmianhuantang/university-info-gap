@@ -11,7 +11,7 @@ established: 1941
 campuses: ['海淀校区', '丰台校区']
 brief: 以民族学、人类学为特色的综合性大学，校训“美美与共、知行合一”。
 featured: false
-cover: /images/cover-muc.svg
+cover: /images/logo-muc.webp
 
 videos:
   - title: "2025 招生宣传片《美，生生不息》"

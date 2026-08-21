@@ -11,7 +11,7 @@ established: 1958
 campuses: ['东校区', '西校区', '高新校区']
 brief: 以基础理科和前沿科技见长的小而精研究型大学。
 featured: false
-cover: /images/cover-ustc.svg
+cover: /images/logo-ustc.webp
 
 videos:
   - title: "2024 招生宣传片《来科大，你就能！》"
