@@ -19,6 +19,11 @@
     'Microsoft YaHei', 'Segoe UI', Roboto, sans-serif;
 }
 
+/* 保证 hidden 属性始终生效（防止被 display:flex/grid 覆盖） */
+[hidden] {
+  display: none !important;
+}
+
 html[data-theme='dark'] {
   --bg: #0d1526;
   --surface: #16213a;
