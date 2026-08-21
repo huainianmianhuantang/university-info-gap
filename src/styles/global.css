@@ -2916,3 +2916,116 @@ html[data-theme='dark'] {
     opacity: 0.55;
   }
 }
+
+/* ---------- 手机端体验优化 ---------- */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 触屏设备：取消悬停浮起，避免点按后粘滞 */
+@media (hover: none) {
+  .university-card:hover,
+  .category-card:hover,
+  .article-card:hover,
+  .video-card:hover,
+  .material-card:hover,
+  .compare-check:hover,
+  .hero-steps a:hover,
+  .acct-chip:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  /* 防 iOS 聚焦输入框自动缩放 */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* 触控目标与按压反馈 */
+  .chip,
+  .video-filter-btn {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .quiz-option {
+    padding: 15px 18px;
+  }
+
+  .fav-btn {
+    min-height: 40px;
+  }
+
+  .university-card:active,
+  .category-card:active,
+  .article-card:active,
+  .material-card:active,
+  .compare-check:active,
+  .video-card:active,
+  .quiz-option:active,
+  .btn:active,
+  .chip:active,
+  .video-filter-btn:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+
+  /* 首页统计改为两列 */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 14px;
+    font-size: 13px;
+  }
+
+  /* CTA 按钮整宽，方便点按 */
+  .hero-cta .btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 16px;
+  }
+
+  /* 网格间距收紧 */
+  .grid {
+    gap: 12px;
+  }
+
+  .grid-universities {
+    grid-template-columns: 1fr;
+  }
+
+  /* 页面与页脚底部安全区（iPhone 横条） */
+  .page {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .site-footer {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* 标题字号微调 */
+  .page-hero h1 {
+    font-size: 26px;
+  }
+
+  .section-head h2 {
+    font-size: 20px;
+  }
+
+  /* 视频筛选工具换行 */
+  .video-tools {
+    flex-wrap: wrap;
+  }
+
+  .video-search {
+    max-width: 100%;
+  }
+
+  .hero {
+    padding: 28px 18px;
+  }
+}
