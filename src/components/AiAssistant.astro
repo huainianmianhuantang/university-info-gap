@@ -1,4 +1,5 @@
 <button class="ai-fab" id="aiFab" type="button" aria-label="打开 AI 小助手" aria-expanded="false">🤖</button>
+<button class="ai-dock" id="aiDock" hidden type="button" aria-label="展开 AI 小助手">🤖<span>小助手</span></button>
 
 <div class="ai-panel" id="aiPanel" hidden role="dialog" aria-modal="false" aria-label="AI 小助手">
   <div class="ai-head">
@@ -29,6 +30,7 @@
 <script>
   const KEY = 'ai-chat';
   const fab = document.getElementById('aiFab') as HTMLButtonElement;
+  const dock = document.getElementById('aiDock') as HTMLButtonElement;
   const panel = document.getElementById('aiPanel') as HTMLElement;
   const close = document.getElementById('aiClose') as HTMLButtonElement;
   const chips = document.getElementById('aiChips') as HTMLElement;
@@ -158,6 +160,8 @@
 
   function open() {
     panel.hidden = false;
+    dock.hidden = true;
+    fab.hidden = false;
     fab.setAttribute('aria-expanded', 'true');
     renderHistory();
     requestAnimationFrame(() => input.focus());
@@ -165,12 +169,22 @@
 
   function closePanel() {
     panel.hidden = true;
+    dock.hidden = true;
+    fab.hidden = false;
+    fab.setAttribute('aria-expanded', 'false');
+  }
+
+  function minimize() {
+    panel.hidden = true;
+    dock.hidden = false;
+    fab.hidden = true;
     fab.setAttribute('aria-expanded', 'false');
   }
 
   fab.addEventListener('click', () => (panel.hidden ? open() : closePanel()));
+  dock.addEventListener('click', () => open());
   window.addEventListener('ai:open', () => open());
-  close.addEventListener('click', closePanel);
+  close.addEventListener('click', minimize);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !panel.hidden) closePanel();
   });
@@ -218,6 +232,34 @@
   }
   .ai-fab:hover {
     transform: translateY(-3px) rotate(8deg);
+  }
+  .ai-dock {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 57;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 12px 7px;
+    border: 0;
+    border-radius: 0 18px 18px 0;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(31, 94, 255, 0.35);
+    transition: transform 0.15s ease;
+  }
+  .ai-dock:hover {
+    transform: translateY(-50%) translateX(3px);
+  }
+  .ai-dock span {
+    writing-mode: vertical-rl;
+    font-size: 11px;
+    letter-spacing: 2px;
   }
   .ai-panel {
     position: fixed;
