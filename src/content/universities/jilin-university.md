@@ -23,7 +23,7 @@ videos:
   - title: "惊现电梯公寓！揭秘吉林大学前卫校区男生宿舍"
     platform: bilibili
     id: BV1Dg411U74w
-    source: "B站转载（UP待核实）"
+    source: "B站转载（UP：小七吉大考研）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
   - title: "吉大讲堂｜国家精品在线开放课《物理与人类生活》"

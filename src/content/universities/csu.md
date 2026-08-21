@@ -23,7 +23,7 @@ videos:
   - title: "中南大学1200元研究生宿舍到底如何？入住一年后的真实感受"
     platform: bilibili
     id: BV1xX4y1x7sL
-    source: "B站转载（UP待核实）"
+    source: "B站转载（UP：Stephen_Leung）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
   - title: "【全英VLOG】在中南大学读研是种什么体验｜Presentation 支配的一天"

@@ -1,0 +1,106 @@
+{
+  "bit.md": {
+    "school": "北京理工大学",
+    "life": {
+      "bvid": "BV1PtKgziEGb",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1uF411B7cJ",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "buaa.md": {
+    "school": "北京航空航天大学",
+    "life": {
+      "bvid": "BV1ha41197Td",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1sZqVBrEB9",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "bnu.md": {
+    "school": "北京师范大学",
+    "life": {
+      "bvid": "BV1LV4y1W7wP",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1SM411a7rf",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "cau.md": {
+    "school": "中国农业大学",
+    "life": {
+      "bvid": "BV1Nq4y157N2",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1R54y1T7iW",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "cqu.md": {
+    "school": "重庆大学",
+    "life": {
+      "bvid": "BV17f4y1n7U6",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1xv411u7ht",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "csu.md": {
+    "school": "中南大学",
+    "life": {
+      "bvid": "BV1xX4y1x7sL",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1te4y147dc",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "dlut.md": {
+    "school": "大连理工大学",
+    "life": {
+      "bvid": "BV1h4421S71Y",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1Jb4y1y7CL",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "ecnu.md": {
+    "school": "华东师范大学",
+    "life": {
+      "bvid": "BV1ce4y1h7Fm",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1rY4y1K7cz",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  }
+}

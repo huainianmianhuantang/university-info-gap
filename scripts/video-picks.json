@@ -1,197 +1,509 @@
 {
   "bit.md": {
     "school": "北京理工大学",
-    "life": { "bvid": "BV1PtKgziEGb", "title": "北京理工大学宿舍我惊了！（含中关村校区/良乡校区/珠海校区宿舍简介）", "up": "北理考研在线" },
-    "study": { "bvid": "BV1uF411B7cJ", "title": "【VLOG.棠梨w】北理工期末复习周记录｜备考线性代数/概率论/六级", "up": "棠梨w" }
+    "life": {
+      "bvid": "BV1PtKgziEGb",
+      "title": "北京理工大学宿舍我惊了！（含中关村校区/良乡校区/珠海校区宿舍简介）",
+      "up": "北理考研在线"
+    },
+    "study": {
+      "bvid": "BV1uF411B7cJ",
+      "title": "【VLOG.棠梨w】北理工期末复习周记录｜备考线性代数/概率论/六级",
+      "up": "棠梨w"
+    }
   },
   "buaa.md": {
     "school": "北京航空航天大学",
-    "life": { "bvid": "BV1ha41197Td", "title": "北航研究生学姐带你沉浸式感受宿舍！【北航沙河校区西区公寓】", "up": null },
-    "study": { "bvid": "BV1sZqVBrEB9", "title": "北航vlog｜图书馆猛学/大一 midterm 极限复习", "up": null }
+    "life": {
+      "bvid": "BV1ha41197Td",
+      "title": "北航研究生学姐带你沉浸式感受宿舍！【北航沙河校区西区公寓】",
+      "up": "木木学姐北航考研"
+    },
+    "study": {
+      "bvid": "BV1sZqVBrEB9",
+      "title": "北航vlog｜图书馆猛学/大一 midterm 极限复习",
+      "up": null
+    }
   },
   "bnu.md": {
     "school": "北京师范大学",
-    "life": { "bvid": "BV1LV4y1W7wP", "title": "男寝公共浴室大合唱？北师大海华苑6人间宿舍实拍", "up": null },
-    "study": { "bvid": "BV1SM411a7rf", "title": "北京师范大学珠海校区图书馆总馆寒假实拍", "up": "乘风望山河" }
+    "life": {
+      "bvid": "BV1LV4y1W7wP",
+      "title": "男寝公共浴室大合唱？北师大海华苑6人间宿舍实拍",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1SM411a7rf",
+      "title": "北京师范大学珠海校区图书馆总馆寒假实拍",
+      "up": "乘风望山河"
+    }
   },
   "cau.md": {
     "school": "中国农业大学",
-    "life": { "bvid": "BV1Nq4y157N2", "title": "中国农业大学西校区最好的宿舍12号楼", "up": "小杨学长-" },
-    "study": { "bvid": "BV1R54y1T7iW", "title": "农农vlog#06：开学第一周，上课日常", "up": "中国农业大学" }
+    "life": {
+      "bvid": "BV1Nq4y157N2",
+      "title": "中国农业大学西校区最好的宿舍12号楼",
+      "up": "小杨学长-"
+    },
+    "study": {
+      "bvid": "BV1R54y1T7iW",
+      "title": "农农vlog#06：开学第一周，上课日常",
+      "up": "中国农业大学"
+    }
   },
   "cqu.md": {
     "school": "重庆大学",
-    "life": { "bvid": "BV17f4y1n7U6", "title": "【研究生开学】重庆大学开学的一天", "up": "泰国王老丝" },
-    "study": { "bvid": "BV1xv411u7ht", "title": "【重庆大学】一位本科生的Vlog-1 自习·上课·科研·锻炼", "up": null }
+    "life": {
+      "bvid": "BV17f4y1n7U6",
+      "title": "【研究生开学】重庆大学开学的一天",
+      "up": "泰国王老丝"
+    },
+    "study": {
+      "bvid": "BV1xv411u7ht",
+      "title": "【重庆大学】一位本科生的Vlog-1 自习·上课·科研·锻炼",
+      "up": null
+    }
   },
   "csu.md": {
     "school": "中南大学",
-    "life": { "bvid": "BV1xX4y1x7sL", "title": "中南大学1200元研究生宿舍到底如何？入住一年后的真实感受", "up": null },
-    "study": { "bvid": "BV1te4y147dc", "title": "【全英VLOG】在中南大学读研是种什么体验｜Presentation 支配的一天", "up": "Stephen_Leung" }
+    "life": {
+      "bvid": "BV1xX4y1x7sL",
+      "title": "中南大学1200元研究生宿舍到底如何？入住一年后的真实感受",
+      "up": "Stephen_Leung"
+    },
+    "study": {
+      "bvid": "BV1te4y147dc",
+      "title": "【全英VLOG】在中南大学读研是种什么体验｜Presentation 支配的一天",
+      "up": "Stephen_Leung"
+    }
   },
   "dlut.md": {
     "school": "大连理工大学",
-    "life": { "bvid": "BV1h4421S71Y", "title": "不知道哪些大工学生会住进这样的海景宿舍!", "up": "大连理工大学" },
-    "study": { "bvid": "BV1Jb4y1y7CL", "title": "【互动视频】假如你是大工学子，你的一天会是……", "up": "大连理工大学" }
+    "life": {
+      "bvid": "BV1h4421S71Y",
+      "title": "不知道哪些大工学生会住进这样的海景宿舍!",
+      "up": "大连理工大学"
+    },
+    "study": {
+      "bvid": "BV1Jb4y1y7CL",
+      "title": "【互动视频】假如你是大工学子，你的一天会是……",
+      "up": "大连理工大学"
+    }
   },
   "ecnu.md": {
     "school": "华东师范大学",
-    "life": { "bvid": "BV1ce4y1h7Fm", "title": "VLOG10｜华东师大研一开学｜白玉路豪华公寓初体验", "up": null },
-    "study": { "bvid": "BV1rY4y1K7cz", "title": "华东师范大学卓越学院-生物科学（专业体验）", "up": "华东师大本科招生" }
+    "life": {
+      "bvid": "BV1ce4y1h7Fm",
+      "title": "VLOG10｜华东师大研一开学｜白玉路豪华公寓初体验",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1rY4y1K7cz",
+      "title": "华东师范大学卓越学院-生物科学（专业体验）",
+      "up": "华东师大本科招生"
+    }
   },
   "fudan.md": {
     "school": "复旦大学",
-    "life": { "bvid": "BV1MX4y187Un", "title": "复旦，没有比这更好的本科宿舍了吧", "up": "Danny早饭吃了没" },
-    "study": { "bvid": "BV1jc411W715", "title": "体验在复旦大学上一天学，真的被惊到了！", "up": "张根源Genyuan" }
+    "life": {
+      "bvid": "BV1MX4y187Un",
+      "title": "复旦，没有比这更好的本科宿舍了吧",
+      "up": "Danny早饭吃了没"
+    },
+    "study": {
+      "bvid": "BV1jc411W715",
+      "title": "体验在复旦大学上一天学，真的被惊到了！",
+      "up": "张根源Genyuan"
+    }
   },
   "hit.md": {
     "school": "哈尔滨工业大学",
-    "life": { "bvid": "BV1eNzJYUEC9", "title": "哈工大本科生的一天vlog", "up": "哈尔滨工业大学" },
-    "study": { "bvid": "BV1FB4y1m7dG", "title": "Vlog｜哈工大计算机系女生的一天", "up": "RondaWang" }
+    "life": {
+      "bvid": "BV1eNzJYUEC9",
+      "title": "哈工大本科生的一天vlog",
+      "up": "哈尔滨工业大学"
+    },
+    "study": {
+      "bvid": "BV1FB4y1m7dG",
+      "title": "Vlog｜哈工大计算机系女生的一天",
+      "up": "RondaWang"
+    }
   },
   "huazhong-ust.md": {
     "school": "华中科技大学",
-    "life": { "bvid": "BV1M7411N7bS", "title": "华中科技大学（研究生）宿舍（之一）实览", "up": null },
-    "study": { "bvid": "BV1oZ4y1e7cx", "title": "王牌教授的高考人生——华中科技大学第一临床学院 董念国教授", "up": "华中科技大学招生办" }
+    "life": {
+      "bvid": "BV1M7411N7bS",
+      "title": "华中科技大学（研究生）宿舍（之一）实览",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1oZ4y1e7cx",
+      "title": "王牌教授的高考人生——华中科技大学第一临床学院 董念国教授",
+      "up": "华中科技大学招生办"
+    }
   },
   "hunan-university.md": {
     "school": "湖南大学",
-    "life": { "bvid": "BV1WhKczkECA", "title": "【细节控】湖南大学天马学生公寓，正在成为一件艺术品", "up": "greatre嘉瑞特" },
-    "study": { "bvid": "BV1dE41197Hp", "title": "Vlog004 湖南大学播音生的日常｜满课的日子", "up": null }
+    "life": {
+      "bvid": "BV1WhKczkECA",
+      "title": "【细节控】湖南大学天马学生公寓，正在成为一件艺术品",
+      "up": "greatre嘉瑞特"
+    },
+    "study": {
+      "bvid": "BV1dE41197Hp",
+      "title": "Vlog004 湖南大学播音生的日常｜满课的日子",
+      "up": null
+    }
   },
   "jilin-university.md": {
     "school": "吉林大学",
-    "life": { "bvid": "BV1Dg411U74w", "title": "惊现电梯公寓！揭秘吉林大学前卫校区男生宿舍", "up": null },
-    "study": { "bvid": "BV1Jz411i7fY", "title": "吉大讲堂｜国家精品在线开放课《物理与人类生活》", "up": "吉林大学" }
+    "life": {
+      "bvid": "BV1Dg411U74w",
+      "title": "惊现电梯公寓！揭秘吉林大学前卫校区男生宿舍",
+      "up": "小七吉大考研"
+    },
+    "study": {
+      "bvid": "BV1Jz411i7fY",
+      "title": "吉大讲堂｜国家精品在线开放课《物理与人类生活》",
+      "up": "吉林大学"
+    }
   },
   "lzu.md": {
     "school": "兰州大学",
-    "life": { "bvid": "BV1nW4y1r7dJ", "title": "兰大数学专业“播音系”学长的日常", "up": "兰州大学招办" },
-    "study": { "bvid": "BV1f94y1y7no", "title": "兰大物理学专业“文武双全”学姐的一天", "up": "兰州大学招办" }
+    "life": {
+      "bvid": "BV1nW4y1r7dJ",
+      "title": "兰大数学专业“播音系”学长的日常",
+      "up": "兰州大学招办"
+    },
+    "study": {
+      "bvid": "BV1f94y1y7no",
+      "title": "兰大物理学专业“文武双全”学姐的一天",
+      "up": "兰州大学招办"
+    }
   },
   "muc.md": {
     "school": "中央民族大学",
-    "life": { "bvid": "BV1zt4y1t7wJ", "title": "中央民族大学还有这么大的宿舍？民大宿舍 roomtour", "up": "雪鹅是Shire" },
-    "study": { "bvid": "BV1bL411s7Rj", "title": "【瓶】央民读研vlog#4：图书馆教室宿舍食堂四点一线", "up": null }
+    "life": {
+      "bvid": "BV1zt4y1t7wJ",
+      "title": "中央民族大学还有这么大的宿舍？民大宿舍 roomtour",
+      "up": "雪鹅是Shire"
+    },
+    "study": {
+      "bvid": "BV1bL411s7Rj",
+      "title": "【瓶】央民读研vlog#4：图书馆教室宿舍食堂四点一线",
+      "up": null
+    }
   },
   "nankai.md": {
     "school": "南开大学",
-    "life": { "bvid": "BV1YV411Y7wQ", "title": "南开女子生活图鉴", "up": "南开大学" },
-    "study": { "bvid": "BV1154y1r7B9", "title": "【南小开Vlog】早安！医学打工人！临床医学生的一天", "up": "南开大学" }
+    "life": {
+      "bvid": "BV1YV411Y7wQ",
+      "title": "南开女子生活图鉴",
+      "up": "南开大学"
+    },
+    "study": {
+      "bvid": "BV1154y1r7B9",
+      "title": "【南小开Vlog】早安！医学打工人！临床医学生的一天",
+      "up": "南开大学"
+    }
   },
   "nju.md": {
     "school": "南京大学",
-    "life": { "bvid": "BV1QM4y137fM", "title": "南大宿舍长啥样？全网最真实介绍！", "up": "南大招生小蓝鲸" },
-    "study": { "bvid": "BV1YY4y1u7d3", "title": "vlog｜南京大学｜沉浸式体验理科研究生的一天", "up": null }
+    "life": {
+      "bvid": "BV1QM4y137fM",
+      "title": "南大宿舍长啥样？全网最真实介绍！",
+      "up": "南大招生小蓝鲸"
+    },
+    "study": {
+      "bvid": "BV1YY4y1u7d3",
+      "title": "vlog｜南京大学｜沉浸式体验理科研究生的一天",
+      "up": null
+    }
   },
   "northeastern-university.md": {
     "school": "东北大学",
-    "life": { "bvid": "BV1eU3EzQENp", "title": "东北大学宿舍空调，给你清凉一夏", "up": "东北大学" },
-    "study": { "bvid": "BV1c6jyzQEEi", "title": "NEUer，请选择你的学院！（一）", "up": "东北大学" }
+    "life": {
+      "bvid": "BV1eU3EzQENp",
+      "title": "东北大学宿舍空调，给你清凉一夏",
+      "up": "东北大学"
+    },
+    "study": {
+      "bvid": "BV1c6jyzQEEi",
+      "title": "NEUer，请选择你的学院！（一）",
+      "up": "东北大学"
+    }
   },
   "npu.md": {
     "school": "西北工业大学",
-    "life": { "bvid": "BV1ag4y197aW", "title": "沉浸式体验西工大的夜生活！", "up": "西北工业大学" },
-    "study": { "bvid": "BV1hg4y1v7Ji", "title": "西工大小姐姐带你游览亚洲最大水上图书馆", "up": "Carressa" }
+    "life": {
+      "bvid": "BV1ag4y197aW",
+      "title": "沉浸式体验西工大的夜生活！",
+      "up": "西北工业大学"
+    },
+    "study": {
+      "bvid": "BV1hg4y1v7Ji",
+      "title": "西工大小姐姐带你游览亚洲最大水上图书馆",
+      "up": "Carressa"
+    }
   },
   "nudt.md": {
     "school": "国防科技大学",
-    "life": { "bvid": "BV1GA411J7s3", "title": "@各位战友：国防科大长这样，先来视频逛一逛~", "up": "国防科技大学" },
-    "study": { "bvid": "BV14Wf9BkErT", "title": "欢迎收看科大学员的一天~", "up": "国防科技大学招生办" }
+    "life": {
+      "bvid": "BV1GA411J7s3",
+      "title": "@各位战友：国防科大长这样，先来视频逛一逛~",
+      "up": "国防科技大学"
+    },
+    "study": {
+      "bvid": "BV14Wf9BkErT",
+      "title": "欢迎收看科大学员的一天~",
+      "up": "国防科技大学招生办"
+    }
   },
   "nwafu.md": {
     "school": "西北农林科技大学",
-    "life": { "bvid": "BV1KV4y1p7oX", "title": "招生减章但是西农｜新生宿舍", "up": null },
-    "study": { "bvid": "BV1Dz4y1E7ok", "title": "西北农林科技大学【水资】大三小学期实习vlog", "up": null }
+    "life": {
+      "bvid": "BV1KV4y1p7oX",
+      "title": "招生减章但是西农｜新生宿舍",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1Dz4y1E7ok",
+      "title": "西北农林科技大学【水资】大三小学期实习vlog",
+      "up": null
+    }
   },
   "ouc.md": {
     "school": "中国海洋大学",
-    "life": { "bvid": "BV1oG411t7jf", "title": "中国海洋大学（崂山校区）宿舍！！！", "up": "俟星瀚" },
-    "study": { "bvid": "BV1AHs9zNEwC", "title": "中国海洋大学师生的一天", "up": "-李-比-希-" }
+    "life": {
+      "bvid": "BV1oG411t7jf",
+      "title": "中国海洋大学（崂山校区）宿舍！！！",
+      "up": "俟星瀚"
+    },
+    "study": {
+      "bvid": "BV1AHs9zNEwC",
+      "title": "中国海洋大学师生的一天",
+      "up": "-李-比-希-"
+    }
   },
   "peking-university.md": {
     "school": "北京大学",
-    "life": { "bvid": "BV1g3kZBJE3Y", "title": "北大VLOG｜暑假留校｜带你逛北大宿舍", "up": null },
-    "study": { "bvid": "BV1MgtrexELJ", "title": "北大读博vlog｜开学啦！沉浸式自习&吃食堂借书的校园日常", "up": "皮卡张张呀" }
+    "life": {
+      "bvid": "BV1g3kZBJE3Y",
+      "title": "北大VLOG｜暑假留校｜带你逛北大宿舍",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1MgtrexELJ",
+      "title": "北大读博vlog｜开学啦！沉浸式自习&吃食堂借书的校园日常",
+      "up": "皮卡张张呀"
+    }
   },
   "renmin-university.md": {
     "school": "中国人民大学",
-    "life": { "bvid": "BV15h7P6JEJV", "title": "选择人大，校园生活过舒心！", "up": "中国人民大学" },
-    "study": { "bvid": "BV1Yu4y1w7GA", "title": "人大外国语学院 Jamie 老师《祎起来看》第一期", "up": "中国人民大学" }
+    "life": {
+      "bvid": "BV15h7P6JEJV",
+      "title": "选择人大，校园生活过舒心！",
+      "up": "中国人民大学"
+    },
+    "study": {
+      "bvid": "BV1Yu4y1w7GA",
+      "title": "人大外国语学院 Jamie 老师《祎起来看》第一期",
+      "up": "中国人民大学"
+    }
   },
   "scu.md": {
     "school": "四川大学",
-    "life": { "bvid": "BV1b441127jM", "title": "985的四川大学宿舍长啥样？萌新的报道vlog", "up": "一只汤碗" },
-    "study": { "bvid": "BV1eS4y1u7vX", "title": "【四川大学】华西口腔大四医学生｜上课的一天", "up": "奇妙碳水酱" }
+    "life": {
+      "bvid": "BV1b441127jM",
+      "title": "985的四川大学宿舍长啥样？萌新的报道vlog",
+      "up": "一只汤碗"
+    },
+    "study": {
+      "bvid": "BV1eS4y1u7vX",
+      "title": "【四川大学】华西口腔大四医学生｜上课的一天",
+      "up": "奇妙碳水酱"
+    }
   },
   "scut.md": {
     "school": "华南理工大学",
-    "life": { "bvid": "BV1mRaczjErA", "title": "【华南理工大学】一镜到底！五山校区研究生宿舍大揭秘", "up": null },
-    "study": { "bvid": "BV1Bm4y1U74J", "title": "走进华南理工大学电子与信息学院（一）", "up": "华南理工大学招生办" }
+    "life": {
+      "bvid": "BV1mRaczjErA",
+      "title": "【华南理工大学】一镜到底！五山校区研究生宿舍大揭秘",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1Bm4y1U74J",
+      "title": "走进华南理工大学电子与信息学院（一）",
+      "up": "华南理工大学招生办"
+    }
   },
   "sdu.md": {
     "school": "山东大学",
-    "life": { "bvid": "BV1dJ411y76T", "title": "带你走进山东大学，走进青岛校区（宿舍篇+校园篇）", "up": null },
-    "study": { "bvid": "BV1yVptzoEyp", "title": "沉浸式体验985大学生的一天，孤独但充实", "up": null }
+    "life": {
+      "bvid": "BV1dJ411y76T",
+      "title": "带你走进山东大学，走进青岛校区（宿舍篇+校园篇）",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1yVptzoEyp",
+      "title": "沉浸式体验985大学生的一天，孤独但充实",
+      "up": null
+    }
   },
   "seu.md": {
     "school": "东南大学",
-    "life": { "bvid": "BV1kt4y1E7S3", "title": "东南大学宿舍", "up": null },
-    "study": { "bvid": "BV1b841147J4", "title": "东南大学学习场所推荐（Study Everybody University）", "up": "富叉叉乐哈哈" }
+    "life": {
+      "bvid": "BV1kt4y1E7S3",
+      "title": "东南大学宿舍",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1b841147J4",
+      "title": "东南大学学习场所推荐（Study Everybody University）",
+      "up": "富叉叉乐哈哈"
+    }
   },
   "sjtu.md": {
     "school": "上海交通大学",
-    "life": { "bvid": "BV1GZ4y1T7cZ", "title": "交大Vlog｜研究生报道第一天｜二人间宿舍/吃食堂/校园生活", "up": null },
-    "study": { "bvid": "BV1Ja4y1D73c", "title": "交大医学生的一天｜学习vlog｜study with me", "up": null }
+    "life": {
+      "bvid": "BV1GZ4y1T7cZ",
+      "title": "交大Vlog｜研究生报道第一天｜二人间宿舍/吃食堂/校园生活",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1Ja4y1D73c",
+      "title": "交大医学生的一天｜学习vlog｜study with me",
+      "up": null
+    }
   },
   "sysu.md": {
     "school": "中山大学",
-    "life": { "bvid": "BV1w3411q7JA", "title": "【中山大学】宿舍还可以这么装修 | 参观我的宿舍", "up": null },
-    "study": { "bvid": "BV1XNSSY4Ebv", "title": "欢迎收看中山大学大一新生的一天！", "up": "爱学习历史的Simon" }
+    "life": {
+      "bvid": "BV1w3411q7JA",
+      "title": "【中山大学】宿舍还可以这么装修 | 参观我的宿舍",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1XNSSY4Ebv",
+      "title": "欢迎收看中山大学大一新生的一天！",
+      "up": "爱学习历史的Simon"
+    }
   },
   "tju.md": {
     "school": "天津大学",
-    "life": { "bvid": "BV19e4y1Z7fr", "title": "天津大学研究生沉浸式开学｜豪华宿舍/北洋园鸭/超大图书馆", "up": "天津大学林小生" },
-    "study": { "bvid": "BV1iuYizZEKv", "title": "天津大学研究生日常，看完你还想考研吗？", "up": "天津大学林小生" }
+    "life": {
+      "bvid": "BV19e4y1Z7fr",
+      "title": "天津大学研究生沉浸式开学｜豪华宿舍/北洋园鸭/超大图书馆",
+      "up": "天津大学林小生"
+    },
+    "study": {
+      "bvid": "BV1iuYizZEKv",
+      "title": "天津大学研究生日常，看完你还想考研吗？",
+      "up": "天津大学林小生"
+    }
   },
   "tongji.md": {
     "school": "同济大学",
-    "life": { "bvid": "BV1PfCjBFE3Y", "title": "同济大学最好宿舍没有之一", "up": "啊哈辉呀" },
-    "study": { "bvid": "BV1WM411o7uT", "title": "同济男大学生的一天", "up": "小何Ayers" }
+    "life": {
+      "bvid": "BV1PfCjBFE3Y",
+      "title": "同济大学最好宿舍没有之一",
+      "up": "啊哈辉呀"
+    },
+    "study": {
+      "bvid": "BV1WM411o7uT",
+      "title": "同济男大学生的一天",
+      "up": "小何Ayers"
+    }
   },
   "tsinghua-university.md": {
     "school": "清华大学",
-    "life": { "bvid": "BV1KC736sEEr", "title": "我住进了清华大学最好的宿舍！", "up": "银河第一纯洁" },
-    "study": { "bvid": "BV1zF95YmESs", "title": "VLOG04｜和我一起在清华上一天学吧", "up": "圈宁CeoxNim" }
+    "life": {
+      "bvid": "BV1KC736sEEr",
+      "title": "我住进了清华大学最好的宿舍！",
+      "up": "银河第一纯洁"
+    },
+    "study": {
+      "bvid": "BV1zF95YmESs",
+      "title": "VLOG04｜和我一起在清华上一天学吧",
+      "up": "圈宁CeoxNim"
+    }
   },
   "uestc.md": {
     "school": "电子科技大学",
-    "life": { "bvid": "BV17ju26nEWy", "title": "成电学子“精彩各不同”的一天系列vlog（12）", "up": "电子科技大学" },
-    "study": { "bvid": "BV19E411C7bi", "title": "【电子科技大学】《电路分析基础》国家级精品课程", "up": "电子科技大学" }
+    "life": {
+      "bvid": "BV17ju26nEWy",
+      "title": "成电学子“精彩各不同”的一天系列vlog（12）",
+      "up": "电子科技大学"
+    },
+    "study": {
+      "bvid": "BV19E411C7bi",
+      "title": "【电子科技大学】《电路分析基础》国家级精品课程",
+      "up": "电子科技大学"
+    }
   },
   "ustc.md": {
     "school": "中国科学技术大学",
-    "life": { "bvid": "BV1we411R7e6", "title": "来看中国科大版六人间宿舍", "up": "中国科学技术大学" },
-    "study": { "bvid": "BV1PKGAzFEtB", "title": "中科大，请选择你的学院（一）", "up": "中国科学技术大学" }
+    "life": {
+      "bvid": "BV1we411R7e6",
+      "title": "来看中国科大版六人间宿舍",
+      "up": "中国科学技术大学"
+    },
+    "study": {
+      "bvid": "BV1PKGAzFEtB",
+      "title": "中科大，请选择你的学院（一）",
+      "up": "中国科学技术大学"
+    }
   },
   "wuhan-university.md": {
     "school": "武汉大学",
-    "life": { "bvid": "BV1Uo4y1X7ZQ", "title": "上新了，武大湖滨新宿舍！", "up": "武汉大学" },
-    "study": { "bvid": "BV1WD4y1272z", "title": "你知道武汉大学图书馆长啥样吗？", "up": "武汉大学" }
+    "life": {
+      "bvid": "BV1Uo4y1X7ZQ",
+      "title": "上新了，武大湖滨新宿舍！",
+      "up": "武汉大学"
+    },
+    "study": {
+      "bvid": "BV1WD4y1272z",
+      "title": "你知道武汉大学图书馆长啥样吗？",
+      "up": "武汉大学"
+    }
   },
   "xjtu.md": {
     "school": "西安交通大学",
-    "life": { "bvid": "BV1JsTM6CEGZ", "title": "云游西交｜第一人称视角打开西交校园", "up": "西安交通大学" },
-    "study": { "bvid": "BV1jwKQ6xEPU", "title": "西安交通大学未来技术学院研究生招生宣传片", "up": "西安交通大学" }
+    "life": {
+      "bvid": "BV1JsTM6CEGZ",
+      "title": "云游西交｜第一人称视角打开西交校园",
+      "up": "西安交通大学"
+    },
+    "study": {
+      "bvid": "BV1jwKQ6xEPU",
+      "title": "西安交通大学未来技术学院研究生招生宣传片",
+      "up": "西安交通大学"
+    }
   },
   "xmu.md": {
     "school": "厦门大学",
-    "life": { "bvid": "BV1JL411m7AP", "title": "在厦大的一天如何度过！", "up": null },
-    "study": { "bvid": "BV1K24y147fM", "title": "在厦大的一天，希望不要卷到你！", "up": "Annyinn" }
+    "life": {
+      "bvid": "BV1JL411m7AP",
+      "title": "在厦大的一天如何度过！",
+      "up": null
+    },
+    "study": {
+      "bvid": "BV1K24y147fM",
+      "title": "在厦大的一天，希望不要卷到你！",
+      "up": "Annyinn"
+    }
   },
   "zhejiang-university.md": {
     "school": "浙江大学",
-    "life": { "bvid": "BV1nx411o7J1", "title": "浙大vlog｜在浙大学习生活是一种怎样的体验？", "up": "浙江大学" },
-    "study": { "bvid": "BV1uQ4y1b7Wb", "title": "一进到底浙江大学图书馆主馆！走进书香浙大", "up": "浙江大学" }
+    "life": {
+      "bvid": "BV1nx411o7J1",
+      "title": "浙大vlog｜在浙大学习生活是一种怎样的体验？",
+      "up": "浙江大学"
+    },
+    "study": {
+      "bvid": "BV1uQ4y1b7Wb",
+      "title": "一进到底浙江大学图书馆主馆！走进书香浙大",
+      "up": "浙江大学"
+    }
   }
 }

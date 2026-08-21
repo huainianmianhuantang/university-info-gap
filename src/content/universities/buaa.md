@@ -23,7 +23,7 @@ videos:
   - title: "北航研究生学姐带你沉浸式感受宿舍！【北航沙河校区西区公寓】"
     platform: bilibili
     id: BV1ha41197Td
-    source: "B站转载（UP待核实）"
+    source: "B站转载（UP：木木学姐北航考研）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
   - title: "北航vlog｜图书馆猛学/大一 midterm 极限复习"

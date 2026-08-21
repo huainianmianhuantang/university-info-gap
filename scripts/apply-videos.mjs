@@ -39,7 +39,7 @@ for (const [file, p] of Object.entries(picks)) {
   const fp = path.join(dir, file);
   let text = fs.readFileSync(fp, 'utf8');
   const gitText = execSync(
-    `git show HEAD:src/content/universities/${file}`,
+    `git show d681cd9:src/content/universities/${file}`,
     { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
   ).trim();
   const gitFm = gitText.match(/^---\n([\s\S]*?)\n---/);

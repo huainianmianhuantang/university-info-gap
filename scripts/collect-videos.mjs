@@ -10,22 +10,22 @@ const headers = {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function getJson(url, tries = 4) {
+async function getJson(url, tries = 2) {
   for (let i = 0; i < tries; i++) {
     try {
-      const res = await fetch(url, { headers });
+      const res = await fetch(url, { headers, signal: AbortSignal.timeout(8000) });
       if (res.status === 412) {
-        await sleep(6000 * (i + 1));
+        await sleep(5000 * (i + 1));
         continue;
       }
       const json = await res.json();
       if (json.code === -412) {
-        await sleep(6000 * (i + 1));
+        await sleep(5000 * (i + 1));
         continue;
       }
       return json;
     } catch (e) {
-      await sleep(3000 * (i + 1));
+      await sleep(2500 * (i + 1));
     }
   }
   return null;
@@ -52,17 +52,29 @@ if (process.argv.includes('--probe')) {
 }
 
 const results = {};
+const verifiedPath = path.resolve('scripts/video-verified.json');
+if (fs.existsSync(verifiedPath)) {
+  Object.assign(results, JSON.parse(fs.readFileSync(verifiedPath, 'utf8')));
+}
 let issues = 0;
 let done = 0;
 const total = Object.values(picks).reduce(
   (n, p) => n + (p.life ? 1 : 0) + (p.study ? 1 : 0),
   0,
 );
+const limitArg = process.argv.indexOf('--limit');
+const limit = limitArg !== -1 ? Number(process.argv[limitArg + 1]) : Infinity;
+let processed = 0;
 for (const [file, p] of Object.entries(picks)) {
+  if (processed >= limit) break;
   results[file] = { school: p.school, life: null, study: null };
   for (const slot of ['life', 'study']) {
     const v = p[slot];
     if (!v) continue;
+    if (results[file]?.[slot]?.bvid && results[file][slot].title !== '(API FAIL)') {
+      done++;
+      continue;
+    }
     const json = await getJson(
       `https://api.bilibili.com/x/web-interface/view?bvid=${v.bvid}`,
     );
@@ -76,6 +88,7 @@ for (const [file, p] of Object.entries(picks)) {
     const title = json.data.title || '';
     const author = json.data.owner?.name || '';
     results[file][slot] = { bvid: v.bvid, title, author };
+    fs.writeFileSync(verifiedPath, JSON.stringify(results, null, 2), 'utf8');
     const flag = v.up && !author.includes(v.up) ? ' <<MISMATCH' : '';
     if (flag) issues++;
     console.log(
@@ -85,11 +98,8 @@ for (const [file, p] of Object.entries(picks)) {
     console.log(`[progress ${done}/${total}]`);
     await sleep(1400);
   }
+  processed++;
+  fs.writeFileSync(verifiedPath, JSON.stringify(results, null, 2), 'utf8');
 }
 
-fs.writeFileSync(
-  path.resolve('scripts/video-verified.json'),
-  JSON.stringify(results, null, 2),
-  'utf8',
-);
-console.log(`Done. issues=${issues}`);
+console.log(`Partial done (processed ${processed} schools). issues=${issues}`);
