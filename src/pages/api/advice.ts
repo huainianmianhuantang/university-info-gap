@@ -2,6 +2,14 @@ import { QUESTIONS } from '../../lib/recommender';
 
 export const prerender = false;
 
+// 运行时从环境变量读取配置（不把 Key 打进构建产物）。
+// 开发时加载项目根目录 .env；生产环境由部署平台注入环境变量。
+try {
+  process.loadEnvFile?.();
+} catch {
+  /* .env 不存在时忽略（生产由平台注入） */
+}
+
 interface AdviceBody {
   answers?: Record<string, number>;
   result?: {
@@ -58,12 +66,9 @@ function buildPrompt(body: AdviceBody): string {
 }
 
 export async function POST({ request }): Promise<Response> {
-  const key = import.meta.env.AI_API_KEY as string | undefined;
-  const base = ((import.meta.env.AI_BASE_URL as string) || 'https://api.deepseek.com').replace(
-    /\/$/,
-    '',
-  );
-  const model = (import.meta.env.AI_MODEL as string) || 'deepseek-chat';
+  const key = process.env.AI_API_KEY as string | undefined;
+  const base = (process.env.AI_BASE_URL || 'https://api.deepseek.com').replace(/\/$/, '');
+  const model = process.env.AI_MODEL || 'deepseek-chat';
 
   if (!key) {
     return json({ error: 'AI 未配置：请在 .env 中填写 AI_API_KEY' });

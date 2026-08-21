@@ -64,12 +64,13 @@ npm run preview
 
 ## 部署指南
 
-本站为纯静态站点（Astro static），可部署到任意静态托管：
+本站为 Astro 站点，已接入 `@astrojs/node`（standalone）适配器：普通页面构建为静态文件，`/api/advice` 为服务端接口。因此部署需要能运行 Node 的环境：
 
-- **Vercel / Netlify / Cloudflare Pages**：导入仓库，构建命令 `npm run build`，输出目录 `dist`。
-- **GitHub Pages**：构建后把 `dist/` 推送到 `gh-pages` 分支（注意配置 `SITE.url` 为站点地址）。
+- **本机生产预览**：`npm run build` 后执行 `node dist/server/entry.mjs`（默认端口 4321，可用环境变量 `PORT`/`HOST` 调整）。
+- **VPS / 云服务器 / 容器**：构建后以 Node 运行 `dist/server/entry.mjs`，用 Nginx/Caddy 反代；配置 `PORT`、`HOST`、`PUBLIC_SITE_URL` 与 `.env` 中的 `AI_API_KEY`。
+- **Vercel / Netlify / Cloudflare Pages**：导入仓库即可，构建命令 `npm run build`，输出目录 `dist`；如需在边缘函数中调用 AI，可后续替换为对应平台的适配器（如 `@astrojs/vercel`）。
 
-部署前把 `src/config.ts` 中的 `SITE.url` 改为正式域名，`CONTACT` 改为真实联系方式。
+部署前设置环境变量 `PUBLIC_SITE_URL` 为正式域名，并把 `src/config.ts` 中的 `CONTACT` 改为真实联系方式。
 
 ## 目录结构
 

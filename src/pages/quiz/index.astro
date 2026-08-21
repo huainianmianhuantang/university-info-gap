@@ -109,6 +109,42 @@ const schools = (await getCollection('universities')).map((u) => ({
       if (savedAnswers && savedResult) {
         Object.assign(state.answers, savedAnswers);
         showResult(savedResult);
+        if (savedResult.advice?.provider !== 'llm') {
+          const result = savedResult.result;
+          fetch('/api/advice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              answers: state.answers,
+              result: {
+                dims: result.dims,
+                majors: result.majors,
+                schools: result.schools.map((s) => ({
+                  name: s.profile?.name ?? s.name,
+                  majors: s.majors,
+                  city: s.profile?.city ?? s.city,
+                })),
+              },
+            }),
+          })
+            .then((r) => r.json())
+            .then((data) => {
+              if (data && data.text) {
+                const upgraded = {
+                  result,
+                  advice: { provider: 'llm', text: data.text, points: data.points ?? [data.text] },
+                  at: Date.now(),
+                };
+                try {
+                  localStorage.setItem(LS_RESULT, JSON.stringify(upgraded));
+                } catch {
+                  /* ignore */
+                }
+                showResult(upgraded);
+              }
+            })
+            .catch(() => {});
+        }
         return true;
       }
       if (savedAnswers) {
