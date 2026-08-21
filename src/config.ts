@@ -5,7 +5,7 @@ export const SITE = {
   title: '象牙塔透视镜',
   description:
     '象牙塔透视镜：收集 985 高校的转专业政策、二次选拔、培养计划、寝室上课实况与学习资料，帮你在填报志愿前看清每一所大学。',
-  url: import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321',
+  url: import.meta.env.PUBLIC_SITE_URL ?? 'https://ivory-tower-xray.pages.dev',
 };
 
 /**

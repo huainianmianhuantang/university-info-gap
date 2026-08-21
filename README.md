@@ -85,9 +85,14 @@ npm run preview
    - `AI_API_KEY`（必填，DeepSeek Key，勾选 Encrypt）
    - `AI_BASE_URL=https://api.deepseek.com`（可选）
    - `AI_MODEL=deepseek-chat`（可选）
-   - `PUBLIC_SITE_URL=https://你的项目名.pages.dev`（必填，影响 canonical / OG / sitemap / robots 中的站点地址）
-5. 部署完成后，用 `PUBLIC_SITE_URL` 对应的地址验证首页与 `/quiz/` 的 AI 建议接口。
+   - `PUBLIC_SITE_URL`（可选，见下方“站点地址”说明）
+5. 部署完成后，验证首页与 `/quiz/` 的 AI 建议接口。
 6. 绑定自定义域名（可选）：Pages 项目 → Custom domains。
+
+> **站点地址（canonical / OG / sitemap / robots）**：代码中默认写的是 `https://ivory-tower-xray.pages.dev`。
+> 若你创建 Pages 项目时用的就是这个名称，无需任何额外配置；
+> 若用了其他名称，二选一：① 在环境变量中设置 `PUBLIC_SITE_URL=https://你的项目名.pages.dev`；② 修改 `src/config.ts` 与 `astro.config.mjs` 中的地址后重新部署。
+> 绑定自定义域名后，把 `PUBLIC_SITE_URL` 改成正式域名即可。
 
 ### 本机开发 / 预览
 

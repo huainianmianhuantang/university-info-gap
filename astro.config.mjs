@@ -2,7 +2,7 @@ import { defineConfig, envField } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
-  site: 'http://localhost:4321',
+  site: 'https://ivory-tower-xray.pages.dev',
   adapter: cloudflare(),
   compressHTML: true,
   env: {
