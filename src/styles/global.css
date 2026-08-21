@@ -202,6 +202,21 @@ svg {
   font-size: 17px;
 }
 
+.nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 4px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
 @media (max-width: 860px) {
   .nav-toggle {
     display: block;
@@ -246,6 +261,22 @@ svg {
 
 .page-hero {
   padding: 44px 0 28px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.breadcrumb a {
+  color: var(--primary);
+}
+
+.breadcrumb span {
+  color: var(--text-secondary);
 }
 
 .page-hero h1 {

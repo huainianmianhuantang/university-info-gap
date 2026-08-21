@@ -11,7 +11,7 @@ established: 1895
 campuses: ['卫津路校区', '北洋园校区']
 brief: 中国第一所现代大学，工科传统深厚，校训“实事求是”。
 featured: false
-cover: /images/logo-tju.webp
+cover: /images/logo-tju-512.webp
 
 videos:
   - title: "2022 招生宣传片《我们的一天》"

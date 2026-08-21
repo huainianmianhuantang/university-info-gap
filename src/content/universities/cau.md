@@ -11,7 +11,7 @@ established: 1905
 campuses: ['东校区', '西校区']
 brief: 农业与生命科学领域的顶尖学府，校训“解民生之多艰，育天下之英才”。
 featured: false
-cover: /images/logo-cau.webp
+cover: /images/logo-cau-512.webp
 
 videos:
   - title: "2024 招生宣传片《看见》"

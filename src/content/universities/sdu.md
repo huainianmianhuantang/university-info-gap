@@ -11,7 +11,7 @@ established: 1901
 campuses: ['中心校区', '洪家楼校区', '趵突泉校区', '千佛山校区', '软件园校区', '兴隆山校区']
 brief: 文史哲传统深厚的综合性大学，校训“学无止境、气有浩然”。
 featured: false
-cover: /images/logo-sdu.webp
+cover: /images/logo-sdu-512.webp
 
 videos:
   - title: "本科招生宣传片《朝夕遇见你》"

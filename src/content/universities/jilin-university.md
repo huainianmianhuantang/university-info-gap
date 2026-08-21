@@ -11,7 +11,7 @@ established: 1946
 campuses: ['前卫校区', '南岭校区', '新民校区', '朝阳校区', '南湖校区', '和平校区']
 brief: 学科门类齐全的综合性大学，校训“求实创新、励志图强”。
 featured: false
-cover: /images/logo-jilin-university.webp
+cover: /images/logo-jilin-university-512.webp
 
 videos:
   - title: "2024 招生宣传片《青春向北》"

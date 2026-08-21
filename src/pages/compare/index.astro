@@ -36,6 +36,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         也可以直接在地址栏追加参数，如 <code>?u=peking-university,tsinghua-university</code>。
       </p>
       <button class="btn btn-ghost" id="copyCompareLink" type="button">复制对比链接</button>
+      <button class="btn btn-ghost" id="copySummary" type="button" hidden>复制差异摘要</button>
     </div>
 
     <div id="compareApp">
@@ -54,6 +55,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const empty = document.getElementById('compareEmpty');
   const table = document.getElementById('compareTable');
   const copyBtn = document.getElementById('copyCompareLink');
+  const summaryBtn = document.getElementById('copySummary');
 
   copyBtn?.addEventListener('click', () => {
     navigator.clipboard
@@ -99,6 +101,7 @@ const schools = (await getCollection('universities')).map((u) => ({
     ];
     const maxVideos = Math.max(...picked.map((s) => s.videos), 1);
     const maxMaterials = Math.max(...picked.map((s) => s.materials), 1);
+    let summaryLines = [`【${picked.map((s) => s.name).join(' vs ')} 对比摘要】`];
 
     const head = document.createElement('thead');
     const hr = document.createElement('tr');
@@ -122,6 +125,11 @@ const schools = (await getCollection('universities')).map((u) => ({
       tr.appendChild(tdLabel);
       const values = picked.map((s) => String(fn(s) ?? '').trim());
       const allSame = values.every((v) => v === values[0]);
+      if (!allSame && label !== '学校' && label !== '英文名' && label !== '详情页') {
+        summaryLines.push(
+          `- ${label}：${picked.map((s, i) => `${s.name} ${values[i]}`).join('；')}`,
+        );
+      }
       picked.forEach((s) => {
         const td = document.createElement('td');
         td.innerHTML = fn(s);
@@ -152,6 +160,22 @@ const schools = (await getCollection('universities')).map((u) => ({
       body.appendChild(tr);
     });
     table.appendChild(body);
+
+    summaryLines.push(`- 视频：${picked.map((s) => `${s.name} ${s.videos}`).join('；')}`);
+    summaryLines.push(`- 资料：${picked.map((s) => `${s.name} ${s.materials}`).join('；')}`);
+    const summary = summaryLines.join('\n');
+    if (summaryBtn) {
+      summaryBtn.hidden = false;
+      summaryBtn.addEventListener('click', () => {
+        navigator.clipboard
+          ?.writeText(summary)
+          .then(() => {
+            summaryBtn.textContent = '已复制 ✓';
+            setTimeout(() => (summaryBtn.textContent = '复制差异摘要'), 1600);
+          })
+          .catch(() => {});
+      });
+    }
 
     const legend = document.createElement('p');
     legend.className = 'small muted compare-legend';

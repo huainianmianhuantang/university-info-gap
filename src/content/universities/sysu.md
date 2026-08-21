@@ -11,7 +11,7 @@ established: 1924
 campuses: ['南校园', '北校园', '东校园', '深圳校区', '珠海校区']
 brief: 孙中山先生创办的综合性大学，校训“博学、审问、慎思、明辨、笃行”。
 featured: false
-cover: /images/logo-sysu.webp
+cover: /images/logo-sysu-512.webp
 
 videos:
   - title: "2025 招生微电影《一个理由》"

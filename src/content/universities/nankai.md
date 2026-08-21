@@ -11,7 +11,7 @@ established: 1919
 campuses: ['八里台校区', '津南校区']
 brief: 文理并重的百年名校，周恩来总理母校。
 featured: false
-cover: /images/logo-nankai.webp
+cover: /images/logo-nankai-512.webp
 
 videos:
   - title: "2019 招生宣传片《遇见南开》"

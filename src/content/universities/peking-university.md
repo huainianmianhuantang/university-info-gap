@@ -11,7 +11,7 @@ established: 1898
 campuses: ['燕园校区']
 brief: 中国近现代第一所国立综合性大学，人文社科与基础理科实力顶尖。
 featured: true
-cover: /images/logo-peking-university.webp
+cover: /images/logo-peking-university-512.webp
 
 videos:
   - title: "2024 招生宣传片《一朵小花》"

@@ -11,7 +11,7 @@ established: 1905
 campuses: ['邯郸校区', '江湾校区', '枫林校区', '张江校区']
 brief: 文、理、医、经管全面发展的综合性名校，校训“博学而笃志，切问而近思”。
 featured: false
-cover: /images/logo-fudan.webp
+cover: /images/logo-fudan-512.webp
 
 videos:
   - title: "2026 本科生招生宣传片《无用之用》"

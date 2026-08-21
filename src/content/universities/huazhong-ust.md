@@ -11,7 +11,7 @@ established: 1952
 campuses: [主校区, 同济校区]
 brief: 2000 年合并组建的工科强校，机械、光电、医学方向突出。
 featured: true
-cover: /images/logo-huazhong-ust.webp
+cover: /images/logo-huazhong-ust-512.webp
 
 transferPolicy:
   summary: 工科专业间转专业机会较多，转入口径与名额因学院而异。（示例内容，需以教务通知为准）

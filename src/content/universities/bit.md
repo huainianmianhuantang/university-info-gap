@@ -11,7 +11,7 @@ established: 1940
 campuses: ['中关村校区', '良乡校区']
 brief: 国防特色工科强校，兵器、车辆、信息方向突出。
 featured: false
-cover: /images/logo-bit.webp
+cover: /images/logo-bit-512.webp
 
 videos:
   - title: "2023 招生宣传片《北极星》"

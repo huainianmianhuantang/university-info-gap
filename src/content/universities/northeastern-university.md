@@ -11,7 +11,7 @@ established: 1923
 campuses: [南湖校区, 浑南校区]
 brief: 东北老牌工科强校，自动化、冶金、计算机方向突出。
 featured: false
-cover: /images/logo-northeastern-university.webp
+cover: /images/logo-northeastern-university-512.webp
 
 dorm:
   summary: 宿舍情况详见资料库《东北大学宿舍床尺寸》与新生入学资料（夸克网盘，提取码 DKVL），床铺规格与校区差异以资料原文为准。

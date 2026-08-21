@@ -11,7 +11,7 @@ established: 1903
 campuses: ['南校区', '北校区']
 brief: 坐拥千年学府岳麓书院传承的综合性大学，校训“实事求是、敢为人先”。
 featured: false
-cover: /images/logo-hunan-university.webp
+cover: /images/logo-hunan-university-512.webp
 
 videos:
   - title: "2018 招生宣传片《约麓山·千年学府等你来》"

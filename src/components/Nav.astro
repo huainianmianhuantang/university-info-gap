@@ -6,7 +6,7 @@ const links = [
   { href: '/universities/', label: '大学库' },
   { href: '/resources/', label: '资料库' },
   { href: '/quiz/', label: '选校测评' },
-  { href: '/favorites/', label: '我的收藏' },
+  { href: '/favorites/', label: '我的收藏', badge: true },
   { href: '/articles/', label: '专题文章' },
   { href: '/submit/', label: '我要投稿' },
   { href: '/about/', label: '关于本站' },
@@ -36,6 +36,7 @@ const currentPath = Astro.url.pathname;
           }
         >
           {link.label}
+          {link.badge && <span class="nav-badge" id="favNavBadge" hidden></span>}
         </a>
       ))}
     </nav>
@@ -77,4 +78,20 @@ const currentPath = Astro.url.pathname;
       document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     applyTheme(next);
   });
+
+  const favBadge = document.getElementById('favNavBadge');
+  if (favBadge) {
+    const updateBadge = () => {
+      try {
+        const n = JSON.parse(localStorage.getItem('fav-universities') || '[]').length;
+        favBadge.textContent = n > 0 ? n : '';
+        favBadge.hidden = n === 0;
+      } catch {
+        favBadge.hidden = true;
+      }
+    };
+    updateBadge();
+    window.addEventListener('storage', updateBadge);
+    window.addEventListener('focus', updateBadge);
+  }
 </script>

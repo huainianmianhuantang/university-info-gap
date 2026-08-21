@@ -48,6 +48,8 @@ const missingSections = SECTIONS.filter((s) => {
 });
 
 const allUniversities = await getCollection('universities');
+const withVideosCount = allUniversities.filter((x) => x.data.videos.length > 0).length;
+const withMaterialsCount = allUniversities.filter((x) => x.data.materials.length > 0).length;
 const related = allUniversities
   .filter((x) => x.id !== university.id)
   .sort((a, b) => {
@@ -75,12 +77,31 @@ const related = allUniversities
     },
     memberOf: u.levels,
   })}></script>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: `${SITE.url.replace(/\/$/, '')}/` },
+      { '@type': 'ListItem', position: 2, name: '大学库', item: `${SITE.url.replace(/\/$/, '')}/universities/` },
+      { '@type': 'ListItem', position: 3, name: u.name },
+    ],
+  })}></script>
   <div class="container page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="/">首页</a> › <a href="/universities/">大学库</a> › <span>{u.name}</span>
+    </nav>
     <div class="uni-hero">
-      <img class="uni-emblem" src={u.cover} alt={`${u.name} 校徽`} loading="eager" />
+      <img class="uni-emblem" src={u.cover} alt={`${u.name} 校徽`} loading="eager" width="96" height="96" />
       <div class="uni-hero-info">
       <h1>{u.name}</h1>
       <button class="fav-btn" id="favBtn" type="button" aria-pressed="false">☆ 收藏</button>
+      <a class="btn btn-ghost report-btn" href={`/submit/?school=${encodeURIComponent(u.name)}`}>
+        ✎ 纠错 / 补充此页
+      </a>
+      <button class="btn btn-ghost" id="detailCompareBtn" type="button" data-slug={university.id}>
+        ＋ 加入对比
+      </button>
+      <a class="btn btn-primary" id="detailCompareLink" href="/compare/" hidden>去对比 →</a>
       {u.nameEn && <div class="uni-en">{u.nameEn}</div>}
       <div class="chip-row">
         {u.levels.map((level) => <span class={`chip level-${level}`}>{level}</span>)}
@@ -241,6 +262,9 @@ const related = allUniversities
     {missingSections.length > 0 && (
       <section class="card section-block">
         <h2>待补充信息</h2>
+        <p class="small muted" style="margin:0 0 10px;">
+          全站进度：学校概况 {allUniversities.length}/{allUniversities.length} · 校园/政策视频 {withVideosCount}/{allUniversities.length} · 学习资料 {withMaterialsCount}/{allUniversities.length}
+        </p>
         <p>
           以下栏目尚未收录内容，欢迎
           <a href="/submit/">投稿</a>补充一手信息（政策原文、实拍、资料等）：
@@ -322,4 +346,42 @@ const related = allUniversities
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  const cmpBtn = document.getElementById('detailCompareBtn');
+  const cmpLink = document.getElementById('detailCompareLink');
+  const COMPARE_KEY = 'compare-list';
+  let cmpList = [];
+  try {
+    cmpList = JSON.parse(localStorage.getItem(COMPARE_KEY) || '[]');
+  } catch {
+    cmpList = [];
+  }
+  const cmpSlug = cmpBtn?.dataset.slug;
+
+  function updateCmp() {
+    if (!cmpBtn) return;
+    const inList = cmpSlug && cmpList.includes(cmpSlug);
+    cmpBtn.textContent = inList ? `已加入对比 (${cmpList.length}/3)` : '＋ 加入对比';
+    if (cmpLink) {
+      cmpLink.hidden = cmpList.length < 2;
+      cmpLink.href = `/compare/?u=${cmpList.join(',')}`;
+    }
+  }
+
+  cmpBtn?.addEventListener('click', () => {
+    if (!cmpSlug) return;
+    if (cmpList.includes(cmpSlug)) {
+      cmpList = cmpList.filter((x) => x !== cmpSlug);
+    } else {
+      if (cmpList.length >= 3) cmpList.shift();
+      cmpList.push(cmpSlug);
+    }
+    try {
+      localStorage.setItem(COMPARE_KEY, JSON.stringify(cmpList));
+    } catch {
+      /* ignore */
+    }
+    updateCmp();
+  });
+  updateCmp();
 </script>

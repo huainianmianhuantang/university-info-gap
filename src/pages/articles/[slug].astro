@@ -17,6 +17,9 @@ const { Content } = await render(article);
 
 <BaseLayout title={article.data.title} description={article.data.summary}>
   <div class="container page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="/">首页</a> › <a href="/articles/">专题文章</a> › <span>{article.data.title}</span>
+    </nav>
     <article class="card article-single">
       <h1>{article.data.title}</h1>
       <div class="meta-line">

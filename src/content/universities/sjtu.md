@@ -11,7 +11,7 @@ established: 1896
 campuses: ['闵行校区', '徐汇校区']
 brief: 百年工科名校，工科、医学、经管并举。
 featured: false
-cover: /images/logo-sjtu.webp
+cover: /images/logo-sjtu-512.webp
 
 videos:
   - title: "2019 招生宣传片"

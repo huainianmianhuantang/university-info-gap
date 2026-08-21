@@ -11,7 +11,7 @@ established: 1938
 campuses: ['友谊校区', '长安校区']
 brief: 以航空、航天、航海“三航”为特色的国防工科强校。
 featured: false
-cover: /images/logo-npu.webp
+cover: /images/logo-npu-512.webp
 
 videos:
   - title: "2024 招生宣传片《铸·锋芒》"

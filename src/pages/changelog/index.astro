@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const updates = [
+  {
+    date: '2026-08-21',
+    title: '批量优化',
+    items: [
+      '校徽图片压缩至 512px，页面加载明显变快',
+      '新增面包屑导航与站内全站搜索',
+      '测评结果支持分享链接与冲/稳/保分档',
+      '深色模式、收藏夹对比/导出、视频学校搜索',
+      '详情页可一键纠错/补充、加入对比',
+    ],
+  },
+  {
+    date: '2026-08-20',
+    title: '核心功能上线',
+    items: [
+      '39 所 985 高校详情页与官方校徽',
+      '116 条校园/政策视频，按宣传片/宿舍生活/学习日常分类',
+      '选校测评 + DeepSeek AI 建议',
+      '大学对比页（2-3 所并排、差异高亮）',
+      '东北大学完整样板页（培养方案/寝室/上课/29 份资料）',
+    ],
+  },
+  {
+    date: '2026-08-19',
+    title: '站点框架',
+    items: ['资料库按大学/类别归档', '夸克网盘资料迁移', '专题文章与投稿体系'],
+  },
+];
+---
+
+<BaseLayout title="更新日志" description="象牙塔透视镜网站的功能更新记录。">
+  <div class="container page">
+    <div class="page-hero">
+      <h1>更新日志</h1>
+      <p>记录网站每次重要的功能与内容更新，方便你了解我们一直在做什么。</p>
+    </div>
+
+    {updates.map((u) => (
+      <section class="card section-block">
+        <div class="section-head">
+          <h2>{u.title}</h2>
+          <span class="date">{u.date}</span>
+        </div>
+        <ul class="point-list">
+          {u.items.map((item) => (
+            <li class="point-item">
+              <p>{item}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

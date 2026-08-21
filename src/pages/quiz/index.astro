@@ -47,6 +47,7 @@ const schools = (await getCollection('universities')).map((u) => ({
           <h2>你的测评结果</h2>
           <div class="result-actions">
             <button class="btn btn-ghost" id="copyBtn" type="button">复制结果</button>
+            <button class="btn btn-ghost" id="shareBtn" type="button">复制结果链接</button>
             <button class="btn btn-ghost" id="restartBtn" type="button">重新测评</button>
           </div>
         </div>
@@ -76,8 +77,15 @@ const schools = (await getCollection('universities')).map((u) => ({
           </p>
           <div class="rank-input">
             <input type="number" id="rankInput" min="1" max="99999" placeholder="如 5000" aria-label="预估全省位次" />
+            <select id="rankType" aria-label="科类">
+              <option value="physics">物理类（理科）</option>
+              <option value="history">历史类（文科）</option>
+            </select>
             <button class="btn" id="rankApply" type="button">分档</button>
           </div>
+          <p class="small muted" id="rankWarn" hidden>
+            ⚠️ 历史类（文科）位次与物理类口径不同，请先按本省一分一段表自行换算，再参考下方分档。
+          </p>
           <div class="chip-row" id="rankLegend"></div>
         </section>
 
@@ -119,9 +127,12 @@ const schools = (await getCollection('universities')).map((u) => ({
   const restartBtn = document.getElementById('restartBtn');
   const rankInput = document.getElementById('rankInput');
   const rankApply = document.getElementById('rankApply');
+  const rankType = document.getElementById('rankType');
+  const rankWarn = document.getElementById('rankWarn');
   const rankLegend = document.getElementById('rankLegend');
   let currentResult = null;
   const copyBtn = document.getElementById('copyBtn');
+  const shareBtn = document.getElementById('shareBtn');
   const regenBtn = document.getElementById('regenBtn');
 
   async function fetchLLMAdvice(answers, result) {
@@ -399,6 +410,10 @@ const schools = (await getCollection('universities')).map((u) => ({
     state.rank = Number.isFinite(v) && v > 0 ? v : null;
     renderSchools(currentResult);
     renderLegend();
+    if (rankWarn) rankWarn.hidden = rankType?.value !== 'history';
+  });
+  rankType?.addEventListener('change', () => {
+    if (rankWarn) rankWarn.hidden = rankType.value !== 'history';
   });
   rankInput?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') rankApply?.click();
@@ -427,6 +442,22 @@ const schools = (await getCollection('universities')).map((u) => ({
       .catch(() => {});
   });
 
+  shareBtn?.addEventListener('click', () => {
+    try {
+      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(state.answers))));
+      const url = `${window.location.origin}/quiz/?r=${encoded}`;
+      navigator.clipboard
+        ?.writeText(url)
+        .then(() => {
+          shareBtn.textContent = '已复制 ✓';
+          setTimeout(() => (shareBtn.textContent = '复制结果链接'), 1600);
+        })
+        .catch(() => {});
+    } catch {
+      /* ignore */
+    }
+  });
+
   regenBtn?.addEventListener('click', async () => {
     const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
     if (!saved) return;
@@ -450,5 +481,23 @@ const schools = (await getCollection('universities')).map((u) => ({
     regenBtn.textContent = '换一批建议';
   });
 
-  if (!loadSaved()) renderQuestion();
+  const params = new URLSearchParams(window.location.search);
+  const shared = params.get('r');
+  if (shared) {
+    try {
+      const ans = JSON.parse(decodeURIComponent(escape(atob(shared))));
+      if (ans && QUESTIONS.every((q) => ans[q.id] !== undefined)) {
+        Object.assign(state.answers, ans);
+        saveAnswers();
+        compute();
+        history.replaceState(null, '', '/quiz/');
+      } else if (!loadSaved()) {
+        renderQuestion();
+      }
+    } catch {
+      if (!loadSaved()) renderQuestion();
+    }
+  } else if (!loadSaved()) {
+    renderQuestion();
+  }
 </script>

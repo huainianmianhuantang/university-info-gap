@@ -1,0 +1,161 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const universities = (await getCollection('universities')).map((u) => ({
+  id: u.id,
+  name: u.data.name,
+  nameEn: u.data.nameEn ?? '',
+  type: u.data.type,
+  province: u.data.province,
+  city: u.data.city,
+  tags: u.data.tags,
+  brief: u.data.brief,
+}));
+const articles = (await getCollection('articles')).map((a) => ({
+  id: a.id,
+  title: a.data.title,
+  summary: a.data.summary,
+  tags: a.data.tags,
+}));
+const materials = (await getCollection('universities')).flatMap((u) =>
+  u.data.materials.map((m) => ({
+    title: m.title,
+    description: m.description,
+    school: u.data.name,
+    schoolSlug: u.id,
+    link: m.link,
+    code: m.code ?? '',
+  })),
+);
+---
+
+<BaseLayout title="站内搜索" description="搜索全部 985 高校、专题文章与学习资料。">
+  <div class="container page">
+    <div class="page-hero">
+      <h1>站内搜索</h1>
+      <p>搜索大学、文章与资料。输入关键词后即时显示结果。</p>
+      <form class="hero-search" action="/search/" method="get">
+        <input
+          type="search"
+          id="searchInput"
+          name="q"
+          placeholder="搜索：东北大学 / 转专业 / 宿舍 / 保研…"
+          aria-label="全站搜索"
+        />
+        <button type="submit">搜索</button>
+      </form>
+    </div>
+
+    <div id="searchApp">
+      <p class="muted" id="searchHint">输入关键词开始搜索。</p>
+      <p class="muted" id="searchEmpty" hidden>没有找到匹配的内容，换个关键词试试。</p>
+
+      <section class="section" id="uniSection" hidden>
+        <div class="section-head">
+          <h2>大学（<span id="uniCount">0</span>）</h2>
+        </div>
+        <div class="grid grid-universities" id="uniResults"></div>
+      </section>
+
+      <section class="section" id="articleSection" hidden>
+        <div class="section-head">
+          <h2>文章（<span id="articleCount">0</span>）</h2>
+        </div>
+        <div class="grid grid-articles" id="articleResults"></div>
+      </section>
+
+      <section class="section" id="materialSection" hidden>
+        <div class="section-head">
+          <h2>资料（<span id="materialCount">0</span>）</h2>
+        </div>
+        <div class="grid grid-categories" id="materialResults"></div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<script define:vars={{ universities, articles, materials }}>
+  const input = document.getElementById('searchInput');
+  const hint = document.getElementById('searchHint');
+  const empty = document.getElementById('searchEmpty');
+  const uniSection = document.getElementById('uniSection');
+  const articleSection = document.getElementById('articleSection');
+  const materialSection = document.getElementById('materialSection');
+  const uniResults = document.getElementById('uniResults');
+  const articleResults = document.getElementById('articleResults');
+  const materialResults = document.getElementById('materialResults');
+
+  function render() {
+    const kw = (input?.value ?? '').trim().toLowerCase();
+    hint.hidden = kw.length > 0;
+    if (!kw) {
+      empty.hidden = true;
+      uniSection.hidden = true;
+      articleSection.hidden = true;
+      materialSection.hidden = true;
+      return;
+    }
+
+    const match = (s) => (s ?? '').toLowerCase().includes(kw);
+    const us = universities.filter(
+      (u) =>
+        match(u.name) ||
+        match(u.nameEn) ||
+        match(u.type) ||
+        match(u.province) ||
+        match(u.city) ||
+        u.tags.some(match) ||
+        match(u.brief),
+    );
+    const as = articles.filter(
+      (a) => match(a.title) || match(a.summary) || a.tags.some(match),
+    );
+    const ms = materials.filter((m) => match(m.title) || match(m.description) || match(m.school));
+
+    document.getElementById('uniCount').textContent = us.length;
+    document.getElementById('articleCount').textContent = as.length;
+    document.getElementById('materialCount').textContent = ms.length;
+    uniSection.hidden = us.length === 0;
+    articleSection.hidden = as.length === 0;
+    materialSection.hidden = ms.length === 0;
+    empty.hidden = us.length + as.length + ms.length > 0;
+
+    uniResults.innerHTML = '';
+    us.slice(0, 12).forEach((u) => {
+      const a = document.createElement('a');
+      a.className = 'card university-card';
+      a.href = `/universities/${u.id}/`;
+      const body = document.createElement('div');
+      body.className = 'university-body';
+      body.innerHTML = `<h3>${u.name}</h3><p class="small muted">${u.type} · ${u.province} ${u.city}</p><p class="small">${u.brief}</p>`;
+      a.appendChild(body);
+      uniResults.appendChild(a);
+    });
+
+    articleResults.innerHTML = '';
+    as.slice(0, 10).forEach((a) => {
+      const el = document.createElement('a');
+      el.className = 'card article-card';
+      el.href = `/articles/${a.id}/`;
+      el.innerHTML = `<h3>${a.title}</h3><p>${a.summary}</p>`;
+      articleResults.appendChild(el);
+    });
+
+    materialResults.innerHTML = '';
+    ms.slice(0, 10).forEach((m) => {
+      const el = document.createElement('a');
+      el.className = 'card material-card';
+      el.href = m.link.startsWith('/') ? m.link : `/universities/${m.schoolSlug}/`;
+      el.target = m.link.startsWith('/') ? '_self' : '_blank';
+      el.innerHTML = `<h3>${m.title}</h3><p>${m.description}</p><p class="small muted">${m.school}${m.code ? ` · 提取码 ${m.code}` : ''}</p>`;
+      materialResults.appendChild(el);
+    });
+  }
+
+  input?.addEventListener('input', render);
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('q') ?? '';
+  if (input) input.value = q;
+  render();
+</script>

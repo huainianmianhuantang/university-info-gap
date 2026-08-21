@@ -11,7 +11,7 @@ established: 1893
 campuses: [文理学部, 工学部, 信息学部, 医学部]
 brief: 坐落于珞珈山的百年名校，测绘、法学、生命科学等方向突出。
 featured: true
-cover: /images/logo-wuhan-university.webp
+cover: /images/logo-wuhan-university-512.webp
 
 transferPolicy:
   summary: 转专业政策相对灵活，一般在大一、大二开放申请窗口。（示例内容，需以教务通知为准）

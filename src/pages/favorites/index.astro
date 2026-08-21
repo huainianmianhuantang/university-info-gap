@@ -25,6 +25,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         在大学库卡片左上角点 ★ 即可收藏。收藏只保存在你的浏览器本地，可一键导出文本与家人分享。
       </p>
       <button class="btn btn-ghost" id="exportFavs" type="button">导出收藏</button>
+      <button class="btn btn-ghost" id="exportJson" type="button">导出 JSON</button>
     </div>
 
     <div id="favApp">
@@ -32,6 +33,11 @@ const schools = (await getCollection('universities')).map((u) => ({
         还没有收藏任何学校。去<a href="/universities/">大学库</a>逛逛，点卡片左上角 ★ 收藏吧。
       </p>
       <div class="grid grid-universities" id="favGrid"></div>
+    </div>
+
+    <div class="compare-bar" id="cmpBar" hidden>
+      <span id="cmpCount">已选 0 所</span>
+      <a class="btn btn-primary" id="cmpBtn" href="/compare/?u=">开始对比</a>
     </div>
   </div>
 </BaseLayout>
@@ -55,6 +61,13 @@ const schools = (await getCollection('universities')).map((u) => ({
     if (exportBtn) exportBtn.hidden = true;
   } else {
     picked.forEach((s) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'u-item';
+      const label = document.createElement('label');
+      label.className = 'compare-check';
+      label.title = '加入对比';
+      label.innerHTML = `<input type="checkbox" class="fav-compare" value="${s.id}" aria-label="对比${s.name}"><span>对比</span>`;
+      wrap.appendChild(label);
       const a = document.createElement('a');
       a.className = 'card university-card';
       a.href = `/universities/${s.id}/`;
@@ -75,9 +88,57 @@ const schools = (await getCollection('universities')).map((u) => ({
         </div>
       `;
       a.appendChild(body);
-      grid.appendChild(a);
+      wrap.appendChild(a);
+      grid.appendChild(wrap);
     });
   }
+
+  const exportJsonBtn = document.getElementById('exportJson');
+  exportJsonBtn?.addEventListener('click', () => {
+    if (picked.length === 0) return;
+    const json = JSON.stringify(picked, null, 2);
+    navigator.clipboard
+      ?.writeText(json)
+      .then(() => {
+        exportJsonBtn.textContent = '已复制 ✓';
+        setTimeout(() => (exportJsonBtn.textContent = '导出 JSON'), 1600);
+      })
+      .catch(() => {});
+  });
+
+  const COMPARE_KEY = 'compare-list';
+  let cmp = [];
+  try {
+    cmp = JSON.parse(localStorage.getItem(COMPARE_KEY) || '[]');
+  } catch {
+    cmp = [];
+  }
+  const cmpBoxes = Array.from(document.querySelectorAll('.fav-compare'));
+  cmpBoxes.forEach((c) => {
+    c.checked = cmp.includes(c.value);
+  });
+  const cmpBar = document.getElementById('cmpBar');
+  const cmpCount = document.getElementById('cmpCount');
+  const cmpBtn = document.getElementById('cmpBtn');
+  function updateCmp() {
+    const sel = cmpBoxes.filter((c) => c.checked).map((c) => c.value);
+    if (sel.length > 3) {
+      const last = sel[sel.length - 1];
+      const box = cmpBoxes.find((c) => c.value === last);
+      if (box) box.checked = false;
+      return updateCmp();
+    }
+    if (cmpBar) cmpBar.hidden = sel.length < 2;
+    if (cmpCount) cmpCount.textContent = `已选 ${sel.length} 所`;
+    if (cmpBtn) cmpBtn.href = `/compare/?u=${sel.join(',')}`;
+    try {
+      localStorage.setItem(COMPARE_KEY, JSON.stringify(sel));
+    } catch {
+      /* ignore */
+    }
+  }
+  cmpBoxes.forEach((c) => c.addEventListener('change', updateCmp));
+  updateCmp();
 
   exportBtn?.addEventListener('click', () => {
     if (picked.length === 0) return;

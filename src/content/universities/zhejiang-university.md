@@ -11,7 +11,7 @@ established: 1897
 campuses: [紫金港校区, 玉泉校区, 西溪校区, 华家池校区, 之江校区, 舟山校区, 海宁国际校区]
 brief: 学科齐全的顶尖综合性大学，前身为 1897 年创办的求是书院。
 featured: true
-cover: /images/logo-zhejiang-university.webp
+cover: /images/logo-zhejiang-university-512.webp
 
 transferPolicy:
   summary: 转专业以“申请—考核”为主，多数专业允许大一、大二申请，热门专业竞争激烈。（示例内容，需以教务处通知为准）

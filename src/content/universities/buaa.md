@@ -11,7 +11,7 @@ established: 1952
 campuses: ['学院路校区', '沙河校区']
 brief: 航空航天特色鲜明的工科强校，校训“德才兼备、知行合一”。
 featured: false
-cover: /images/logo-buaa.webp
+cover: /images/logo-buaa-512.webp
 
 videos:
   - title: "2023 招生宣传片《择一凌云志》"

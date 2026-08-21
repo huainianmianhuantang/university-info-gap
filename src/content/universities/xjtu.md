@@ -11,7 +11,7 @@ established: 1896
 campuses: ['兴庆校区', '雁塔校区', '创新港校区']
 brief: 1896 年创办、1956 年西迁西安的工科名校。
 featured: false
-cover: /images/logo-xjtu.webp
+cover: /images/logo-xjtu-512.webp
 
 videos:
   - title: "2024 招生宣传片《朝着太阳生长》"
