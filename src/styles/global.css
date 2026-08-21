@@ -1567,6 +1567,33 @@ a.chip:hover {
   font-weight: 600;
 }
 
+.quiz-option {
+  animation: quiz-opt-in 0.22s ease both;
+}
+
+.quiz-option:nth-child(2) {
+  animation-delay: 0.04s;
+}
+
+.quiz-option:nth-child(3) {
+  animation-delay: 0.08s;
+}
+
+.quiz-option:nth-child(4) {
+  animation-delay: 0.12s;
+}
+
+@keyframes quiz-opt-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .quiz-nav {
   display: flex;
   justify-content: space-between;
@@ -1579,6 +1606,56 @@ a.chip:hover {
 
 .result-section h3 {
   margin: 0 0 10px;
+}
+
+#resultCard:not([hidden]) {
+  animation: result-in 0.38s var(--ease-pop);
+}
+
+@keyframes result-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+#resultSchools .u-item {
+  animation: result-card-in 0.32s ease both;
+}
+
+#resultSchools .u-item:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+#resultSchools .u-item:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+#resultSchools .u-item:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+#resultSchools .u-item:nth-child(5) {
+  animation-delay: 0.2s;
+}
+
+#resultSchools .u-item:nth-child(6) {
+  animation-delay: 0.25s;
+}
+
+@keyframes result-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .result-section-head {
