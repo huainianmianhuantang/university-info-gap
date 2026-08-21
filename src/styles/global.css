@@ -2073,6 +2073,13 @@ html[data-theme='dark'] .tier-保 {
 }
 
 @media (max-width: 640px) {
+  .hero-cta .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
   .page {
     padding: 24px 0 56px;
   }
