@@ -5,7 +5,7 @@ export const SITE = {
   title: '大学信息差',
   description:
     '收集 985 高校的转专业政策、二次选拔、培养计划、寝室上课实况与学习资料，帮助高考生和家长看清每所大学的真实情况。',
-  url: 'http://localhost:4321',
+  url: import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321',
 };
 
 /**
