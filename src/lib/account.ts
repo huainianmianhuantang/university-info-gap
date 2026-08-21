@@ -186,6 +186,24 @@ export function clearAccountData() {
   notifyChange();
 }
 
+/** 登录成功后，把匿名数据迁移到当前账号（不覆盖账号已有数据） */
+export function migrateAnonymousData() {
+  const p = read()?.profile;
+  if (!p) return;
+  const bases = ['fav-universities', 'quiz-result', 'quiz-history', 'compare-list', 'ai-chat'];
+  try {
+    for (const base of bases) {
+      const anon = localStorage.getItem(base);
+      if (!anon) continue;
+      const scoped = `${base}-${p.uid}`;
+      if (localStorage.getItem(scoped)) continue;
+      localStorage.setItem(scoped, anon);
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 const FAIL_KEY = 'account-fail';
 
 function readFails(): Record<string, { n: number; t: number }> {

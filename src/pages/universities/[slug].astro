@@ -303,7 +303,7 @@ const related = allUniversities
     {u.videos.length > 0 && (
       <section id="videos" class="section">
         <div class="section-head">
-          <h2>视频</h2>
+          <h2>视频（共 {u.videos.length} 条）</h2>
         </div>
         <div class="grid grid-videos">
           {sortedVideos.map((video) => <VideoEmbed video={video} />)}

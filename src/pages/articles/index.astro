@@ -34,14 +34,22 @@ const allTags = [...new Set(articles.flatMap((a) => a.data.tags))];
 <script>
   const filter = document.getElementById('tagFilter');
   const cards = Array.from(document.querySelectorAll('.article-card'));
-  filter?.addEventListener('click', (e) => {
-    const btn = (e.target as HTMLElement).closest('.tag-chip');
-    if (!btn) return;
-    const tag = (btn as HTMLElement).dataset.tag ?? '全部';
-    filter.querySelectorAll('.tag-chip').forEach((b) => b.classList.toggle('on', b === btn));
+  function applyTag(tag) {
+    filter.querySelectorAll('.tag-chip').forEach((b) => b.classList.toggle('on', (b.dataset.tag ?? '') === tag));
     cards.forEach((card) => {
       const tags = (card as HTMLElement).dataset.tags ?? '';
       card.hidden = tag !== '全部' && !tags.includes(tag);
     });
+  }
+
+  const initTag = decodeURIComponent(window.location.hash.replace(/^#tag-/, ''));
+  if (initTag) applyTag(initTag);
+
+  filter?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('.tag-chip');
+    if (!btn) return;
+    const tag = (btn as HTMLElement).dataset.tag ?? '全部';
+    applyTag(tag);
+    history.replaceState(null, '', tag === '全部' ? location.pathname : '#tag-' + encodeURIComponent(tag));
   });
 </script>
