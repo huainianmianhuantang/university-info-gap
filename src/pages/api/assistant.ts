@@ -77,10 +77,14 @@ export async function POST({ request }): Promise<Response> {
   }
 
   let messages: ChatMsg[] = [];
+  let userName = '';
   try {
     const raw = await request.text();
-    const body = raw ? (JSON.parse(raw) as { messages?: ChatMsg[] }) : {};
+    const body = raw
+      ? (JSON.parse(raw) as { messages?: ChatMsg[]; userName?: string })
+      : {};
     messages = Array.isArray(body.messages) ? body.messages : [];
+    userName = typeof body.userName === 'string' ? body.userName.trim().slice(0, 20) : '';
   } catch {
     return json({ error: '参数格式不对，请刷新后再试' }, 400);
   }
@@ -102,6 +106,9 @@ export async function POST({ request }): Promise<Response> {
 
   const base = (AI_BASE_URL || 'https://api.deepseek.com').replace(/\/$/, '');
   const model = AI_MODEL || 'deepseek-chat';
+  const systemNote = userName
+    ? SYSTEM_PROMPT + '\n用户昵称：' + userName + '（可以用昵称称呼用户）'
+    : SYSTEM_PROMPT;
 
   try {
     const res = await fetch(`${base}/chat/completions`, {
@@ -113,7 +120,7 @@ export async function POST({ request }): Promise<Response> {
       body: JSON.stringify({
         model,
         messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'system', content: systemNote },
           ...messages.map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
         ],
         temperature: 0.7,
