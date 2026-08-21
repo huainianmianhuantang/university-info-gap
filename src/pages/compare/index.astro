@@ -35,6 +35,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         在<a href="/universities/">大学库</a>勾选 2-3 所学校后即可并排对比。
         也可以直接在地址栏追加参数，如 <code>?u=peking-university,tsinghua-university</code>。
       </p>
+      <button class="btn btn-ghost" id="copyCompareLink" type="button">复制对比链接</button>
     </div>
 
     <div id="compareApp">
@@ -52,6 +53,17 @@ const schools = (await getCollection('universities')).map((u) => ({
   const wrap = document.getElementById('compareTableWrap');
   const empty = document.getElementById('compareEmpty');
   const table = document.getElementById('compareTable');
+  const copyBtn = document.getElementById('copyCompareLink');
+
+  copyBtn?.addEventListener('click', () => {
+    navigator.clipboard
+      ?.writeText(window.location.href)
+      .then(() => {
+        copyBtn.textContent = '已复制 ✓';
+        setTimeout(() => (copyBtn.textContent = '复制对比链接'), 1600);
+      })
+      .catch(() => {});
+  });
 
   const params = new URLSearchParams(window.location.search);
   const slugs = (params.get('u') ?? '')
