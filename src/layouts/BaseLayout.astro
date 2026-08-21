@@ -4,6 +4,7 @@ import { SITE } from '../config';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import OnboardingModal from '../components/OnboardingModal.astro';
+import HelpButton from '../components/HelpButton.astro';
 
 interface Props {
   title?: string;
@@ -64,6 +65,7 @@ const pageDescription = description ?? SITE.description;
       <button class="install-close" id="installClose" type="button" aria-label="关闭">×</button>
     </div>
     <OnboardingModal />
+    <HelpButton />
   </body>
 </html>
 

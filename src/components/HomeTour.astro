@@ -1,0 +1,341 @@
+<div class="tour-mask" id="tourMask" hidden></div>
+<div class="tour-spot" id="tourSpot" hidden></div>
+<div class="tour-bubble" id="tourBubble" hidden role="dialog" aria-label="新手引导">
+  <div class="tour-bubble-inner">
+    <div class="tour-head">
+      <span class="tour-emoji" id="tourEmoji"></span>
+      <div class="tour-text">
+        <b id="tourTitle"></b>
+        <span id="tourDesc"></span>
+      </div>
+    </div>
+    <div class="tour-dots" id="tourDots"></div>
+    <div class="tour-controls">
+      <label class="tour-never">
+        <input type="checkbox" id="tourNever" />
+        不再提示
+      </label>
+      <div class="tour-btns">
+        <button class="tour-skip" id="tourSkip" type="button">跳过</button>
+        <button class="tour-next" id="tourNext" type="button">下一步 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = 'site-tour';
+  const FORCE = new URLSearchParams(window.location.search).get('tour') === '1';
+
+  const mask = document.getElementById('tourMask') as HTMLElement;
+  const spot = document.getElementById('tourSpot') as HTMLElement;
+  const bubble = document.getElementById('tourBubble') as HTMLElement;
+  const emoji = document.getElementById('tourEmoji') as HTMLElement;
+  const title = document.getElementById('tourTitle') as HTMLElement;
+  const desc = document.getElementById('tourDesc') as HTMLElement;
+  const dots = document.getElementById('tourDots') as HTMLElement;
+  const never = document.getElementById('tourNever') as HTMLInputElement;
+  const skip = document.getElementById('tourSkip') as HTMLButtonElement;
+  const next = document.getElementById('tourNext') as HTMLButtonElement;
+
+  const STEPS = [
+    {
+      sel: '.hero-search',
+      emoji: '🔍',
+      title: '先搜一搜',
+      desc: '想查大学、转专业、宿舍…直接在这里打字搜索，秒出结果。',
+      align: 'below',
+    },
+    {
+      sel: '.hero-steps',
+      emoji: '🪜',
+      title: '跟着三步走',
+      desc: '逛大学库 → 看真实视频 → 测评找方向，新手照这个顺序准没错。',
+      align: 'below',
+    },
+    {
+      sel: '.grid-categories',
+      emoji: '🗂️',
+      title: '按主题逛',
+      desc: '转专业、二次选拔、寝室上课、资料库，点卡片直达专题。',
+      align: 'above',
+    },
+    {
+      sel: '.site-footer',
+      emoji: '🆘',
+      title: '随时回来求助',
+      desc: '右下角 ❓ 可以重看引导、看图文教程、提交反馈。',
+      align: 'above',
+    },
+  ];
+
+  let seen = false;
+  try {
+    seen = localStorage.getItem(KEY) === '1';
+  } catch {
+    seen = false;
+  }
+
+  let idx = 0;
+
+  function onboardingOpen() {
+    const m = document.getElementById('obMask');
+    return m !== null && !m.hidden;
+  }
+
+  function remember() {
+    try {
+      localStorage.setItem(KEY, '1');
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function hide() {
+    mask.hidden = true;
+    spot.hidden = true;
+    bubble.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  function renderDots() {
+    dots.innerHTML = '';
+    STEPS.forEach((_, i) => {
+      const d = document.createElement('i');
+      if (i === idx) d.className = 'on';
+      dots.appendChild(d);
+    });
+  }
+
+  function position() {
+    const target = document.querySelector<HTMLElement>(STEPS[idx].sel);
+    if (!target) {
+      finish();
+      return;
+    }
+    target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    window.setTimeout(() => {
+      const r = target.getBoundingClientRect();
+      spot.hidden = false;
+      spot.style.left = `${r.left - 8}px`;
+      spot.style.top = `${r.top - 8}px`;
+      spot.style.width = `${r.width + 16}px`;
+      spot.style.height = `${r.height + 16}px`;
+
+      bubble.hidden = false;
+      const bw = bubble.offsetWidth;
+      const bh = bubble.offsetHeight;
+      let left = r.left + r.width / 2 - bw / 2;
+      left = Math.max(12, Math.min(left, window.innerWidth - bw - 12));
+
+      const step = STEPS[idx];
+      const placeBelow = step.align === 'below' && r.bottom + bh + 18 < window.innerHeight - 12;
+      if (placeBelow) {
+        bubble.style.top = `${r.bottom + 14}px`;
+        bubble.classList.remove('tour-above');
+        bubble.classList.add('tour-below');
+      } else {
+        bubble.style.top = `${Math.max(12, r.top - bh - 14)}px`;
+        bubble.classList.remove('tour-below');
+        bubble.classList.add('tour-above');
+      }
+      bubble.style.left = `${left}px`;
+    }, 380);
+  }
+
+  function render() {
+    const step = STEPS[idx];
+    emoji.textContent = step.emoji;
+    title.textContent = step.title;
+    desc.textContent = step.desc;
+    next.textContent = idx === STEPS.length - 1 ? '开始逛吧 🎉' : '下一步 →';
+    renderDots();
+    position();
+  }
+
+  function show() {
+    if (document.getElementById('tourMask') === null) return;
+    mask.hidden = false;
+    document.body.style.overflow = 'hidden';
+    idx = 0;
+    render();
+  }
+
+  function finish() {
+    if (never.checked) remember();
+    hide();
+  }
+
+  next.addEventListener('click', () => {
+    if (idx < STEPS.length - 1) {
+      idx += 1;
+      render();
+    } else {
+      remember();
+      hide();
+      if (window.location.search.includes('tour=1')) {
+        history.replaceState(null, '', '/');
+      }
+    }
+  });
+
+  skip.addEventListener('click', () => {
+    remember();
+    hide();
+    if (window.location.search.includes('tour=1')) {
+      history.replaceState(null, '', '/');
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (!bubble.hidden) position();
+  });
+  window.addEventListener('scroll', () => {
+    if (!bubble.hidden) position();
+  });
+
+  if (FORCE) {
+    show();
+  } else if (!seen) {
+    if (onboardingOpen()) {
+      window.addEventListener('onboarding:closed', () => show(), { once: true });
+    } else {
+      window.setTimeout(show, 600);
+    }
+  }
+</script>
+
+<style>
+  .tour-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(13, 21, 38, 0.42);
+  }
+  .tour-spot {
+    position: fixed;
+    z-index: 9001;
+    border-radius: 20px;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--accent), 0 12px 34px rgba(0, 0, 0, 0.35);
+    transition: all 0.28s ease;
+    pointer-events: none;
+  }
+  .tour-bubble {
+    position: fixed;
+    z-index: 9002;
+    width: min(330px, calc(100vw - 24px));
+    background: var(--surface);
+    color: var(--text);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    padding: 16px 16px 12px;
+    animation: tour-pop 0.25s ease;
+  }
+  .tour-bubble::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    width: 14px;
+    height: 14px;
+    background: var(--surface);
+    transform: rotate(45deg);
+  }
+  .tour-below::before {
+    top: -7px;
+  }
+  .tour-above::before {
+    bottom: -7px;
+  }
+  @keyframes tour-pop {
+    from {
+      transform: translateY(8px) scale(0.96);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  .tour-bubble-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tour-head {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .tour-emoji {
+    font-size: 30px;
+    line-height: 1;
+  }
+  .tour-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .tour-text b {
+    font-size: 17px;
+  }
+  .tour-text span {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .tour-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .tour-dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .tour-dots i.on {
+    background: var(--accent);
+    width: 20px;
+    border-radius: 999px;
+  }
+  .tour-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .tour-never {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+  }
+  .tour-btns {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .tour-skip {
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 8px 10px;
+  }
+  .tour-next {
+    border: 0;
+    border-radius: 999px;
+    padding: 9px 18px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(31, 94, 255, 0.3);
+  }
+</style>

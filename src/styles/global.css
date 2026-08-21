@@ -1413,17 +1413,19 @@ html[data-theme='dark'] mark {
 
 .quiz-option {
   text-align: left;
-  padding: 13px 16px;
+  padding: 14px 18px;
   border: 1px solid var(--border, #e2e8f0);
-  border-radius: 10px;
+  border-radius: 16px;
   background: var(--card-bg, #fff);
   font-size: 15px;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .quiz-option:hover {
   border-color: var(--primary, #2563eb);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
 }
 
 .quiz-option.selected {

@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import UniversityCard from '../components/UniversityCard.astro';
+import HomeTour from '../components/HomeTour.astro';
 import { SITE } from '../config';
 import { formatDate } from '../utils';
 
@@ -170,6 +171,7 @@ const categories = [
       </p>
     </section>
   </div>
+  <HomeTour />
 </BaseLayout>
 
 <script define:vars={{ schoolBriefs }}>
