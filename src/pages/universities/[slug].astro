@@ -6,6 +6,7 @@ import UniversityCard from '../../components/UniversityCard.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import { RESOURCE_CATEGORIES, SECTIONS, SITE } from '../../config';
 import { OFFICIAL_SITES } from '../../lib/official';
+import { channelsFor } from '../../lib/social';
 
 export async function getStaticPaths() {
   const universities = await getCollection('universities');
@@ -59,6 +60,7 @@ const sortedVideos = [...u.videos].sort(
 const officialUrl = OFFICIAL_SITES[university.id]
   ? `https://www.${OFFICIAL_SITES[university.id]}`
   : null;
+const channels = channelsFor(u.name, officialUrl ?? undefined);
 const related = allUniversities
   .filter((x) => x.id !== university.id)
   .sort((a, b) => {
@@ -151,21 +153,21 @@ const related = allUniversities
       </div>
     </section>
 
-    {officialUrl && (
+    {channels.length > 0 && (
       <section class="card section-block">
-        <h2>官方渠道</h2>
-        <p>
-          <a href={officialUrl} target="_blank" rel="noopener">进入 {u.name} 官网 →</a>
-          <span class="muted">（招生网、教务网、研究生院等更多入口可在官网导航中查找）</span>
+        <h2>关注与信息渠道</h2>
+        <p class="muted">
+          官网以学校官方发布为准；其余平台提供搜索入口，便于查找官方账号与在校生一手内容。
         </p>
-        <p>
-          <a
-            href={`https://search.bilibili.com/all?keyword=${encodeURIComponent(u.name)}`}
-            target="_blank"
-            rel="noopener"
-          >在 B 站搜索「{u.name}」视频 →</a>
-          <span class="muted">（本站已收录视频见下方「视频」栏目）</span>
-        </p>
+        <div class="channel-grid">
+          {channels.map((c) => (
+            <a class="channel-card" href={c.url} target="_blank" rel="noopener noreferrer">
+              <span class="channel-emoji">{c.emoji}</span>
+              <b>{c.label}</b>
+              <span>{c.note}</span>
+            </a>
+          ))}
+        </div>
       </section>
     )}
 
