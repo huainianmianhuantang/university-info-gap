@@ -25,3 +25,26 @@
 - [x] 验证：外链均带 rel=noopener
 - [x] 验证：/api/advice 不再泄露 keySet
 
+
+## 第 2 轮：界面 AI 小助手（已提交）
+
+- [x] 新增 /api/assistant 服务端接口（DeepSeek，带站内栏目上下文）
+- [x] 同源校验（拒绝跨站调用）
+- [x] 进程内限流（每 IP 60 秒 15 次）
+- [x] 载荷校验（messages 数量/角色/内容长度）
+- [x] 友好中文错误提示，不泄露堆栈
+- [x] AI 悬浮按钮 🤖（左下角，全站）
+- [x] 聊天面板：消息气泡 + 输入框 + 发送
+- [x] 4 个快捷问题 chips
+- [x] 欢迎语 + 底部免责声明
+- [x] 输入中三点闪烁动画
+- [x] 出错时提供「重试」按钮
+- [x] 聊天记录 localStorage 持久化（最多 20 条）
+- [x] 「清空对话」按钮
+- [x] 移动端面板自适应
+- [x] 深色模式适配（CSS 变量）
+- [x] Esc 关闭面板
+- [x] Enter 发送 / Shift+Enter 换行
+- [x] 无障碍：role=dialog、aria-live、aria-expanded
+- [x] 全站接入（BaseLayout）
+- [x] 回复支持 Markdown 粗体与站内链接渲染
