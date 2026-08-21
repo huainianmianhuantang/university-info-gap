@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import { SITE } from '../config';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -39,7 +39,7 @@ const pageDescription = description ?? SITE.description;
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <meta name="theme-color" content="#1f5eff" />
-    <ViewTransitions />
+    <ClientRouter />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content={SITE.title} />
