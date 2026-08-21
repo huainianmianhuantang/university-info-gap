@@ -78,6 +78,18 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           ★ 只看收藏
         </label>
       </div>
+      <div class="filter-group">
+        <label>
+          <input type="checkbox" id="videoOnly" />
+          只看有视频
+        </label>
+      </div>
+      <div class="filter-group">
+        <label>
+          <input type="checkbox" id="materialOnly" />
+          只看有资料
+        </label>
+      </div>
     </form>
 
     <p class="result-count" id="resultCount">共 {universities.length} 所大学</p>
@@ -134,6 +146,8 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const compareBoxes = Array.from(document.querySelectorAll('.compare-box'));
   const sortSelect = document.getElementById('sortBy');
   const favOnly = document.getElementById('favOnly');
+  const videoOnly = document.getElementById('videoOnly');
+  const materialOnly = document.getElementById('materialOnly');
   const favBoxes = Array.from(document.querySelectorAll('.fav-box'));
 
   const FAV_KEY = 'fav-universities';
@@ -164,6 +178,8 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
     const type = typeSelect?.value ?? '';
     const selectedLevels = levelChecks.filter((c) => c.checked).map((c) => c.value);
     const favOnlyChecked = favOnly?.checked ?? false;
+    const videoOnlyChecked = videoOnly?.checked ?? false;
+    const materialOnlyChecked = materialOnly?.checked ?? false;
 
     let visible = 0;
     for (const item of items) {
@@ -175,7 +191,9 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
       const okType = !type || item.dataset.type === type;
       const okLevel = selectedLevels.length === 0 || selectedLevels.some((l) => levels.includes(l));
       const okFav = !favOnlyChecked || favs.has(item.querySelector('.fav-box')?.value ?? '');
-      const ok = okKeyword && okProvince && okType && okLevel && okFav;
+      const okVideo = !videoOnlyChecked || Number(item.dataset.videos ?? 0) > 0;
+      const okMaterial = !materialOnlyChecked || Number(item.dataset.materials ?? 0) > 0;
+      const ok = okKeyword && okProvince && okType && okLevel && okFav && okVideo && okMaterial;
       item.style.display = ok ? '' : 'none';
       if (ok) visible++;
     }
@@ -220,6 +238,8 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   compareBoxes.forEach((c) => c.addEventListener('change', updateCompare));
   sortSelect?.addEventListener('change', applySort);
   favOnly?.addEventListener('change', applyFilters);
+  videoOnly?.addEventListener('change', applyFilters);
+  materialOnly?.addEventListener('change', applyFilters);
   applyFilters();
   applySort();
 </script>

@@ -175,8 +175,8 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       <p class="small muted video-summary">
         共 {withVideos.length} 所高校 · {totalVideos} 条视频，点击学校名可展开/收起。
       </p>
-      {withVideos.map((group) => (
-        <details class="card video-group" open>
+      {withVideos.map((group, index) => (
+        <details class="card video-group" open={index < 5}>
           <summary>
             <a href={`/universities/${group.university.id}/`}>{group.university.data.name}</a>
             <span class="small muted">{group.items.length} 个视频</span>
