@@ -1,0 +1,431 @@
+<div class="ob-mask" id="obMask" hidden>
+  <div class="ob-card" id="obCard" role="dialog" aria-modal="true" aria-label="第一次来？先认识一下">
+    <button class="ob-skip" id="obSkip" type="button">跳过，先逛逛 →</button>
+    <div class="ob-body" id="obBody"></div>
+  </div>
+</div>
+
+<script>
+  import {
+    IDENTITIES,
+    LEVEL_META,
+    recommendationsFor,
+    scoreLevel,
+  } from '../lib/onboarding';
+
+  const KEY = 'onboarding';
+  const mask = document.getElementById('obMask') as HTMLElement;
+  const body = document.getElementById('obBody') as HTMLElement;
+  const skipBtn = document.getElementById('obSkip') as HTMLButtonElement;
+
+  let saved: Record<string, unknown> | null = null;
+  try {
+    saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+  } catch {
+    saved = null;
+  }
+
+  if (!saved) {
+    requestAnimationFrame(() => {
+      mask.hidden = false;
+      mask.classList.add('ob-show');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  const state: {
+    identityId: string | null;
+    gradeId: string | null;
+    answers: Record<string, number>;
+    qi: number;
+    score: number;
+    level: string;
+  } = { identityId: null, gradeId: null, answers: {}, qi: 0, score: 0, level: 'newbie' };
+
+  function identityOf() {
+    return IDENTITIES.find((i) => i.id === state.identityId)!;
+  }
+
+  function el(tag: string, cls: string, html: string) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e as HTMLElement;
+  }
+
+  function backBtn(label: string, fn: () => void) {
+    const b = el('button', 'ob-back', label);
+    b.addEventListener('click', fn);
+    return b;
+  }
+
+  function showIdentity() {
+    body.innerHTML = '';
+    body.appendChild(el('div', 'ob-kicker', '👋 第一次见面，先认识一下？'));
+    body.appendChild(el('h2', 'ob-title', '你是谁呀？'));
+    const grid = el('div', 'ob-grid ob-grid-3');
+    for (const idn of IDENTITIES) {
+      const btn = el('button', 'ob-card-btn', `${idn.emoji}<b>${idn.label}</b><span>${idn.short}</span>`);
+      btn.addEventListener('click', () => {
+        state.identityId = idn.id;
+        showGrade();
+      });
+      grid.appendChild(btn);
+    }
+    body.appendChild(grid);
+  }
+
+  function showGrade() {
+    const idn = identityOf();
+    body.innerHTML = '';
+    body.appendChild(el('div', 'ob-kicker', '马上就好～'));
+    body.appendChild(el('h2', 'ob-title', `${idn.emoji} ${idn.gradeQuestion}`));
+    const grid = el('div', 'ob-grid ob-grid-2');
+    for (const g of idn.grades) {
+      const btn = el(
+        'button',
+        'ob-card-btn ob-grade-btn',
+        `${g.emoji}<b>${g.label}</b><span>${g.age}</span>`,
+      );
+      btn.addEventListener('click', () => {
+        state.gradeId = g.id;
+        state.qi = 0;
+        showQuiz();
+      });
+      grid.appendChild(btn);
+    }
+    body.appendChild(grid);
+    body.appendChild(backBtn('← 上一步', showIdentity));
+  }
+
+  function showQuiz() {
+    const idn = identityOf();
+    const qs = idn.questions;
+    const q = qs[state.qi];
+    body.innerHTML = '';
+
+    const prog = el('div', 'ob-progress', `<i style="width:${((state.qi + 1) / qs.length) * 100}%"></i>`);
+    body.appendChild(prog);
+    body.appendChild(el('div', 'ob-step', `第 ${state.qi + 1} / ${qs.length} 题`));
+    body.appendChild(el('h2', 'ob-title', q.title));
+    if (q.note) body.appendChild(el('p', 'ob-note', q.note));
+
+    const opts = el('div', 'ob-opts');
+    q.options.forEach((o, idx) => {
+      const b = el('button', 'ob-opt', o.label);
+      if (state.answers[q.id] === idx) b.classList.add('on');
+      b.addEventListener('click', () => {
+        state.answers[q.id] = idx;
+        if (state.qi < qs.length - 1) {
+          state.qi += 1;
+          showQuiz();
+        } else {
+          showResult();
+        }
+      });
+      opts.appendChild(b);
+    });
+    body.appendChild(opts);
+
+    if (state.qi > 0) body.appendChild(backBtn('← 上一题', () => { state.qi -= 1; showQuiz(); }));
+  }
+
+  function showResult() {
+    const idn = identityOf();
+    state.score = idn.questions.reduce(
+      (sum, q) => sum + (q.options[state.answers[q.id]]?.score ?? 0),
+      0,
+    );
+    state.level = scoreLevel(state.score);
+    const meta = LEVEL_META[state.level as keyof typeof LEVEL_META];
+    const recs = recommendationsFor(idn.id as 'gaokao' | 'junior' | 'parent', state.level as never);
+
+    body.innerHTML = '';
+    body.appendChild(el('div', 'ob-kicker', '摸底完成！'));
+    body.appendChild(el('h2', 'ob-title', `${meta.emoji} ${meta.title}`));
+    body.appendChild(el('p', 'ob-desc', meta.line));
+
+    const list = el('div', 'ob-recs');
+    for (const r of recs) {
+      const a = el('a', 'ob-rec', `${r.emoji}<b>${r.title}</b><span>${r.desc}</span>`) as HTMLAnchorElement;
+      a.href = r.href;
+      list.appendChild(a);
+    }
+    body.appendChild(list);
+
+    const done = el('button', 'ob-done', '开始探索 →');
+    done.addEventListener('click', () => {
+      save();
+      mask.hidden = true;
+      document.body.style.overflow = '';
+      if (window.location.pathname !== '/') window.location.href = '/';
+    });
+    body.appendChild(done);
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(
+        KEY,
+        JSON.stringify({
+          identity: state.identityId,
+          grade: state.gradeId,
+          answers: state.answers,
+          score: state.score,
+          level: state.level,
+          doneAt: Date.now(),
+        }),
+      );
+    } catch {
+      /* ignore */
+    }
+  }
+
+  skipBtn.addEventListener('click', () => {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ skipped: true, doneAt: Date.now() }));
+    } catch {
+      /* ignore */
+    }
+    mask.hidden = true;
+    document.body.style.overflow = '';
+  });
+
+  document.querySelectorAll('[data-onboard-redo]').forEach((n) => {
+    n.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        localStorage.removeItem(KEY);
+      } catch {
+        /* ignore */
+      }
+      window.location.reload();
+    });
+  });
+
+  if (!saved) showIdentity();
+</script>
+
+<style>
+  .ob-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    background: rgba(13, 21, 38, 0.6);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .ob-mask.ob-show {
+    opacity: 1;
+  }
+  .ob-card {
+    width: min(620px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--surface);
+    color: var(--text);
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg);
+    padding: 30px 30px 26px;
+    position: relative;
+    animation: ob-pop 0.3s ease;
+    -webkit-overflow-scrolling: touch;
+  }
+  @keyframes ob-pop {
+    from {
+      transform: translateY(18px) scale(0.97);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  .ob-skip {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px 8px;
+  }
+  .ob-skip:hover {
+    color: var(--primary);
+  }
+  .ob-body {
+    min-height: 300px;
+  }
+  .ob-kicker {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .ob-title {
+    margin: 0 0 18px;
+    font-size: 24px;
+    line-height: 1.4;
+  }
+  .ob-note {
+    margin: -8px 0 14px;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+  .ob-progress {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--surface-soft);
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .ob-progress i {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transition: width 0.25s ease;
+  }
+  .ob-step {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+  .ob-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .ob-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ob-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ob-card-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 16px 14px;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    background: var(--card-bg);
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+  }
+  .ob-card-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow);
+  }
+  .ob-card-btn b {
+    font-size: 17px;
+  }
+  .ob-card-btn span {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .ob-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .ob-opt {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 13px 15px;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    background: var(--card-bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.12s ease, background 0.12s ease;
+  }
+  .ob-opt:hover,
+  .ob-opt.on {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+  }
+  .ob-back {
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 0;
+  }
+  .ob-back:hover {
+    color: var(--primary);
+  }
+  .ob-desc {
+    margin: 0 0 16px;
+    color: var(--text-secondary);
+  }
+  .ob-recs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .ob-rec {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 13px 15px;
+    border-radius: 14px;
+    background: var(--surface-soft);
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .ob-rec:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+  }
+  .ob-rec b {
+    font-size: 15px;
+  }
+  .ob-rec span {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .ob-done {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    font: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  @media (max-width: 560px) {
+    .ob-card {
+      padding: 22px 18px 18px;
+    }
+    .ob-grid-3,
+    .ob-grid-2 {
+      grid-template-columns: 1fr;
+    }
+    .ob-title {
+      font-size: 20px;
+    }
+  }
+</style>
