@@ -264,3 +264,21 @@ const related = allUniversities
     )}
   </div>
 </BaseLayout>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll('.uni-tabs a'));
+  const sections = tabs
+    .map((a) => document.getElementById((a.getAttribute('href') ?? '').slice(1)))
+    .filter(Boolean);
+  function onScroll() {
+    let current = sections[0];
+    for (const s of sections) {
+      if (s.getBoundingClientRect().top <= 130) current = s;
+    }
+    tabs.forEach((a) => {
+      a.classList.toggle('active', a.getAttribute('href') === `#${current?.id}`);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

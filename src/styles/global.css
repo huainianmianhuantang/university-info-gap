@@ -566,6 +566,12 @@ svg {
   text-decoration: none;
 }
 
+.uni-tabs a.active {
+  color: var(--primary);
+  background: var(--primary-soft);
+  font-weight: 600;
+}
+
 .section-block {
   padding: 22px 22px 18px;
   margin-bottom: 20px;
@@ -949,6 +955,12 @@ svg {
 
 .result-section h3 {
   margin: 0 0 10px;
+}
+
+.result-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .result-chip {

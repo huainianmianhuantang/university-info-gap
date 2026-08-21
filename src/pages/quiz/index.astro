@@ -44,7 +44,10 @@ const schools = (await getCollection('universities')).map((u) => ({
       <div class="card section-block" id="resultCard" hidden>
         <div class="section-head">
           <h2>你的测评结果</h2>
-          <button class="btn btn-ghost" id="restartBtn" type="button">重新测评</button>
+          <div class="result-actions">
+            <button class="btn btn-ghost" id="copyBtn" type="button">复制结果</button>
+            <button class="btn btn-ghost" id="restartBtn" type="button">重新测评</button>
+          </div>
         </div>
 
         <section class="result-section">
@@ -97,6 +100,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const progressBar = document.getElementById('progressBar');
   const stepInfo = document.getElementById('stepInfo');
   const restartBtn = document.getElementById('restartBtn');
+  const copyBtn = document.getElementById('copyBtn');
 
   function loadSaved() {
     try {
@@ -310,6 +314,29 @@ const schools = (await getCollection('universities')).map((u) => ({
   });
 
   restartBtn.addEventListener('click', restart);
+  copyBtn.addEventListener('click', () => {
+    const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
+    if (!saved) return;
+    const { result, advice } = saved;
+    const lines = [
+      '【大学信息差·选校测评结果】',
+      `兴趣画像：${result.dims.map((d) => DIM_LABELS[d.dim]).join('、')}`,
+      `匹配专业：${result.majors.slice(0, 8).join('、')}`,
+      `推荐高校：${result.schools.slice(0, 5).map((s) => s.profile.name).join('、')}`,
+      '',
+      'AI 建议：',
+      advice?.text ?? '',
+      '',
+      '来自：大学信息差（仅供参考）',
+    ].join('\n');
+    navigator.clipboard
+      ?.writeText(lines)
+      .then(() => {
+        copyBtn.textContent = '已复制 ✓';
+        setTimeout(() => (copyBtn.textContent = '复制结果'), 1600);
+      })
+      .catch(() => {});
+  });
 
   if (!loadSaved()) renderQuestion();
 </script>

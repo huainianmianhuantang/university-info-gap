@@ -1,0 +1,16 @@
+{
+  "name": "大学信息差",
+  "short_name": "大学信息差",
+  "description": "985高校转专业、二次选拔、培养计划、寝室上课、学习资料与校园视频聚合站",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#1f5eff",
+  "icons": [
+    {
+      "src": "/images/og-default.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
