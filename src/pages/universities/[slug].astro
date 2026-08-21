@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBlock from '../../components/SectionBlock.astro';
+import UniversityCard from '../../components/UniversityCard.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import { RESOURCE_CATEGORIES, SECTIONS, SITE } from '../../config';
 
@@ -45,6 +46,16 @@ const missingSections = SECTIONS.filter((s) => {
   if (s.id === 'videos') return u.videos.length === 0;
   return false;
 });
+
+const allUniversities = await getCollection('universities');
+const related = allUniversities
+  .filter((x) => x.id !== university.id)
+  .sort((a, b) => {
+    const aScore = (a.data.province === u.province ? 2 : 0) + (a.data.type === u.type ? 1 : 0);
+    const bScore = (b.data.province === u.province ? 2 : 0) + (b.data.type === u.type ? 1 : 0);
+    return bScore - aScore;
+  })
+  .slice(0, 3);
 ---
 
 <BaseLayout
@@ -236,6 +247,18 @@ const missingSections = SECTIONS.filter((s) => {
               ＋ {s.label}
             </a>
           ))}
+        </div>
+      </section>
+    )}
+
+    {related.length > 0 && (
+      <section class="card section-block">
+        <div class="section-head">
+          <h2>相关学校</h2>
+          <a class="more" href="/universities/">查看全部 →</a>
+        </div>
+        <div class="grid grid-universities">
+          {related.map((r) => <UniversityCard university={r} />)}
         </div>
       </section>
     )}

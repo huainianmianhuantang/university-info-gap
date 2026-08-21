@@ -40,5 +40,18 @@ const pageDescription = description ?? SITE.description;
       <slot />
     </main>
     <Footer />
+    <button class="back-to-top" id="backToTop" aria-label="回到顶部" hidden>↑</button>
   </body>
 </html>
+
+<script>
+  const btn = document.getElementById('backToTop');
+  if (btn) {
+    const onScroll = () => {
+      btn.hidden = window.scrollY < 400;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }
+</script>

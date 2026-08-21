@@ -436,6 +436,31 @@ svg {
   display: none;
 }
 
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 24px;
+  z-index: 55;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(31, 94, 255, 0.35);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.back-to-top:hover {
+  transform: translateY(-3px);
+}
+
+.back-to-top[hidden] {
+  display: none;
+}
+
 /* ---------- 筛选区 ---------- */
 .filters {
   display: flex;
