@@ -1,0 +1,23 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  school: string;
+  category: string;
+}
+
+const { id, label, school, category } = Astro.props;
+---
+
+<section id={id} class="card section-block pending-block">
+  <h2>{label}</h2>
+  <p class="muted">
+    🏗️ 该栏目内容正在整理中。欢迎
+    <a
+      href={`/submit/?school=${encodeURIComponent(school)}&category=${encodeURIComponent(category)}`}
+    >
+      投稿
+    </a>
+    补充一手信息，审核后发布。
+  </p>
+</section>

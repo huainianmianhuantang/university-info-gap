@@ -54,6 +54,17 @@ materials:
     category: training-plan
     type: pdf
     link: https://dean.pku.edu.cn/userfiles/upload/download/202412271118273931.pdf
+
+secondarySelection:
+  summary: 入校后面向新生的二次选拔以元培学院与强基计划为主，另有各院系实验班/基地班可申请。
+  programs:
+    - name: 元培学院
+      content: 以“自由选择专业、通识教育”为特色，新生入学后可跨院系选择专业方向，小班研讨与书院制管理。
+    - name: 强基计划（数学、物理、化学、生物、文史哲等方向）
+      content: 单独编班、本硕博衔接培养，入校后按专门培养方案学习，动态进出机制。
+  sources:
+    - 北京大学本科招生网（公开资料整理）
+
 videos:
   - title: "2024 招生宣传片《一朵小花》"
     platform: bilibili

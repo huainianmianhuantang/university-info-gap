@@ -1,7 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const dist = path.resolve('dist');
+// Astro 7 + Cloudflare 适配器把静态页面放在 dist/client 下
+let dist = path.resolve('dist');
+const clientDir = path.join(dist, 'client');
+if (fs.existsSync(path.join(clientDir, 'index.html'))) {
+  dist = clientDir;
+}
 const files = [];
 function walk(dir) {
   for (const f of fs.readdirSync(dir, { withFileTypes: true })) {

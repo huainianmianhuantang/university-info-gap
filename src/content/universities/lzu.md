@@ -17,8 +17,8 @@ materials:
   - title: "兰州大学2023版本科人才培养方案修订工作方案"
     description: 教务处印发的 2023 版本科人才培养方案修订工作方案（校教发〔2022〕22号）
     category: training-plan
-    type: 其他
-    link: https://jwc.lzu.edu.cn/lzupage/2022/05/06/N20220506085330.html
+    type: pdf
+    link: https://jwc.lzu.edu.cn/jwc/upload/files/N20220506085249.pdf
   - title: "兰州大学管理学院2023版本科专业人才培养方案"
     description: 管理学院官网发布的 2023 版各本科专业人才培养方案
     category: training-plan

@@ -956,6 +956,22 @@ a.chip:hover {
   margin: 0 0 14px;
 }
 
+.pending-block {
+  border: 1.5px dashed var(--border);
+  background: var(--surface-soft);
+  text-align: center;
+  padding: 28px 22px;
+}
+
+.pending-block h2 {
+  font-size: 18px;
+  opacity: 0.75;
+}
+
+.pending-block p {
+  margin: 8px 0 0;
+}
+
 .point-list {
   display: grid;
   gap: 12px;

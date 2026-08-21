@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBlock from '../../components/SectionBlock.astro';
 import UniversityCard from '../../components/UniversityCard.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import SectionPending from '../../components/SectionPending.astro';
 import { RESOURCE_CATEGORIES, SECTIONS, SITE } from '../../config';
 import { OFFICIAL_SITES } from '../../lib/official';
 import { channelsFor } from '../../lib/social';
@@ -22,13 +23,13 @@ const { Content } = await render(university);
 
 const tabs = [
   { id: 'overview', label: '概况' },
-  ...(u.transferPolicy ? [{ id: 'transfer', label: '转专业' }] : []),
-  ...(u.secondarySelection ? [{ id: 'secondary', label: '二次选拔' }] : []),
-  ...(u.trainingPlan ? [{ id: 'training', label: '培养计划' }] : []),
-  ...(u.dorm ? [{ id: 'dorm', label: '寝室' }] : []),
-  ...(u.classes ? [{ id: 'classes', label: '上课' }] : []),
-  ...(u.materials.length ? [{ id: 'materials', label: '学习资料' }] : []),
-  ...(u.videos.length ? [{ id: 'videos', label: '视频' }] : []),
+  { id: 'transfer', label: '转专业' },
+  { id: 'secondary', label: '二次选拔' },
+  { id: 'training', label: '培养计划' },
+  { id: 'dorm', label: '寝室' },
+  { id: 'classes', label: '上课' },
+  { id: 'materials', label: '学习资料' },
+  { id: 'videos', label: '视频' },
 ];
 
 const materialsByCategory = RESOURCE_CATEGORIES.map((c) => ({
@@ -181,6 +182,9 @@ const related = allUniversities
         sources={u.transferPolicy.sources}
       />
     )}
+    {!u.transferPolicy && (
+      <SectionPending id="transfer" label="转专业政策" school={u.name} category="转专业政策" />
+    )}
 
     {u.secondarySelection && (
       <section id="secondary" class="card section-block">
@@ -204,6 +208,9 @@ const related = allUniversities
         )}
       </section>
     )}
+    {!u.secondarySelection && (
+      <SectionPending id="secondary" label="二次选拔" school={u.name} category="二次选拔" />
+    )}
 
     {u.trainingPlan && (
       <SectionBlock
@@ -213,6 +220,9 @@ const related = allUniversities
         items={u.trainingPlan.points}
         sources={u.trainingPlan.sources}
       />
+    )}
+    {!u.trainingPlan && (
+      <SectionPending id="training" label="专业培养计划" school={u.name} category="培养计划" />
     )}
 
     {u.dorm && (
@@ -237,6 +247,9 @@ const related = allUniversities
         )}
       </section>
     )}
+    {!u.dorm && (
+      <SectionPending id="dorm" label="寝室情况" school={u.name} category="寝室情况" />
+    )}
 
     {u.classes && (
       <SectionBlock
@@ -246,6 +259,9 @@ const related = allUniversities
         items={u.classes.points}
         sources={u.classes.sources}
       />
+    )}
+    {!u.classes && (
+      <SectionPending id="classes" label="上课情况" school={u.name} category="上课情况" />
     )}
 
     {u.materials.length > 0 && (
@@ -302,6 +318,9 @@ const related = allUniversities
         </p>
       </section>
     )}
+    {u.materials.length === 0 && (
+      <SectionPending id="materials" label="学习资料" school={u.name} category="学习资料" />
+    )}
 
     {u.videos.length > 0 && (
       <section id="videos" class="section">
@@ -312,6 +331,9 @@ const related = allUniversities
           {sortedVideos.map((video) => <VideoEmbed video={video} />)}
         </div>
       </section>
+    )}
+    {u.videos.length === 0 && (
+      <SectionPending id="videos" label="校园视频" school={u.name} category="视频" />
     )}
 
     {missingSections.length > 0 && (

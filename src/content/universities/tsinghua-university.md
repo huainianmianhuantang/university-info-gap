@@ -14,6 +14,16 @@ featured: true
 cover: /images/logo-tsinghua-university-512.webp
 
 materials:
+  - title: "清华大学2026年本科招生章程"
+    description: 2026 年本科招生章程全文（教育在线转载，内容与官方一致）
+    category: admission
+    type: 其他
+    link: https://www.eol.cn/kaoshi/gaokao/gxzx/202606/t20260607_2741835.shtml
+  - title: "清华大学2026年强基计划招生简章"
+    description: 依托致理、日新、未央、探微、行健五个书院开展强基计划招生与培养
+    category: training-plan
+    type: 其他
+    link: https://m.join-tsinghua.edu.cn/info/1007/2165.htm
   - title: "清华大学物理系物理学专业本科培养方案"
     description: 校网公开的物理学专业培养方案 PDF，含培养目标、学分结构与课程计划
     category: training-plan
@@ -29,6 +39,27 @@ materials:
     category: transfer-policy
     type: 其他
     link: https://www.tsinghua.edu.cn/info/1142/1108.htm
+  - title: "学生公寓住宿注意事项"
+    description: 学生社区管理服务中心发布的住宿申请、入住与退宿规定
+    category: campus-life
+    type: 其他
+    link: https://www.tsinghua.edu.cn/xssqglfwzx/info/1043/1175.htm
+  - title: "大学生活须知（学生社区管理服务中心）"
+    description: 学生公寓门禁、家具检查、用电与日常生活注意事项
+    category: campus-life
+    type: 其他
+    link: https://www.tsinghua.edu.cn/xssqglfwzx/info/1043/1176.htm
+
+secondarySelection:
+  summary: 强基计划依托致理、日新、未央、探微、行健五个书院实施“书院制”培养；另有学堂班、实验班等面向入校学生的二次选拔机会。
+  programs:
+    - name: 强基计划五书院（致理 / 日新 / 未央 / 探微 / 行健）
+      content: 分别对接数理、文史哲、工程衔接等方向，单独制定培养方案，小班制、导师制，理工衔接双学位等特色培养。
+    - name: 学堂班与实验班
+      content: 各院系开设的拔尖人才培养项目（如钱学森力学班等），部分面向全校新生二次选拔，考核以笔试与面试为主。
+  sources:
+    - 清华大学2026年强基计划招生简章（本科招生网）
+
 videos:
   - title: "2024 招生宣传片《奇迹》"
     platform: bilibili

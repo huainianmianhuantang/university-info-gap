@@ -60,6 +60,12 @@ npm run preview
   - 每条资料必须填 `category`，取值见 `src/config.ts` 的 `RESOURCE_CATEGORIES`（培养方案 / 保研政策 / 奖学金与评优 / 选课与教学 / 新生指南 / 校园生活 / 竞赛）。
 - 大文件建议优先使用网盘（参考东北大学 29 份资料迁移至夸克网盘的先例），避免撑大 Git 仓库。
 
+## 投稿与审核流程
+
+- 用户通过 `/submit/` 提交的内容以邮件形式发送到站方邮箱（`src/config.ts` 的 `CONTACT.email`），**不会直接上屏**。
+- 站方人工核对来源与版权后，才将内容整理进 `src/content/` 对应学校或资料库并发布。
+- 政策类信息一律标注“以学校官方发布为准”；链接在发布前用 `scripts/check-external-links.mjs` 巡检。
+
 ## 选校测评与 AI 建议
 
 - 问卷与推荐引擎：`src/lib/recommender.ts`（纯 TS，可在浏览器运行）。学校画像与各维度推荐学校均在此维护。
