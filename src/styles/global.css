@@ -2557,14 +2557,16 @@ html[data-theme='dark'] .prose pre {
 /* ---------- 首页页面背景：呼吸式光点与镜头圆环 ---------- */
 :root {
   --deco-blue: rgba(31, 94, 255, 0.1);
-  --deco-line: rgba(31, 94, 255, 0.45);
+  --deco-line: rgba(31, 94, 255, 0.28);
   --deco-dot: rgba(31, 94, 255, 0.2);
+  --deco-edge: rgba(31, 94, 255, 0.12);
 }
 
 html[data-theme='dark'] {
   --deco-blue: rgba(122, 176, 255, 0.12);
-  --deco-line: rgba(150, 200, 255, 0.42);
+  --deco-line: rgba(150, 200, 255, 0.26);
   --deco-dot: rgba(140, 190, 255, 0.22);
+  --deco-edge: rgba(122, 176, 255, 0.1);
 }
 
 .page-bg {
@@ -2573,6 +2575,20 @@ html[data-theme='dark'] {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+}
+
+.page-edge-grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--deco-edge) 0%,
+    transparent 12%,
+    transparent 88%,
+    var(--deco-edge) 100%
+  );
+  animation: bg-breath 8s ease-in-out infinite;
+  opacity: 0.55;
 }
 
 .bg-breath {
@@ -2611,7 +2627,7 @@ html[data-theme='dark'] {
 .bg-ring {
   position: absolute;
   border-radius: 50%;
-  border: 2.5px solid var(--deco-line);
+  border: 1.5px solid var(--deco-line);
   animation: bg-ring-breathe 7s ease-in-out infinite;
 }
 
@@ -2641,11 +2657,11 @@ html[data-theme='dark'] {
 @keyframes bg-ring-breathe {
   0%,
   100% {
-    transform: scale(0.85);
-    opacity: 0.6;
+    transform: scale(0.9);
+    opacity: 0.5;
   }
   50% {
-    transform: scale(1.15);
+    transform: scale(1.1);
     opacity: 1;
   }
 }
