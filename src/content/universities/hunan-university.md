@@ -13,6 +13,17 @@ brief: 坐拥千年学府岳麓书院传承的综合性大学，校训“实事�
 featured: false
 cover: /images/logo-hunan-university-512.webp
 
+materials:
+  - title: "湖南大学工商管理学院2026年本科生转专业工作细则"
+    description: 学院级转专业（专业分流）工作细则
+    category: transfer-policy
+    type: 其他
+    link: http://ibschool.hnu.edu.cn/info/11247/98847.htm
+  - title: "湖南大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://admi.hnu.edu.cn/info/1187/7333.htm
 videos:
   - title: "2018 招生宣传片《约麓山·千年学府等你来》"
     platform: bilibili

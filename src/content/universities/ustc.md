@@ -13,6 +13,17 @@ brief: 以基础理科和前沿科技见长的小而精研究型大学。
 featured: false
 cover: /images/logo-ustc-512.webp
 
+materials:
+  - title: "中国科学技术大学本科生学习指南（含专业选择说明）"
+    description: 官方学习指南，含全校性专业选择与转专业说明
+    category: transfer-policy
+    type: pdf
+    link: https://www.teach.ustc.edu.cn/wp-content/uploads/2024/08/2024%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97.pdf
+  - title: "中国科学技术大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zsb.ustc.edu.cn/2026/0529/c35550a741990/page.htm
 videos:
   - title: "2024 招生宣传片《来科大，你就能！》"
     platform: bilibili

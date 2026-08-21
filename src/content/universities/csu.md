@@ -13,6 +13,17 @@ brief: 2000 年合并组建的综合性大学，医学、冶金、材料、铁�
 featured: false
 cover: /images/logo-csu-512.webp
 
+materials:
+  - title: "中南大学机电工程学院2025级本科生转专业接收实施细则"
+    description: 学院级转专业接收实施细则
+    category: transfer-policy
+    type: 其他
+    link: https://cmee.csu.edu.cn/info/1090/7305.htm
+  - title: "中南大学2026年全日制普通本科招生章程"
+    description: 2026 年全日制普通本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zhaosheng.csu.edu.cn/info/1218/2622.htm
 videos:
   - title: "中南大学宣传片《光荫里的中南》"
     platform: bilibili

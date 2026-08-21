@@ -13,6 +13,17 @@ brief: 华南地区老牌工科强校，轻工、建筑、材料等方向突出�
 featured: false
 cover: /images/logo-scut-512.webp
 
+materials:
+  - title: "华南理工大学计算机科学与工程学院2026年自主转专业工作方案"
+    description: 学院级接收 2026 年本科生自主转专业工作方案
+    category: transfer-policy
+    type: 其他
+    link: https://www2.scut.edu.cn/cs/2026/0423/c45217a625376/page.htm
+  - title: "华南理工大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://admission.scut.edu.cn/_t1723/2026/0528/c30824a628133/page.htm
 videos:
   - title: "2022 本科招生宣传片《你，就是未来》"
     platform: bilibili

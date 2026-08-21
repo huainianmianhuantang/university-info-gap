@@ -13,6 +13,17 @@ brief: 以海洋和水产学科为特色的大学，校训“海纳百川、取�
 featured: false
 cover: /images/logo-ouc-512.webp
 
+materials:
+  - title: "中国海洋大学春季学期学生转换院系、班级学习通知"
+    description: 教务处发布的转换院系（转专业）工作通知
+    category: transfer-policy
+    type: 其他
+    link: http://jwc.ouc.edu.cn/2023/0310/c6517a426324/page.htm
+  - title: "中国海洋大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: http://bkzs.ouc.edu.cn/2026/0526/c7205a529059/page.htm
 videos:
   - title: "中国海洋大学招生宣传片"
     platform: bilibili

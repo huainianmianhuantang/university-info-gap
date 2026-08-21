@@ -13,6 +13,17 @@ brief: 1896 年创办、1956 年西迁西安的工科名校。
 featured: false
 cover: /images/logo-xjtu-512.webp
 
+materials:
+  - title: "西安交通大学2024年物理学院本科生转专业工作实施方案"
+    description: 依据《本科生转专业实施细则》制定的学院实施方案
+    category: transfer-policy
+    type: 其他
+    link: http://jwc.xjtu.edu.cn/info/1095/8201.htm
+  - title: "西安交通大学本科招生章程（招生政策汇总）"
+    description: 本科招生网发布的招生章程与招生政策汇总页
+    category: admission
+    type: 其他
+    link: http://zs.xjtu.edu.cn/zsxx1/zszc.htm
 videos:
   - title: "2024 招生宣传片《朝着太阳生长》"
     platform: bilibili

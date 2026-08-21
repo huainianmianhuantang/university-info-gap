@@ -13,6 +13,17 @@ brief: 以航空、航天、航海“三航”为特色的国防工科强校。
 featured: false
 cover: /images/logo-npu-512.webp
 
+materials:
+  - title: "西北工业大学化学与化工学院2026年转专业考核结果公示"
+    description: 依据《本科生转专业实施办法》开展的 2026 年转专业工作公示
+    category: transfer-policy
+    type: 其他
+    link: https://huaxue.nwpu.edu.cn/info/1821/21071.htm
+  - title: "西北工业大学2026年本科招生章程"
+    description: 2026 年本科招生章程全文（教育在线转载，内容与官方一致）
+    category: admission
+    type: 其他
+    link: https://www.eol.cn/kaoshi/gaokao/gxzx/202606/t20260607_2742130.shtml
 videos:
   - title: "2024 招生宣传片《铸·锋芒》"
     platform: bilibili

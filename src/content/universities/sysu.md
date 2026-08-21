@@ -13,6 +13,17 @@ brief: 孙中山先生创办的综合性大学，校训“博学、审问、慎�
 featured: false
 cover: /images/logo-sysu-512.webp
 
+materials:
+  - title: "中山大学本科生申报转专业常见问题解答"
+    description: 教务部发布的转专业资格与流程官方解答
+    category: transfer-policy
+    type: 其他
+    link: https://jwb.sysu.edu.cn/article/2594
+  - title: "中山大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://admission.sysu.edu.cn/f/newsCenter/article/8b565b6ba01a4d568cf370680f8338d4
 videos:
   - title: "2025 招生微电影《一个理由》"
     platform: bilibili

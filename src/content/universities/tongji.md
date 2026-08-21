@@ -13,6 +13,17 @@ brief: 以土木建筑闻名的综合性大学，校训“同舟共济”。
 featured: false
 cover: /images/logo-tongji-512.webp
 
+materials:
+  - title: "同济大学主修专业确认、转专业与转学（信息公开）"
+    description: 信息公开网公布的转专业与转学相关规定
+    category: transfer-policy
+    type: 其他
+    link: https://xxgk.tongji.edu.cn/index.php?classid=11612&newsid=14486&t=show
+  - title: "同济大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://bkzs-h5.tongji.edu.cn/notice/detail?id=6a1d239d02b06a00012eb717
 videos:
   - title: "2024 招生宣传片《不凡》"
     platform: bilibili

@@ -13,6 +13,17 @@ brief: 西北地区老牌综合性大学，草学、化学等学科实力突出�
 featured: false
 cover: /images/logo-lzu-512.webp
 
+materials:
+  - title: "兰州大学本科生转专业管理办法（2025年修订）"
+    description: 2025 年 5 月校长办公会议审议通过的转专业管理办法全文
+    category: transfer-policy
+    type: pdf
+    link: https://chem.lzu.edu.cn/ueditor/php/upload/file/20250520/1747712582636350.pdf
+  - title: "兰州大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zsb.lzu.edu.cn/zhaoshengdongtai/tongzhigonggao/2026/0526/332173.html
 videos:
   - title: "2022 招生宣传片《你的决定》"
     platform: bilibili

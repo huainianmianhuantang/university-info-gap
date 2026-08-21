@@ -13,6 +13,17 @@ brief: 以民族学、人类学为特色的综合性大学，校训“美美与�
 featured: false
 cover: /images/logo-muc-512.webp
 
+materials:
+  - title: "中央民族大学本科生专业调整实施办法"
+    description: 校方发布的本科生专业调整（转专业）实施办法
+    category: transfer-policy
+    type: 其他
+    link: https://jw.muc.edu.cn/info/1008/2952.htm
+  - title: "中央民族大学2026年本、预科招生章程"
+    description: 2026 年本、预科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zb.muc.edu.cn/content/zs/93108d8f-5802-11f1-98a5-6c92bf4353bb.htm
 videos:
   - title: "2025 招生宣传片《美，生生不息》"
     platform: bilibili

@@ -13,6 +13,17 @@ brief: 西南地区综合性大学，建筑、电气、机械等工科传统深�
 featured: false
 cover: /images/logo-cqu-512.webp
 
+materials:
+  - title: "重庆大学普通本科学生转专业管理办法"
+    description: 校方发布的转专业管理办法全文
+    category: transfer-policy
+    type: pdf
+    link: https://jwc.cqu.edu.cn/__local/3/CC/D0/150A6E569C933DB821C0B46B5AE_601E96AE_2A587.pdf?e=.pdf
+  - title: "重庆大学2025年本科招生章程"
+    description: 2025 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zhaosheng.cqu.edu.cn/pub/desktopend/contentpage/1164
 videos:
   - title: "2025 招生宣传片《笔承日新》"
     platform: bilibili

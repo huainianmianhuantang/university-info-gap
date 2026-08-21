@@ -12,6 +12,17 @@ campuses: ['北校区', '南校区']
 brief: 农科特色鲜明，中国西北现代农业教育的重要基地。
 featured: false
 cover: /images/logo-nwafu-512.webp
+materials:
+  - title: "西北农林科技大学资源环境学院转专业考核办法"
+    description: 学院级本科生转专业考核办法官方文件
+    category: transfer-policy
+    type: pdf
+    link: https://jiaowu.nwafu.edu.cn/docs//2026-01/2360b446e1774930967a78ddaf870c1d.pdf
+  - title: "西北农林科技大学2024年本科招生章程"
+    description: 2024 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zhshw.nwafu.edu.cn/zszn/zszc/d31456f41b9e4303bebcdf8821a10cf4.htm
 videos:
   - title: "招生减章但是西农｜新生宿舍"
     platform: bilibili

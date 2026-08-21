@@ -13,6 +13,17 @@ brief: 文史哲传统深厚的综合性大学，校训“学无止境、气有�
 featured: false
 cover: /images/logo-sdu-512.webp
 
+materials:
+  - title: "山东大学2024年春季学期本科生转专业工作通知"
+    description: 教务处发布的学期转专业工作通知
+    category: transfer-policy
+    type: 其他
+    link: https://jwc.wh.sdu.edu.cn/info/1032/16602.htm
+  - title: "山东大学2026年普通本科招生章程"
+    description: 2026 年普通本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://www.bkzs.sdu.edu.cn/info/1028/2601.htm
 videos:
   - title: "本科招生宣传片《朝夕遇见你》"
     platform: bilibili

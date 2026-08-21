@@ -13,6 +13,17 @@ brief: 文理医均衡发展，华西口腔医学全国闻名。
 featured: false
 cover: /images/logo-scu-512.webp
 
+materials:
+  - title: "四川大学建筑与环境学院2026年本科生转专业工作实施方案"
+    description: 学院级转专业工作实施方案
+    category: transfer-policy
+    type: 其他
+    link: https://acem.scu.edu.cn/info/1003/13980.htm
+  - title: "四川大学2026年普通本科招生章程"
+    description: 2026 年普通本科招生章程全文（教育在线转载，内容与官方一致）
+    category: admission
+    type: 其他
+    link: https://www.eol.cn/kaoshi/gaokao/gxzx/202606/t20260605_2741272.shtml
 videos:
   - title: "2024 招生宣传片《青春同行》"
     platform: bilibili

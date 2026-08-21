@@ -13,6 +13,17 @@ brief: 电子信息领域的特色强校，校训“求实求真、大气大为�
 featured: false
 cover: /images/logo-uestc-512.webp
 
+materials:
+  - title: "电子科技大学信息与通信工程学院本科生专业确认实施细则"
+    description: 学院专业确认与转专业实施细则（依据学校 2026 年转专业工作通知）
+    category: transfer-policy
+    type: 其他
+    link: https://www.sice.uestc.edu.cn/info/1140/16307.htm
+  - title: "电子科技大学2026年全日制普通本科招生章程"
+    description: 2026 年全日制普通本科招生章程全文（教育在线转载，内容与官方一致）
+    category: admission
+    type: 其他
+    link: https://www.eol.cn/kaoshi/gaokao/gxzx/202606/t20260607_2742175.shtml
 videos:
   - title: "2020 招生宣传片《我在电子科技大学等你》"
     platform: bilibili

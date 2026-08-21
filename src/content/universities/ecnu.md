@@ -13,6 +13,17 @@ brief: 师范教育传统深厚的综合性大学，心理学与教育学优势�
 featured: false
 cover: /images/logo-ecnu-512.webp
 
+materials:
+  - title: "华东师范大学本科生转专业介绍"
+    description: 招生网发布的转专业类型、时间与流程介绍
+    category: transfer-policy
+    type: 其他
+    link: https://zsb.ecnu.edu.cn/d7/04/c37596a448260/page.htm
+  - title: "华东师范大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://xxgk.ecnu.edu.cn/a3/52/c11816a762706/page.htm
 videos:
   - title: "2022 招生宣传片《卓越之路》"
     platform: bilibili
