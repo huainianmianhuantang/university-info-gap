@@ -14,6 +14,7 @@ const articles = (await getCollection('articles')).sort((a, b) =>
 const featured = universities.filter((u) => u.data.featured);
 const showcase = (featured.length ? featured : universities).slice(0, 3);
 const totalVideos = universities.reduce((n, u) => n + u.data.videos.length, 0);
+const schoolBriefs = universities.map((u) => ({ id: u.id, name: u.data.name }));
 
 const categories = [
   { icon: '⇄', label: '转专业政策', desc: '申请条件、考核方式、名额限制', href: '/universities/' },
@@ -77,6 +78,13 @@ const categories = [
       </div>
     </section>
 
+    <section class="section" id="recentSection" hidden>
+      <div class="section-head">
+        <h2>最近浏览</h2>
+      </div>
+      <div class="chip-row" id="recentList"></div>
+    </section>
+
     <section class="section">
       <div class="section-head">
         <h2>你想了解什么？</h2>
@@ -122,3 +130,26 @@ const categories = [
     </section>
   </div>
 </BaseLayout>
+
+<script define:vars={{ schoolBriefs }}>
+  const recentSection = document.getElementById('recentSection');
+  const recentList = document.getElementById('recentList');
+  try {
+    const recent = JSON.parse(localStorage.getItem('recent-universities') || '[]');
+    const items = recent
+      .map((id) => schoolBriefs.find((s) => s.id === id))
+      .filter(Boolean);
+    if (items.length > 0 && recentSection && recentList) {
+      recentSection.hidden = false;
+      items.forEach((s) => {
+        const a = document.createElement('a');
+        a.className = 'chip';
+        a.href = `/universities/${s.id}/`;
+        a.textContent = s.name;
+        recentList.appendChild(a);
+      });
+    }
+  } catch {
+    /* ignore */
+  }
+</script>

@@ -267,6 +267,15 @@ const related = allUniversities
 </BaseLayout>
 
 <script>
+  const RECENT_KEY = 'recent-universities';
+  try {
+    const recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+    const next = [slug, ...recent.filter((x) => x !== slug)].slice(0, 6);
+    localStorage.setItem(RECENT_KEY, JSON.stringify(next));
+  } catch {
+    /* ignore */
+  }
+
   const favBtn = document.getElementById('favBtn');
   const FAV_KEY = 'fav-universities';
   const slug = window.location.pathname.split('/').filter(Boolean)[1] ?? '';
