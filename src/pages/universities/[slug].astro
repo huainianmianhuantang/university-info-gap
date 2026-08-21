@@ -121,7 +121,10 @@ const related = allUniversities
       {u.campuses.length > 0 && (
         <div class="university-meta">校区：{u.campuses.join(' / ')}</div>
       )}
+      <div class="university-meta">
+        本页收录：概况 · {u.videos.length} 条视频 · {u.materials.length} 份资料 · 待补充栏目 {missingSections.length} 个
       </div>
+    </div>
     </div>
 
     <div class="note-banner">

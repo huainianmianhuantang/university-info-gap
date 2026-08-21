@@ -30,7 +30,8 @@ const schools = (await getCollection('universities')).map((u) => ({
 
     <div id="favApp">
       <p class="muted" id="favEmpty" hidden>
-        还没有收藏任何学校。去<a href="/universities/">大学库</a>逛逛，点卡片左上角 ★ 收藏吧。
+        还没有收藏任何学校。去<a href="/universities/">大学库</a>逛逛，点卡片左上角 ★ 收藏；
+        或者先做一次<a href="/quiz/">选校测评</a>，把推荐学校一键收藏。
       </p>
       <div class="card filters" id="favFilters" hidden>
         <div class="filter-group">

@@ -38,6 +38,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       <button class="btn btn-ghost" id="copyCompareLink" type="button">复制对比链接</button>
       <button class="btn btn-ghost" id="copySummary" type="button" hidden>复制差异摘要</button>
       <button class="btn btn-ghost" id="printCompare" type="button">打印 / 导出 PDF</button>
+      <button class="btn btn-ghost" id="onlyDiff" type="button" hidden>只看差异</button>
     </div>
 
     <div id="compareApp">
@@ -58,6 +59,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const copyBtn = document.getElementById('copyCompareLink');
   const summaryBtn = document.getElementById('copySummary');
   const printBtn = document.getElementById('printCompare');
+  const onlyDiffBtn = document.getElementById('onlyDiff');
 
   copyBtn?.addEventListener('click', () => {
     navigator.clipboard
@@ -159,6 +161,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       tr.appendChild(tdLabel);
       const values = picked.map((s) => String(fn(s) ?? '').trim());
       const allSame = values.every((v) => v === values[0]);
+      tr.dataset.allSame = allSame ? '1' : '0';
       if (!allSame && label !== '学校' && label !== '英文名' && label !== '详情页') {
         summaryLines.push(
           `- ${label}：${picked.map((s, i) => `${s.name} ${values[i]}`).join('；')}`,
@@ -194,6 +197,13 @@ const schools = (await getCollection('universities')).map((u) => ({
       body.appendChild(tr);
     });
     table.appendChild(body);
+    if (onlyDiffBtn) {
+      onlyDiffBtn.hidden = false;
+      onlyDiffBtn.addEventListener('click', () => {
+        const on = table.classList.toggle('only-diff');
+        onlyDiffBtn.textContent = on ? '显示全部' : '只看差异';
+      });
+    }
 
     summaryLines.push(`- 视频：${picked.map((s) => `${s.name} ${s.videos}`).join('；')}`);
     summaryLines.push(`- 资料：${picked.map((s) => `${s.name} ${s.materials}`).join('；')}`);

@@ -16,6 +16,17 @@ const types = [...new Set(universities.map((u) => u.data.type))].sort((a, b) =>
 const allTags = [...new Set(universities.flatMap((u) => u.data.tags))].sort((a, b) =>
   a.localeCompare(b, 'zh'),
 );
+const REGIONS: Record<string, string> = {
+  北京: '华北', 天津: '华北', 河北: '华北', 山西: '华北', 内蒙古: '华北',
+  上海: '华东', 江苏: '华东', 浙江: '华东', 安徽: '华东', 福建: '华东',
+  江西: '华东', 山东: '华东',
+  湖北: '华中', 湖南: '华中', 河南: '华中',
+  广东: '华南', 广西: '华南', 海南: '华南',
+  重庆: '西南', 四川: '西南', 贵州: '西南', 云南: '西南', 西藏: '西南',
+  陕西: '西北', 甘肃: '西北', 青海: '西北', 宁夏: '西北', 新疆: '西北',
+  辽宁: '东北', 吉林: '东北', 黑龙江: '东北',
+};
+const regions = [...new Set(universities.map((u) => REGIONS[u.data.province] ?? '其他'))].filter(Boolean);
 const initialQuery = Astro.url.searchParams.get('q') ?? '';
 ---
 
@@ -85,6 +96,13 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           </label>
         ))}
       </div>
+      <div class="filter-group region-chips">
+        <span class="small muted">大区：</span>
+        <button type="button" class="video-filter-btn active" data-region="all">全部</button>
+        {regions.map((r) => (
+          <button type="button" class="video-filter-btn" data-region={r}>{r}</button>
+        ))}
+      </div>
       <div class="filter-group">
         <label>
           <input type="checkbox" id="favOnly" />
@@ -120,6 +138,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           data-province={u.data.province}
           data-type={u.data.type}
           data-levels={u.data.levels.join(' ')}
+          data-region={REGIONS[u.data.province] ?? '其他'}
           data-videos={u.data.videos.length}
           data-materials={u.data.materials.length}
         >
@@ -164,6 +183,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const videoOnly = document.getElementById('videoOnly');
   const materialOnly = document.getElementById('materialOnly');
   const viewToggle = document.getElementById('viewToggle');
+  const regionBtns = Array.from(document.querySelectorAll('[data-region]'));
   const favBoxes = Array.from(document.querySelectorAll('.fav-box'));
 
   const FAV_KEY = 'fav-universities';
@@ -208,6 +228,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
     const favOnlyChecked = favOnly?.checked ?? false;
     const videoOnlyChecked = videoOnly?.checked ?? false;
     const materialOnlyChecked = materialOnly?.checked ?? false;
+    const region = document.querySelector('[data-region].active')?.getAttribute('data-region') ?? 'all';
 
     let visible = 0;
     for (const item of items) {
@@ -222,7 +243,8 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
       const okFav = !favOnlyChecked || favs.has(item.querySelector('.fav-box')?.value ?? '');
       const okVideo = !videoOnlyChecked || Number(item.dataset.videos ?? 0) > 0;
       const okMaterial = !materialOnlyChecked || Number(item.dataset.materials ?? 0) > 0;
-      const ok = okKeyword && okProvince && okType && okTag && okLevel && okFav && okVideo && okMaterial;
+      const okRegion = region === 'all' || item.dataset.region === region;
+      const ok = okKeyword && okProvince && okType && okTag && okLevel && okFav && okVideo && okMaterial && okRegion;
       item.style.display = ok ? '' : 'none';
       if (ok) visible++;
     }
@@ -275,6 +297,15 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   favOnly?.addEventListener('change', applyFilters);
   videoOnly?.addEventListener('change', applyFilters);
   materialOnly?.addEventListener('change', applyFilters);
+  regionBtns.forEach((b) => {
+    b.addEventListener('click', () => {
+      regionBtns.forEach((x) => {
+        x.classList.toggle('active', x === b);
+        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+      });
+      applyFilters();
+    });
+  });
   viewToggle?.addEventListener('click', () => {
     const listMode = grid?.classList.toggle('list-view') ?? false;
     if (viewToggle) viewToggle.textContent = listMode ? '卡片视图' : '列表视图';

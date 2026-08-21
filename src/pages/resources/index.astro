@@ -45,7 +45,7 @@ const withMaterials = universities
 const byCategory = RESOURCE_CATEGORIES.map((c) => ({
   ...c,
   items: all.filter((m) => m.category === c.id),
-})).filter((c) => c.items.length > 0);
+}));
 
 const withVideos = universities
   .map((u) => ({
@@ -143,25 +143,31 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
             <span class="small muted">{cat.items.length} 份</span>
           </div>
           <p class="small muted" style="margin-top:-8px;">{cat.description}</p>
-          <div
-            class="grid"
-            style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"
-          >
-            {cat.items.map((m) => (
-              <div class="card material-card">
-                <div class="title-row">
-                  <h3>{m.title}</h3>
-                  <span class="type-chip school-chip">{m.school}</span>
-                  <span class="type-chip">{m.type}</span>
+          {cat.items.length > 0 ? (
+            <div
+              class="grid"
+              style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"
+            >
+              {cat.items.map((m) => (
+                <div class="card material-card">
+                  <div class="title-row">
+                    <h3>{m.title}</h3>
+                    <span class="type-chip school-chip">{m.school}</span>
+                    <span class="type-chip">{m.type}</span>
+                  </div>
+                  <p>{m.description}</p>
+                  {m.code && <p>提取码：<strong>{m.code}</strong></p>}
+                  <a class="btn" href={m.link} target="_blank" rel="noopener">
+                    {m.link.startsWith('/') ? '查看文件' : '获取资料'}
+                  </a>
                 </div>
-                <p>{m.description}</p>
-                {m.code && <p>提取码：<strong>{m.code}</strong></p>}
-                <a class="btn" href={m.link} target="_blank" rel="noopener">
-                  {m.link.startsWith('/') ? '查看文件' : '获取资料'}
-                </a>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p class="muted">
+              该类别暂无资料，欢迎<a href="/submit/">投稿</a>补充。
+            </p>
+          )}
         </section>
       ))}
     </div>
@@ -190,6 +196,10 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
         placeholder="搜索学校，如：东北大学、清华、武汉…"
         aria-label="搜索学校视频"
       />
+      <div class="video-tools">
+        <button class="btn btn-ghost" id="expandAll" type="button">展开全部</button>
+        <button class="btn btn-ghost" id="collapseAll" type="button">收起全部</button>
+      </div>
       {withVideos.map((group, index) => (
         <details class="card video-group" open={index < 5}>
           <summary>
@@ -280,6 +290,30 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
         /* ignore */
       }
     });
+  });
+  const expandAllBtn = document.getElementById('expandAll');
+  const collapseAllBtn = document.getElementById('collapseAll');
+  expandAllBtn?.addEventListener('click', () => {
+    openSet = new Set(videoGroups.map((g) => g.querySelector('summary a')?.textContent?.trim() ?? ''));
+    videoGroups.forEach((g) => {
+      g.open = true;
+    });
+    try {
+      localStorage.setItem(OPEN_KEY, JSON.stringify([...openSet]));
+    } catch {
+      /* ignore */
+    }
+  });
+  collapseAllBtn?.addEventListener('click', () => {
+    openSet = new Set();
+    videoGroups.forEach((g) => {
+      g.open = false;
+    });
+    try {
+      localStorage.setItem(OPEN_KEY, '[]');
+    } catch {
+      /* ignore */
+    }
   });
   videoSearch?.addEventListener('input', () => {
     const kw = videoSearch.value.trim().toLowerCase();

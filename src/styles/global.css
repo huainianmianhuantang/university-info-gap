@@ -1119,6 +1119,29 @@ html[data-theme='dark'] mark {
   margin: 0 0 16px;
 }
 
+.video-tools {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.video-tools .btn {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.compare-table.only-diff tr[data-all-same='1'] {
+  display: none;
+}
+
+.region-chips {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
 .faq-item {
   margin-bottom: 10px;
   padding: 14px 18px;
