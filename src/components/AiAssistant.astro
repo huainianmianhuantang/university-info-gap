@@ -85,7 +85,7 @@
       const profile = getProfile();
       hi.innerHTML =
         (profile
-          ? `你好呀 ${profile.nickname}，我是小助手 🤖 `
+          ? `你好呀 ${escapeHtml(profile.nickname)}，我是小助手 🤖 `
           : '你好呀，我是小助手 🤖 ') +
         '可以问我：这个网站怎么用、怎么选专业方向、<strong>转专业</strong>要注意什么……' +
         (profile ? '' : '（登录后对话会按账号保存）');

@@ -42,7 +42,15 @@ const categories = [
     },
   })}></script>
   <div class="container page">
-    <section class="hero">
+        <div class="welcome-banner card" id="welcomeBanner" hidden>
+      <span class="welcome-emoji" id="welcomeEmoji">👋</span>
+      <div class="welcome-text">
+        <b id="welcomeTitle"></b>
+        <span id="welcomeSub">收藏、测评结果和 AI 对话都保存在你的账号下。</span>
+      </div>
+      <a class="btn btn-ghost btn-xs" href="/account/">个人中心</a>
+    </div>
+<section class="hero">
       <h1>选大学，先看清“象牙塔”</h1>
       <p>
         {SITE.description}
@@ -188,6 +196,15 @@ const categories = [
 </BaseLayout>
 
 <script define:vars={{ schoolBriefs }}>
+  import { getProfile } from '../lib/account';
+  const welcomeBanner = document.getElementById('welcomeBanner');
+  const profileNow = getProfile();
+  if (welcomeBanner && profileNow) {
+    document.getElementById('welcomeTitle').textContent = '欢迎回来，' + profileNow.nickname + '！';
+    document.getElementById('welcomeEmoji').textContent = '👋';
+    welcomeBanner.hidden = false;
+  }
+
   const recentSection = document.getElementById('recentSection');
   const recentList = document.getElementById('recentList');
   const clearRecent = document.getElementById('clearRecent');
