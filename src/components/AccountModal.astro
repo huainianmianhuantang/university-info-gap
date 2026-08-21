@@ -1,0 +1,330 @@
+<div class="acct-mask" id="acctMask" hidden>
+  <div class="acct-card" role="dialog" aria-modal="true" aria-label="登录 / 注册">
+    <button class="acct-close" id="acctClose" type="button" aria-label="关闭">×</button>
+    <div class="acct-head">
+      <span class="acct-logo">🔐</span>
+      <div>
+        <b id="acctTitle">登录</b>
+        <span id="acctSub">登录后收藏和记录跨设备可用（云同步待接入）</span>
+      </div>
+    </div>
+
+    <div class="acct-tabs">
+      <button class="acct-tab on" data-tab="login" type="button">登录</button>
+      <button class="acct-tab" data-tab="register" type="button">注册</button>
+    </div>
+
+    <div class="acct-body" id="acctBody"></div>
+
+    <div class="acct-third">
+      <div class="acct-divider"><span>或使用第三方</span></div>
+      <div class="acct-third-btns">
+        <button type="button" data-third="qq">🐧 QQ 登录</button>
+        <button type="button" data-third="wechat">💬 微信登录</button>
+      </div>
+      <p class="acct-third-note">QQ/微信登录需要开发者资质（AppID），当前为演示模式：登录后可模拟绑定。</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import {
+    bindThirdParty,
+    devCode,
+    getProfile,
+    loginWithCode,
+    loginWithPassword,
+    register,
+  } from '../lib/account';
+
+  const mask = document.getElementById('acctMask') as HTMLElement;
+  const title = document.getElementById('acctTitle') as HTMLElement;
+  const sub = document.getElementById('acctSub') as HTMLElement;
+  const body = document.getElementById('acctBody') as HTMLElement;
+  const close = document.getElementById('acctClose') as HTMLButtonElement;
+  const tabs = Array.from(document.querySelectorAll('.acct-tab')) as HTMLButtonElement[];
+
+  let mode: 'login' | 'register' = 'login';
+  let currentCode = devCode();
+
+  function el(tag: string, cls: string, html: string) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e as HTMLElement;
+  }
+
+  function field(label: string, id: string, type: string, placeholder: string, extra = '') {
+    const wrap = el('div', 'acct-field', `<label for="${id}">${label}</label>`);
+    const input = document.createElement('input');
+    input.id = id;
+    input.type = type;
+    input.placeholder = placeholder;
+    input.autocomplete = extra;
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  function render() {
+    body.innerHTML = '';
+    title.textContent = mode === 'login' ? '登录' : '注册新账号';
+    sub.textContent =
+      mode === 'login'
+        ? '登录后收藏和记录可跨设备（云同步待接入）'
+        : '只需要手机号 + 一个昵称，不收集多余信息';
+    tabs.forEach((t) => t.classList.toggle('on', t.dataset.tab === mode));
+
+    if (mode === 'login') {
+      body.appendChild(el('p', 'acct-dev', `🔧 开发模式演示验证码：<b>${currentCode}</b>`));
+      const phone = field('手机号', 'acctPhone', 'tel', '11 位手机号');
+      const code = field('验证码', 'acctCode', 'text', '6 位验证码');
+      const pass = field('密码（选填，有密码可走密码登录）', 'acctPass', 'password', '密码');
+      const btn = el('button', 'btn btn-primary acct-submit', '登录');
+      btn.addEventListener('click', async () => {
+        const p = (document.getElementById('acctPhone') as HTMLInputElement).value;
+        const c = (document.getElementById('acctCode') as HTMLInputElement).value;
+        const pw = (document.getElementById('acctPass') as HTMLInputElement).value;
+        let r;
+        if (pw) r = await loginWithPassword(p, pw);
+        else r = loginWithCode(p, c, currentCode);
+        if (r.ok) {
+          window.showToast?.('登录成功，欢迎回来 👋');
+          closeModal();
+        } else {
+          window.showToast?.(r.error || '登录失败');
+        }
+      });
+      body.append(phone, code, pass, btn);
+    } else {
+      body.appendChild(el('p', 'acct-dev', `🔧 开发模式演示验证码：<b>${currentCode}</b>`));
+      const phone = field('手机号', 'acctRPhone', 'tel', '11 位手机号');
+      const code = field('验证码', 'acctRCode', 'text', '6 位验证码');
+      const nick = field('昵称', 'acctNick', 'text', '给自己起个名字');
+      const pass = field('设置密码（选填，至少 6 位）', 'acctRPass', 'password', '密码');
+      const btn = el('button', 'btn btn-primary acct-submit', '注册并登录');
+      btn.addEventListener('click', async () => {
+        const p = (document.getElementById('acctRPhone') as HTMLInputElement).value;
+        const c = (document.getElementById('acctRCode') as HTMLInputElement).value;
+        const n = (document.getElementById('acctNick') as HTMLInputElement).value;
+        const pw = (document.getElementById('acctRPass') as HTMLInputElement).value;
+        const r = await register(p, c, currentCode, n, pw);
+        if (r.ok) {
+          window.showToast?.('注册成功，欢迎加入 🎉');
+          closeModal();
+        } else {
+          window.showToast?.(r.error || '注册失败');
+        }
+      });
+      body.append(phone, code, nick, pass, btn);
+    }
+  }
+
+  function open() {
+    currentCode = devCode();
+    render();
+    mask.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    mask.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  tabs.forEach((t) =>
+    t.addEventListener('click', () => {
+      mode = (t.dataset.tab as 'login' | 'register') || 'login';
+      render();
+    }),
+  );
+
+  close.addEventListener('click', closeModal);
+  mask.addEventListener('click', (e) => {
+    if (e.target === mask) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !mask.hidden) closeModal();
+  });
+
+  document.querySelectorAll('[data-third]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const type = (b as HTMLElement).dataset.third as 'qq' | 'wechat';
+      const profile = getProfile();
+      if (!profile) {
+        window.showToast?.('请先注册 / 登录手机号账号，再模拟绑定第三方');
+        return;
+      }
+      bindThirdParty(type, type + '_demo_' + profile.uid);
+      window.showToast?.(type === 'qq' ? '已模拟绑定 QQ（演示）' : '已模拟绑定 微信（演示）');
+    });
+  });
+
+  window.addEventListener('account:open', () => open());
+</script>
+
+<style>
+  .acct-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    background: rgba(13, 21, 38, 0.6);
+    backdrop-filter: blur(6px);
+  }
+  .acct-card {
+    width: min(420px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--surface);
+    color: var(--text);
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg);
+    padding: 24px 24px 20px;
+    position: relative;
+    animation: acct-pop 0.25s ease;
+  }
+  @keyframes acct-pop {
+    from {
+      transform: translateY(12px) scale(0.97);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  .acct-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .acct-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .acct-logo {
+    font-size: 30px;
+  }
+  .acct-head b {
+    font-size: 18px;
+  }
+  .acct-head span:last-child {
+    display: block;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+  }
+  .acct-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .acct-tab {
+    flex: 1;
+    padding: 9px;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    background: var(--card-bg);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+  }
+  .acct-tab.on {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .acct-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .acct-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .acct-field label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .acct-field input {
+    padding: 11px 13px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    color: var(--text);
+    font: inherit;
+  }
+  .acct-submit {
+    margin-top: 4px;
+  }
+  .acct-dev {
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: var(--surface-soft);
+    color: var(--text-secondary);
+    font-size: 12.5px;
+  }
+  .acct-dev b {
+    color: var(--primary);
+    letter-spacing: 2px;
+  }
+  .acct-third {
+    margin-top: 16px;
+  }
+  .acct-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .acct-divider::before,
+  .acct-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .acct-third-btns {
+    display: flex;
+    gap: 10px;
+  }
+  .acct-third-btns button {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+  }
+  .acct-third-btns button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .acct-third-note {
+    margin: 8px 0 0;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .acct-card {
+      animation: none;
+    }
+  }
+</style>

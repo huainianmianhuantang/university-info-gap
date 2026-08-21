@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import OnboardingModal from '../components/OnboardingModal.astro';
 import HelpButton from '../components/HelpButton.astro';
 import AiAssistant from '../components/AiAssistant.astro';
+import AccountModal from '../components/AccountModal.astro';
 
 interface Props {
   title?: string;
@@ -80,6 +81,7 @@ const pageDescription = description ?? SITE.description;
     <OnboardingModal />
     <HelpButton />
     <AiAssistant />
+    <AccountModal />
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   </body>
 </html>

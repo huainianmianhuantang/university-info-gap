@@ -66,7 +66,17 @@ const categories = [
 </BaseLayout>
 
 <script define:vars={{ submitEmail: CONTACT.email }}>
+  import { getProfile } from '../lib/account';
   const form = document.getElementById('submitForm');
+
+  const acctProfile = getProfile();
+  if (acctProfile) {
+    const contactInput = document.getElementById('contact');
+    if (contactInput && !contactInput.value) {
+      contactInput.value = acctProfile.phone ? acctProfile.phone + '（' + acctProfile.nickname + '）' : acctProfile.nickname;
+    }
+  }
+
   const copySubmit = document.getElementById('copySubmit');
 
   const fillExample = document.getElementById('fillExample');

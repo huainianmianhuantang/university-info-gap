@@ -21,6 +21,7 @@ const currentPath = Astro.url.pathname;
       <span class="logo-mark">镜</span>
       <span>{SITE.title}</span>
     </a>
+    <div class="acct-wrap" id="acctWrap"></div>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="打开菜单">
       ☰
     </button>
@@ -44,6 +45,8 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <script>
+  import { getProfile, logout } from '../lib/account';
+
   const toggle = document.getElementById('navToggle');
   const header = document.querySelector('.site-header');
   toggle?.addEventListener('click', () => {
@@ -61,6 +64,51 @@ const currentPath = Astro.url.pathname;
   );
 
   const themeBtn = document.getElementById('themeToggle');
+  const acctWrap = document.getElementById('acctWrap');
+
+  function renderAcct() {
+    if (!acctWrap) return;
+    const profile = getProfile();
+    const logged = Boolean(profile);
+    acctWrap.innerHTML = '';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'acct-chip';
+    btn.textContent = logged ? `👤 ${profile?.nickname ?? ''} ▾` : '登录 / 注册';
+    acctWrap.appendChild(btn);
+    if (logged) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = document.createElement('div');
+        menu.className = 'acct-menu';
+        const me = document.createElement('a');
+        me.href = '/account/';
+        me.textContent = '👤 个人中心';
+        const out = document.createElement('button');
+        out.type = 'button';
+        out.textContent = '🚪 退出登录';
+        out.addEventListener('click', () => {
+          logout();
+          menu.remove();
+        });
+        menu.append(me, out);
+        acctWrap.appendChild(menu);
+        const closeMenu = (ev: Event) => {
+          if (!menu.contains(ev.target as Node)) menu.remove();
+          document.removeEventListener('click', closeMenu);
+        };
+        document.addEventListener('click', closeMenu);
+      });
+    } else {
+      btn.addEventListener('click', () => {
+        window.dispatchEvent(new CustomEvent('account:open'));
+      });
+    }
+  }
+
+  window.addEventListener('account:change', renderAcct);
+  renderAcct();
+
   const applyTheme = (t) => {
     document.documentElement.setAttribute('data-theme', t);
     if (themeBtn) themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';

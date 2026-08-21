@@ -1053,6 +1053,15 @@ html[data-theme='dark'] mark {
   background: #d7e3ff;
 }
 
+.btn-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.btn-danger:hover {
+  background: #fecaca;
+}
+
 /* ---------- 视频 ---------- */
 .video-card {
   overflow: hidden;
@@ -1954,6 +1963,74 @@ html[data-theme='dark'] .tier-保 {
 
 .toast[hidden] {
   display: none;
+}
+
+/* ---------- 导航账号入口 ---------- */
+.acct-wrap {
+  position: relative;
+  margin-left: auto;
+  margin-right: 8px;
+}
+
+.acct-chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 14px;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-size: 13.5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.acct-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.acct-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 150px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.acct-menu a,
+.acct-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 11px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.acct-menu a:hover,
+.acct-menu button:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+@media (max-width: 640px) {
+  .acct-chip {
+    padding: 6px 10px;
+    font-size: 12.5px;
+  }
 }
 
 button,

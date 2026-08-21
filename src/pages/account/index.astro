@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="个人中心"
+  description="管理你的登录账号、收藏与记录。"
+  robots="noindex,follow"
+>
+  <div class="container page">
+    <div class="page-hero">
+      <h1>个人中心</h1>
+      <p>管理账号、收藏与记录。登录后数据可在本机聚合，云同步待接入。</p>
+    </div>
+
+    <div id="accountApp">
+      <div class="card section-block" id="acctProfile" hidden>
+        <div class="acct-profile-head">
+          <span class="acct-avatar" id="acctAvatar">👤</span>
+          <div class="acct-profile-info">
+            <b id="acctNickname"></b>
+            <span class="muted" id="acctPhone"></span>
+          </div>
+          <button class="btn btn-ghost btn-xs" id="editNick" type="button">改昵称</button>
+        </div>
+
+        <div class="acct-binds">
+          <div class="bind-row">
+            <span>🐧 QQ 绑定</span>
+            <span class="bind-status" id="bindQq"></span>
+            <button class="btn btn-ghost btn-xs" data-bind="qq" type="button">模拟绑定</button>
+            <button class="btn btn-ghost btn-xs" data-unbind="qq" type="button">解绑</button>
+          </div>
+          <div class="bind-row">
+            <span>💬 微信绑定</span>
+            <span class="bind-status" id="bindWechat"></span>
+            <button class="btn btn-ghost btn-xs" data-bind="wechat" type="button">模拟绑定</button>
+            <button class="btn btn-ghost btn-xs" data-unbind="wechat" type="button">解绑</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section-block" id="acctData" hidden>
+        <h2>我的数据</h2>
+        <div class="acct-stats">
+          <a class="stat-box" href="/favorites/">
+            <b id="statFavs">0</b>
+            <span>收藏的学校</span>
+          </a>
+          <a class="stat-box" href="/quiz/">
+            <b id="statQuiz">0</b>
+            <span>测评历史</span>
+          </a>
+          <button class="stat-box" id="openAiBtn" type="button">
+            <b id="statChat">0</b>
+            <span>AI 对话</span>
+          </button>
+          <a class="stat-box" href="/submit/">
+            <b>✍️</b>
+            <span>去投稿</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="card section-block" id="acctGuest">
+        <h2>还没有登录</h2>
+        <p class="muted">登录后可以管理你的账号与绑定，投稿时自动带上昵称和联系方式。</p>
+        <button class="btn btn-primary" id="goLogin" type="button">登录 / 注册</button>
+      </div>
+
+      <div class="card section-block" id="acctLogoutWrap" hidden>
+        <button class="btn btn-danger" id="logoutBtn" type="button">退出登录</button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import {
+    bindThirdParty,
+    getProfile,
+    isLoggedIn,
+    logout,
+    maskPhone,
+    setNickname,
+    unbindThirdParty,
+  } from '../../lib/account';
+
+  const profileEl = document.getElementById('acctProfile') as HTMLElement;
+  const dataEl = document.getElementById('acctData') as HTMLElement;
+  const guestEl = document.getElementById('acctGuest') as HTMLElement;
+  const logoutWrap = document.getElementById('acctLogoutWrap') as HTMLElement;
+  const avatar = document.getElementById('acctAvatar') as HTMLElement;
+  const nickname = document.getElementById('acctNickname') as HTMLElement;
+  const phone = document.getElementById('acctPhone') as HTMLElement;
+
+  function count(key: string): number {
+    try {
+      const v = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(v) ? v.length : 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  function render() {
+    const profile = getProfile();
+    const logged = isLoggedIn();
+    profileEl.hidden = !logged;
+    dataEl.hidden = !logged;
+    logoutWrap.hidden = !logged;
+    guestEl.hidden = logged;
+    if (!logged) return;
+
+    avatar.textContent = '👤';
+    nickname.textContent = profile?.nickname ?? '';
+    phone.textContent = profile?.phone ? `已绑定手机：${maskPhone(profile.phone)}` : '';
+    (document.getElementById('statFavs') as HTMLElement).textContent = String(count('fav-universities'));
+    (document.getElementById('statQuiz') as HTMLElement).textContent = String(count('quiz-history'));
+    (document.getElementById('statChat') as HTMLElement).textContent = String(count('ai-chat'));
+
+    const qq = document.getElementById('bindQq') as HTMLElement;
+    const wx = document.getElementById('bindWechat') as HTMLElement;
+    qq.textContent = profile?.qq ? '✅ 已绑定（演示）' : '未绑定';
+    wx.textContent = profile?.wechat ? '✅ 已绑定（演示）' : '未绑定';
+  }
+
+  document.querySelectorAll('[data-bind]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const type = (b as HTMLElement).dataset.bind as 'qq' | 'wechat';
+      bindThirdParty(type, type + '_demo_' + Date.now());
+      window.showToast?.(type === 'qq' ? '已模拟绑定 QQ' : '已模拟绑定微信');
+      render();
+    });
+  });
+
+  document.querySelectorAll('[data-unbind]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const type = (b as HTMLElement).dataset.unbind as 'qq' | 'wechat';
+      unbindThirdParty(type);
+      window.showToast?.('已解绑');
+      render();
+    });
+  });
+
+  document.getElementById('editNick')?.addEventListener('click', () => {
+    const profile = getProfile();
+    const name = window.prompt('新的昵称：', profile?.nickname ?? '');
+    if (name && name.trim()) {
+      setNickname(name);
+      window.showToast?.('昵称已更新');
+      render();
+    }
+  });
+
+  document.getElementById('goLogin')?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('account:open'));
+  });
+
+  document.getElementById('openAiBtn')?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('ai:open'));
+  });
+
+  document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    logout();
+    window.showToast?.('已退出登录');
+    render();
+  });
+
+  window.addEventListener('account:change', render);
+  render();
+</script>
+
+<style>
+  .acct-profile-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .acct-avatar {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    border-radius: 50%;
+    background: var(--primary-soft);
+  }
+  .acct-profile-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .acct-profile-info b {
+    font-size: 18px;
+  }
+  .acct-binds {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bind-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .bind-status {
+    flex: 1;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .acct-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 8px;
+    border-radius: 14px;
+    background: var(--surface-soft);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .stat-box b {
+    font-size: 22px;
+    color: var(--primary);
+  }
+  .stat-box span {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+  }
+  .stat-box:hover {
+    box-shadow: var(--shadow);
+    text-decoration: none;
+  }
+  @media (max-width: 560px) {
+    .acct-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
