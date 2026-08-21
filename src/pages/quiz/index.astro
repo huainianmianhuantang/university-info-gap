@@ -57,7 +57,8 @@ const schools = (await getCollection('universities')).map((u) => ({
           </div>
         </div>
 
-        <section class="result-section">
+              <p class="small muted" id="loginTip" hidden>💡 登录后，测评结果会保存在你的账号下。</p>
+<section class="result-section">
           <h3>兴趣画像</h3>
           <div class="chip-row" id="resultDims"></div>
         </section>
@@ -152,6 +153,12 @@ import { scopedKey } from '../../lib/account';
   const clearHistoryBtn = document.getElementById('clearHistory');
   let currentResult = null;
   const HISTORY_KEY = scopedKey('quiz-history');
+  const loginTip = document.getElementById('loginTip');
+  if (loginTip) {
+    import('../../lib/account').then((m) => {
+      loginTip.hidden = m.isLoggedIn();
+    });
+  }
   const copyBtn = document.getElementById('copyBtn');
   const shareBtn = document.getElementById('shareBtn');
   const printResultBtn = document.getElementById('printResult');

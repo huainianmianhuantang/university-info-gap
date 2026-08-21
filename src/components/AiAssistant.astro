@@ -87,7 +87,8 @@
         (profile
           ? `你好呀 ${profile.nickname}，我是小助手 🤖 `
           : '你好呀，我是小助手 🤖 ') +
-        '可以问我：这个网站怎么用、怎么选专业方向、<strong>转专业</strong>要注意什么……';
+        '可以问我：这个网站怎么用、怎么选专业方向、<strong>转专业</strong>要注意什么……' +
+        (profile ? '' : '（登录后对话会按账号保存）');
       msgs.appendChild(hi);
     } else {
       history.forEach((m) => addMsg(m.role, m.content));
