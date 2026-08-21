@@ -10,7 +10,7 @@ tags: [冶金, 材料, 自动化, 老牌工科]
 established: 1923
 campuses: [南湖校区, 浑南校区]
 brief: 东北老牌工科强校，自动化、冶金、计算机方向突出。
-featured: false
+featured: true
 cover: /images/logo-northeastern-university-512.webp
 
 dorm:

@@ -10,7 +10,7 @@ tags: [工科强校, 同济医学院]
 established: 1952
 campuses: [主校区, 同济校区]
 brief: 2000 年合并组建的工科强校，机械、光电、医学方向突出。
-featured: true
+featured: false
 cover: /images/logo-huazhong-ust-512.webp
 
 transferPolicy:
