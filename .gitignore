@@ -6,3 +6,4 @@ dist/
 scripts/*.err
 .env
 .env.*
+!.env.example
