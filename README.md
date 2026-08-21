@@ -1,6 +1,6 @@
 # 大学信息差网站
 
-收集 985 高校的转专业政策、二次选拔、培养计划、寝室上课实况、学习资料与视频，帮助高考生和家长看清大学之间的真实差异。内容结构已为 211 / 双一流 / 普通高校预留，后续可直接扩充。
+收集 985 高校的转专业政策、二次选拔、培养计划、寝室上课实况、学习资料与校园视频，帮助高考生和家长看清大学之间的真实差异。内容结构已为 211 / 双一流 / 普通高校预留，后续可直接扩充。
 
 ## 本地运行
 
@@ -16,61 +16,79 @@ npm run build
 npm run preview
 ```
 
-> Windows 下如果 `npm` 命令因执行策略被禁止，请使用 `npm.cmd`。
+> Windows 下如果 `npm` 命令因执行策略被禁用，请使用 `npm.cmd`。
+
+## 站点功能
+
+- **大学库**：39 所 985 高校详情页，支持按省份/类型/层次筛选、搜索，卡片显示视频与资料数量，勾选 2-3 所可进入对比页 `/compare/`。
+- **资料库**：文件资料（按大学 / 按类别）与视频资料分开；视频按学校分组，支持按“宣传片 / 宿舍生活 / 学习日常”筛选，三列网格布局。
+- **选校测评 `/quiz/`**：12 题兴趣问卷 → 推荐专业方向 + 匹配高校 + AI 建议（规则引擎）。结果保存在浏览器 localStorage。
+- **专题文章**：转专业指南、培养方案阅读方法、宿舍视频甄别、测评使用说明等。
 
 ## 如何新增一所大学
 
-1. 在 `src/content/universities/` 下新建一个 Markdown 文件（文件名建议用英文，如 `peking-university.md`）。
-2. 按已有文件复制 frontmatter（YAML 头部），修改：
+1. 在 `src/content/universities/` 新建 Markdown 文件（文件名建议英文，如 `peking-university.md`）。
+2. 参考已有文件填写 frontmatter：
    - `name` / `nameEn` / `slug` / `province` / `city` / `type` / `levels` / `tags`
-   - `brief`（列表页摘要）、`featured`（是否在首页重点展示）
-   - `cover`（封面图，放在 `public/images/` 下）
-   - 各栏目：`transferPolicy`（转专业）、`secondarySelection`（二次选拔）、`trainingPlan`（培养计划）、`dorm`（寝室）、`classes`（上课）
-   - `materials`（资料：title / description / type / link / code）
-   - `videos`（视频：platform / id / url / source / description）
+   - `brief`（列表页摘要）、`featured`、`cover`（封面图放 `public/images/`）
+   - 栏目：`transferPolicy`（转专业）、`secondarySelection`（二次选拔）、`trainingPlan`（培养计划）、`dorm`（寝室）、`classes`（上课）
+   - `materials`（资料：title / description / type / link / code / category）
+   - `videos`（视频：title / platform / id / url / source / description / tags）
 3. 正文写学校概况。
-4. 必填字段缺失时构建会报错，可按报错提示补齐。
+4. 运行 `npm run build`，按报错补齐必填字段。
 
-> 层次 `levels` 支持 `985`、`211`、`双一流`、`普通`，筛选页会自动适配，无需改代码。
+> `levels` 支持 `985` / `211` / `双一流` / `普通`，筛选页会自动适配。
 
 ## 如何添加视频与资料
 
-- **视频**：目前支持 B 站嵌入。在 `videos` 里填 `platform: bilibili` 和 `id`（B 站 BV 号）即可；优酷/腾讯可在 `src/components/VideoEmbed.astro` 中扩展。
-- **资料**：有两种方式——
-  - 站内文件：把文件放进 `public/resources/<学校简称>/`，在 `materials` 里填站内路径（如 `/resources/neu/xxx.pdf`）；
-  - 网盘链接：在 `materials` 里填外链与提取码（`code`）。
-  - 每条资料必须填 `category`（类别），取值见 `src/config.ts` 的 `RESOURCE_CATEGORIES`：
-    培养方案 `training-plan` / 保研政策 `postgrad-rec` / 奖学金与评优 `scholarship` /
-    选课与教学 `courses` / 新生指南 `freshman` / 校园生活 `campus-life` / 竞赛 `competition`。
-  - 全站"资料库"页面（`/resources/`）会自动按类别汇总所有学校的资料，无需额外维护。
+- **视频**：支持 B 站嵌入。在 `videos` 里填 `platform: bilibili` 和 `id`（BV 号）即可；建议同时填写 `tags`（宣传片 / 宿舍生活 / 学习日常）与 `source`（官方账号或转载 UP 主）。
+- **资料**：
+  - 站内文件：放入 `public/resources/<学校简称>/`，`materials` 填站内路径；
+  - 网盘链接：填外链与提取码（`code`）；
+  - 每条资料必须填 `category`，取值见 `src/config.ts` 的 `RESOURCE_CATEGORIES`（培养方案 / 保研政策 / 奖学金与评优 / 选课与教学 / 新生指南 / 校园生活 / 竞赛）。
+- 大文件建议优先使用网盘（参考东北大学 29 份资料迁移至夸克网盘的先例），避免撑大 Git 仓库。
 
-> 注意：站内大文件会显著增大 Git 仓库体积。东北大学 29 份资料已全部迁移至
-> 夸克网盘（资料条目填写网盘链接 + 提取码），站内不再存放原始文件。
-> 其他学校如资料量大，同样建议优先使用网盘或对象存储。
+## 选校测评与 AI 建议
 
-## 投稿与联系方式
+- 问卷与推荐引擎：`src/lib/recommender.ts`（纯 TS，可在浏览器运行）。学校画像与各维度推荐学校均在此维护。
+- AI 建议：`src/lib/ai.ts`。当前 `AI_PROVIDER = 'rule'`（规则引擎，零费用）。
 
-投稿页与页脚联系方式集中在 `src/config.ts` 的 `CONTACT` 中，把 `email` 和 `wechat` 换成真实信息即可。投稿页目前用“生成邮件”的方式提交。
+### AI 升级说明（预留接口）
+
+1. 将站点部署到支持服务端函数的平台（Vercel / Netlify / Cloudflare Pages）。
+2. 把 `AI_PROVIDER` 改为 `'llm'`，实现 `getLLMAdvice()`：在服务端函数中携带 API Key（如 DeepSeek / OpenAI 兼容接口）调用大模型，返回个性化建议。
+3. 切勿在前端暴露 API Key。升级后前端无需改动，测评结果会自动使用 LLM 建议。
+
+## 部署指南
+
+本站为纯静态站点（Astro static），可部署到任意静态托管：
+
+- **Vercel / Netlify / Cloudflare Pages**：导入仓库，构建命令 `npm run build`，输出目录 `dist`。
+- **GitHub Pages**：构建后把 `dist/` 推送到 `gh-pages` 分支（注意配置 `SITE.url` 为站点地址）。
+
+部署前把 `src/config.ts` 中的 `SITE.url` 改为正式域名，`CONTACT` 改为真实联系方式。
 
 ## 目录结构
 
 ```
 src/
-  config.ts                 # 站点名称、联系方式、栏目、层次配置
-  content.config.ts         # 内容数据校验规则（字段 schema）
+  config.ts             # 站点名称、联系方式、栏目、层次、资料类别
+  content.config.ts     # 内容数据校验规则（schema）
   content/
-    universities/           # 每所大学一个 Markdown 文件
-    articles/               # 专题文章
-  layouts/                  # 页面布局
-  components/               # 卡片、视频嵌入、栏目区块等组件
-  pages/                    # 首页、大学库、详情页、文章、投稿、关于
-  styles/global.css         # 全站样式
-public/                     # 静态资源（图标、封面图）
-  resources/<学校>/          # 学校资料文件（东北大学示例）
+    universities/       # 每所大学一个 Markdown 文件
+    articles/           # 专题文章
+  lib/
+    recommender.ts      # 选校测评推荐引擎
+    ai.ts               # AI 建议（规则版 + 预留 LLM 接口）
+  layouts/              # 页面布局（含 SEO meta）
+  components/           # 卡片、视频嵌入、导航等组件
+  pages/                # 首页、大学库、对比、测评、资料库、文章、投稿、关于
+  styles/global.css     # 全站样式
+public/                 # 静态资源（图标、封面、robots.txt）
 ```
 
 ## 内容声明
 
-- 当前站内大学内容均为**示例数据**，正式上线前需逐条核实。
-- 政策类信息请以各高校官方发布为准。
+- 校内政策类信息请以各高校官方发布为准。
 - 学习资料仅收录拥有或已获授权的内容，转载需标注来源。
+- 视频来源均已标注官方账号或转载 UP 主，欢迎举报失效/错误链接。

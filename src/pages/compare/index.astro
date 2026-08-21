@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const schools = (await getCollection('universities')).map((u) => ({
+  id: u.id,
+  name: u.data.name,
+  nameEn: u.data.nameEn ?? '',
+  province: u.data.province,
+  city: u.data.city,
+  type: u.data.type,
+  levels: u.data.levels,
+  tags: u.data.tags,
+  established: u.data.established ?? null,
+  campuses: u.data.campuses,
+  brief: u.data.brief,
+  transfer: u.data.transferPolicy?.summary ?? '',
+  secondary: u.data.secondarySelection?.summary ?? '',
+  training: u.data.trainingPlan?.summary ?? '',
+  dorm: u.data.dorm?.summary ?? '',
+  classes: u.data.classes?.summary ?? '',
+  videos: u.data.videos.length,
+  materials: u.data.materials.length,
+}));
+---
+
+<BaseLayout
+  title="大学对比"
+  description="最多选择 3 所 985 高校，并排对比概况、政策摘要、寝室上课与资料数量。"
+>
+  <div class="container page">
+    <div class="page-hero">
+      <h1>大学对比</h1>
+      <p>
+        在<a href="/universities/">大学库</a>勾选 2-3 所学校后即可并排对比。
+        也可以直接在地址栏追加参数，如 <code>?u=peking-university,tsinghua-university</code>。
+      </p>
+    </div>
+
+    <div id="compareApp">
+      <p class="muted" id="compareEmpty">
+        还没有选择学校。前往<a href="/universities/">大学库</a>勾选 2-3 所后对比。
+      </p>
+      <div class="table-wrap" id="compareTableWrap" hidden>
+        <table class="compare-table" id="compareTable"></table>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script define:vars={{ schools }}>
+  const wrap = document.getElementById('compareTableWrap');
+  const empty = document.getElementById('compareEmpty');
+  const table = document.getElementById('compareTable');
+
+  const params = new URLSearchParams(window.location.search);
+  const slugs = (params.get('u') ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 3);
+  const picked = slugs
+    .map((s) => schools.find((x) => x.id === s))
+    .filter(Boolean);
+
+  if (picked.length < 2) {
+    empty.hidden = false;
+  } else {
+    empty.hidden = true;
+    wrap.hidden = false;
+    const rows = [
+      ['学校', (s) => s.name],
+      ['英文名', (s) => s.nameEn],
+      ['省份 / 城市', (s) => `${s.province} ${s.city}`],
+      ['类型', (s) => `${s.type}类`],
+      ['层次', (s) => s.levels.join(' / ')],
+      ['标签', (s) => s.tags.join(' / ') || '—'],
+      ['建校', (s) => (s.established ? `${s.established} 年` : '—')],
+      ['校区', (s) => s.campuses.join(' / ') || '—'],
+      ['学校概况', (s) => s.brief || '—'],
+      ['转专业政策', (s) => s.transfer || '待补充'],
+      ['二次选拔', (s) => s.secondary || '待补充'],
+      ['培养计划', (s) => s.training || '待补充'],
+      ['寝室情况', (s) => s.dorm || '待补充'],
+      ['上课情况', (s) => s.classes || '待补充'],
+      ['视频 / 资料', (s) => `🎬 ${s.videos} / 📄 ${s.materials}`],
+      ['详情页', (s) => `<a href="/universities/${s.id}/">查看详情 →</a>`],
+    ];
+
+    const head = document.createElement('thead');
+    const hr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.textContent = '对比项';
+    hr.appendChild(th);
+    picked.forEach((s) => {
+      const c = document.createElement('th');
+      c.innerHTML = `<a href="/universities/${s.id}/">${s.name}</a>`;
+      hr.appendChild(c);
+    });
+    head.appendChild(hr);
+    table.appendChild(head);
+
+    const body = document.createElement('tbody');
+    rows.forEach(([label, fn]) => {
+      const tr = document.createElement('tr');
+      const tdLabel = document.createElement('td');
+      tdLabel.className = 'row-label';
+      tdLabel.textContent = label;
+      tr.appendChild(tdLabel);
+      picked.forEach((s) => {
+        const td = document.createElement('td');
+        td.innerHTML = fn(s);
+        tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+    table.appendChild(body);
+  }
+</script>

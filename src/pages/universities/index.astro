@@ -75,9 +75,20 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           data-type={u.data.type}
           data-levels={u.data.levels.join(' ')}
         >
+          <label class="compare-check" title="加入对比">
+            <input type="checkbox" class="compare-box" value={u.id} aria-label={`对比${u.data.name}`} />
+            <span>对比</span>
+          </label>
           <UniversityCard university={u} />
         </div>
       ))}
+    </div>
+
+    <p class="muted" id="emptyState" hidden>没有匹配的大学，试试调整搜索或筛选条件。</p>
+
+    <div class="compare-bar" id="compareBar" hidden>
+      <span id="compareCount">已选 0 所</span>
+      <a class="btn btn-primary" id="compareBtn" href="/compare/?u=">开始对比</a>
     </div>
   </div>
 </BaseLayout>
@@ -90,6 +101,11 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const typeSelect = document.getElementById('type');
   const levelChecks = Array.from(document.querySelectorAll('.level'));
   const items = Array.from(grid?.querySelectorAll('.u-item') ?? []);
+  const emptyState = document.getElementById('emptyState');
+  const compareBar = document.getElementById('compareBar');
+  const compareCount = document.getElementById('compareCount');
+  const compareBtn = document.getElementById('compareBtn');
+  const compareBoxes = Array.from(document.querySelectorAll('.compare-box'));
 
   function applyFilters() {
     const keyword = (qInput?.value ?? '').trim().toLowerCase();
@@ -111,11 +127,26 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
       if (ok) visible++;
     }
     if (count) count.textContent = `共 ${visible} 所大学`;
+    if (emptyState) emptyState.hidden = visible !== 0;
+  }
+
+  function updateCompare() {
+    const selected = compareBoxes.filter((c) => c.checked).map((c) => c.value);
+    if (selected.length > 3) {
+      const last = selected[selected.length - 1];
+      const box = compareBoxes.find((c) => c.value === last);
+      if (box) box.checked = false;
+      return updateCompare();
+    }
+    if (compareBar) compareBar.hidden = selected.length < 2;
+    if (compareCount) compareCount.textContent = `已选 ${selected.length} 所`;
+    if (compareBtn) compareBtn.href = `/compare/?u=${selected.join(',')}`;
   }
 
   qInput?.addEventListener('input', applyFilters);
   provinceSelect?.addEventListener('change', applyFilters);
   typeSelect?.addEventListener('change', applyFilters);
   levelChecks.forEach((c) => c.addEventListener('change', applyFilters));
+  compareBoxes.forEach((c) => c.addEventListener('change', updateCompare));
   applyFilters();
 </script>

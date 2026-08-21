@@ -18,7 +18,10 @@ const links = [
       <span class="logo-mark">信</span>
       <span>{SITE.title}</span>
     </a>
-    <nav class="nav" aria-label="主导航">
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="打开菜单">
+      ☰
+    </button>
+    <nav class="nav" id="siteNav" aria-label="主导航">
       {links.map((link) => (
         <a href={link.href} aria-current={Astro.url.pathname === link.href ? 'page' : undefined}>
           {link.label}
@@ -27,3 +30,13 @@ const links = [
     </nav>
   </div>
 </header>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const header = document.querySelector('.site-header');
+  toggle?.addEventListener('click', () => {
+    const open = header?.classList.toggle('nav-open') ?? false;
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.textContent = open ? '✕' : '☰';
+  });
+</script>

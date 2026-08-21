@@ -30,5 +30,9 @@ const u = university.data;
       <span>{u.type}类</span>
       {u.established && <span>建校 {u.established} 年</span>}
     </div>
+    <div class="university-stats">
+      <span class="stat-chip">🎬 {u.videos.length} 视频</span>
+      <span class="stat-chip">📄 {u.materials.length} 资料</span>
+    </div>
   </div>
 </a>

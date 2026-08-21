@@ -13,6 +13,7 @@ const articles = (await getCollection('articles')).sort((a, b) =>
 );
 const featured = universities.filter((u) => u.data.featured);
 const showcase = (featured.length ? featured : universities).slice(0, 3);
+const totalVideos = universities.reduce((n, u) => n + u.data.videos.length, 0);
 
 const categories = [
   { icon: '⇄', label: '转专业政策', desc: '申请条件、考核方式、名额限制', href: '/universities/' },
@@ -43,9 +44,9 @@ const categories = [
         <a class="btn btn-primary" href="/quiz/">🎯 2 分钟测一测适合什么专业与学校</a>
       </div>
       <div class="hero-stats">
-        <span>收录 {universities.length} 所 985 高校（持续扩充）</span>
-        <span>8 大信息栏目</span>
-        <span>全部内容人工核实后发布</span>
+        <span>收录 {universities.length} 所 985 高校</span>
+        <span>{totalVideos} 条校园/政策视频</span>
+        <span>兴趣测评 + AI 建议</span>
       </div>
     </section>
 
