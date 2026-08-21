@@ -70,6 +70,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
       <div class="card section-block" id="acctLogoutWrap" hidden>
         <button class="btn btn-danger" id="logoutBtn" type="button">退出登录</button>
+        <button class="btn btn-ghost" id="setPassBtn" type="button">设置 / 修改密码</button>
+        <button class="btn btn-ghost" id="clearDataBtn" type="button">清除本机账号数据</button>
       </div>
     </div>
   </div>
@@ -82,6 +84,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     isLoggedIn,
     logout,
     maskPhone,
+    setPassword,
+    clearAccountData,
     setNickname,
     unbindThirdParty,
   } from '../../lib/account';
@@ -165,6 +169,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     logout();
     window.showToast?.('已退出登录');
     render();
+  });
+
+  document.getElementById('setPassBtn')?.addEventListener('click', async () => {
+    const pw = window.prompt('设置新密码（至少 6 位）：');
+    if (!pw) return;
+    const r = await setPassword(pw);
+    window.showToast?.(r.ok ? '密码已设置' : (r.error || '设置失败'));
+  });
+
+  document.getElementById('clearDataBtn')?.addEventListener('click', () => {
+    if (window.confirm('确定清除本机账号数据吗？收藏与历史记录会保留。')) {
+      clearAccountData();
+      window.showToast?.('本机账号数据已清除');
+      render();
+    }
   });
 
   window.addEventListener('account:change', render);

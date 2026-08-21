@@ -76,9 +76,9 @@
 
     if (mode === 'login') {
       body.appendChild(el('p', 'acct-dev', `🔧 开发模式演示验证码：<b>${currentCode}</b>`));
-      const phone = field('手机号', 'acctPhone', 'tel', '11 位手机号');
-      const code = field('验证码', 'acctCode', 'text', '6 位验证码');
-      const pass = field('密码（选填，有密码可走密码登录）', 'acctPass', 'password', '密码');
+      const phone = field('手机号', 'acctPhone', 'tel', '11 位手机号', 'tel');
+      const code = field('验证码', 'acctCode', 'text', '6 位验证码', 'one-time-code');
+      const pass = field('密码（选填，有密码可走密码登录）', 'acctPass', 'password', '密码', 'current-password');
       const btn = el('button', 'btn btn-primary acct-submit', '登录');
       btn.addEventListener('click', async () => {
         const p = (document.getElementById('acctPhone') as HTMLInputElement).value;
@@ -97,10 +97,10 @@
       body.append(phone, code, pass, btn);
     } else {
       body.appendChild(el('p', 'acct-dev', `🔧 开发模式演示验证码：<b>${currentCode}</b>`));
-      const phone = field('手机号', 'acctRPhone', 'tel', '11 位手机号');
-      const code = field('验证码', 'acctRCode', 'text', '6 位验证码');
-      const nick = field('昵称', 'acctNick', 'text', '给自己起个名字');
-      const pass = field('设置密码（选填，至少 6 位）', 'acctRPass', 'password', '密码');
+      const phone = field('手机号', 'acctRPhone', 'tel', '11 位手机号', 'tel');
+      const code = field('验证码', 'acctRCode', 'text', '6 位验证码', 'one-time-code');
+      const nick = field('昵称', 'acctNick', 'text', '给自己起个名字', 'nickname');
+      const pass = field('设置密码（选填，至少 6 位）', 'acctRPass', 'password', '密码', 'new-password');
       const btn = el('button', 'btn btn-primary acct-submit', '注册并登录');
       btn.addEventListener('click', async () => {
         const p = (document.getElementById('acctRPhone') as HTMLInputElement).value;

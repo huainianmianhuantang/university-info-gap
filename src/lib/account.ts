@@ -37,6 +37,27 @@ function uid() {
   return 'u_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
+async function derivePbkdf2(password: string, salt: string): Promise<string> {
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(password),
+    'PBKDF2',
+    false,
+    ['deriveBits'],
+  );
+  const bits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      salt: new TextEncoder().encode(salt),
+      iterations: 100_000,
+      hash: 'SHA-256',
+    },
+    key,
+    256,
+  );
+  return [...new Uint8Array(bits)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
 async function sha256(text: string): Promise<string> {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -89,7 +110,7 @@ export async function register(
   const acc: StoredAccount = { profile };
   if (password && password.length >= 6) {
     const s = salt();
-    acc.pass = { salt: s, hash: await sha256(s + password) };
+    acc.pass = { salt: s, hash: await derivePbkdf2(password, s) };
   }
   write(acc);
   notifyChange();
@@ -100,13 +121,19 @@ export async function loginWithPassword(
   identifier: string,
   password: string,
 ): Promise<{ ok: boolean; error?: string }> {
+  const locked = checkLocked(identifier);
+  if (locked) return { ok: false, error: '尝试太多次啦，请 1 分钟后再试' };
   const acc = read();
   if (!acc?.pass) return { ok: false, error: '该账号未设置密码，请用手机验证码登录' };
-  const hash = await sha256(acc.pass.salt + password);
-  if (hash !== acc.pass.hash) return { ok: false, error: '密码不对，再想想～' };
   if (acc.profile.phone !== identifier && acc.profile.nickname !== identifier) {
     return { ok: false, error: '账号不存在' };
   }
+  const hash = await derivePbkdf2(password, acc.pass.salt);
+  if (hash !== acc.pass.hash) {
+    recordFail(identifier);
+    return { ok: false, error: '密码不对，再想想～' };
+  }
+  clearFails(identifier);
   acc.profile.lastLogin = Date.now();
   write(acc);
   notifyChange();
@@ -130,6 +157,64 @@ export function logout() {
     /* ignore */
   }
   notifyChange();
+}
+
+export async function setPassword(newPassword: string): Promise<{ ok: boolean; error?: string }> {
+  const acc = read();
+  if (!acc) return { ok: false, error: '请先登录' };
+  if (newPassword.length < 6) return { ok: false, error: '密码至少 6 位哦' };
+  const s = salt();
+  acc.pass = { salt: s, hash: await derivePbkdf2(newPassword, s) };
+  write(acc);
+  notifyChange();
+  return { ok: true };
+}
+
+export function clearAccountData() {
+  try {
+    localStorage.removeItem(KEY);
+  } catch {
+    /* ignore */
+  }
+  notifyChange();
+}
+
+const FAIL_KEY = 'account-fail';
+
+function readFails(): Record<string, { n: number; t: number }> {
+  try {
+    return JSON.parse(localStorage.getItem(FAIL_KEY) || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function writeFails(f: Record<string, { n: number; t: number }>) {
+  try {
+    localStorage.setItem(FAIL_KEY, JSON.stringify(f));
+  } catch {
+    /* ignore */
+  }
+}
+
+function checkLocked(id: string): boolean {
+  const f = readFails()[id];
+  return !!f && f.n >= 5 && Date.now() - f.t < 60_000;
+}
+
+function recordFail(id: string) {
+  const f = readFails();
+  const cur = f[id];
+  f[id] = { n: (cur?.n ?? 0) + 1, t: Date.now() };
+  writeFails(f);
+}
+
+function clearFails(id: string) {
+  const f = readFails();
+  if (f[id]) {
+    delete f[id];
+    writeFails(f);
+  }
 }
 
 /** 第三方绑定占位：真实接入需 OAuth AppID（QQ 互联 / 微信开放平台） */
