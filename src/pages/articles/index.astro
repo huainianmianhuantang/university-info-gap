@@ -20,8 +20,8 @@ const allTags = [...new Set(articles.flatMap((a) => a.data.tags))];
       {allTags.map((t) => <button class="chip tag-chip" data-tag={t} type="button">{t}</button>)}
     </div>
     <div class="grid grid-articles">
-      {articles.map((article) => (
-        <a class="card article-card" data-tags={article.data.tags.join(',')} href={`/articles/${article.id}/`}>
+      {articles.map((article, i) => (
+        <a class="card article-card" data-tags={article.data.tags.join(',')} href={`/articles/${article.id}/`} data-reveal data-reveal-delay={i % 4}>
           <h3>{article.data.title}</h3>
           <p>{article.data.summary}</p>
           <span class="date">{formatDate(article.data.date)} · {article.data.tags.join(' / ')}</span>

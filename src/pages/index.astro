@@ -67,16 +67,16 @@ const categories = [
       <div class="hero-cta">
         <a class="btn btn-primary" href="/quiz/">🎯 2 分钟测一测适合什么专业与学校</a>
       </div>
-      <div class="hero-stats">
+      <div class="hero-stats" data-reveal>
         <span>收录 <b class="stat-num" data-count={universities.length}>0</b> 所 985 高校</span>
         <span><b class="stat-num" data-count={totalVideos}>0</b> 条校园/政策视频</span>
         <span><b class="stat-num" data-count={totalMaterials}>0</b> 份学习资料</span>
         <span>专题文章 <b class="stat-num" data-count={articles.length}>0</b> 篇</span>
       </div>
-      <div>
+      <div data-reveal data-reveal-delay="1">
         <span class="hero-badge">🔄 内容持续更新中</span>
       </div>
-      <div>
+      <div data-reveal data-reveal-delay="2">
         <a class="hero-scroll" href="#guide" aria-label="向下查看新手介绍">↓</a>
       </div>
     </section>
@@ -91,7 +91,7 @@ const categories = [
           <a class="more" href="/universities/">查看全部 →</a>
         </div>
       </div>
-      <div class="grid grid-universities">
+      <div class="grid grid-universities" data-reveal>
         {showcase.map((u) => <UniversityCard university={u} />)}
       </div>
     </section>
@@ -101,7 +101,7 @@ const categories = [
         <h2>最近浏览</h2>
         <button class="btn btn-ghost" id="clearRecent" type="button">清除</button>
       </div>
-      <div class="chip-row" id="recentList"></div>
+      <div class="chip-row" id="recentList" data-reveal></div>
     </section>
 
     <section class="section">
@@ -109,8 +109,8 @@ const categories = [
         <h2>你想了解什么？</h2>
       </div>
       <div class="grid grid-categories">
-        {categories.map((c) => (
-          <a class="card category-card" href={c.href}>
+        {categories.map((c, i) => (
+          <a class="card category-card" href={c.href} data-reveal data-reveal-delay={i}>
             <div class="category-icon">{c.icon}</div>
             <h3>{c.label}</h3>
             <p>{c.desc}</p>
@@ -125,8 +125,8 @@ const categories = [
         <a class="more" href="/articles/">更多 →</a>
       </div>
       <div class="grid grid-articles">
-        {articles.slice(0, 3).map((article) => (
-          <a class="card article-card" href={`/articles/${article.id}/`}>
+        {articles.slice(0, 3).map((article, i) => (
+          <a class="card article-card" href={`/articles/${article.id}/`} data-reveal data-reveal-delay={i}>
             <h3>{article.data.title}</h3>
             <p>{article.data.summary}</p>
             <span class="date">{formatDate(article.data.date)} · {article.data.tags.join(' / ')}</span>
@@ -135,7 +135,7 @@ const categories = [
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" data-reveal>
       <div class="section-head">
         <h2>热门话题</h2>
       </div>
@@ -146,7 +146,7 @@ const categories = [
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" data-reveal>
       <div class="section-head">
         <h2>常见问题</h2>
       </div>

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
 import { SITE } from '../config';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -38,6 +39,7 @@ const pageDescription = description ?? SITE.description;
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <meta name="theme-color" content="#1f5eff" />
+    <ViewTransitions />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content={SITE.title} />
@@ -94,6 +96,26 @@ const pageDescription = description ?? SITE.description;
   }
 
   const btn = document.getElementById('backToTop');
+  document.documentElement.classList.add('js');
+
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('reveal-in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -30px 0px' },
+    );
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('reveal-in'));
+  }
+
   const toast = document.getElementById('toast');
   (window as unknown as { showToast?: (msg: string) => void }).showToast = (msg: string) => {
     if (!toast) return;

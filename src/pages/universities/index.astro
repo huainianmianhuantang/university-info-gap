@@ -130,7 +130,7 @@ const slugs = universities.map((u) => u.id);
       提示：卡片左上角 ★ 可收藏，右上角「对比」可勾选 2-3 所进入对比页。
     </p>
 
-    <div class="grid grid-universities" id="universityGrid">
+    <div class="grid grid-universities" id="universityGrid" data-reveal>
       {universities.map((u) => (
         <div
           class:list={['u-item']}
