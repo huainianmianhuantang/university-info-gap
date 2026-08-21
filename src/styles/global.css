@@ -1276,6 +1276,36 @@ svg {
   opacity: 0.9;
 }
 
+.hero-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.hero-steps a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.15s ease;
+}
+
+.hero-steps a:hover {
+  background: rgba(255, 255, 255, 0.26);
+  text-decoration: none;
+}
+
+.hero-steps a span {
+  opacity: 0.85;
+  font-size: 12px;
+}
+
 .category-card {
   display: block;
   padding: 20px;
