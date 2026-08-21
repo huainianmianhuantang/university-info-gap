@@ -1,13 +1,16 @@
 import { QUESTIONS } from '../../lib/recommender';
+import { AI_API_KEY, AI_BASE_URL, AI_MODEL } from 'astro:env/server';
 
 export const prerender = false;
 
 // 运行时从环境变量读取配置（不把 Key 打进构建产物）。
 // 开发时加载项目根目录 .env；生产环境由部署平台注入环境变量。
-try {
-  process.loadEnvFile?.();
-} catch {
-  /* .env 不存在时忽略（生产由平台注入） */
+if (typeof process !== 'undefined') {
+  try {
+    process.loadEnvFile?.();
+  } catch {
+    /* .env 不存在时忽略（生产由平台注入） */
+  }
 }
 
 interface AdviceBody {
@@ -67,9 +70,9 @@ function buildPrompt(body: AdviceBody): string {
 }
 
 export async function POST({ request }): Promise<Response> {
-  const key = process.env.AI_API_KEY as string | undefined;
-  const base = (process.env.AI_BASE_URL || 'https://api.deepseek.com').replace(/\/$/, '');
-  const model = process.env.AI_MODEL || 'deepseek-chat';
+  const key = AI_API_KEY || (typeof process !== 'undefined' ? process.env.AI_API_KEY : undefined);
+  const base = (AI_BASE_URL || 'https://api.deepseek.com').replace(/\/$/, '');
+  const model = AI_MODEL || 'deepseek-chat';
 
   if (!key) {
     return json({ error: 'AI 未配置：请在 .env 中填写 AI_API_KEY' });

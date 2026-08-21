@@ -71,13 +71,30 @@ npm run preview
 
 ## 部署指南
 
-本站为 Astro 站点，已接入 `@astrojs/node`（standalone）适配器：普通页面构建为静态文件，`/api/advice` 为服务端接口。因此部署需要能运行 Node 的环境：
+本站为 Astro 站点，已接入 `@astrojs/cloudflare` 适配器：普通页面预渲染为静态文件，`/api/advice` 为 Cloudflare Pages 云函数（读取 `AI_API_KEY` 调用 DeepSeek）。
 
-- **本机生产预览**：`npm run build` 后执行 `node dist/server/entry.mjs`（默认端口 4321，可用环境变量 `PORT`/`HOST` 调整）。
-- **VPS / 云服务器 / 容器**：构建后以 Node 运行 `dist/server/entry.mjs`，用 Nginx/Caddy 反代；配置 `PORT`、`HOST`、`PUBLIC_SITE_URL` 与 `.env` 中的 `AI_API_KEY`。
-- **Vercel / Netlify / Cloudflare Pages**：导入仓库即可，构建命令 `npm run build`，输出目录 `dist`；如需在边缘函数中调用 AI，可后续替换为对应平台的适配器（如 `@astrojs/vercel`）。
+### Cloudflare Pages（推荐）
 
-部署前设置环境变量 `PUBLIC_SITE_URL` 为正式域名，并把 `src/config.ts` 中的 `CONTACT` 改为真实联系方式。
+1. 把代码推送到 GitHub 仓库（`.env` 不会上传）。
+2. 在 Cloudflare 控制台 → Workers & Pages → Create → Pages → 连接 GitHub 仓库。
+3. 构建设置：
+   - Build command：`npm run build`
+   - Build output directory：`dist`
+   - 如默认 Node 版本过低，添加环境变量 `NODE_VERSION=22`。
+4. 在 Pages 项目 Settings → Environment variables 中添加：
+   - `AI_API_KEY`（必填，DeepSeek Key，勾选 Encrypt）
+   - `AI_BASE_URL=https://api.deepseek.com`（可选）
+   - `AI_MODEL=deepseek-chat`（可选）
+   - `PUBLIC_SITE_URL=https://你的项目名.pages.dev`（必填，影响 canonical / OG / sitemap / robots 中的站点地址）
+5. 部署完成后，用 `PUBLIC_SITE_URL` 对应的地址验证首页与 `/quiz/` 的 AI 建议接口。
+6. 绑定自定义域名（可选）：Pages 项目 → Custom domains。
+
+### 本机开发 / 预览
+
+- 开发：`npm run dev`（默认 http://localhost:4321）。
+- 生产构建：`npm run build`，产物在 `dist/`（含 `_worker.js` 与 `_routes.json`，可直接用 `wrangler pages deploy dist` 上传）。
+
+部署前把 `src/config.ts` 中的 `CONTACT` 改为真实联系方式。
 
 ## 目录结构
 

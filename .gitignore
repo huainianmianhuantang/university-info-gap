@@ -5,6 +5,7 @@ dist/
 *.log
 scripts/*.err
 scripts/_tmp/
+.wrangler/
 .env
 .env.*
 !.env.example
