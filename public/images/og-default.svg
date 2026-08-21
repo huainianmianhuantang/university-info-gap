@@ -8,7 +8,7 @@
   <rect width="1200" height="630" fill="url(#bg)"/>
   <circle cx="1050" cy="120" r="180" fill="#ffffff" opacity="0.08"/>
   <circle cx="120" cy="560" r="240" fill="#ffffff" opacity="0.06"/>
-  <text x="80" y="300" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="84" font-weight="700" fill="#ffffff">大学信息差</text>
-  <text x="82" y="380" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="34" fill="#dbe7ff">选大学，先看清信息差</text>
+  <text x="80" y="300" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="84" font-weight="700" fill="#ffffff">象牙塔透视镜</text>
+  <text x="82" y="380" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="34" fill="#dbe7ff">看清每一所大学，再填志愿</text>
   <text x="82" y="440" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="26" fill="#dbe7ff">转专业 · 二次选拔 · 培养计划 · 寝室上课 · 学习资料 · 校园视频</text>
 </svg>
