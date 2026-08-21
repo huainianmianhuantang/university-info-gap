@@ -10,6 +10,8 @@ const links = [
   { href: '/submit/', label: '我要投稿' },
   { href: '/about/', label: '关于本站' },
 ];
+
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
@@ -23,7 +25,14 @@ const links = [
     </button>
     <nav class="nav" id="siteNav" aria-label="主导航">
       {links.map((link) => (
-        <a href={link.href} aria-current={Astro.url.pathname === link.href ? 'page' : undefined}>
+        <a
+          href={link.href}
+          aria-current={
+            link.href === '/' ? currentPath === '/' : currentPath.startsWith(link.href)
+              ? 'page'
+              : undefined
+          }
+        >
           {link.label}
         </a>
       ))}
