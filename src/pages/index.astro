@@ -25,6 +25,18 @@ const categories = [
 ---
 
 <BaseLayout>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.title,
+    url: SITE.url,
+    description: SITE.description,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${SITE.url}/universities/?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  })}></script>
   <div class="container page">
     <section class="hero">
       <h1>选大学，先看清“信息差”</h1>
