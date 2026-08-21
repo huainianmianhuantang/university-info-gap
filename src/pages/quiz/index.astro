@@ -125,6 +125,12 @@ const schools = (await getCollection('universities')).map((u) => ({
   import { getAdvice } from '../../lib/ai';
 import { scopedKey } from '../../lib/account';
 
+  function esc(s: string): string {
+    return String(s ?? '').replace(/[&<>"']/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
+    );
+  }
+
 
   const LS_ANSWERS = 'quiz-answers';
   const LS_RESULT = scopedKey('quiz-result');
@@ -304,7 +310,7 @@ import { scopedKey } from '../../lib/account';
       btn.className = 'btn btn-ghost';
       btn.textContent = '查看';
       btn.addEventListener('click', () => showResult(item));
-      li.innerHTML = `<strong>${when}</strong><p>兴趣：${dims}${schools ? `｜推荐：${schools}` : ''}</p>`;
+      li.innerHTML = `<strong>${esc(when)}</strong><p>兴趣：${esc(dims)}${schools ? `｜推荐：${esc(schools)}` : ''}</p>`;
       li.appendChild(btn);
       historyList.appendChild(li);
     });

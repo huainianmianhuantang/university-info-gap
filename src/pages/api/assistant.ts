@@ -133,8 +133,7 @@ export async function POST({ request }): Promise<Response> {
       return json({ error: data?.error?.message ?? '模型没有返回内容，请重试' }, 502);
     }
     return json({ reply: reply.slice(0, 4000) });
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : '网络异常';
-    return json({ error: '网络开小差了，请重试（' + msg.slice(0, 80) + '）' }, 502);
+  } catch {
+    return json({ error: '网络开小差了，请稍后再试' }, 502);
   }
 }
