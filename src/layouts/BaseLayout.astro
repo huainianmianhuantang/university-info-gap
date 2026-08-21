@@ -80,6 +80,7 @@ const pageDescription = description ?? SITE.description;
     <OnboardingModal />
     <HelpButton />
     <AiAssistant />
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   </body>
 </html>
 
@@ -91,6 +92,16 @@ const pageDescription = description ?? SITE.description;
   }
 
   const btn = document.getElementById('backToTop');
+  const toast = document.getElementById('toast');
+  (window as unknown as { showToast?: (msg: string) => void }).showToast = (msg: string) => {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.hidden = false;
+    clearTimeout((toast as HTMLElement & { _t?: number })._t);
+    (toast as HTMLElement & { _t?: number })._t = window.setTimeout(() => {
+      toast.hidden = true;
+    }, 2000);
+  };
   if (btn) {
     const onScroll = () => {
       btn.hidden = window.scrollY < 400;

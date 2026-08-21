@@ -52,6 +52,14 @@ const currentPath = Astro.url.pathname;
     toggle.textContent = open ? '✕' : '☰';
   });
 
+  header?.querySelectorAll('.nav a').forEach((a) =>
+    a.addEventListener('click', () => {
+      header.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = '☰';
+    }),
+  );
+
   const themeBtn = document.getElementById('themeToggle');
   const applyTheme = (t) => {
     document.documentElement.setAttribute('data-theme', t);

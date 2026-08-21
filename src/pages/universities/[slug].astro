@@ -100,7 +100,7 @@ const related = allUniversities
       <a href="/">首页</a> › <a href="/universities/">大学库</a> › <span>{u.name}</span>
     </nav>
     <div class="uni-hero">
-      <img class="uni-emblem" src={u.cover} alt={`${u.name} 校徽`} loading="eager" width="96" height="96" decoding="async" />
+      <img class="uni-emblem" src={u.cover} alt={`${u.name} 校徽`} loading="eager" width="96" height="96" decoding="async" fetchpriority="high" />
       <div class="uni-hero-info">
       <h1>{u.name}</h1>
       <button class="fav-btn" id="favBtn" type="button" aria-pressed="false">☆ 收藏</button>
@@ -438,6 +438,7 @@ const related = allUniversities
       ?.writeText(window.location.href)
       .then(() => {
         copyPageBtn.textContent = '已复制 ✓';
+        window.showToast?.('页面链接已复制');
         setTimeout(() => (copyPageBtn.textContent = '复制链接'), 1600);
       })
       .catch(() => {});

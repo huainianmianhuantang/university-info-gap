@@ -581,6 +581,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       ?.writeText(lines)
       .then(() => {
         copyBtn.textContent = '已复制 ✓';
+        window.showToast?.('结果已复制到剪贴板');
         setTimeout(() => (copyBtn.textContent = '复制结果'), 1600);
       })
       .catch(() => {});
@@ -594,6 +595,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         ?.writeText(url)
         .then(() => {
           shareBtn.textContent = '已复制 ✓';
+          window.showToast?.('分享内容已复制');
           setTimeout(() => (shareBtn.textContent = '复制结果链接'), 1600);
         })
         .catch(() => {});

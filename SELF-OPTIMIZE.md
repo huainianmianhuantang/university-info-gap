@@ -48,3 +48,26 @@
 - [x] 无障碍：role=dialog、aria-live、aria-expanded
 - [x] 全站接入（BaseLayout）
 - [x] 回复支持 Markdown 粗体与站内链接渲染
+
+## 第 3 轮：UI/UX 打磨（已提交）
+
+- [x] 全局 Toast 轻提示组件（role=status + aria-live）
+- [x] 测评复制结果 / 分享接入 Toast
+- [x] 收藏导出接入 Toast
+- [x] 详情页复制链接接入 Toast
+- [x] 帮助菜单新增「问问 AI 小助手」入口
+- [x] AI 面板支持 ai:open 事件联动打开
+- [x] 关于页 AI 描述更新（实际已接入 DeepSeek）
+- [x] 关于页新增「数据来源」板块
+- [x] 投稿页新增「填入示例」一键填充按钮
+- [x] 页脚新增数据来源与免责声明折叠块
+- [x] 首页 FAQ 新增 AI 小助手说明
+- [x] 详情页校徽图片 fetchpriority=high
+- [x] 全局 touch-action: manipulation（消除移动端点击延迟）
+- [x] 移动端导航点击菜单项后自动收起
+- [x] Toast 自动消失（2 秒）与移动端适配
+- [x] 深色模式适配（沿用 CSS 变量）
+- [x] 验证：对比页空状态提示正常
+- [x] 验证：搜索空结果提示正常
+- [x] 验证：文章页返回列表链接存在
+- [x] 验证：资料库分类描述正常

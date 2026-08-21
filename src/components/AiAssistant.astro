@@ -169,6 +169,7 @@
   }
 
   fab.addEventListener('click', () => (panel.hidden ? open() : closePanel()));
+  window.addEventListener('ai:open', () => open());
   close.addEventListener('click', closePanel);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !panel.hidden) closePanel();

@@ -54,6 +54,7 @@ const categories = [
         <input id="contact" name="contact" type="text" placeholder={CONTACT.email} />
       </div>
       <button class="btn" type="submit">生成投稿邮件</button>
+      <button class="btn btn-ghost" id="fillExample" type="button">填入示例</button>
       <button class="btn btn-ghost" id="copySubmit" type="button">复制投稿内容</button>
       <p class="hint">
         点击后会自动打开你的邮件客户端并填好内容。你也可以直接发邮件到
@@ -67,6 +68,23 @@ const categories = [
 <script define:vars={{ submitEmail: CONTACT.email }}>
   const form = document.getElementById('submitForm');
   const copySubmit = document.getElementById('copySubmit');
+
+  const fillExample = document.getElementById('fillExample');
+  fillExample?.addEventListener('click', () => {
+    const s = document.getElementById('school');
+    const cat = document.getElementById('category');
+    const t = document.getElementById('title');
+    const con = document.getElementById('content');
+    const src = document.getElementById('source');
+    if (s) s.value = '东北大学';
+    if (cat) cat.value = '转专业政策';
+    if (t) t.value = '2026 年转专业政策要点整理（示例）';
+    if (con) con.value = '以教务处官网通知为准：大一结束前可申请，需无挂科且绩点达到专业前 30%，笔试+面试。官方链接：https://www.neu.edu.cn';
+    if (src) src.value = '教务处官网通知（示例）';
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.showToast?.('已填入示例，改成你自己的内容即可');
+  });
+
 
   function buildBody() {
     const data = new FormData(form);
