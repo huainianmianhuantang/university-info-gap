@@ -71,6 +71,14 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       </p>
     </div>
 
+    <input
+      type="search"
+      id="materialSearch"
+      class="material-search"
+      placeholder="搜索文件资料（标题 / 学校 / 描述）…"
+      aria-label="搜索文件资料"
+    />
+
     <div class="tab-bar" role="tablist">
       <button class="tab-btn active" data-view="by-university" role="tab" aria-selected="true">
         文件 · 按大学
@@ -225,6 +233,15 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
         const tags = (card.dataset.tags ?? '').split(' ').filter(Boolean);
         card.style.display = tag === 'all' || tags.includes(tag) ? '' : 'none';
       });
+    });
+  });
+
+  const searchInput = document.getElementById('materialSearch');
+  searchInput?.addEventListener('input', () => {
+    const kw = searchInput.value.trim().toLowerCase();
+    document.querySelectorAll('.material-card').forEach((card) => {
+      const text = (card.textContent ?? '').toLowerCase();
+      card.style.display = !kw || text.includes(kw) ? '' : 'none';
     });
   });
 </script>

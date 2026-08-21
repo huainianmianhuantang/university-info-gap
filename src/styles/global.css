@@ -898,6 +898,17 @@ svg {
   margin: -8px 0 14px;
 }
 
+.material-search {
+  width: 100%;
+  max-width: 420px;
+  font: inherit;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  background: var(--surface);
+}
+
 .video-group {
   margin-bottom: 18px;
   padding: 14px 16px;
