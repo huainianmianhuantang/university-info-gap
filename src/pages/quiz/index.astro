@@ -270,16 +270,19 @@ const schools = (await getCollection('universities')).map((u) => ({
       p.textContent = '暂无高匹配学校，建议前往大学库按省份与类型浏览。';
       schoolsEl.appendChild(p);
     }
+    const maxScore = result.schools[0]?.score ?? 1;
     result.schools.forEach((s) => {
       const a = document.createElement('a');
       a.className = 'card university-card';
       a.href = `/universities/${s.profile.id}/`;
       const body = document.createElement('div');
       body.className = 'university-body';
+      const pct = Math.round((s.score / maxScore) * 100);
       body.innerHTML = `
         <h3>${s.profile.name}</h3>
         <p class="small muted">${s.profile.type} · ${s.profile.province} ${s.profile.city}</p>
         <p class="small">匹配方向：${s.majors.slice(0, 4).join(' / ')}</p>
+        <div class="chip-row"><span class="chip result-chip">匹配度 ${pct}%</span></div>
       `;
       a.appendChild(body);
       schoolsEl.appendChild(a);
