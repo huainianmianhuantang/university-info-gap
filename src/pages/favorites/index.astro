@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const schools = (await getCollection('universities')).map((u) => ({
+  id: u.id,
+  name: u.data.name,
+  cover: u.data.cover,
+  type: u.data.type,
+  province: u.data.province,
+  city: u.data.city,
+  videos: u.data.videos.length,
+  materials: u.data.materials.length,
+}));
+---
+
+<BaseLayout
+  title="我的收藏"
+  description="你收藏的大学列表，支持一键导出，方便和家人一起商量。"
+>
+  <div class="container page">
+    <div class="page-hero">
+      <h1>我的收藏</h1>
+      <p>
+        在大学库卡片左上角点 ★ 即可收藏。收藏只保存在你的浏览器本地，可一键导出文本与家人分享。
+      </p>
+      <button class="btn btn-ghost" id="exportFavs" type="button">导出收藏</button>
+    </div>
+
+    <div id="favApp">
+      <p class="muted" id="favEmpty" hidden>
+        还没有收藏任何学校。去<a href="/universities/">大学库</a>逛逛，点卡片左上角 ★ 收藏吧。
+      </p>
+      <div class="grid grid-universities" id="favGrid"></div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script define:vars={{ schools }}>
+  const grid = document.getElementById('favGrid');
+  const empty = document.getElementById('favEmpty');
+  const exportBtn = document.getElementById('exportFavs');
+
+  let favs = [];
+  try {
+    favs = JSON.parse(localStorage.getItem('fav-universities') || '[]');
+  } catch {
+    favs = [];
+  }
+
+  const picked = favs.map((id) => schools.find((s) => s.id === id)).filter(Boolean);
+
+  if (picked.length === 0) {
+    empty.hidden = false;
+    if (exportBtn) exportBtn.hidden = true;
+  } else {
+    picked.forEach((s) => {
+      const a = document.createElement('a');
+      a.className = 'card university-card';
+      a.href = `/universities/${s.id}/`;
+      const img = document.createElement('img');
+      img.className = 'university-cover';
+      img.src = s.cover;
+      img.alt = `${s.name} 校徽`;
+      img.loading = 'lazy';
+      a.appendChild(img);
+      const body = document.createElement('div');
+      body.className = 'university-body';
+      body.innerHTML = `
+        <h3>${s.name}</h3>
+        <p class="small muted">${s.type} · ${s.province} ${s.city}</p>
+        <div class="university-stats">
+          <span class="stat-chip">🎬 ${s.videos} 视频</span>
+          <span class="stat-chip">📄 ${s.materials} 资料</span>
+        </div>
+      `;
+      a.appendChild(body);
+      grid.appendChild(a);
+    });
+  }
+
+  exportBtn?.addEventListener('click', () => {
+    if (picked.length === 0) return;
+    const text =
+      `我的大学收藏清单（${new Date().toLocaleDateString('zh-CN')}）\n` +
+      picked.map((s) => `- ${s.name}（${s.type} · ${s.province} ${s.city}）`).join('\n') +
+      '\n来源：大学信息差 https://localhost:4321';
+    navigator.clipboard
+      ?.writeText(text)
+      .then(() => {
+        exportBtn.textContent = '已复制 ✓';
+        setTimeout(() => (exportBtn.textContent = '导出收藏'), 1600);
+      })
+      .catch(() => {});
+  });
+</script>

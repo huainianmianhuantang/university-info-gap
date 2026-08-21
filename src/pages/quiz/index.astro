@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 const schools = (await getCollection('universities')).map((u) => ({
   id: u.id,
   name: u.data.name,
+  cover: u.data.cover,
   type: u.data.type,
   province: u.data.province,
   city: u.data.city,
@@ -69,6 +70,18 @@ const schools = (await getCollection('universities')).map((u) => ({
         </section>
 
         <section class="result-section">
+          <h3>冲 / 稳 / 保 分档（可选）</h3>
+          <p class="muted">
+            输入你的预估全省位次（理科参考值），为推荐学校粗略分档；仅供参考，最终以官方数据为准。
+          </p>
+          <div class="rank-input">
+            <input type="number" id="rankInput" min="1" max="99999" placeholder="如 5000" aria-label="预估全省位次" />
+            <button class="btn" id="rankApply" type="button">分档</button>
+          </div>
+          <div class="chip-row" id="rankLegend"></div>
+        </section>
+
+        <section class="result-section">
           <div class="result-section-head">
             <h3>AI 建议</h3>
             <button class="btn btn-ghost" id="regenBtn" type="button" hidden>换一批建议</button>
@@ -82,7 +95,7 @@ const schools = (await getCollection('universities')).map((u) => ({
 </BaseLayout>
 
 <script define:vars={{ schools }}>
-  import { QUESTIONS, recommend, DIM_LABELS } from '../../lib/recommender';
+  import { QUESTIONS, recommend, DIM_LABELS, tierOf } from '../../lib/recommender';
   import { getAdvice } from '../../lib/ai';
 
   const LS_ANSWERS = 'quiz-answers';
@@ -91,6 +104,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const state = {
     step: 0,
     answers: {},
+    rank: null,
   };
 
   const quizCard = document.getElementById('quizCard');
@@ -103,6 +117,10 @@ const schools = (await getCollection('universities')).map((u) => ({
   const progressBar = document.getElementById('progressBar');
   const stepInfo = document.getElementById('stepInfo');
   const restartBtn = document.getElementById('restartBtn');
+  const rankInput = document.getElementById('rankInput');
+  const rankApply = document.getElementById('rankApply');
+  const rankLegend = document.getElementById('rankLegend');
+  let currentResult = null;
   const copyBtn = document.getElementById('copyBtn');
   const regenBtn = document.getElementById('regenBtn');
 
@@ -262,31 +280,8 @@ const schools = (await getCollection('universities')).map((u) => ({
       majorsEl.appendChild(chip);
     });
 
-    const schoolsEl = document.getElementById('resultSchools');
-    schoolsEl.innerHTML = '';
-    if (result.schools.length === 0) {
-      const p = document.createElement('p');
-      p.className = 'muted';
-      p.textContent = '暂无高匹配学校，建议前往大学库按省份与类型浏览。';
-      schoolsEl.appendChild(p);
-    }
-    const maxScore = result.schools[0]?.score ?? 1;
-    result.schools.forEach((s) => {
-      const a = document.createElement('a');
-      a.className = 'card university-card';
-      a.href = `/universities/${s.profile.id}/`;
-      const body = document.createElement('div');
-      body.className = 'university-body';
-      const pct = Math.round((s.score / maxScore) * 100);
-      body.innerHTML = `
-        <h3>${s.profile.name}</h3>
-        <p class="small muted">${s.profile.type} · ${s.profile.province} ${s.profile.city}</p>
-        <p class="small">匹配方向：${s.majors.slice(0, 4).join(' / ')}</p>
-        <div class="chip-row"><span class="chip result-chip">匹配度 ${pct}%</span></div>
-      `;
-      a.appendChild(body);
-      schoolsEl.appendChild(a);
-    });
+    currentResult = result;
+    renderSchools(result);
 
     const adviceEl = document.getElementById('resultAdvice');
     adviceEl.innerHTML = '';
@@ -311,6 +306,61 @@ const schools = (await getCollection('universities')).map((u) => ({
       /* ignore */
     }
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function renderSchools(result) {
+    const schoolsEl = document.getElementById('resultSchools');
+    schoolsEl.innerHTML = '';
+    if (!result || result.schools.length === 0) {
+      const p = document.createElement('p');
+      p.className = 'muted';
+      p.textContent = '暂无高匹配学校，建议前往大学库按省份与类型浏览。';
+      schoolsEl.appendChild(p);
+      return;
+    }
+    const maxScore = result.schools[0]?.score ?? 1;
+    result.schools.forEach((s) => {
+      const a = document.createElement('a');
+      a.className = 'card university-card';
+      a.href = `/universities/${s.profile.id}/`;
+      const img = document.createElement('img');
+      img.className = 'university-cover';
+      img.src = s.profile.cover;
+      img.alt = `${s.profile.name} 校徽`;
+      img.loading = 'lazy';
+      a.appendChild(img);
+      const body = document.createElement('div');
+      body.className = 'university-body';
+      const pct = Math.round((s.score / maxScore) * 100);
+      const tier = state.rank ? tierOf(state.rank, s.profile.id) : null;
+      const tierHtml = tier
+        ? `<span class="chip tier-badge tier-${tier}">${tier}</span>`
+        : '';
+      body.innerHTML = `
+        <h3>${s.profile.name}</h3>
+        <p class="small muted">${s.profile.type} · ${s.profile.province} ${s.profile.city}</p>
+        <p class="small">匹配方向：${s.majors.slice(0, 4).join(' / ')}</p>
+        <div class="chip-row"><span class="chip result-chip">匹配度 ${pct}%</span>${tierHtml}</div>
+      `;
+      a.appendChild(body);
+      schoolsEl.appendChild(a);
+    });
+  }
+
+  function renderLegend() {
+    if (!rankLegend) return;
+    rankLegend.innerHTML = '';
+    if (!state.rank) return;
+    [
+      ['冲', '位次略高于该校往年门槛，可尝试'],
+      ['稳', '位次基本达到往年门槛'],
+      ['保', '位次有明显余量，比较稳妥'],
+    ].forEach(([label, desc]) => {
+      const chip = document.createElement('span');
+      chip.className = `chip tier-badge tier-${label}`;
+      chip.textContent = `${label}：${desc}`;
+      rankLegend.appendChild(chip);
+    });
   }
 
   function restart() {
@@ -344,6 +394,15 @@ const schools = (await getCollection('universities')).map((u) => ({
   });
 
   restartBtn.addEventListener('click', restart);
+  rankApply?.addEventListener('click', () => {
+    const v = Number(rankInput?.value ?? '');
+    state.rank = Number.isFinite(v) && v > 0 ? v : null;
+    renderSchools(currentResult);
+    renderLegend();
+  });
+  rankInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') rankApply?.click();
+  });
   copyBtn.addEventListener('click', () => {
     const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
     if (!saved) return;

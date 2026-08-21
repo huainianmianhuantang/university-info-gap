@@ -13,6 +13,9 @@ const provinces = [...new Set(universities.map((u) => u.data.province))].sort(
 const types = [...new Set(universities.map((u) => u.data.type))].sort((a, b) =>
   a.localeCompare(b, 'zh'),
 );
+const allTags = [...new Set(universities.flatMap((u) => u.data.tags))].sort((a, b) =>
+  a.localeCompare(b, 'zh'),
+);
 const initialQuery = Astro.url.searchParams.get('q') ?? '';
 ---
 
@@ -49,6 +52,15 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           <select id="type">
             <option value="">全部类型</option>
             {types.map((t) => <option value={t}>{t}</option>)}
+          </select>
+        </label>
+      </div>
+      <div class="filter-group">
+        <label>
+          特色标签
+          <select id="tagFilter">
+            <option value="">全部标签</option>
+            {allTags.map((t) => <option value={t}>{t}</option>)}
           </select>
         </label>
       </div>
@@ -103,6 +115,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           class:list={['u-item']}
           data-name={u.data.name}
           data-tags={[...u.data.levels, ...u.data.tags].join(' ')}
+          data-extra-tags={u.data.tags.join(' ')}
           data-province={u.data.province}
           data-type={u.data.type}
           data-levels={u.data.levels.join(' ')}
@@ -137,6 +150,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const qInput = document.getElementById('q');
   const provinceSelect = document.getElementById('province');
   const typeSelect = document.getElementById('type');
+  const tagFilter = document.getElementById('tagFilter');
   const levelChecks = Array.from(document.querySelectorAll('.level'));
   const items = Array.from(grid?.querySelectorAll('.u-item') ?? []);
   const emptyState = document.getElementById('emptyState');
@@ -151,6 +165,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const favBoxes = Array.from(document.querySelectorAll('.fav-box'));
 
   const FAV_KEY = 'fav-universities';
+  const COMPARE_KEY = 'compare-list';
   let favs = new Set();
   try {
     favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
@@ -172,10 +187,21 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
     });
   });
 
+  let compareSel = new Set();
+  try {
+    compareSel = new Set(JSON.parse(localStorage.getItem(COMPARE_KEY) || '[]'));
+  } catch {
+    compareSel = new Set();
+  }
+  compareBoxes.forEach((c) => {
+    c.checked = compareSel.has(c.value);
+  });
+
   function applyFilters() {
     const keyword = (qInput?.value ?? '').trim().toLowerCase();
     const province = provinceSelect?.value ?? '';
     const type = typeSelect?.value ?? '';
+    const tag = tagFilter?.value ?? '';
     const selectedLevels = levelChecks.filter((c) => c.checked).map((c) => c.value);
     const favOnlyChecked = favOnly?.checked ?? false;
     const videoOnlyChecked = videoOnly?.checked ?? false;
@@ -189,11 +215,12 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
       const okKeyword = !keyword || name.toLowerCase().includes(keyword) || tags.toLowerCase().includes(keyword);
       const okProvince = !province || item.dataset.province === province;
       const okType = !type || item.dataset.type === type;
+      const okTag = !tag || (item.dataset.extraTags ?? '').split(' ').includes(tag);
       const okLevel = selectedLevels.length === 0 || selectedLevels.some((l) => levels.includes(l));
       const okFav = !favOnlyChecked || favs.has(item.querySelector('.fav-box')?.value ?? '');
       const okVideo = !videoOnlyChecked || Number(item.dataset.videos ?? 0) > 0;
       const okMaterial = !materialOnlyChecked || Number(item.dataset.materials ?? 0) > 0;
-      const ok = okKeyword && okProvince && okType && okLevel && okFav && okVideo && okMaterial;
+      const ok = okKeyword && okProvince && okType && okTag && okLevel && okFav && okVideo && okMaterial;
       item.style.display = ok ? '' : 'none';
       if (ok) visible++;
     }
@@ -212,6 +239,11 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
     if (compareBar) compareBar.hidden = selected.length < 2;
     if (compareCount) compareCount.textContent = `已选 ${selected.length} 所`;
     if (compareBtn) compareBtn.href = `/compare/?u=${selected.join(',')}`;
+    try {
+      localStorage.setItem(COMPARE_KEY, JSON.stringify(selected));
+    } catch {
+      /* ignore */
+    }
   }
 
   function applySort() {
@@ -234,6 +266,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   qInput?.addEventListener('input', applyFilters);
   provinceSelect?.addEventListener('change', applyFilters);
   typeSelect?.addEventListener('change', applyFilters);
+  tagFilter?.addEventListener('change', applyFilters);
   levelChecks.forEach((c) => c.addEventListener('change', applyFilters));
   compareBoxes.forEach((c) => c.addEventListener('change', updateCompare));
   sortSelect?.addEventListener('change', applySort);
@@ -242,4 +275,5 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   materialOnly?.addEventListener('change', applyFilters);
   applyFilters();
   applySort();
+  updateCompare();
 </script>

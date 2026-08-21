@@ -95,9 +95,10 @@ const schools = (await getCollection('universities')).map((u) => ({
       ['培养计划', (s) => s.training || '待补充'],
       ['寝室情况', (s) => s.dorm || '待补充'],
       ['上课情况', (s) => s.classes || '待补充'],
-      ['视频 / 资料', (s) => `🎬 ${s.videos} / 📄 ${s.materials}`],
       ['详情页', (s) => `<a href="/universities/${s.id}/">查看详情 →</a>`],
     ];
+    const maxVideos = Math.max(...picked.map((s) => s.videos), 1);
+    const maxMaterials = Math.max(...picked.map((s) => s.materials), 1);
 
     const head = document.createElement('thead');
     const hr = document.createElement('tr');
@@ -119,13 +120,42 @@ const schools = (await getCollection('universities')).map((u) => ({
       tdLabel.className = 'row-label';
       tdLabel.textContent = label;
       tr.appendChild(tdLabel);
+      const values = picked.map((s) => String(fn(s) ?? '').trim());
+      const allSame = values.every((v) => v === values[0]);
       picked.forEach((s) => {
         const td = document.createElement('td');
         td.innerHTML = fn(s);
+        if (allSame) td.className = 'same';
+        else if (values.indexOf(td.textContent?.trim() ?? '') !== 0) td.className = 'diff';
+        tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+
+    const barRows = [
+      ['视频数量', (s) => s.videos, maxVideos],
+      ['资料数量', (s) => s.materials, maxMaterials],
+    ];
+    barRows.forEach(([label, fn, max]) => {
+      const tr = document.createElement('tr');
+      const tdLabel = document.createElement('td');
+      tdLabel.className = 'row-label';
+      tdLabel.textContent = label;
+      tr.appendChild(tdLabel);
+      picked.forEach((s) => {
+        const td = document.createElement('td');
+        const val = fn(s);
+        const pct = Math.round((val / max) * 100);
+        td.innerHTML = `<div class="bar-row"><div class="bar"><i style="width:${pct}%"></i></div><span>${val}</span></div>`;
         tr.appendChild(td);
       });
       body.appendChild(tr);
     });
     table.appendChild(body);
+
+    const legend = document.createElement('p');
+    legend.className = 'small muted compare-legend';
+    legend.innerHTML = '图例：<span class="legend-diff">黄色</span> = 校际差异项，<span class="legend-same">灰色</span> = 各校一致项。';
+    wrap.parentNode?.insertBefore(legend, wrap.nextSibling);
   }
 </script>

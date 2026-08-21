@@ -183,6 +183,13 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       <p class="small muted video-summary">
         共 {withVideos.length} 所高校 · {totalVideos} 条视频，点击学校名可展开/收起。
       </p>
+      <input
+        type="search"
+        id="videoSearch"
+        class="video-search"
+        placeholder="搜索学校，如：东北大学、清华、武汉…"
+        aria-label="搜索学校视频"
+      />
       {withVideos.map((group, index) => (
         <details class="card video-group" open={index < 5}>
           <summary>
@@ -234,6 +241,34 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
         card.style.display = tag === 'all' || tags.includes(tag) ? '' : 'none';
       });
     });
+  });
+
+  const tagCounts = { 宣传片: 0, 宿舍生活: 0, 学习日常: 0 };
+  document.querySelectorAll('.video-card').forEach((card) => {
+    (card.dataset.tags ?? '').split(' ').forEach((t) => {
+      if (t in tagCounts) tagCounts[t]++;
+    });
+  });
+  filterBtns.forEach((btn) => {
+    const t = btn.dataset.vtag;
+    if (t !== 'all' && t in tagCounts) btn.textContent = `${t} ${tagCounts[t]}`;
+  });
+
+  const videoSearch = document.getElementById('videoSearch');
+  const videoGroups = Array.from(document.querySelectorAll('.video-group'));
+  const videoSummary = document.querySelector('.video-summary');
+  videoSearch?.addEventListener('input', () => {
+    const kw = videoSearch.value.trim().toLowerCase();
+    let visible = 0;
+    videoGroups.forEach((g) => {
+      const name = (g.querySelector('summary a')?.textContent ?? '').toLowerCase();
+      const show = !kw || name.includes(kw);
+      g.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    if (videoSummary) {
+      videoSummary.textContent = `匹配 ${visible} 所高校，点击学校名可展开/收起。`;
+    }
   });
 
   const searchInput = document.getElementById('materialSearch');

@@ -264,6 +264,60 @@ export const DIM_SCHOOLS: Record<Dim, { slug: string; majors: string[] }[]> = {
   ],
 };
 
+/**
+ * 粗略分层（按往年理科一批大致位次估算，仅用于测评结果的“冲/稳/保”参考）。
+ * bound 表示该档大致门槛位次（数字越小要求越高），最终请以官方数据为准。
+ */
+export const SCHOOL_TIERS: Record<string, { tier: 'top' | 'mid' | 'other'; bound: number }> = {
+  'peking-university': { tier: 'top', bound: 1000 },
+  'tsinghua-university': { tier: 'top', bound: 1000 },
+  'fudan': { tier: 'top', bound: 1800 },
+  'sjtu': { tier: 'top', bound: 1800 },
+  'zhejiang-university': { tier: 'top', bound: 2000 },
+  'ustc': { tier: 'top', bound: 2000 },
+  'nju': { tier: 'top', bound: 2500 },
+  'hit': { tier: 'top', bound: 3500 },
+  'xjtu': { tier: 'top', bound: 4500 },
+  'renmin-university': { tier: 'mid', bound: 3000 },
+  'buaa': { tier: 'mid', bound: 3500 },
+  'bit': { tier: 'mid', bound: 4500 },
+  'tongji': { tier: 'mid', bound: 4500 },
+  'tju': { tier: 'mid', bound: 5000 },
+  'nankai': { tier: 'mid', bound: 5000 },
+  'huazhong-ust': { tier: 'mid', bound: 5000 },
+  'wuhan-university': { tier: 'mid', bound: 5500 },
+  'seu': { tier: 'mid', bound: 5500 },
+  'scu': { tier: 'mid', bound: 6500 },
+  'sysu': { tier: 'mid', bound: 6500 },
+  'xmu': { tier: 'mid', bound: 7000 },
+  'sdu': { tier: 'mid', bound: 8000 },
+  'csu': { tier: 'mid', bound: 8000 },
+  'scut': { tier: 'mid', bound: 8000 },
+  'cqu': { tier: 'mid', bound: 8500 },
+  'dlut': { tier: 'mid', bound: 9000 },
+  'npu': { tier: 'mid', bound: 9000 },
+  'uestc': { tier: 'mid', bound: 9000 },
+  'ecnu': { tier: 'mid', bound: 9000 },
+  'bnu': { tier: 'mid', bound: 9000 },
+  'hunan-university': { tier: 'mid', bound: 10000 },
+  'jilin-university': { tier: 'other', bound: 12000 },
+  'lzu': { tier: 'other', bound: 13000 },
+  'cau': { tier: 'other', bound: 13000 },
+  'muc': { tier: 'other', bound: 14000 },
+  'ouc': { tier: 'other', bound: 14000 },
+  'northeastern-university': { tier: 'other', bound: 14000 },
+  'nudt': { tier: 'other', bound: 9000 },
+  'nwafu': { tier: 'other', bound: 18000 },
+};
+
+export function tierOf(rank: number, slug: string): '冲' | '稳' | '保' | null {
+  const info = SCHOOL_TIERS[slug];
+  if (!info || !Number.isFinite(rank) || rank <= 0) return null;
+  if (rank <= info.bound * 0.7) return '保';
+  if (rank <= info.bound) return '稳';
+  return '冲';
+}
+
 export interface QuizAnswer {
   interest: number;
   strength: number;
