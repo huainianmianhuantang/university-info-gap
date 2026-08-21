@@ -53,6 +53,17 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
         </label>
       </div>
       <div class="filter-group">
+        <label>
+          排序
+          <select id="sortBy">
+            <option value="name">按名称</option>
+            <option value="province">按省份</option>
+            <option value="videos">按视频数</option>
+            <option value="materials">按资料数</option>
+          </select>
+        </label>
+      </div>
+      <div class="filter-group">
         <span class="small muted">层次：</span>
         {LEVELS.map((level) => (
           <label>
@@ -74,6 +85,8 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           data-province={u.data.province}
           data-type={u.data.type}
           data-levels={u.data.levels.join(' ')}
+          data-videos={u.data.videos.length}
+          data-materials={u.data.materials.length}
         >
           <label class="compare-check" title="加入对比">
             <input type="checkbox" class="compare-box" value={u.id} aria-label={`对比${u.data.name}`} />
@@ -106,6 +119,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const compareCount = document.getElementById('compareCount');
   const compareBtn = document.getElementById('compareBtn');
   const compareBoxes = Array.from(document.querySelectorAll('.compare-box'));
+  const sortSelect = document.getElementById('sortBy');
 
   function applyFilters() {
     const keyword = (qInput?.value ?? '').trim().toLowerCase();
@@ -143,10 +157,29 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
     if (compareBtn) compareBtn.href = `/compare/?u=${selected.join(',')}`;
   }
 
+  function applySort() {
+    const mode = sortSelect?.value ?? 'name';
+    const sorted = [...items].sort((a, b) => {
+      if (mode === 'province') {
+        return (a.dataset.province ?? '').localeCompare(b.dataset.province ?? '', 'zh');
+      }
+      if (mode === 'videos') {
+        return Number(b.dataset.videos ?? 0) - Number(a.dataset.videos ?? 0);
+      }
+      if (mode === 'materials') {
+        return Number(b.dataset.materials ?? 0) - Number(a.dataset.materials ?? 0);
+      }
+      return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '', 'zh');
+    });
+    sorted.forEach((el) => grid?.appendChild(el));
+  }
+
   qInput?.addEventListener('input', applyFilters);
   provinceSelect?.addEventListener('change', applyFilters);
   typeSelect?.addEventListener('change', applyFilters);
   levelChecks.forEach((c) => c.addEventListener('change', applyFilters));
   compareBoxes.forEach((c) => c.addEventListener('change', updateCompare));
+  sortSelect?.addEventListener('change', applySort);
   applyFilters();
+  applySort();
 </script>
