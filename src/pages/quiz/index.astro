@@ -69,7 +69,10 @@ const schools = (await getCollection('universities')).map((u) => ({
         </section>
 
         <section class="result-section">
-          <h3>AI 建议</h3>
+          <div class="result-section-head">
+            <h3>AI 建议</h3>
+            <button class="btn btn-ghost" id="regenBtn" type="button" hidden>换一批建议</button>
+          </div>
           <div class="advice-box" id="resultAdvice"></div>
           <p class="small muted" id="adviceBadge">AI 建议生成中…</p>
         </section>
@@ -101,6 +104,33 @@ const schools = (await getCollection('universities')).map((u) => ({
   const stepInfo = document.getElementById('stepInfo');
   const restartBtn = document.getElementById('restartBtn');
   const copyBtn = document.getElementById('copyBtn');
+  const regenBtn = document.getElementById('regenBtn');
+
+  async function fetchLLMAdvice(answers, result) {
+    const resp = await fetch('/api/advice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        answers,
+        result: {
+          dims: result.dims,
+          majors: result.majors,
+          schools: result.schools.map((s) => ({
+            name: s.profile?.name ?? s.name,
+            majors: s.majors,
+            city: s.profile?.city ?? s.city,
+          })),
+        },
+      }),
+    });
+    const data = await resp.json();
+    if (!data || !data.text) return null;
+    return {
+      provider: 'llm',
+      text: data.text,
+      points: data.points ?? [data.text],
+    };
+  }
 
   function loadSaved() {
     try {
@@ -111,30 +141,10 @@ const schools = (await getCollection('universities')).map((u) => ({
         showResult(savedResult);
         if (savedResult.advice?.provider !== 'llm') {
           const result = savedResult.result;
-          fetch('/api/advice', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              answers: state.answers,
-              result: {
-                dims: result.dims,
-                majors: result.majors,
-                schools: result.schools.map((s) => ({
-                  name: s.profile?.name ?? s.name,
-                  majors: s.majors,
-                  city: s.profile?.city ?? s.city,
-                })),
-              },
-            }),
-          })
-            .then((r) => r.json())
-            .then((data) => {
-              if (data && data.text) {
-                const upgraded = {
-                  result,
-                  advice: { provider: 'llm', text: data.text, points: data.points ?? [data.text] },
-                  at: Date.now(),
-                };
+          fetchLLMAdvice(state.answers, result)
+            .then((advice) => {
+              if (advice) {
+                const upgraded = { result, advice, at: Date.now() };
                 try {
                   localStorage.setItem(LS_RESULT, JSON.stringify(upgraded));
                 } catch {
@@ -210,29 +220,9 @@ const schools = (await getCollection('universities')).map((u) => ({
     showResult(saved);
 
     try {
-      const resp = await fetch('/api/advice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          answers: state.answers,
-          result: {
-            dims: result.dims,
-            majors: result.majors,
-            schools: result.schools.map((s) => ({
-              name: s.profile.name,
-              majors: s.majors,
-              city: s.profile.city,
-            })),
-          },
-        }),
-      });
-      const data = await resp.json();
-      if (data && data.text) {
-        saved = {
-          result,
-          advice: { provider: 'llm', text: data.text, points: data.points ?? [data.text] },
-          at: Date.now(),
-        };
+      const advice = await fetchLLMAdvice(state.answers, result);
+      if (advice) {
+        saved = { result, advice, at: Date.now() };
         try {
           localStorage.setItem(LS_RESULT, JSON.stringify(saved));
         } catch {
@@ -310,6 +300,7 @@ const schools = (await getCollection('universities')).map((u) => ({
           ? 'AI 建议（DeepSeek 大模型生成）'
           : 'AI 建议（规则引擎生成）';
     }
+    if (regenBtn) regenBtn.hidden = advice.provider !== 'llm';
 
     try {
       localStorage.setItem(LS_RESULT, JSON.stringify(saved));
@@ -372,6 +363,29 @@ const schools = (await getCollection('universities')).map((u) => ({
         setTimeout(() => (copyBtn.textContent = '复制结果'), 1600);
       })
       .catch(() => {});
+  });
+
+  regenBtn?.addEventListener('click', async () => {
+    const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
+    if (!saved) return;
+    regenBtn.disabled = true;
+    regenBtn.textContent = '生成中…';
+    try {
+      const advice = await fetchLLMAdvice(state.answers, saved.result);
+      if (advice) {
+        const updated = { ...saved, advice, at: Date.now() };
+        try {
+          localStorage.setItem(LS_RESULT, JSON.stringify(updated));
+        } catch {
+          /* ignore */
+        }
+        showResult(updated);
+      }
+    } catch {
+      /* ignore */
+    }
+    regenBtn.disabled = false;
+    regenBtn.textContent = '换一批建议';
   });
 
   if (!loadSaved()) renderQuestion();
