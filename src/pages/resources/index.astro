@@ -172,18 +172,19 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
         <button class="video-filter-btn" data-vtag="宿舍生活">宿舍生活</button>
         <button class="video-filter-btn" data-vtag="学习日常">学习日常</button>
       </div>
+      <p class="small muted video-summary">
+        共 {withVideos.length} 所高校 · {totalVideos} 条视频，点击学校名可展开/收起。
+      </p>
       {withVideos.map((group) => (
-        <section class="section">
-          <div class="section-head">
-            <h2>
-              <a href={`/universities/${group.university.id}/`}>{group.university.data.name}</a>
-            </h2>
+        <details class="card video-group" open>
+          <summary>
+            <a href={`/universities/${group.university.id}/`}>{group.university.data.name}</a>
             <span class="small muted">{group.items.length} 个视频</span>
-          </div>
+          </summary>
           <div class="grid grid-videos">
             {group.items.map((video) => <VideoEmbed video={video} />)}
           </div>
-        </section>
+        </details>
       ))}
       {withVideos.length === 0 && (
         <p class="muted">暂无视频资料，欢迎投稿。</p>

@@ -894,6 +894,53 @@ svg {
   margin: 0;
 }
 
+.video-summary {
+  margin: -8px 0 14px;
+}
+
+.video-group {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+}
+
+.video-group summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  list-style: none;
+}
+
+.video-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.video-group summary::before {
+  content: '▸ ';
+  color: var(--primary);
+  transition: transform 0.15s ease;
+}
+
+.video-group[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.video-group summary a {
+  color: var(--text);
+}
+
+.video-group summary a:hover {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.video-group .grid {
+  margin-top: 14px;
+}
+
 /* ---------- 对比页 ---------- */
 .table-wrap {
   overflow-x: auto;
