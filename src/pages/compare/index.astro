@@ -55,6 +55,7 @@ const schools = (await getCollection('universities')).map((u) => ({
 </BaseLayout>
 
 <script define:vars={{ schools }}>
+import { scopedKey } from '../../lib/account';
   const wrap = document.getElementById('compareTableWrap');
   const empty = document.getElementById('compareEmpty');
   const table = document.getElementById('compareTable');
@@ -82,7 +83,7 @@ const schools = (await getCollection('universities')).map((u) => ({
     .slice(0, 3);
   if (slugs.length === 0) {
     try {
-      slugs = JSON.parse(localStorage.getItem('compare-list') || '[]').slice(0, 3);
+      slugs = JSON.parse(localStorage.getItem(scopedKey('compare-list')) || '[]').slice(0, 3);
       if (slugs.length > 0) {
         history.replaceState(null, '', `/compare/?u=${slugs.join(',')}`);
       }
@@ -141,7 +142,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       favBtn.className = 'btn btn-ghost cmp-fav';
       let favs = [];
       try {
-        favs = JSON.parse(localStorage.getItem('fav-universities') || '[]');
+        favs = JSON.parse(localStorage.getItem(scopedKey('fav-universities')) || '[]');
       } catch {
         favs = [];
       }
@@ -150,14 +151,14 @@ const schools = (await getCollection('universities')).map((u) => ({
       favBtn.addEventListener('click', () => {
         let list = [];
         try {
-          list = JSON.parse(localStorage.getItem('fav-universities') || '[]');
+          list = JSON.parse(localStorage.getItem(scopedKey('fav-universities')) || '[]');
         } catch {
           list = [];
         }
         if (list.includes(s.id)) list = list.filter((x) => x !== s.id);
         else list.push(s.id);
         try {
-          localStorage.setItem('fav-universities', JSON.stringify(list));
+          localStorage.setItem(scopedKey('fav-universities'), JSON.stringify(list));
         } catch {
           /* ignore */
         }

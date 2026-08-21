@@ -79,6 +79,12 @@ export function getProfile(): UserProfile | null {
   return read()?.profile ?? null;
 }
 
+/** 按账号隔离的存储键：登录后数据跟随账号，未登录则用公共键 */
+export function scopedKey(base: string): string {
+  const p = getProfile();
+  return p ? `${base}-${p.uid}` : base;
+}
+
 export function maskPhone(p: string): string {
   return p.length >= 7 ? p.slice(0, 3) + '****' + p.slice(-4) : p;
 }

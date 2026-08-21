@@ -346,6 +346,8 @@ const related = allUniversities
 </BaseLayout>
 
 <script>
+import { scopedKey } from '../../lib/account';
+
   const RECENT_KEY = 'recent-universities';
   try {
     const recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
@@ -364,7 +366,7 @@ const related = allUniversities
         .catch(() => {});
     });
   });
-  const FAV_KEY = 'fav-universities';
+  const FAV_KEY = scopedKey('fav-universities');
   const slug = window.location.pathname.split('/').filter(Boolean)[1] ?? '';
   let favs = new Set();
   try {
@@ -409,7 +411,7 @@ const related = allUniversities
 
   const cmpBtn = document.getElementById('detailCompareBtn');
   const cmpLink = document.getElementById('detailCompareLink');
-  const COMPARE_KEY = 'compare-list';
+  const COMPARE_KEY = scopedKey('compare-list');
   let cmpList = [];
   try {
     cmpList = JSON.parse(localStorage.getItem(COMPARE_KEY) || '[]');

@@ -119,9 +119,11 @@ const schools = (await getCollection('universities')).map((u) => ({
 <script define:vars={{ schools }}>
   import { QUESTIONS, recommend, DIM_LABELS, tierOf } from '../../lib/recommender';
   import { getAdvice } from '../../lib/ai';
+import { scopedKey } from '../../lib/account';
+
 
   const LS_ANSWERS = 'quiz-answers';
-  const LS_RESULT = 'quiz-result';
+  const LS_RESULT = scopedKey('quiz-result');
 
   const state = {
     step: 0,
@@ -149,7 +151,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const historyList = document.getElementById('historyList');
   const clearHistoryBtn = document.getElementById('clearHistory');
   let currentResult = null;
-  const HISTORY_KEY = 'quiz-history';
+  const HISTORY_KEY = scopedKey('quiz-history');
   const copyBtn = document.getElementById('copyBtn');
   const shareBtn = document.getElementById('shareBtn');
   const printResultBtn = document.getElementById('printResult');
@@ -420,10 +422,10 @@ const schools = (await getCollection('universities')).map((u) => ({
       favBtn.addEventListener('click', (e) => {
         e.preventDefault();
         try {
-          const favs = new Set(JSON.parse(localStorage.getItem('fav-universities') || '[]'));
+          const favs = new Set(JSON.parse(localStorage.getItem(scopedKey('fav-universities')) || '[]'));
           if (favs.has(s.profile.id)) favs.delete(s.profile.id);
           else favs.add(s.profile.id);
-          localStorage.setItem('fav-universities', JSON.stringify([...favs]));
+          localStorage.setItem(scopedKey('fav-universities'), JSON.stringify([...favs]));
           favBtn.textContent = favs.has(s.profile.id) ? '★ 已收藏' : '☆ 收藏';
         } catch {
           /* ignore */
@@ -436,14 +438,14 @@ const schools = (await getCollection('universities')).map((u) => ({
       cmpBtn.addEventListener('click', (e) => {
         e.preventDefault();
         try {
-          const list = JSON.parse(localStorage.getItem('compare-list') || '[]');
+          const list = JSON.parse(localStorage.getItem(scopedKey('compare-list')) || '[]');
           if (list.includes(s.profile.id)) {
             const next = list.filter((x) => x !== s.profile.id);
-            localStorage.setItem('compare-list', JSON.stringify(next));
+            localStorage.setItem(scopedKey('compare-list'), JSON.stringify(next));
             cmpBtn.textContent = '＋ 对比';
           } else {
             const next = list.length >= 3 ? [...list.slice(1), s.profile.id] : [...list, s.profile.id];
-            localStorage.setItem('compare-list', JSON.stringify(next));
+            localStorage.setItem(scopedKey('compare-list'), JSON.stringify(next));
             cmpBtn.textContent = `已选 ${next.length}/3`;
           }
         } catch {

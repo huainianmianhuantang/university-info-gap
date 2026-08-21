@@ -124,9 +124,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     since.textContent = profile?.createdAt
       ? `注册于 ${new Date(profile.createdAt).toLocaleDateString('zh-CN')}`
       : '';
-    (document.getElementById('statFavs') as HTMLElement).textContent = String(count('fav-universities'));
-    (document.getElementById('statQuiz') as HTMLElement).textContent = String(count('quiz-history'));
-    (document.getElementById('statChat') as HTMLElement).textContent = String(count('ai-chat'));
+    (document.getElementById('statFavs') as HTMLElement).textContent = String(count(scopedKey('fav-universities')));
+    (document.getElementById('statQuiz') as HTMLElement).textContent = String(count(scopedKey('quiz-history')));
+    (document.getElementById('statChat') as HTMLElement).textContent = String(count(scopedKey('ai-chat')));
 
     const qq = document.getElementById('bindQq') as HTMLElement;
     const wx = document.getElementById('bindWechat') as HTMLElement;

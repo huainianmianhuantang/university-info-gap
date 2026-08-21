@@ -63,6 +63,8 @@ const schools = (await getCollection('universities')).map((u) => ({
 </BaseLayout>
 
 <script define:vars={{ schools }}>
+import { scopedKey } from '../../lib/account';
+
   const grid = document.getElementById('favGrid');
   const empty = document.getElementById('favEmpty');
   const exportBtn = document.getElementById('exportFavs');
@@ -73,7 +75,7 @@ const schools = (await getCollection('universities')).map((u) => ({
 
   let favs = [];
   try {
-    favs = JSON.parse(localStorage.getItem('fav-universities') || '[]');
+    favs = JSON.parse(localStorage.getItem(scopedKey('fav-universities')) || '[]');
   } catch {
     favs = [];
   }

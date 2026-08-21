@@ -167,6 +167,8 @@ const slugs = universities.map((u) => u.id);
 </BaseLayout>
 
 <script define:vars={{ slugs }}>
+import { scopedKey } from '../../lib/account';
+
   const grid = document.getElementById('universityGrid');
   const count = document.getElementById('resultCount');
   const qInput = document.getElementById('q');
@@ -189,7 +191,7 @@ const slugs = universities.map((u) => u.id);
   const regionBtns = Array.from(document.querySelectorAll('[data-region]'));
   const favBoxes = Array.from(document.querySelectorAll('.fav-box'));
 
-  const FAV_KEY = 'fav-universities';
+  const FAV_KEY = scopedKey('fav-universities');
   const COMPARE_KEY = 'compare-list';
   let favs = new Set();
   try {
