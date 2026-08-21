@@ -51,6 +51,7 @@ const schools = (await getCollection('universities')).map((u) => ({
           <div class="result-actions">
             <button class="btn btn-ghost" id="copyBtn" type="button">复制结果</button>
             <button class="btn btn-ghost" id="shareBtn" type="button">复制结果链接</button>
+            <button class="btn btn-ghost" id="printResult" type="button">打印结果</button>
             <button class="btn btn-ghost" id="restartBtn" type="button">重新测评</button>
           </div>
         </div>
@@ -149,6 +150,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const HISTORY_KEY = 'quiz-history';
   const copyBtn = document.getElementById('copyBtn');
   const shareBtn = document.getElementById('shareBtn');
+  const printResultBtn = document.getElementById('printResult');
   const regenBtn = document.getElementById('regenBtn');
 
   async function fetchLLMAdvice(answers, result) {
@@ -589,6 +591,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       /* ignore */
     }
   });
+  printResultBtn?.addEventListener('click', () => window.print());
 
   regenBtn?.addEventListener('click', async () => {
     const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');

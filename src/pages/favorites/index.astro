@@ -36,6 +36,9 @@ const schools = (await getCollection('universities')).map((u) => ({
       </p>
       <div class="card filters" id="favFilters" hidden>
         <div class="filter-group">
+          <input type="search" id="favSearch" placeholder="搜索收藏的学校…" aria-label="搜索收藏" />
+        </div>
+        <div class="filter-group">
           <label>
             省份
             <select id="favProvince"><option value="">全部省份</option></select>
@@ -65,6 +68,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const favFilters = document.getElementById('favFilters');
   const favProvince = document.getElementById('favProvince');
   const favType = document.getElementById('favType');
+  const favSearch = document.getElementById('favSearch');
 
   let favs = [];
   try {
@@ -137,14 +141,17 @@ const schools = (await getCollection('universities')).map((u) => ({
   function applyFavFilter() {
     const pv = favProvince?.value ?? '';
     const tp = favType?.value ?? '';
+    const kw = (favSearch?.value ?? '').trim().toLowerCase();
     document.querySelectorAll('#favGrid .u-item').forEach((el) => {
       const okP = !pv || el.dataset.province === pv;
       const okT = !tp || el.dataset.type === tp;
-      el.style.display = okP && okT ? '' : 'none';
+      const okK = !kw || (el.textContent ?? '').toLowerCase().includes(kw);
+      el.style.display = okP && okT && okK ? '' : 'none';
     });
   }
   favProvince?.addEventListener('change', applyFavFilter);
   favType?.addEventListener('change', applyFavFilter);
+  favSearch?.addEventListener('input', applyFavFilter);
 
   const exportJsonBtn = document.getElementById('exportJson');
   const clearAllBtn = document.getElementById('clearAll');

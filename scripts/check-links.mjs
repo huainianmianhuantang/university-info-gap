@@ -1,39 +1,36 @@
-const base = 'http://127.0.0.1:4321';
+import fs from 'node:fs';
+import path from 'node:path';
 
-async function get(url) {
-  try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    return { status: res.status, text: await res.text() };
-  } catch (e) {
-    return { status: -1, text: '', error: e.message };
+const dist = path.resolve('dist/client');
+const files = [];
+function walk(dir) {
+  for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, f.name);
+    if (f.isDirectory()) walk(p);
+    else if (f.name.endsWith('.html')) files.push(p);
   }
 }
+walk(dist);
 
-const sitemap = await get(`${base}/sitemap.xml`);
-const urls = new Set(['/']);
-if (sitemap.status === 200) {
-  for (const m of sitemap.text.matchAll(/<loc>(.*?)<\/loc>/g)) {
-    const p = new URL(m[1]).pathname.replace(/\/$/, '') || '/';
-    urls.add(p);
+const broken = new Set();
+let checked = 0;
+for (const f of files) {
+  const html = fs.readFileSync(f, 'utf8');
+  const refs = [
+    ...html.matchAll(/(?:href|src)="(\/[^"#?]*)/g),
+  ].map((m) => m[1]);
+  for (const ref of refs) {
+    if (ref.startsWith('http') || ref.startsWith('mailto:') || ref.startsWith('tel:')) continue;
+    if (ref.includes('${')) continue;
+    checked++;
+    const target = path.join(dist, ref.replace(/^\//, ''));
+    const ok =
+      fs.existsSync(target) ||
+      fs.existsSync(path.join(target, 'index.html')) ||
+      fs.existsSync(target + '.html') ||
+      fs.existsSync(target.replace(/\/$/, '') + '.html');
+    if (!ok) broken.add(`${ref} <- ${path.relative(dist, f)}`);
   }
 }
-urls.add('/404test');
-
-const all = new Set(urls);
-for (const u of urls) {
-  const r = await get(base + u);
-  for (const m of r.text.matchAll(/href="(\/[^"#?]*)/g)) {
-    const p = m[1].replace(/\/$/, '') || '/';
-    if (!p.startsWith('/api')) all.add(p);
-  }
-}
-
-const failures = [];
-for (const u of all) {
-  if (u === '/404test') continue;
-  const r = await get(base + u);
-  if (r.status !== 200) failures.push(`${u} -> ${r.status}${r.error ? ` (${r.error})` : ''}`);
-}
-
-console.log(`Checked ${all.size} URLs, ${failures.length} failures`);
-for (const f of failures) console.log(f);
+console.log(`checked ${checked} local refs, broken ${broken.size}`);
+for (const b of broken) console.log('BROKEN:', b);

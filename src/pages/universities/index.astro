@@ -253,7 +253,28 @@ const slugs = universities.map((u) => u.id);
     }
     if (count) count.textContent = `共 ${visible} 所大学`;
     if (emptyState) emptyState.hidden = visible !== 0;
+
+    const share = new URLSearchParams();
+    const raw = (qInput?.value ?? '').trim();
+    if (raw) share.set('q', raw);
+    if (province) share.set('province', province);
+    if (type) share.set('type', type);
+    if (tag) share.set('tag', tag);
+    if (favOnlyChecked) share.set('favOnly', '1');
+    if (videoOnlyChecked) share.set('videoOnly', '1');
+    if (materialOnlyChecked) share.set('materialOnly', '1');
+    const qs = share.toString();
+    history.replaceState(null, '', qs ? `/universities/?${qs}` : '/universities/');
   }
+
+  const sp = new URLSearchParams(window.location.search);
+  if (provinceSelect && sp.get('province')) provinceSelect.value = sp.get('province');
+  if (typeSelect && sp.get('type')) typeSelect.value = sp.get('type');
+  if (tagFilter && sp.get('tag')) tagFilter.value = sp.get('tag');
+  if (videoOnly) videoOnly.checked = sp.get('videoOnly') === '1';
+  if (materialOnly) materialOnly.checked = sp.get('materialOnly') === '1';
+  if (favOnly) favOnly.checked = sp.get('favOnly') === '1';
+  if (qInput && sp.get('q')) qInput.value = sp.get('q');
 
   function updateCompare() {
     const selected = compareBoxes.filter((c) => c.checked).map((c) => c.value);
