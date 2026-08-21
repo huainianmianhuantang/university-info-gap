@@ -189,6 +189,7 @@
     }
     mask.hidden = true;
     document.body.style.overflow = '';
+    if (window.location.pathname !== '/') window.location.href = '/';
   });
 
   document.querySelectorAll('[data-onboard-redo]').forEach((n) => {
