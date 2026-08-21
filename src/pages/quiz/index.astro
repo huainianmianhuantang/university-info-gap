@@ -1,0 +1,271 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const schools = (await getCollection('universities')).map((u) => ({
+  id: u.id,
+  name: u.data.name,
+  type: u.data.type,
+  province: u.data.province,
+  city: u.data.city,
+  tags: u.data.tags,
+  levels: u.data.levels,
+}));
+---
+
+<BaseLayout
+  title="选校测评"
+  description="通过 12 道兴趣问卷，帮你找到适合的专业方向与 985 高校，并生成个性化建议。"
+>
+  <div class="container page">
+    <div class="page-hero">
+      <h1>选校测评</h1>
+      <p>
+        回答 12 道关于兴趣、性格与生活偏好的题目，约 2 分钟。
+        完成后会为你推荐专业方向、匹配高校，并生成一份建议。结果只保存在你的浏览器本地。
+      </p>
+    </div>
+
+    <div id="quizApp" class="quiz-app">
+      <div class="card quiz-card" id="quizCard">
+        <div class="quiz-progress" aria-hidden="true">
+          <div class="quiz-progress-bar" id="progressBar"></div>
+        </div>
+        <div class="quiz-step-info" id="stepInfo">1 / 12</div>
+        <h2 class="quiz-question" id="quizTitle"></h2>
+        <p class="muted quiz-subtitle" id="quizSubtitle"></p>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-nav">
+          <button class="btn btn-ghost" id="prevBtn" type="button">上一步</button>
+          <button class="btn btn-primary" id="nextBtn" type="button">下一步</button>
+        </div>
+      </div>
+
+      <div class="card section-block" id="resultCard" hidden>
+        <div class="section-head">
+          <h2>你的测评结果</h2>
+          <button class="btn btn-ghost" id="restartBtn" type="button">重新测评</button>
+        </div>
+
+        <section class="result-section">
+          <h3>兴趣画像</h3>
+          <div class="chip-row" id="resultDims"></div>
+        </section>
+
+        <section class="result-section">
+          <h3>匹配专业方向</h3>
+          <div class="chip-row" id="resultMajors"></div>
+        </section>
+
+        <section class="result-section">
+          <h3>推荐高校</h3>
+          <p class="muted">
+            点进学校详情页，可查看转专业政策、培养计划、宿舍实况与课堂/校园视频。
+          </p>
+          <div class="grid grid-universities" id="resultSchools"></div>
+        </section>
+
+        <section class="result-section">
+          <h3>AI 建议</h3>
+          <div class="advice-box" id="resultAdvice"></div>
+          <p class="small muted">
+            当前为规则引擎生成；站点接入大模型后会自动升级为更个性化的深度建议。
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script define:vars={{ schools }}>
+  import { QUESTIONS, recommend, DIM_LABELS } from '../../lib/recommender';
+  import { getAdvice } from '../../lib/ai';
+
+  const LS_ANSWERS = 'quiz-answers';
+  const LS_RESULT = 'quiz-result';
+
+  const state = {
+    step: 0,
+    answers: {},
+  };
+
+  const quizCard = document.getElementById('quizCard');
+  const resultCard = document.getElementById('resultCard');
+  const titleEl = document.getElementById('quizTitle');
+  const subtitleEl = document.getElementById('quizSubtitle');
+  const optionsEl = document.getElementById('quizOptions');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progressBar = document.getElementById('progressBar');
+  const stepInfo = document.getElementById('stepInfo');
+  const restartBtn = document.getElementById('restartBtn');
+
+  function loadSaved() {
+    try {
+      const savedAnswers = JSON.parse(localStorage.getItem(LS_ANSWERS) || 'null');
+      const savedResult = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
+      if (savedAnswers && savedResult) {
+        Object.assign(state.answers, savedAnswers);
+        showResult(savedResult);
+        return true;
+      }
+      if (savedAnswers) {
+        Object.assign(state.answers, savedAnswers);
+        const last = QUESTIONS.findIndex((q) => !(q.id in savedAnswers));
+        state.step = last === -1 ? QUESTIONS.length - 1 : last;
+      }
+    } catch {
+      /* ignore corrupted storage */
+    }
+    return false;
+  }
+
+  function renderQuestion() {
+    const q = QUESTIONS[state.step];
+    titleEl.textContent = q.title;
+    subtitleEl.textContent = q.subtitle ?? '';
+    subtitleEl.style.display = q.subtitle ? '' : 'none';
+    stepInfo.textContent = `${state.step + 1} / ${QUESTIONS.length}`;
+    progressBar.style.width = `${((state.step + 1) / QUESTIONS.length) * 100}%`;
+
+    optionsEl.innerHTML = '';
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'quiz-option';
+      btn.textContent = opt.label;
+      if (state.answers[q.id] === idx) btn.classList.add('selected');
+      btn.addEventListener('click', () => {
+        state.answers[q.id] = idx;
+        optionsEl.querySelectorAll('.quiz-option').forEach((b) =>
+          b.classList.toggle('selected', b === btn),
+        );
+        saveAnswers();
+      });
+      optionsEl.appendChild(btn);
+    });
+
+    prevBtn.disabled = state.step === 0;
+    nextBtn.textContent = state.step === QUESTIONS.length - 1 ? '查看结果' : '下一步';
+    nextBtn.disabled = !(state.answers[q.id] !== undefined);
+    quizCard.hidden = false;
+    resultCard.hidden = true;
+  }
+
+  function saveAnswers() {
+    try {
+      localStorage.setItem(LS_ANSWERS, JSON.stringify(state.answers));
+    } catch {
+      /* storage full / unavailable */
+    }
+  }
+
+  function compute() {
+    const result = recommend(state.answers, schools);
+    const advice = getAdvice({ answers: state.answers, result, schools });
+    const saved = { result, advice, at: Date.now() };
+    try {
+      localStorage.setItem(LS_RESULT, JSON.stringify(saved));
+    } catch {
+      /* ignore */
+    }
+    showResult(saved);
+  }
+
+  function showResult(saved) {
+    const { result, advice } = saved;
+    quizCard.hidden = true;
+    resultCard.hidden = false;
+
+    const dimsEl = document.getElementById('resultDims');
+    dimsEl.innerHTML = '';
+    result.dims.forEach(({ dim }, i) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip result-chip';
+      chip.textContent = `${DIM_LABELS[dim]}${i === 0 ? ' ★' : ''}`;
+      dimsEl.appendChild(chip);
+    });
+
+    const majorsEl = document.getElementById('resultMajors');
+    majorsEl.innerHTML = '';
+    result.majors.forEach((m) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = m;
+      majorsEl.appendChild(chip);
+    });
+
+    const schoolsEl = document.getElementById('resultSchools');
+    schoolsEl.innerHTML = '';
+    if (result.schools.length === 0) {
+      const p = document.createElement('p');
+      p.className = 'muted';
+      p.textContent = '暂无高匹配学校，建议前往大学库按省份与类型浏览。';
+      schoolsEl.appendChild(p);
+    }
+    result.schools.forEach((s) => {
+      const a = document.createElement('a');
+      a.className = 'card university-card';
+      a.href = `/universities/${s.profile.id}/`;
+      const body = document.createElement('div');
+      body.className = 'university-body';
+      body.innerHTML = `
+        <h3>${s.profile.name}</h3>
+        <p class="small muted">${s.profile.type} · ${s.profile.province} ${s.profile.city}</p>
+        <p class="small">匹配方向：${s.majors.slice(0, 4).join(' / ')}</p>
+      `;
+      a.appendChild(body);
+      schoolsEl.appendChild(a);
+    });
+
+    const adviceEl = document.getElementById('resultAdvice');
+    adviceEl.innerHTML = '';
+    advice.points.forEach((p) => {
+      const item = document.createElement('p');
+      item.className = 'advice-point';
+      item.textContent = p;
+      adviceEl.appendChild(item);
+    });
+
+    try {
+      localStorage.setItem(LS_RESULT, JSON.stringify(saved));
+    } catch {
+      /* ignore */
+    }
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function restart() {
+    state.step = 0;
+    state.answers = {};
+    try {
+      localStorage.removeItem(LS_ANSWERS);
+      localStorage.removeItem(LS_RESULT);
+    } catch {
+      /* ignore */
+    }
+    renderQuestion();
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (state.step > 0) {
+      state.step--;
+      renderQuestion();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const q = QUESTIONS[state.step];
+    if (state.answers[q.id] === undefined) return;
+    if (state.step < QUESTIONS.length - 1) {
+      state.step++;
+      renderQuestion();
+    } else {
+      compute();
+    }
+  });
+
+  restartBtn.addEventListener('click', restart);
+
+  if (!loadSaved()) renderQuestion();
+</script>

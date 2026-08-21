@@ -10,6 +10,7 @@ export async function GET() {
     { path: '/', priority: '1.0' },
     { path: '/universities/', priority: '0.9' },
     { path: '/resources/', priority: '0.9' },
+    { path: '/quiz/', priority: '0.9' },
     { path: '/articles/', priority: '0.7' },
     { path: '/submit/', priority: '0.6' },
     { path: '/about/', priority: '0.5' },

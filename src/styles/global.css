@@ -680,6 +680,127 @@ svg {
   color: #fff;
 }
 
+.quiz-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding: 16px 20px;
+}
+
+.quiz-cta h3 {
+  margin: 0 0 4px;
+}
+
+.quiz-cta p {
+  margin: 0;
+}
+
+/* ---------- 选校测评 ---------- */
+.quiz-app {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.quiz-card {
+  padding: 24px 26px;
+}
+
+.quiz-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border, #e2e8f0);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.quiz-progress-bar {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: var(--primary, #2563eb);
+  transition: width 0.25s ease;
+}
+
+.quiz-step-info {
+  font-size: 13px;
+  color: var(--text-secondary, #64748b);
+  margin-bottom: 6px;
+}
+
+.quiz-question {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.quiz-subtitle {
+  margin: 0 0 16px;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 20px;
+}
+
+.quiz-option {
+  text-align: left;
+  padding: 13px 16px;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  background: var(--card-bg, #fff);
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.quiz-option:hover {
+  border-color: var(--primary, #2563eb);
+}
+
+.quiz-option.selected {
+  border-color: var(--primary, #2563eb);
+  background: var(--primary-soft, #e8efff);
+  font-weight: 600;
+}
+
+.quiz-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.result-section {
+  margin: 22px 0;
+}
+
+.result-section h3 {
+  margin: 0 0 10px;
+}
+
+.result-chip {
+  background: var(--primary-soft, #e8efff);
+  color: var(--primary, #2563eb);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+}
+
+.advice-box {
+  background: var(--primary-soft, #e8efff);
+  border-left: 4px solid var(--primary, #2563eb);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.advice-point {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
 .video-placeholder {
   display: grid;
   place-items: center;
@@ -842,6 +963,14 @@ svg {
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+}
+
+.hero-cta {
+  margin-top: 16px;
+}
+
+.hero-cta .btn {
+  display: inline-block;
 }
 
 .hero-stats {

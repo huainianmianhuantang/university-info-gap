@@ -151,6 +151,13 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
     </div>
 
     <div id="videos" hidden>
+      <div class="card quiz-cta">
+        <div>
+          <h3>看完视频，测一测你适合哪所大学？</h3>
+          <p class="muted">2 分钟兴趣问卷 + AI 建议，推荐专业方向与匹配高校。</p>
+        </div>
+        <a class="btn btn-primary" href="/quiz/">开始测评 →</a>
+      </div>
       <div class="video-filter-bar" role="group" aria-label="按视频类型筛选">
         <button class="video-filter-btn active" data-vtag="all">全部</button>
         <button class="video-filter-btn" data-vtag="宣传片">宣传片</button>

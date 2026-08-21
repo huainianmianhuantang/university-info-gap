@@ -19,6 +19,7 @@ const categories = [
   { icon: '★', label: '二次选拔', desc: '实验班、基地班、拔尖计划', href: '/universities/' },
   { icon: '床', label: '寝室与上课', desc: '几人间、独卫空调、课程体验', href: '/universities/' },
   { icon: '▤', label: '资料库', desc: '培养方案、保研、选课等一手资料', href: '/resources/' },
+  { icon: '🎯', label: '选校测评', desc: '兴趣问卷 + AI 建议，推荐专业与高校', href: '/quiz/' },
 ];
 ---
 
@@ -38,6 +39,9 @@ const categories = [
         />
         <button type="submit">搜索</button>
       </form>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="/quiz/">🎯 2 分钟测一测适合什么专业与学校</a>
+      </div>
       <div class="hero-stats">
         <span>收录 {universities.length} 所 985 高校（持续扩充）</span>
         <span>8 大信息栏目</span>
