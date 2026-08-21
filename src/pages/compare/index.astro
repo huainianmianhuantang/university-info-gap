@@ -73,11 +73,21 @@ const schools = (await getCollection('universities')).map((u) => ({
   printBtn?.addEventListener('click', () => window.print());
 
   const params = new URLSearchParams(window.location.search);
-  const slugs = (params.get('u') ?? '')
+  let slugs = (params.get('u') ?? '')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean)
     .slice(0, 3);
+  if (slugs.length === 0) {
+    try {
+      slugs = JSON.parse(localStorage.getItem('compare-list') || '[]').slice(0, 3);
+      if (slugs.length > 0) {
+        history.replaceState(null, '', `/compare/?u=${slugs.join(',')}`);
+      }
+    } catch {
+      slugs = [];
+    }
+  }
   const picked = slugs
     .map((s) => schools.find((x) => x.id === s))
     .filter(Boolean);
@@ -87,6 +97,9 @@ const schools = (await getCollection('universities')).map((u) => ({
   } else {
     empty.hidden = true;
     wrap.hidden = false;
+    const caption = document.createElement('caption');
+    caption.textContent = `${picked.map((s) => s.name).join('、')} 对比表`;
+    table.appendChild(caption);
     const rows = [
       ['学校', (s) => s.name],
       ['英文名', (s) => s.nameEn],
@@ -112,9 +125,11 @@ const schools = (await getCollection('universities')).map((u) => ({
     const hr = document.createElement('tr');
     const th = document.createElement('th');
     th.textContent = '对比项';
+    th.scope = 'col';
     hr.appendChild(th);
     picked.forEach((s) => {
       const c = document.createElement('th');
+      c.scope = 'col';
       const link = document.createElement('a');
       link.href = `/universities/${s.id}/`;
       link.textContent = s.name;
@@ -158,6 +173,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       const tdLabel = document.createElement('td');
       tdLabel.className = 'row-label';
       tdLabel.textContent = label;
+      tdLabel.scope = 'row';
       tr.appendChild(tdLabel);
       const values = picked.map((s) => String(fn(s) ?? '').trim());
       const allSame = values.every((v) => v === values[0]);

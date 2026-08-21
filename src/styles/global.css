@@ -325,6 +325,19 @@ html[data-theme='dark'] mark {
   font-size: 13px;
 }
 
+.resume-note {
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.compare-table caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 600;
+  padding: 8px 2px;
+  color: var(--text);
+}
+
 .cmp-fav {
   margin-left: 8px;
   padding: 2px 8px;
@@ -335,7 +348,7 @@ html[data-theme='dark'] mark {
 .install-banner {
   position: fixed;
   left: 50%;
-  bottom: 76px;
+  bottom: calc(76px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   z-index: 70;
   display: flex;
@@ -657,7 +670,7 @@ html[data-theme='dark'] mark {
 .compare-bar {
   position: fixed;
   left: 50%;
-  bottom: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   z-index: 60;
   display: flex;
@@ -683,7 +696,7 @@ html[data-theme='dark'] mark {
 .back-to-top {
   position: fixed;
   right: 22px;
-  bottom: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   z-index: 55;
   width: 44px;
   height: 44px;

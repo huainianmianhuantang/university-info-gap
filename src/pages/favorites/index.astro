@@ -26,6 +26,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       </p>
       <button class="btn btn-ghost" id="exportFavs" type="button">导出收藏</button>
       <button class="btn btn-ghost" id="exportJson" type="button">导出 JSON</button>
+      <button class="btn btn-ghost" id="clearAll" type="button">清空本地数据</button>
     </div>
 
     <div id="favApp">
@@ -146,6 +147,27 @@ const schools = (await getCollection('universities')).map((u) => ({
   favType?.addEventListener('change', applyFavFilter);
 
   const exportJsonBtn = document.getElementById('exportJson');
+  const clearAllBtn = document.getElementById('clearAll');
+  clearAllBtn?.addEventListener('click', () => {
+    if (!window.confirm('确定清空收藏、对比、测评记录与浏览历史吗？此操作不可撤销。')) return;
+    [
+      'fav-universities',
+      'compare-list',
+      'quiz-answers',
+      'quiz-result',
+      'quiz-history',
+      'recent-universities',
+      'uni-view',
+      'open-video-groups',
+    ].forEach((k) => {
+      try {
+        localStorage.removeItem(k);
+      } catch {
+        /* ignore */
+      }
+    });
+    window.location.reload();
+  });
   exportJsonBtn?.addEventListener('click', () => {
     if (picked.length === 0) return;
     const json = JSON.stringify(picked, null, 2);

@@ -28,6 +28,7 @@ const REGIONS: Record<string, string> = {
 };
 const regions = [...new Set(universities.map((u) => REGIONS[u.data.province] ?? '其他'))].filter(Boolean);
 const initialQuery = Astro.url.searchParams.get('q') ?? '';
+const slugs = universities.map((u) => u.id);
 ---
 
 <BaseLayout title="大学库" description="按省份、层次、类型筛选与搜索 985 高校。">
@@ -36,6 +37,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
       <h1>大学库</h1>
       <p>当前收录 {universities.length} 所 985 高校，每所大学的政策、实况与资料都在详情页里。</p>
       <button class="btn btn-ghost" id="viewToggle" type="button">列表视图</button>
+      <button class="btn btn-ghost" id="randomBtn" type="button">🎲 随机逛一所</button>
     </div>
 
     <form class="card filters" id="filters" method="get" action="/universities/">
@@ -164,7 +166,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   </div>
 </BaseLayout>
 
-<script>
+<script define:vars={{ slugs }}>
   const grid = document.getElementById('universityGrid');
   const count = document.getElementById('resultCount');
   const qInput = document.getElementById('q');
@@ -183,6 +185,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const videoOnly = document.getElementById('videoOnly');
   const materialOnly = document.getElementById('materialOnly');
   const viewToggle = document.getElementById('viewToggle');
+  const randomBtn = document.getElementById('randomBtn');
   const regionBtns = Array.from(document.querySelectorAll('[data-region]'));
   const favBoxes = Array.from(document.querySelectorAll('.fav-box'));
 
@@ -323,6 +326,11 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   } catch {
     /* ignore */
   }
+  randomBtn?.addEventListener('click', () => {
+    if (slugs.length === 0) return;
+    const pick = slugs[Math.floor(Math.random() * slugs.length)];
+    window.location.href = `/universities/${pick}/`;
+  });
   applyFilters();
   applySort();
   updateCompare();

@@ -1,5 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const universities = await getCollection('universities');
+const articles = await getCollection('articles');
+const stats = {
+  schools: universities.length,
+  videos: universities.reduce((n, u) => n + u.data.videos.length, 0),
+  materials: universities.reduce((n, u) => n + u.data.materials.length, 0),
+  articles: articles.length,
+};
 
 const updates = [
   {
@@ -38,6 +48,16 @@ const updates = [
       <h1>更新日志</h1>
       <p>记录网站每次重要的功能与内容更新，方便你了解我们一直在做什么。</p>
     </div>
+
+    <section class="card section-block">
+      <h2>站点数据</h2>
+      <div class="hero-stats">
+        <span>收录 {stats.schools} 所 985 高校</span>
+        <span>{stats.videos} 条视频</span>
+        <span>{stats.materials} 份资料</span>
+        <span>{stats.articles} 篇文章</span>
+      </div>
+    </section>
 
     {updates.map((u) => (
       <section class="card section-block">

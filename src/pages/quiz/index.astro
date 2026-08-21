@@ -32,6 +32,9 @@ const schools = (await getCollection('universities')).map((u) => ({
         <div class="quiz-progress" aria-hidden="true">
           <div class="quiz-progress-bar" id="progressBar"></div>
         </div>
+        <button class="btn btn-ghost resume-note" id="resumeNote" type="button" hidden>
+          已恢复上次未完成的问卷 · 点击重新开始
+        </button>
         <div class="quiz-step-info" id="stepInfo">1 / 12</div>
         <h2 class="quiz-question" id="quizTitle"></h2>
         <p class="muted quiz-subtitle" id="quizSubtitle"></p>
@@ -132,6 +135,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const nextBtn = document.getElementById('nextBtn');
   const progressBar = document.getElementById('progressBar');
   const stepInfo = document.getElementById('stepInfo');
+  const resumeNote = document.getElementById('resumeNote');
   const restartBtn = document.getElementById('restartBtn');
   const rankInput = document.getElementById('rankInput');
   const rankApply = document.getElementById('rankApply');
@@ -239,6 +243,9 @@ const schools = (await getCollection('universities')).map((u) => ({
     nextBtn.disabled = !(state.answers[q.id] !== undefined);
     quizCard.hidden = false;
     resultCard.hidden = true;
+    if (resumeNote) {
+      resumeNote.hidden = Object.keys(state.answers).length === 0;
+    }
   }
 
   function saveAnswers() {
@@ -511,6 +518,17 @@ const schools = (await getCollection('universities')).map((u) => ({
   });
 
   restartBtn.addEventListener('click', restart);
+  resumeNote?.addEventListener('click', () => {
+    if (!window.confirm('确定重新开始吗？已作答的内容会清空。')) return;
+    state.step = 0;
+    state.answers = {};
+    try {
+      localStorage.removeItem(LS_ANSWERS);
+    } catch {
+      /* ignore */
+    }
+    renderQuestion();
+  });
   clearHistoryBtn?.addEventListener('click', () => {
     try {
       localStorage.removeItem(HISTORY_KEY);

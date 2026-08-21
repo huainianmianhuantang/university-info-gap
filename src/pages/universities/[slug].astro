@@ -5,6 +5,7 @@ import SectionBlock from '../../components/SectionBlock.astro';
 import UniversityCard from '../../components/UniversityCard.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import { RESOURCE_CATEGORIES, SECTIONS, SITE } from '../../config';
+import { OFFICIAL_SITES } from '../../lib/official';
 
 export async function getStaticPaths() {
   const universities = await getCollection('universities');
@@ -55,6 +56,9 @@ const sortedVideos = [...u.videos].sort(
   (a, b) =>
     (TAG_ORDER[a.tags?.[0]] ?? 9) - (TAG_ORDER[b.tags?.[0]] ?? 9),
 );
+const officialUrl = OFFICIAL_SITES[university.id]
+  ? `https://www.${OFFICIAL_SITES[university.id]}`
+  : null;
 const related = allUniversities
   .filter((x) => x.id !== university.id)
   .sort((a, b) => {
@@ -130,6 +134,9 @@ const related = allUniversities
     <div class="note-banner">
       ℹ️ 内容持续整理中，部分栏目待补充；政策类信息请以高校官方发布为准。
     </div>
+    <div class="note-banner quiz-match-note" id="quizMatchNote" hidden>
+      🎯 你上次的选校测评推荐了这所大学，<a href="/quiz/">重新测评</a>或直接查看下方内容。
+    </div>
 
     <nav class="uni-tabs" aria-label="栏目导航">
       {tabs.map((tab) => (
@@ -143,6 +150,16 @@ const related = allUniversities
         <Content />
       </div>
     </section>
+
+    {officialUrl && (
+      <section class="card section-block">
+        <h2>官方渠道</h2>
+        <p>
+          <a href={officialUrl} target="_blank" rel="noopener">进入 {u.name} 官网 →</a>
+          <span class="muted">（招生网、教务网、研究生院等更多入口可在官网导航中查找）</span>
+        </p>
+      </section>
+    )}
 
     {u.transferPolicy && (
       <SectionBlock
@@ -404,4 +421,16 @@ const related = allUniversities
       })
       .catch(() => {});
   });
+
+  try {
+    const saved = JSON.parse(localStorage.getItem('quiz-result') || 'null');
+    if (
+      saved?.result?.schools?.some((s) => s.profile?.id === slug)
+    ) {
+      const note = document.getElementById('quizMatchNote');
+      if (note) note.hidden = false;
+    }
+  } catch {
+    /* ignore */
+  }
 </script>
