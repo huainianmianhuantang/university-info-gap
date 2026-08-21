@@ -14,11 +14,11 @@ featured: false
 cover: /images/logo-ouc-512.webp
 
 materials:
-  - title: "中国海洋大学春季学期学生转换院系、班级学习通知（2023年）"
-    description: 教务处发布的转换院系（转专业）工作通知
+  - title: "中国海洋大学2026年春季学期转换院系、班级学习拟通过名单公示"
+    description: 教务处公布的 2026 年春季学期转换院系（转专业）拟通过学生名单
     category: transfer-policy
     type: 其他
-    link: https://jwc.ouc.edu.cn/2023/0310/c6517a426324/page.htm
+    link: https://jwc.ouc.edu.cn/2026/0428/c6517a525201/page.htm
   - title: "中国海洋大学2026年本科招生章程"
     description: 2026 年本科招生章程官方发布页
     category: admission

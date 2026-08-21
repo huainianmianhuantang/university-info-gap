@@ -18,11 +18,11 @@ materials:
     category: transfer-policy
     type: pdf
     link: https://jiaowu.nwafu.edu.cn/docs//2026-01/2360b446e1774930967a78ddaf870c1d.pdf
-  - title: "西北农林科技大学2024年本科招生章程"
-    description: 2024 年本科招生章程官方发布页
+  - title: "西北农林科技大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
     category: admission
     type: 其他
-    link: https://zhshw.nwafu.edu.cn/zszn/zszc/d31456f41b9e4303bebcdf8821a10cf4.htm
+    link: https://zhshw.nwafu.edu.cn/zszn/zszc/966116f1e8934abc8f21f73b0c0e7a59.htm
 videos:
   - title: "招生减章但是西农｜新生宿舍"
     platform: bilibili
