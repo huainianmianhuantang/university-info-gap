@@ -68,7 +68,7 @@ npm run preview
 ### DeepSeek 大模型接入（当前已启用）
 
 1. 复制 `.env.example` 为 `.env`，填入 `AI_API_KEY`（DeepSeek 或任意 OpenAI 兼容接口的 Key）。
-2. 站点通过 `@astrojs/node` 适配器在服务端调用大模型，**Key 只存在服务端，不会暴露给浏览器**。
+2. 站点通过 Cloudflare Pages 云函数在服务端调用大模型，**Key 只存在服务端，不会暴露给浏览器**。
 3. 测评结果页会先展示规则引擎建议，随后自动升级为 DeepSeek 生成的分点建议；接口异常时自动回退规则引擎。
 4. 更换模型：修改 `.env` 中的 `AI_BASE_URL` 与 `AI_MODEL`（如 OpenAI 兼容服务）。
 
@@ -93,6 +93,18 @@ npm run preview
    - `PUBLIC_SITE_URL`（可选，见下方“站点地址”说明）
 5. 部署完成后，验证首页与 `/quiz/` 的 AI 建议接口。
 6. 绑定自定义域名（可选）：Pages 项目 → Custom domains。
+
+### 接口限流与 KV 绑定（推荐生产启用）
+
+`/api/advice`（12 次/分）与 `/api/assistant`（15 次/分）默认按来源 IP 限流，防止接口被滥用消耗 API 预算。
+
+- **本地开发 / 未配置时**：自动使用进程内内存限流（单实例够用）。
+- **生产（Cloudflare Pages）**：建议配置 KV 绑定，让限流数据跨区域共享、持久化：
+  1. 在 Cloudflare 控制台 → Workers & Pages → KV → 创建命名空间（如 `rate-limit-kv`）。
+  2. 进入 Pages 项目 → Settings → Bindings → Add binding，选择 KV namespace：
+     - Variable name：`RATE_LIMIT_KV`
+     - KV namespace：上一步创建的命名空间
+  3. 重新部署后生效。代码逻辑见 `src/lib/rate-limiter.ts`（KV 优先，缺失自动回退内存）。
 
 > **站点地址（canonical / OG / sitemap / robots）**：代码中默认写的是 `https://ivory-tower-xray.pages.dev`。
 > 若你创建 Pages 项目时用的就是这个名称，无需任何额外配置；

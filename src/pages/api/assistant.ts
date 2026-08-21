@@ -1,4 +1,5 @@
 import { AI_API_KEY, AI_BASE_URL, AI_MODEL } from 'astro:env/server';
+import { createRateLimiter } from '../../lib/rate-limiter';
 
 export const prerender = false;
 
@@ -36,20 +37,7 @@ function json(data: unknown, status = 200): Response {
 }
 
 // 简单的进程内限流（按 IP，60 秒内最多 15 次）
-const hits = new Map<string, { count: number; t: number }>();
-const WINDOW = 60_000;
-const MAX_HITS = 15;
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const cur = hits.get(ip);
-  if (!cur || now - cur.t > WINDOW) {
-    hits.set(ip, { count: 1, t: now });
-    return false;
-  }
-  cur.count += 1;
-  return cur.count > MAX_HITS;
-}
+const assistantRateLimiter = createRateLimiter(15, 60_000, 'assistant');
 
 interface ChatMsg {
   role?: string;
@@ -72,7 +60,7 @@ export async function POST({ request }): Promise<Response> {
     request.headers.get('cf-connecting-ip') ??
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
     'unknown';
-  if (rateLimited(ip)) {
+  if (await assistantRateLimiter(ip)) {
     return json({ error: '问得太快啦，休息一分钟再聊吧～' }, 429);
   }
 

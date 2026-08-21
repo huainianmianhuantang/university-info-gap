@@ -1,24 +1,11 @@
 import { QUESTIONS } from '../../lib/recommender';
 import { AI_API_KEY, AI_BASE_URL, AI_MODEL } from 'astro:env/server';
+import { createRateLimiter } from '../../lib/rate-limiter';
 
 export const prerender = false;
 
 /** 简易内存限流：每个来源每分钟最多 12 次，防止接口被滥用消耗 API 预算 */
-const hitMap = new Map<string, number[]>();
-const RATE_LIMIT = 12;
-const WINDOW_MS = 60_000;
-
-function rateLimited(source: string): boolean {
-  const now = Date.now();
-  const hits = (hitMap.get(source) ?? []).filter((t) => now - t < WINDOW_MS);
-  if (hits.length >= RATE_LIMIT) {
-    hitMap.set(source, hits);
-    return true;
-  }
-  hits.push(now);
-  hitMap.set(source, hits);
-  return false;
-}
+const adviceRateLimiter = createRateLimiter(12, 60_000, 'advice');
 
 function requestSource(request: Request): string {
   return (
@@ -109,7 +96,7 @@ export async function POST({ request }): Promise<Response> {
   if (!sameOrigin(request)) {
     return json({ error: '跨域请求被拒绝' }, 403);
   }
-  if (rateLimited(requestSource(request))) {
+  if (await adviceRateLimiter(requestSource(request))) {
     return json({ error: '请求过于频繁，请稍后再试' }, 429);
   }
   const key = AI_API_KEY || (typeof process !== 'undefined' ? process.env.AI_API_KEY : undefined);
