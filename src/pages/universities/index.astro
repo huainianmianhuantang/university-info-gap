@@ -81,6 +81,9 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
     </form>
 
     <p class="result-count" id="resultCount">共 {universities.length} 所大学</p>
+    <p class="small muted" style="margin-top:-10px;">
+      提示：卡片左上角 ★ 可收藏，右上角「对比」可勾选 2-3 所进入对比页。
+    </p>
 
     <div class="grid grid-universities" id="universityGrid">
       {universities.map((u) => (

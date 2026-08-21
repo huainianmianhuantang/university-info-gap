@@ -22,13 +22,17 @@
 ## 三、站点优化
 
 - [x] 大学库：卡片视频/资料数量徽标、勾选对比（2-3 所）→ `/compare/` 并排对比页、排序（名称/省份/视频数/资料数）、空结果提示。
+- [x] 大学库：学校收藏（心愿单）——卡片星标、只看收藏筛选、详情页收藏按钮（localStorage）。
 - [x] 详情页：相关学校推荐、栏目锚点滚动高亮、待补充栏目提示、JSON-LD 结构化数据。
 - [x] 首页：测评 CTA、真实统计数字、重点大学固定展示。
 - [x] 移动端：汉堡导航、响应式网格。
 - [x] SEO：robots.txt、canonical、OG/Twitter meta、sitemap（含 /quiz/、/compare/）、PWA manifest。
 - [x] 404 页面、回到顶部按钮、页脚链接完善。
 - [x] 内容：39 校真实概况正文与列表摘要；新增 3 篇专题文章（宿舍视频甄别、测评使用说明、转专业横向速览）。
+- [x] 资源库视频 tab：分组可折叠卡片 + 总数统计提示。
 - [x] README 重写（功能、维护、部署、AI 升级说明）。
+- [x] 安全：AI Key 改为运行时读取（`process.env` / `.env` 动态加载），构建产物不含 Key。
+- [x] 生产构建 QA：`node dist/server/entry.mjs` 可独立运行（本沙箱对外 HTTPS 受限，部署到正常 Node 环境不受影响）。
 
 ## 四、验证状态
 
@@ -43,3 +47,4 @@
 - 部署到公网前将 `SITE.url` 改为正式域名（已支持 `PUBLIC_SITE_URL` 环境变量）。
 - 后续接入更多学校资料（当前仅东北大学有文件资料），欢迎投稿。
 - 若需升级建议质量，可在 `.env` 调整 `AI_MODEL`。
+- 公网分享可运行 `scripts/start-tunnel.ps1`（Cloudflare 临时隧道，生成 trycloudflare.com 链接）。
