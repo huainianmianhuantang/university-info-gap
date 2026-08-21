@@ -13,7 +13,7 @@
     <button class="guide-step" data-step="2" type="button"><span>🧩</span>测评找方向</button>
     <button class="guide-step" data-step="3" type="button"><span>📁</span>资料与对比</button>
   </div>
-  <div class="guide-detail" id="guideDetail">
+  <div class="guide-detail" id="guideDetail" aria-live="polite">
     <b id="guideDetailTitle"></b>
     <p id="guideDetailDesc"></p>
     <a class="btn btn-primary" id="guideDetailCta" href="#">去试试 →</a>
@@ -148,6 +148,7 @@
 <style>
   .home-guide {
     margin-top: 24px;
+    scroll-margin-top: 84px;
     padding: 20px 22px 18px;
     border-radius: 22px;
     background:

@@ -43,6 +43,7 @@ const pageDescription = description ?? SITE.description;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
     <meta property="og:url" content={`${SITE.url.replace(/\/$/, '')}${Astro.url.pathname}`} />
     <meta property="og:image" content={`${SITE.url.replace(/\/$/, '')}/images/og-default.svg`} />
     <meta property="og:site_name" content={SITE.title} />

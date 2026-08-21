@@ -1,6 +1,7 @@
 {
   "name": "象牙塔透视镜",
   "short_name": "透视镜",
+  "lang": "zh-CN",
   "description": "985高校转专业、二次选拔、培养计划、寝室上课、学习资料与校园视频聚合站",
   "start_url": "/",
   "display": "standalone",
