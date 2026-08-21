@@ -24,6 +24,36 @@ materials:
     category: transfer-policy
     type: pdf
     link: https://dean.pku.edu.cn/userfiles/upload/download/202210061459418103.pdf
+  - title: "北京大学本科培养方案（2025）理科卷"
+    description: 2025 级理科各院系本科培养方案官方汇编，含课程体系、学分要求与教学计划（约 58MB）
+    category: training-plan
+    type: pdf
+    link: https://dean.pku.edu.cn/userfiles/upload/download/202509011035085202.pdf
+  - title: "北京大学本科培养方案（2025）文科卷"
+    description: 2025 级文科各院系本科培养方案官方汇编，含课程体系、学分要求与教学计划（约 45MB）
+    category: training-plan
+    type: pdf
+    link: https://dean.pku.edu.cn/userfiles/upload/download/202508251658433514.pdf
+  - title: "北京大学本科培养方案（2024）理科卷"
+    description: 2024 级理科各院系本科培养方案官方汇编（约 63MB）
+    category: training-plan
+    type: pdf
+    link: https://dean.pku.edu.cn/userfiles/upload/download/202409061332469481.pdf
+  - title: "北京大学本科培养方案（2024）文科卷"
+    description: 2024 级文科各院系本科培养方案官方汇编（约 71MB）
+    category: training-plan
+    type: pdf
+    link: https://dean.pku.edu.cn/userfiles/upload/download/202409061332094963.pdf
+  - title: "北京大学本科辅修双专业培养方案（2025）"
+    description: 2025 年辅修/双专业培养方案官方汇编，含开设专业与修读要求
+    category: training-plan
+    type: pdf
+    link: https://dean.pku.edu.cn/userfiles/upload/download/202511051101338095.pdf
+  - title: "北京大学本科辅修双专业培养方案（2024）"
+    description: 2024 年辅修/双专业培养方案官方汇编，含开设专业与修读要求（约 71MB）
+    category: training-plan
+    type: pdf
+    link: https://dean.pku.edu.cn/userfiles/upload/download/202412271118273931.pdf
 videos:
   - title: "2024 招生宣传片《一朵小花》"
     platform: bilibili
