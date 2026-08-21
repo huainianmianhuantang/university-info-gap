@@ -30,6 +30,9 @@ const schools = (await getCollection('universities')).map((u) => ({
   robots="noindex,follow"
 >
   <div class="container page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="/">首页</a> › <a href="/universities/">大学库</a> › <span>大学对比</span>
+    </nav>
     <div class="page-hero">
       <h1>大学对比</h1>
       <p>

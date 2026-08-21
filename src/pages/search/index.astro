@@ -32,6 +32,9 @@ const materials = (await getCollection('universities')).flatMap((u) =>
 
 <BaseLayout title="站内搜索" description="搜索全部 985 高校、专题文章与学习资料。" robots="noindex,follow">
   <div class="container page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="/">首页</a> › <span>站内搜索</span>
+    </nav>
     <div class="page-hero">
       <h1>站内搜索</h1>
       <p>搜索大学、文章与资料。输入关键词后即时显示结果。</p>
@@ -49,7 +52,11 @@ const materials = (await getCollection('universities')).flatMap((u) =>
 
     <div id="searchApp">
       <p class="muted" id="searchHint">输入关键词开始搜索。</p>
-      <p class="muted" id="searchEmpty" hidden>没有找到匹配的内容，换个关键词试试。</p>
+      <div class="card empty-state" id="searchEmpty" hidden>
+        <span class="empty-emoji">🤔</span>
+        <p>没有找到匹配的内容，换个关键词试试。</p>
+        <button class="btn btn-ghost" id="searchReset" type="button">清空关键词</button>
+      </div>
       <div class="chip-row" id="searchSuggest" hidden>
         <span class="small muted">试试这些话题：</span>
       </div>
@@ -89,6 +96,7 @@ const materials = (await getCollection('universities')).flatMap((u) =>
   const articleResults = document.getElementById('articleResults');
   const materialResults = document.getElementById('materialResults');
   const searchSuggest = document.getElementById('searchSuggest');
+  const searchReset = document.getElementById('searchReset');
 
   function render() {
     const kw = (input?.value ?? '').trim().toLowerCase();
@@ -187,6 +195,14 @@ const materials = (await getCollection('universities')).flatMap((u) =>
   }
 
   input?.addEventListener('input', render);
+  searchReset?.addEventListener('click', () => {
+    if (input) {
+      input.value = '';
+      history.replaceState(null, '', '/search/');
+    }
+    render();
+    input?.focus();
+  });
   const params = new URLSearchParams(window.location.search);
   const q = params.get('q') ?? '';
   if (input) input.value = q;

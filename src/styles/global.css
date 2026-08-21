@@ -75,6 +75,11 @@ html[data-theme='dark'] textarea {
   outline-offset: 2px;
 }
 
+::selection {
+  background: var(--primary);
+  color: #fff;
+}
+
 .skip-link {
   position: absolute;
   left: -999px;
@@ -565,6 +570,13 @@ html[data-theme='dark'] mark {
   font-size: 12px;
   background: var(--primary-soft);
   color: var(--primary);
+  transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+
+a.chip:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+  text-decoration: none;
 }
 
 .chip.level-985 {
@@ -792,6 +804,47 @@ html[data-theme='dark'] mark {
   margin: 0 0 14px;
 }
 
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 34px 20px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.empty-state[hidden] {
+  display: none;
+}
+
+.empty-state .empty-emoji {
+  font-size: 34px;
+}
+
+.empty-state p {
+  margin: 4px 0 10px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .filters input[type='search'],
+  .filters select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+}
+
 /* ---------- 大学详情页 ---------- */
 .uni-hero {
   background: linear-gradient(135deg, #1f5eff 0%, #0aa5b5 100%);
@@ -976,6 +1029,34 @@ html[data-theme='dark'] mark {
   margin: 6px 0 10px;
   font-size: 14px;
   color: var(--text-secondary);
+}
+
+.code-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.code-line strong {
+  color: var(--text);
+}
+
+.copy-code-btn {
+  border: 1px solid var(--border);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.copy-code-btn:hover {
+  background: #d7e3ff;
+  border-color: var(--primary);
 }
 
 .type-chip {
@@ -1183,6 +1264,38 @@ html[data-theme='dark'] mark {
 .faq-item summary {
   cursor: pointer;
   font-weight: 600;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s ease;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary:hover {
+  color: var(--primary);
+}
+
+.faq-item summary::before {
+  content: '+';
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.faq-item[open] summary::before {
+  transform: rotate(45deg);
 }
 
 .faq-item p {
@@ -1562,6 +1675,22 @@ html[data-theme='dark'] mark {
   color: var(--text);
 }
 
+@media (max-width: 640px) {
+  .rank-input {
+    flex-wrap: wrap;
+  }
+
+  .rank-input input,
+  .rank-input select {
+    flex: 1 1 100%;
+    width: auto;
+  }
+
+  .dim-bar {
+    grid-template-columns: 108px 1fr 32px;
+  }
+}
+
 .tier-badge {
   font-weight: 700;
 }
@@ -1765,6 +1894,12 @@ html[data-theme='dark'] .tier-保 {
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+
+.hero-search button:hover {
+  background: #0f3798;
+  transform: translateY(-1px);
 }
 
 .hero-cta {
@@ -1825,6 +1960,10 @@ html[data-theme='dark'] .tier-保 {
   text-decoration: none;
 }
 
+.category-card:hover .category-icon {
+  transform: scale(1.08) rotate(-3deg);
+}
+
 .category-icon {
   display: grid;
   place-items: center;
@@ -1835,6 +1974,7 @@ html[data-theme='dark'] .tier-保 {
   color: var(--primary);
   font-size: 20px;
   margin-bottom: 12px;
+  transition: transform 0.18s ease;
 }
 
 .category-card h3 {

@@ -20,6 +20,9 @@ const schools = (await getCollection('universities')).map((u) => ({
   robots="noindex,follow"
 >
   <div class="container page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="/">首页</a> › <span>选校测评</span>
+    </nav>
     <div class="page-hero">
       <h1>选校测评</h1>
       <p>
@@ -232,8 +235,9 @@ import { scopedKey } from '../../lib/account';
     titleEl.textContent = q.title;
     subtitleEl.textContent = q.subtitle ?? '';
     subtitleEl.style.display = q.subtitle ? '' : 'none';
-    stepInfo.textContent = `${state.step + 1} / ${QUESTIONS.length}`;
-    progressBar.style.width = `${((state.step + 1) / QUESTIONS.length) * 100}%`;
+    const pct = Math.round(((state.step + 1) / QUESTIONS.length) * 100);
+    stepInfo.textContent = `${state.step + 1} / ${QUESTIONS.length} · ${pct}%`;
+    progressBar.style.width = `${pct}%`;
 
     optionsEl.innerHTML = '';
     q.options.forEach((opt, idx) => {

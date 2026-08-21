@@ -63,6 +63,9 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
   description={`按大学归档的资料库，当前共 ${total} 份资料，覆盖培养方案、保研、选课、生活等。`}
 >
   <div class="container page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="/">首页</a> › <span>资料库</span>
+    </nav>
     <div class="page-hero">
       <h1>资料库</h1>
       <p>
@@ -79,14 +82,14 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       aria-label="搜索文件资料"
     />
 
-    <div class="tab-bar" role="tablist">
-      <button class="tab-btn active" data-view="by-university" role="tab" aria-selected="true">
+    <div class="tab-bar" role="tablist" aria-label="资料视图切换">
+      <button class="tab-btn active" data-view="by-university" role="tab" aria-selected="true" aria-controls="by-university">
         文件 · 按大学
       </button>
-      <button class="tab-btn" data-view="by-category" role="tab" aria-selected="false">
+      <button class="tab-btn" data-view="by-category" role="tab" aria-selected="false" aria-controls="by-category">
         文件 · 按类别
       </button>
-      <button class="tab-btn" data-view="videos" role="tab" aria-selected="false">
+      <button class="tab-btn" data-view="videos" role="tab" aria-selected="false" aria-controls="videos">
         视频资料
       </button>
     </div>
@@ -114,7 +117,12 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
                   <span class="type-chip">{m.type}</span>
                 </div>
                 <p>{m.description}</p>
-                {m.code && <p>提取码：<strong>{m.code}</strong></p>}
+                {m.code && (
+                  <p class="code-line">
+                    提取码：<strong>{m.code}</strong>
+                    <button class="copy-code-btn" type="button" data-copy-code={m.code}>复制</button>
+                  </p>
+                )}
                 <a
                   class="btn"
                   href={(m.link.startsWith('/') || m.link.startsWith('http')) ? m.link : '#'}
@@ -159,7 +167,12 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
                     <span class="type-chip">{m.type}</span>
                   </div>
                   <p>{m.description}</p>
-                  {m.code && <p>提取码：<strong>{m.code}</strong></p>}
+                  {m.code && (
+                    <p class="code-line">
+                      提取码：<strong>{m.code}</strong>
+                      <button class="copy-code-btn" type="button" data-copy-code={m.code}>复制</button>
+                    </p>
+                  )}
                   <a
                     class="btn"
                     href={(m.link.startsWith('/') || m.link.startsWith('http')) ? m.link : '#'}
@@ -189,10 +202,10 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
         <a class="btn btn-primary" href="/quiz/">开始测评 →</a>
       </div>
       <div class="video-filter-bar" role="group" aria-label="按视频类型筛选">
-        <button class="video-filter-btn active" data-vtag="all">全部</button>
-        <button class="video-filter-btn" data-vtag="宣传片">宣传片</button>
-        <button class="video-filter-btn" data-vtag="宿舍生活">宿舍生活</button>
-        <button class="video-filter-btn" data-vtag="学习日常">学习日常</button>
+        <button class="video-filter-btn active" data-vtag="all" aria-pressed="true">全部</button>
+        <button class="video-filter-btn" data-vtag="宣传片" aria-pressed="false">宣传片</button>
+        <button class="video-filter-btn" data-vtag="宿舍生活" aria-pressed="false">宿舍生活</button>
+        <button class="video-filter-btn" data-vtag="学习日常" aria-pressed="false">学习日常</button>
       </div>
       <p class="small muted video-summary">
         共 {withVideos.length} 所高校 · {totalVideos} 条视频，点击学校名可展开/收起。
@@ -227,6 +240,15 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
 </BaseLayout>
 
 <script>
+  document.querySelectorAll('[data-copy-code]').forEach((b) => {
+    b.addEventListener('click', () => {
+      navigator.clipboard
+        ?.writeText(b.dataset.copyCode ?? '')
+        .then(() => window.showToast?.('提取码已复制'))
+        .catch(() => {});
+    });
+  });
+
   const buttons = Array.from(document.querySelectorAll('.tab-btn'));
   const views = {
     'by-university': document.getElementById('by-university'),
@@ -245,6 +267,25 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       }
     });
   });
+  const tabbar = document.querySelector('.tab-bar');
+  tabbar?.addEventListener('keydown', (e) => {
+    const idx = buttons.indexOf(document.activeElement);
+    if (idx === -1) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      buttons[(idx + 1) % buttons.length].focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      buttons[(idx - 1 + buttons.length) % buttons.length].focus();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      buttons[0].focus();
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      buttons[buttons.length - 1].focus();
+    }
+  });
+  buttons.forEach((b) => b.addEventListener('focus', () => b.click()));
 
   const filterBtns = Array.from(document.querySelectorAll('.video-filter-btn'));
   filterBtns.forEach((btn) => {
@@ -267,9 +308,11 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       if (t in tagCounts) tagCounts[t]++;
     });
   });
+  const allCount = Object.values(tagCounts).reduce((n, c) => n + c, 0);
   filterBtns.forEach((btn) => {
     const t = btn.dataset.vtag;
-    if (t !== 'all' && t in tagCounts) btn.textContent = `${t} ${tagCounts[t]}`;
+    if (t === 'all') btn.textContent = `全部 ${allCount}`;
+    else if (t in tagCounts) btn.textContent = `${t} ${tagCounts[t]}`;
   });
 
   const videoSearch = document.getElementById('videoSearch');
@@ -338,11 +381,19 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
   });
 
   const searchInput = document.getElementById('materialSearch');
+  const resultCount = document.querySelector('.result-count');
+  const defaultCountText = resultCount?.textContent ?? '';
   searchInput?.addEventListener('input', () => {
     const kw = searchInput.value.trim().toLowerCase();
+    let visible = 0;
     document.querySelectorAll('.material-card').forEach((card) => {
       const text = (card.textContent ?? '').toLowerCase();
-      card.style.display = !kw || text.includes(kw) ? '' : 'none';
+      const show = !kw || text.includes(kw);
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
     });
+    if (resultCount) {
+      resultCount.textContent = kw ? `匹配 ${visible} 份资料` : defaultCountText;
+    }
   });
 </script>

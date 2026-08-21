@@ -60,7 +60,7 @@ const sortedVideos = [...u.videos].sort(
 const officialUrl = OFFICIAL_SITES[university.id]
   ? `https://www.${OFFICIAL_SITES[university.id]}`
   : null;
-const channels = channelsFor(u.name, officialUrl ?? undefined);
+const channels = channelsFor(u.name, officialUrl ?? undefined, university.id);
 const related = allUniversities
   .filter((x) => x.id !== university.id)
   .sort((a, b) => {
@@ -154,20 +154,21 @@ const related = allUniversities
     </section>
 
     {channels.length > 0 && (
-      <section class="card section-block">
-        <h2>关注与信息渠道</h2>
-        <p class="muted">
-          官网以学校官方发布为准；其余平台提供搜索入口，便于查找官方账号与在校生一手内容。
-        </p>
-        <div class="channel-grid">
-          {channels.map((c) => (
-            <a class="channel-card" href={c.url} target="_blank" rel="noopener noreferrer">
-              <span class="channel-emoji">{c.emoji}</span>
-              <b>{c.label}</b>
-              <span>{c.note}</span>
-            </a>
-          ))}
-        </div>
+    <section class="card section-block">
+      <h2>关注与信息渠道</h2>
+      <p class="muted">
+        官网以学校官方发布为准；已核实账号按粉丝量取影响力最大的官方号，其余平台提供搜索入口。
+      </p>
+      <div class="channel-grid">
+        {channels.map((c) => (
+          <a class="channel-card" href={c.url} target="_blank" rel="noopener noreferrer">
+            <span class="channel-emoji">{c.emoji}</span>
+            <b>{c.label}</b>
+            <span class="channel-note">{c.note}</span>
+            {c.followers && <small class="channel-followers">{c.followers}</small>}
+          </a>
+        ))}
+      </div>
       </section>
     )}
 

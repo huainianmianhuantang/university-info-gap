@@ -33,6 +33,9 @@ const slugs = universities.map((u) => u.id);
 
 <BaseLayout title="大学库" description="按省份、层次、类型筛选与搜索 985 高校。">
   <div class="container page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="/">首页</a> › <span>大学库</span>
+    </nav>
     <div class="page-hero">
       <h1>大学库</h1>
       <p>当前收录 {universities.length} 所 985 高校，每所大学的政策、实况与资料都在详情页里。</p>
@@ -100,9 +103,9 @@ const slugs = universities.map((u) => u.id);
       </div>
       <div class="filter-group region-chips">
         <span class="small muted">大区：</span>
-        <button type="button" class="video-filter-btn active" data-region="all">全部</button>
+        <button type="button" class="video-filter-btn active" data-region="all" aria-pressed="true">全部</button>
         {regions.map((r) => (
-          <button type="button" class="video-filter-btn" data-region={r}>{r}</button>
+          <button type="button" class="video-filter-btn" data-region={r} aria-pressed="false">{r}</button>
         ))}
       </div>
       <div class="filter-group">
@@ -157,7 +160,11 @@ const slugs = universities.map((u) => u.id);
       ))}
     </div>
 
-    <p class="muted" id="emptyState" hidden>没有匹配的大学，试试调整搜索或筛选条件。</p>
+    <div class="card empty-state" id="emptyState" hidden>
+      <span class="empty-emoji">🔍</span>
+      <p>没有匹配的大学，试试调整搜索或筛选条件。</p>
+      <button class="btn btn-ghost" id="resetFilters" type="button">清除全部筛选</button>
+    </div>
 
     <div class="compare-bar" id="compareBar" hidden>
       <span id="compareCount">已选 0 所</span>
@@ -186,6 +193,7 @@ import { scopedKey } from '../../lib/account';
   const favOnly = document.getElementById('favOnly');
   const videoOnly = document.getElementById('videoOnly');
   const materialOnly = document.getElementById('materialOnly');
+  const resetFilters = document.getElementById('resetFilters');
   const viewToggle = document.getElementById('viewToggle');
   const randomBtn = document.getElementById('randomBtn');
   const regionBtns = Array.from(document.querySelectorAll('[data-region]'));
@@ -361,6 +369,23 @@ import { scopedKey } from '../../lib/account';
     if (slugs.length === 0) return;
     const pick = slugs[Math.floor(Math.random() * slugs.length)];
     window.location.href = `/universities/${pick}/`;
+  });
+  resetFilters?.addEventListener('click', () => {
+    if (qInput) qInput.value = '';
+    if (provinceSelect) provinceSelect.value = '';
+    if (typeSelect) typeSelect.value = '';
+    if (tagFilter) tagFilter.value = '';
+    levelChecks.forEach((c) => {
+      c.checked = false;
+    });
+    if (favOnly) favOnly.checked = false;
+    if (videoOnly) videoOnly.checked = false;
+    if (materialOnly) materialOnly.checked = false;
+    regionBtns.forEach((b) => {
+      b.classList.toggle('active', b.dataset.region === 'all');
+      b.setAttribute('aria-pressed', b.dataset.region === 'all' ? 'true' : 'false');
+    });
+    applyFilters();
   });
   applyFilters();
   applySort();
