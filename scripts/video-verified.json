@@ -102,5 +102,57 @@
       "title": "(API FAIL)",
       "author": "(FAIL)"
     }
+  },
+  "fudan.md": {
+    "school": "复旦大学",
+    "life": {
+      "bvid": "BV1MX4y187Un",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1jc411W715",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "hit.md": {
+    "school": "哈尔滨工业大学",
+    "life": {
+      "bvid": "BV1eNzJYUEC9",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1FB4y1m7dG",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "huazhong-ust.md": {
+    "school": "华中科技大学",
+    "life": {
+      "bvid": "BV1M7411N7bS",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1oZ4y1e7cx",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
+  },
+  "hunan-university.md": {
+    "school": "湖南大学",
+    "life": {
+      "bvid": "BV1WhKczkECA",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    },
+    "study": {
+      "bvid": "BV1dE41197Hp",
+      "title": "(API FAIL)",
+      "author": "(FAIL)"
+    }
   }
 }

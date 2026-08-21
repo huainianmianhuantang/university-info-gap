@@ -51,13 +51,16 @@ npm run preview
 ## 选校测评与 AI 建议
 
 - 问卷与推荐引擎：`src/lib/recommender.ts`（纯 TS，可在浏览器运行）。学校画像与各维度推荐学校均在此维护。
-- AI 建议：`src/lib/ai.ts`。当前 `AI_PROVIDER = 'rule'`（规则引擎，零费用）。
+- AI 建议：`src/lib/ai.ts` 提供规则引擎兜底；`/api/advice` 服务端接口已接入 **DeepSeek** 大模型（见下）。
 
-### AI 升级说明（预留接口）
+### DeepSeek 大模型接入（当前已启用）
 
-1. 将站点部署到支持服务端函数的平台（Vercel / Netlify / Cloudflare Pages）。
-2. 把 `AI_PROVIDER` 改为 `'llm'`，实现 `getLLMAdvice()`：在服务端函数中携带 API Key（如 DeepSeek / OpenAI 兼容接口）调用大模型，返回个性化建议。
-3. 切勿在前端暴露 API Key。升级后前端无需改动，测评结果会自动使用 LLM 建议。
+1. 复制 `.env.example` 为 `.env`，填入 `AI_API_KEY`（DeepSeek 或任意 OpenAI 兼容接口的 Key）。
+2. 站点通过 `@astrojs/node` 适配器在服务端调用大模型，**Key 只存在服务端，不会暴露给浏览器**。
+3. 测评结果页会先展示规则引擎建议，随后自动升级为 DeepSeek 生成的分点建议；接口异常时自动回退规则引擎。
+4. 更换模型：修改 `.env` 中的 `AI_BASE_URL` 与 `AI_MODEL`（如 OpenAI 兼容服务）。
+
+> 安全提醒：`.env` 已被 .gitignore 忽略，请勿提交或外传 API Key。
 
 ## 部署指南
 

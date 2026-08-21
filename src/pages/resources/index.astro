@@ -117,6 +117,14 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
           </div>
         </section>
       ))}
+      {withMaterials.length < universities.length && (
+        <div class="card section-block">
+          <p class="muted" style="margin:0;">
+            其余学校的学习资料正在陆续整理中。如果你有一手资料，欢迎<a href="/submit/">投稿</a>，
+            审核通过后会挂到对应学校名下。
+          </p>
+        </div>
+      )}
     </div>
 
     <div id="by-category" hidden>

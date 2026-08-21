@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBlock from '../../components/SectionBlock.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
-import { RESOURCE_CATEGORIES, SECTIONS } from '../../config';
+import { RESOURCE_CATEGORIES, SECTIONS, SITE } from '../../config';
 
 export async function getStaticPaths() {
   const universities = await getCollection('universities');
@@ -51,6 +51,19 @@ const missingSections = SECTIONS.filter((s) => {
   title={u.name}
   description={`${u.name}（${u.nameEn ?? ''}）概况、转专业政策、二次选拔、培养计划、寝室与上课实况、学习资料。`}
 >
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollegeOrUniversity',
+    name: u.name,
+    alternateName: u.nameEn ?? undefined,
+    url: `${SITE.url.replace(/\/$/, '')}/universities/${university.id}/`,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: u.city,
+      addressRegion: u.province,
+    },
+    memberOf: u.levels,
+  })}></script>
   <div class="container page">
     <div class="uni-hero">
       <h1>{u.name}</h1>

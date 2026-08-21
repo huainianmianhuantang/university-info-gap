@@ -68,9 +68,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         <section class="result-section">
           <h3>AI 建议</h3>
           <div class="advice-box" id="resultAdvice"></div>
-          <p class="small muted">
-            当前为规则引擎生成；站点接入大模型后会自动升级为更个性化的深度建议。
-          </p>
+          <p class="small muted" id="adviceBadge">AI 建议生成中…</p>
         </section>
       </div>
     </div>
@@ -160,16 +158,55 @@ const schools = (await getCollection('universities')).map((u) => ({
     }
   }
 
-  function compute() {
+  async function compute() {
     const result = recommend(state.answers, schools);
-    const advice = getAdvice({ answers: state.answers, result, schools });
-    const saved = { result, advice, at: Date.now() };
+    const ruleAdvice = getAdvice({ answers: state.answers, result, schools });
+    let saved = { result, advice: ruleAdvice, at: Date.now() };
     try {
       localStorage.setItem(LS_RESULT, JSON.stringify(saved));
     } catch {
       /* ignore */
     }
     showResult(saved);
+
+    try {
+      const resp = await fetch('/api/advice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          answers: state.answers,
+          result: {
+            dims: result.dims,
+            majors: result.majors,
+            schools: result.schools.map((s) => ({
+              name: s.profile.name,
+              majors: s.majors,
+              city: s.profile.city,
+            })),
+          },
+        }),
+      });
+      const data = await resp.json();
+      if (data && data.text) {
+        saved = {
+          result,
+          advice: { provider: 'llm', text: data.text, points: data.points ?? [data.text] },
+          at: Date.now(),
+        };
+        try {
+          localStorage.setItem(LS_RESULT, JSON.stringify(saved));
+        } catch {
+          /* ignore */
+        }
+        showResult(saved);
+      } else {
+        const badge = document.getElementById('adviceBadge');
+        if (badge) badge.textContent = 'AI 建议（规则引擎生成）';
+      }
+    } catch {
+      const badge = document.getElementById('adviceBadge');
+      if (badge) badge.textContent = 'AI 建议（规则引擎生成）';
+    }
   }
 
   function showResult(saved) {
@@ -226,6 +263,13 @@ const schools = (await getCollection('universities')).map((u) => ({
       item.textContent = p;
       adviceEl.appendChild(item);
     });
+    const badge = document.getElementById('adviceBadge');
+    if (badge) {
+      badge.textContent =
+        advice.provider === 'llm'
+          ? 'AI 建议（DeepSeek 大模型生成）'
+          : 'AI 建议（规则引擎生成）';
+    }
 
     try {
       localStorage.setItem(LS_RESULT, JSON.stringify(saved));

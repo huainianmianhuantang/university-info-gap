@@ -64,6 +64,8 @@ const total = Object.values(picks).reduce(
 );
 const limitArg = process.argv.indexOf('--limit');
 const limit = limitArg !== -1 ? Number(process.argv[limitArg + 1]) : Infinity;
+const delayArg = process.argv.indexOf('--delay');
+const delayMs = delayArg !== -1 ? Number(process.argv[delayArg + 1]) : 1400;
 let processed = 0;
 for (const [file, p] of Object.entries(picks)) {
   if (processed >= limit) break;
@@ -96,7 +98,7 @@ for (const [file, p] of Object.entries(picks)) {
     );
     done++;
     console.log(`[progress ${done}/${total}]`);
-    await sleep(1400);
+    await sleep(delayMs);
   }
   processed++;
   fs.writeFileSync(verifiedPath, JSON.stringify(results, null, 2), 'utf8');

@@ -10,7 +10,7 @@ tags: [C9, 顶尖工科]
 established: 1911
 campuses: ['清华园校区']
 brief: 清华大学概况待完善（示例条目，需核实）。
-featured: false
+featured: true
 cover: /images/cover-tsinghua-university.svg
 
 videos:

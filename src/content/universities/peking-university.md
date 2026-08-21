@@ -10,7 +10,7 @@ tags: [C9, 顶尖综合性大学]
 established: 1898
 campuses: ['燕园校区']
 brief: 北京大学概况待完善（示例条目，需核实）。
-featured: false
+featured: true
 cover: /images/cover-peking-university.svg
 
 videos:
