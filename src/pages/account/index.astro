@@ -72,6 +72,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="card section-block" id="acctLogoutWrap" hidden>
         <button class="btn btn-danger" id="logoutBtn" type="button">退出登录</button>
         <button class="btn btn-ghost" id="setPassBtn" type="button">设置 / 修改密码</button>
+        <button class="btn btn-ghost" id="exportDataBtn" type="button">导出我的数据</button>
+        <button class="btn btn-ghost" id="deleteDataBtn" type="button">删除账号及全部数据</button>
         <button class="btn btn-ghost" id="clearDataBtn" type="button">清除本机账号数据</button>
       </div>
     </div>
@@ -118,7 +120,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     guestEl.hidden = logged;
     if (!logged) return;
 
-    avatar.textContent = '👤';
+    avatar.textContent = profile?.nickname?.trim()?.[0] ?? '👤';
     nickname.textContent = profile?.nickname ?? '';
     phone.textContent = profile?.phone ? `已绑定手机：${maskPhone(profile.phone)}` : '';
     since.textContent = profile?.createdAt
@@ -189,6 +191,49 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       window.showToast?.('本机账号数据已清除');
       render();
     }
+  });
+
+  document.getElementById('exportDataBtn')?.addEventListener('click', () => {
+    const profile = getProfile();
+    const pick = (key: string) => {
+      try {
+        return JSON.parse(localStorage.getItem(scopedKey(key)) || 'null');
+      } catch {
+        return null;
+      }
+    };
+    const data = {
+      exportedAt: new Date().toISOString(),
+      profile,
+      favorites: pick('fav-universities'),
+      quizHistory: pick('quiz-history'),
+      quizResult: pick('quiz-result'),
+      aiChat: pick('ai-chat'),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `我的数据-${profile?.nickname ?? 'user'}-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    window.showToast?.('数据已导出');
+  });
+
+  document.getElementById('deleteDataBtn')?.addEventListener('click', () => {
+    if (!window.confirm('确定删除账号和全部本机数据吗？此操作不可恢复。')) return;
+    const profile = getProfile();
+    const uid = profile?.uid;
+    ['fav-universities', 'quiz-result', 'quiz-history', 'compare-list', 'ai-chat'].forEach((b) => {
+      try {
+        localStorage.removeItem(b);
+        if (uid) localStorage.removeItem(`${b}-${uid}`);
+      } catch {
+        /* ignore */
+      }
+    });
+    clearAccountData();
+    window.showToast?.('账号与本机数据已删除');
+    render();
   });
 
   window.addEventListener('account:change', render);
