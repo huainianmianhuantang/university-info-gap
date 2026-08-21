@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-seu.svg
 
 videos:
-  - title: 招生宣传片《至善宣言》
+  - title: "招生宣传片《至善宣言》"
     platform: bilibili
     id: BV1VYN6e3EKC
-    source: B站转载（UP：LA丶Memba）
-    description: 东南大学招生宣传片。
-
+    source: "B站转载（UP：LA丶Memba）"
+    description: "东南大学招生宣传片。"
+    tags: [宣传片]
+  - title: "东南大学宿舍"
+    platform: bilibili
+    id: BV1kt4y1E7S3
+    source: "B站转载（UP待核实）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "东南大学学习场所推荐（Study Everybody University）"
+    platform: bilibili
+    id: BV1b841147J4
+    source: "B站转载（UP：富叉叉乐哈哈）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 东南大学溯源于 1902 年的三江师范学堂，建筑、电子、信息等工科方向实力突出。

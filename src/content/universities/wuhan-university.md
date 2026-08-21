@@ -80,11 +80,24 @@ materials:
     code: hy2026
 
 videos:
-  - title: 招生宣传片《课堂》（示例视频）
+  - title: "招生宣传片《课堂》（示例视频）"
     platform: bilibili
     id: BV1sK4y137aD
-    source: 武汉大学官方账号
-    description: 官方招生宣传片，带你走进武大课堂。
+    source: "武汉大学官方账号"
+    description: "官方招生宣传片，带你走进武大课堂。"
+    tags: [宣传片]
+  - title: "上新了，武大湖滨新宿舍！"
+    platform: bilibili
+    id: BV1Uo4y1X7ZQ
+    source: "武汉大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "你知道武汉大学图书馆长啥样吗？"
+    platform: bilibili
+    id: BV1WD4y1272z
+    source: "武汉大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 武汉大学溯源于 1893 年创办的自强学堂，是教育部直属的综合性全国重点大学，位列“双一流”建设高校名单。

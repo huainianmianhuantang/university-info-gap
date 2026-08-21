@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-lzu.svg
 
 videos:
-  - title: 2022 招生宣传片《你的决定》
+  - title: "2022 招生宣传片《你的决定》"
     platform: bilibili
     id: BV1Bv4y1g7b5
-    source: 兰州大学官方账号
-    description: 这是你人生独树一帜的决定。
-
+    source: "兰州大学官方账号"
+    description: "这是你人生独树一帜的决定。"
+    tags: [宣传片]
+  - title: "兰大数学专业“播音系”学长的日常"
+    platform: bilibili
+    id: BV1nW4y1r7dJ
+    source: "兰州大学招办"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "兰大物理学专业“文武双全”学姐的一天"
+    platform: bilibili
+    id: BV1f94y1y7no
+    source: "兰州大学招办"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 兰州大学前身是 1909 年创办的甘肃法政学堂，化学、草学、生态学等基础学科实力突出。

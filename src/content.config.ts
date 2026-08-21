@@ -98,6 +98,7 @@ const universities = defineCollection({
           url: z.string().optional(),
           source: z.string().default(''),
           description: z.string().default(''),
+          tags: z.array(z.string()).default([]),
         }),
       )
       .default([]),

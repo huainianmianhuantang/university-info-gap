@@ -151,6 +151,12 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
     </div>
 
     <div id="videos" hidden>
+      <div class="video-filter-bar" role="group" aria-label="按视频类型筛选">
+        <button class="video-filter-btn active" data-vtag="all">全部</button>
+        <button class="video-filter-btn" data-vtag="宣传片">宣传片</button>
+        <button class="video-filter-btn" data-vtag="宿舍生活">宿舍生活</button>
+        <button class="video-filter-btn" data-vtag="学习日常">学习日常</button>
+      </div>
       {withVideos.map((group) => (
         <section class="section">
           <div class="section-head">
@@ -188,6 +194,21 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       for (const [name, el] of Object.entries(views)) {
         if (el) el.hidden = name !== btn.dataset.view;
       }
+    });
+  });
+
+  const filterBtns = Array.from(document.querySelectorAll('.video-filter-btn'));
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => {
+        b.classList.toggle('active', b === btn);
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      const tag = btn.dataset.vtag ?? 'all';
+      document.querySelectorAll('.video-card').forEach((card) => {
+        const tags = (card.dataset.tags ?? '').split(' ').filter(Boolean);
+        card.style.display = tag === 'all' || tags.includes(tag) ? '' : 'none';
+      });
     });
   });
 </script>

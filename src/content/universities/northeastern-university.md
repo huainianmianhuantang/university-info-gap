@@ -190,11 +190,24 @@ materials:
     code: DKVL
 
 videos:
-  - title: 2025 招生宣传片《人生课题》
+  - title: "2025 招生宣传片《人生课题》"
     platform: bilibili
     id: BV1YFTyz2Eez
-    source: 东北大学官方账号
-    description: 人生的课题不是考卷，每一个因选择而诞生的困惑，都有被称作“希望”的另一面。
+    source: "东北大学官方账号"
+    description: "人生的课题不是考卷，每一个因选择而诞生的困惑，都有被称作“希望”的另一面。"
+    tags: [宣传片]
+  - title: "东北大学宿舍空调，给你清凉一夏"
+    platform: bilibili
+    id: BV1eU3EzQENp
+    source: "东北大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "NEUer，请选择你的学院！（一）"
+    platform: bilibili
+    id: BV1c6jyzQEEi
+    source: "东北大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 东北大学创建于 1923 年，校训为"自强不息，知行合一"，是教育部直属的全国重点大学，位列"双一流"建设高校名单。

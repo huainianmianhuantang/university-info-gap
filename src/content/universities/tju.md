@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-tju.svg
 
 videos:
-  - title: 2022 招生宣传片《我们的一天》
+  - title: "2022 招生宣传片《我们的一天》"
     platform: bilibili
     id: BV14Z4y1v7eA
-    source: 天津大学官方账号
-    description: 天津大学 2022 年招生宣传片。
-
+    source: "天津大学官方账号"
+    description: "天津大学 2022 年招生宣传片。"
+    tags: [宣传片]
+  - title: "天津大学研究生沉浸式开学｜豪华宿舍/北洋园鸭/超大图书馆"
+    platform: bilibili
+    id: BV19e4y1Z7fr
+    source: "天津大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "天津大学研究生日常，看完你还想考研吗？"
+    platform: bilibili
+    id: BV1iuYizZEKv
+    source: "天津大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 天津大学前身为 1895 年创办的北洋大学，是中国第一所现代大学，化工、建筑等工科实力突出。

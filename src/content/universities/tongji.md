@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-tongji.svg
 
 videos:
-  - title: 2024 招生宣传片《不凡》
+  - title: "2024 招生宣传片《不凡》"
     platform: bilibili
     id: BV1VM4m1m7y4
-    source: 同济大学官方账号
-    description: 选择同济，我们陪你体验不凡青春。
-
+    source: "同济大学官方账号"
+    description: "选择同济，我们陪你体验不凡青春。"
+    tags: [宣传片]
+  - title: "同济大学最好宿舍没有之一"
+    platform: bilibili
+    id: BV1PfCjBFE3Y
+    source: "B站转载（UP：啊哈辉呀）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "同济男大学生的一天"
+    platform: bilibili
+    id: BV1WM411o7uT
+    source: "B站转载（UP：小何Ayers）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 同济大学创建于 1907 年，土木建筑类学科全国顶尖，德语区合作资源丰富。

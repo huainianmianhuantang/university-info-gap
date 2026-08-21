@@ -6,9 +6,13 @@ interface Video {
   url?: string;
   source: string;
   description: string;
+  tags?: string[];
 }
 
-const { video } = Astro.props as { video: Video };
+const { video, className = '' } = Astro.props as {
+  video: Video;
+  className?: string;
+};
 
 const embedUrl = video.platform === 'bilibili' && video.id
   ? `https://player.bilibili.com/player.html?bvid=${video.id}&page=1&high_quality=1&danmaku=0`
@@ -17,7 +21,7 @@ const embedUrl = video.platform === 'bilibili' && video.id
 const fallbackUrl = video.url || (video.id ? `https://www.bilibili.com/video/${video.id}` : null);
 ---
 
-<div class="card video-card">
+<div class:list={['card', 'video-card', className]} data-tags={(video.tags ?? []).join(' ')}>
   <div class="video-frame-wrap">
     {embedUrl ? (
       <iframe
@@ -38,6 +42,11 @@ const fallbackUrl = video.url || (video.id ? `https://www.bilibili.com/video/${v
   </div>
   <div class="video-body">
     <h3>{video.title}</h3>
+    {video.tags && video.tags.length > 0 && (
+      <div class="video-tags">
+        {video.tags.map((tag) => <span class="video-tag">{tag}</span>)}
+      </div>
+    )}
     {video.source && <p>来源：{video.source}</p>}
     {video.description && <p>{video.description}</p>}
   </div>

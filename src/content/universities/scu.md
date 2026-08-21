@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-scu.svg
 
 videos:
-  - title: 2024 招生宣传片《青春同行》
+  - title: "2024 招生宣传片《青春同行》"
     platform: bilibili
     id: BV1L1421C72m
-    source: 四川大学官方账号
-    description: 岷山巍峨，锦水含章。今日少年，未来栋梁。
-
+    source: "四川大学官方账号"
+    description: "岷山巍峨，锦水含章。今日少年，未来栋梁。"
+    tags: [宣传片]
+  - title: "985的四川大学宿舍长啥样？萌新的报道vlog"
+    platform: bilibili
+    id: BV1b441127jM
+    source: "B站转载（UP：一只汤碗）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "【四川大学】华西口腔大四医学生｜上课的一天"
+    platform: bilibili
+    id: BV1eS4y1u7vX
+    source: "B站转载（UP：奇妙碳水酱）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 四川大学肇始于 1896 年的四川中西学堂，文理工医协调发展，口腔医学全国顶尖。

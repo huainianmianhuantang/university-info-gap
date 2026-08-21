@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-ustc.svg
 
 videos:
-  - title: 2024 招生宣传片《来科大，你就能！》
+  - title: "2024 招生宣传片《来科大，你就能！》"
     platform: bilibili
     id: BV1Bf421D7wE
-    source: 中国科学技术大学官方账号
-    description: 来科大能怎样？来科大，你就能！
-
+    source: "中国科学技术大学官方账号"
+    description: "来科大能怎样？来科大，你就能！"
+    tags: [宣传片]
+  - title: "来看中国科大版六人间宿舍"
+    platform: bilibili
+    id: BV1we411R7e6
+    source: "中国科学技术大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "中科大，请选择你的学院（一）"
+    platform: bilibili
+    id: BV1PKGAzFEtB
+    source: "中国科学技术大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 中国科学技术大学创建于 1958 年，依托中国科学院办学，理科基础研究实力顶尖，学风严谨。

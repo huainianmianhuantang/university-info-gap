@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-buaa.svg
 
 videos:
-  - title: 2023 招生宣传片《择一凌云志》
+  - title: "2023 招生宣传片《择一凌云志》"
     platform: bilibili
     id: BV19s4y1i7Uc
-    source: B站转载（UP：青蓝Seiran）
-    description: 那些让你选择一以贯之、一往无前的会是什么？
-
+    source: "B站转载（UP：青蓝Seiran）"
+    description: "那些让你选择一以贯之、一往无前的会是什么？"
+    tags: [宣传片]
+  - title: "北航研究生学姐带你沉浸式感受宿舍！【北航沙河校区西区公寓】"
+    platform: bilibili
+    id: BV1ha41197Td
+    source: "B站转载（UP待核实）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "北航vlog｜图书馆猛学/大一 midterm 极限复习"
+    platform: bilibili
+    id: BV1sZqVBrEB9
+    source: "B站转载（UP待核实）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 北京航空航天大学创建于 1952 年，航空航天与信息技术特色鲜明，是国防七子之一。

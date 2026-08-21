@@ -80,11 +80,24 @@ materials:
     code: qm2026
 
 videos:
-  - title: 《学在华科大》宣传片（示例视频）
+  - title: "《学在华科大》宣传片（示例视频）"
     platform: bilibili
     id: BV1sN6mYjEMT
-    source: 华中科技大学官方账号
-    description: 官方宣传片，展示华科大的学习氛围与校园文化。
+    source: "华中科技大学官方账号"
+    description: "官方宣传片，展示华科大的学习氛围与校园文化。"
+    tags: [宣传片]
+  - title: "华中科技大学（研究生）宿舍（之一）实览"
+    platform: bilibili
+    id: BV1M7411N7bS
+    source: "B站转载（UP待核实）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "王牌教授的高考人生——华中科技大学第一临床学院 董念国教授"
+    platform: bilibili
+    id: BV1oZ4y1e7cx
+    source: "华中科技大学招生办"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 华中科技大学由原华中理工大学、同济医科大学等合并组建，是教育部直属的综合性研究型大学，位列“双一流”建设高校名单。

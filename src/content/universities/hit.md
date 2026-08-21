@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-hit.svg
 
 videos:
-  - title: 2025 招生宣传片《参天》
+  - title: "2025 招生宣传片《参天》"
     platform: bilibili
     id: BV1w6TXzHEJ5
-    source: 哈尔滨工业大学官方账号
-    description: 哈工大 2025 年招生宣传片。
-
+    source: "哈尔滨工业大学官方账号"
+    description: "哈工大 2025 年招生宣传片。"
+    tags: [宣传片]
+  - title: "哈工大本科生的一天vlog"
+    platform: bilibili
+    id: BV1eNzJYUEC9
+    source: "哈尔滨工业大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "Vlog｜哈工大计算机系女生的一天"
+    platform: bilibili
+    id: BV1FB4y1m7dG
+    source: "B站转载（UP：RondaWang）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 哈尔滨工业大学创建于 1920 年，被誉为"工程师的摇篮"，航天与工程学科实力顶尖。

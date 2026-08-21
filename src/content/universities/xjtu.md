@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-xjtu.svg
 
 videos:
-  - title: 2024 招生宣传片《朝着太阳生长》
+  - title: "2024 招生宣传片《朝着太阳生长》"
     platform: bilibili
     id: BV1fS411w7x5
-    source: 西安交通大学官方账号
-    description: 一起追光而行，向阳而生。
-
+    source: "西安交通大学官方账号"
+    description: "一起追光而行，向阳而生。"
+    tags: [宣传片]
+  - title: "云游西交｜第一人称视角打开西交校园"
+    platform: bilibili
+    id: BV1JsTM6CEGZ
+    source: "西安交通大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "西安交通大学未来技术学院研究生招生宣传片"
+    platform: bilibili
+    id: BV1jwKQ6xEPU
+    source: "西安交通大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 西安交通大学前身是 1896 年创办的南洋公学，管理、电气、机械等学科实力突出。

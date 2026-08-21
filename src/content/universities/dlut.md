@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-dlut.svg
 
 videos:
-  - title: 欢迎报考大连理工大学
+  - title: "欢迎报考大连理工大学"
     platform: bilibili
     id: BV1fi4y1g7gw
-    source: 大连理工大学招生办
-    description: 大连理工大学招生宣传片。
-
+    source: "大连理工大学招生办"
+    description: "大连理工大学招生宣传片。"
+    tags: [宣传片]
+  - title: "不知道哪些大工学生会住进这样的海景宿舍!"
+    platform: bilibili
+    id: BV1h4421S71Y
+    source: "大连理工大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "【互动视频】假如你是大工学子，你的一天会是……"
+    platform: bilibili
+    id: BV1Jb4y1y7CL
+    source: "大连理工大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 大连理工大学创建于 1949 年，是东北地区重要的工科强校，力学、化工、机械等学科实力突出。

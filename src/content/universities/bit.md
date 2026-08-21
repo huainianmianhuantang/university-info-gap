@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-bit.svg
 
 videos:
-  - title: 2023 招生宣传片《北极星》
+  - title: "2023 招生宣传片《北极星》"
     platform: bilibili
     id: BV1kL411i7ng
-    source: B站转载（UP：芙芙喜欢吃小蛋糕）
-    description: 北理工愿成为你从云层冲出的北极星光。
-
+    source: "B站转载（UP：芙芙喜欢吃小蛋糕）"
+    description: "北理工愿成为你从云层冲出的北极星光。"
+    tags: [宣传片]
+  - title: "北京理工大学宿舍我惊了！（含中关村校区/良乡校区/珠海校区宿舍简介）"
+    platform: bilibili
+    id: BV1PtKgziEGb
+    source: "B站转载（UP：北理考研在线）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "【VLOG.棠梨w】北理工期末复习周记录｜备考线性代数/概率论/六级"
+    platform: bilibili
+    id: BV1uF411B7cJ
+    source: "B站转载（UP：棠梨w）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 北京理工大学源于 1940 年创办的自然科学院，兵器、车辆、信息等工科方向实力突出。

@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-nankai.svg
 
 videos:
-  - title: 2019 招生宣传片《遇见南开》
+  - title: "2019 招生宣传片《遇见南开》"
     platform: bilibili
     id: BV114411G7Vi
-    source: 南开大学官方账号
-    description: 遇见南开，遇见更好的自己。
-
+    source: "南开大学官方账号"
+    description: "遇见南开，遇见更好的自己。"
+    tags: [宣传片]
+  - title: "南开女子生活图鉴"
+    platform: bilibili
+    id: BV1YV411Y7wQ
+    source: "南开大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "【南小开Vlog】早安！医学打工人！临床医学生的一天"
+    platform: bilibili
+    id: BV1154y1r7B9
+    source: "南开大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 南开大学创建于 1919 年，校训"允公允能，日新月异"，化学、数学、经济等学科底蕴深厚。

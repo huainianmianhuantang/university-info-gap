@@ -80,16 +80,30 @@ materials:
     code: div24
 
 videos:
-  - title: 招生宣传片《志愿》（示例视频）
+  - title: "招生宣传片《志愿》（示例视频）"
     platform: bilibili
     id: BV1Qk4y1n7gE
-    source: 浙江大学官方账号
-    description: 官方招生宣传片，展示校园与学习生活。
-  - title: 英文形象片 Bigger Starts Here（示例视频）
+    source: "浙江大学官方账号"
+    description: "官方招生宣传片，展示校园与学习生活。"
+    tags: [宣传片]
+  - title: "英文形象片 Bigger Starts Here（示例视频）"
     platform: bilibili
     id: BV13K4y1o7dE
-    source: 浙江大学官方账号
-    description: 建校 124 周年官方英文形象片。
+    source: "浙江大学官方账号"
+    description: "建校 124 周年官方英文形象片。"
+    tags: [宣传片]
+  - title: "浙大vlog｜在浙大学习生活是一种怎样的体验？"
+    platform: bilibili
+    id: BV1nx411o7J1
+    source: "浙江大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "一进到底浙江大学图书馆主馆！走进书香浙大"
+    platform: bilibili
+    id: BV1uQ4y1b7Wb
+    source: "浙江大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 浙江大学前身求是书院创立于 1897 年，是教育部直属的综合性研究型大学，位列“双一流”建设高校名单。

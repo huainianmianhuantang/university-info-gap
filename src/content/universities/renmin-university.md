@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-renmin-university.svg
 
 videos:
-  - title: 2024 招生宣传片
+  - title: "2024 招生宣传片"
     platform: bilibili
     id: BV18e3aeFESo
-    source: B站转载（UP：炎究生）
-    description: 中国人民大学 2024 年招生宣传片。
-
+    source: "B站转载（UP：炎究生）"
+    description: "中国人民大学 2024 年招生宣传片。"
+    tags: [宣传片]
+  - title: "选择人大，校园生活过舒心！"
+    platform: bilibili
+    id: BV15h7P6JEJV
+    source: "中国人民大学官方B站账号"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "人大外国语学院 Jamie 老师《祎起来看》第一期"
+    platform: bilibili
+    id: BV1Yu4y1w7GA
+    source: "中国人民大学官方B站账号"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 中国人民大学成立于 1937 年，以人文社会科学见长，法学、经济学、新闻学等学科声誉卓著。

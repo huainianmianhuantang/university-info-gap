@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-hunan-university.svg
 
 videos:
-  - title: 2018 招生宣传片《约麓山·千年学府等你来》
+  - title: "2018 招生宣传片《约麓山·千年学府等你来》"
     platform: bilibili
     id: BV1JE411C7tb
-    source: 湖南大学党委宣传部
-    description: 从湖南大学走向世界。
-
+    source: "湖南大学党委宣传部"
+    description: "从湖南大学走向世界。"
+    tags: [宣传片]
+  - title: "【细节控】湖南大学天马学生公寓，正在成为一件艺术品"
+    platform: bilibili
+    id: BV1WhKczkECA
+    source: "B站转载（UP：greatre嘉瑞特）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "Vlog004 湖南大学播音生的日常｜满课的日子"
+    platform: bilibili
+    id: BV1dE41197Hp
+    source: "B站转载（UP待核实）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 湖南大学办学始于岳麓书院（976 年），1903 年改制为湖南高等学堂，建筑、机械等学科实力突出。

@@ -12,6 +12,19 @@ campuses: ['北校区', '南校区']
 brief: 西北农林科技大学概况待完善（示例条目，需核实）。
 featured: false
 cover: /images/cover-nwafu.svg
+videos:
+  - title: "招生减章但是西农｜新生宿舍"
+    platform: bilibili
+    id: BV1KV4y1p7oX
+    source: "B站转载（UP待核实）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "西北农林科技大学【水资】大三小学期实习vlog"
+    platform: bilibili
+    id: BV1Dz4y1E7ok
+    source: "B站转载（UP待核实）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 西北农林科技大学创建于 1934 年，是我国农林水学科最齐全的高校之一，地处陕西杨凌。

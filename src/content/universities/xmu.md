@@ -14,12 +14,24 @@ featured: false
 cover: /images/cover-xmu.svg
 
 videos:
-  - title: 2025 招生宣传片《学在厦大 2》
+  - title: "2025 招生宣传片《学在厦大 2》"
     platform: bilibili
     id: BV1kAKNz7E6S
-    source: 厦门大学招生与考试办公室
-    description: 自强不息，止于至善。
-
+    source: "厦门大学招生与考试办公室"
+    description: "自强不息，止于至善。"
+    tags: [宣传片]
+  - title: "在厦大的一天如何度过！"
+    platform: bilibili
+    id: BV1JL411m7AP
+    source: "B站转载（UP待核实）"
+    description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
+    tags: [宿舍生活]
+  - title: "在厦大的一天，希望不要卷到你！"
+    platform: bilibili
+    id: BV1K24y147fM
+    source: "B站转载（UP：Annyinn）"
+    description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
+    tags: [学习日常]
 ---
 
 厦门大学由爱国华侨陈嘉庚先生于 1921 年创办，校园临海，经济、管理、化学等学科声誉卓著。
