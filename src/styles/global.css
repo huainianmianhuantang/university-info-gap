@@ -65,6 +65,28 @@ html[data-theme='dark'] textarea {
   box-sizing: border-box;
 }
 
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 8px;
+  z-index: 200;
+  padding: 10px 16px;
+  background: var(--surface);
+  color: var(--primary);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  left: 8px;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 76px;
@@ -277,6 +299,18 @@ svg {
 
 .breadcrumb span {
   color: var(--text-secondary);
+}
+
+mark {
+  background: #ffe58f;
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+html[data-theme='dark'] mark {
+  background: #6b4e00;
+  color: #ffe9a8;
 }
 
 .page-hero h1 {
@@ -1003,6 +1037,21 @@ svg {
   margin: 0 0 16px;
 }
 
+.faq-item {
+  margin-bottom: 10px;
+  padding: 14px 18px;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.faq-item p {
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+}
+
 .quiz-cta {
   display: flex;
   align-items: center;
@@ -1170,6 +1219,31 @@ svg {
   background: #eef1f5;
   border: 1px solid #d7dde6;
   vertical-align: -2px;
+}
+
+@media print {
+  .site-header,
+  .site-footer,
+  .back-to-top,
+  .page-hero button,
+  .compare-legend {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    border-color: #94a3b8;
+    background: #fff !important;
+    color: #1e293b !important;
+  }
 }
 
 /* ---------- 选校测评 ---------- */

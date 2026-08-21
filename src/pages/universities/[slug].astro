@@ -50,6 +50,11 @@ const missingSections = SECTIONS.filter((s) => {
 const allUniversities = await getCollection('universities');
 const withVideosCount = allUniversities.filter((x) => x.data.videos.length > 0).length;
 const withMaterialsCount = allUniversities.filter((x) => x.data.materials.length > 0).length;
+const TAG_ORDER = { 宣传片: 0, 宿舍生活: 1, 学习日常: 2 };
+const sortedVideos = [...u.videos].sort(
+  (a, b) =>
+    (TAG_ORDER[a.tags?.[0]] ?? 9) - (TAG_ORDER[b.tags?.[0]] ?? 9),
+);
 const related = allUniversities
   .filter((x) => x.id !== university.id)
   .sort((a, b) => {
@@ -254,7 +259,7 @@ const related = allUniversities
           <h2>视频</h2>
         </div>
         <div class="grid grid-videos">
-          {u.videos.map((video) => <VideoEmbed video={video} />)}
+          {sortedVideos.map((video) => <VideoEmbed video={video} />)}
         </div>
       </section>
     )}

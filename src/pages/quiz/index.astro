@@ -98,6 +98,14 @@ const schools = (await getCollection('universities')).map((u) => ({
           <p class="small muted" id="adviceBadge">AI 建议生成中…</p>
         </section>
       </div>
+
+      <section class="card section-block" id="historySection" hidden>
+        <div class="section-head">
+          <h2>历史测评</h2>
+          <button class="btn btn-ghost" id="clearHistory" type="button">清空历史</button>
+        </div>
+        <ul class="point-list" id="historyList"></ul>
+      </section>
     </div>
   </div>
 </BaseLayout>
@@ -130,7 +138,11 @@ const schools = (await getCollection('universities')).map((u) => ({
   const rankType = document.getElementById('rankType');
   const rankWarn = document.getElementById('rankWarn');
   const rankLegend = document.getElementById('rankLegend');
+  const historySection = document.getElementById('historySection');
+  const historyList = document.getElementById('historyList');
+  const clearHistoryBtn = document.getElementById('clearHistory');
   let currentResult = null;
+  const HISTORY_KEY = 'quiz-history';
   const copyBtn = document.getElementById('copyBtn');
   const shareBtn = document.getElementById('shareBtn');
   const regenBtn = document.getElementById('regenBtn');
@@ -237,6 +249,53 @@ const schools = (await getCollection('universities')).map((u) => ({
     }
   }
 
+  function readHistory() {
+    try {
+      return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  function renderHistory() {
+    const h = readHistory();
+    if (!historySection || !historyList) return;
+    historySection.hidden = h.length === 0;
+    historyList.innerHTML = '';
+    h.forEach((item, idx) => {
+      const li = document.createElement('li');
+      li.className = 'point-item';
+      const dims = (item.result?.dims ?? [])
+        .map((d) => DIM_LABELS[d.dim] ?? d.dim)
+        .join('、');
+      const schools = (item.result?.schools ?? [])
+        .slice(0, 3)
+        .map((s) => s.profile?.name ?? '')
+        .filter(Boolean)
+        .join('、');
+      const when = new Date(item.at ?? Date.now()).toLocaleString('zh-CN');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-ghost';
+      btn.textContent = '查看';
+      btn.addEventListener('click', () => showResult(item));
+      li.innerHTML = `<strong>${when}</strong><p>兴趣：${dims}${schools ? `｜推荐：${schools}` : ''}</p>`;
+      li.appendChild(btn);
+      historyList.appendChild(li);
+    });
+  }
+
+  function saveHistory(saved) {
+    try {
+      const h = readHistory();
+      h.unshift({ at: saved.at ?? Date.now(), result: saved.result, advice: saved.advice });
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(h.slice(0, 5)));
+    } catch {
+      /* ignore */
+    }
+    renderHistory();
+  }
+
   async function compute() {
     const result = recommend(state.answers, schools);
     const ruleAdvice = getAdvice({ answers: state.answers, result, schools });
@@ -247,6 +306,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       /* ignore */
     }
     showResult(saved);
+    saveHistory(saved);
 
     try {
       const advice = await fetchLLMAdvice(state.answers, result);
@@ -258,6 +318,7 @@ const schools = (await getCollection('universities')).map((u) => ({
           /* ignore */
         }
         showResult(saved);
+        saveHistory(saved);
       } else {
         const badge = document.getElementById('adviceBadge');
         if (badge) badge.textContent = 'AI 建议（规则引擎生成）';
@@ -405,6 +466,14 @@ const schools = (await getCollection('universities')).map((u) => ({
   });
 
   restartBtn.addEventListener('click', restart);
+  clearHistoryBtn?.addEventListener('click', () => {
+    try {
+      localStorage.removeItem(HISTORY_KEY);
+    } catch {
+      /* ignore */
+    }
+    renderHistory();
+  });
   rankApply?.addEventListener('click', () => {
     const v = Number(rankInput?.value ?? '');
     state.rank = Number.isFinite(v) && v > 0 ? v : null;
@@ -500,4 +569,5 @@ const schools = (await getCollection('universities')).map((u) => ({
   } else if (!loadSaved()) {
     renderQuestion();
   }
+  renderHistory();
 </script>

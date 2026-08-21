@@ -37,8 +37,9 @@ const pageDescription = description ?? SITE.description;
     <meta name="twitter:image" content={`${SITE.url.replace(/\/$/, '')}/images/og-default.svg`} />
   </head>
   <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
     <Nav />
-    <main>
+    <main id="main">
       <slot />
     </main>
     <Footer />

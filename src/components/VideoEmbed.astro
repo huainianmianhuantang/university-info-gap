@@ -49,5 +49,10 @@ const fallbackUrl = video.url || (video.id ? `https://www.bilibili.com/video/${v
     )}
     {video.source && <p>来源：{video.source}</p>}
     {video.description && <p>{video.description}</p>}
+    {fallbackUrl && (
+      <p class="small video-fallback">
+        <a href={fallbackUrl} target="_blank" rel="noopener">打不开？去 B 站观看 →</a>
+      </p>
+    )}
   </div>
 </div>

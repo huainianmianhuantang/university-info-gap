@@ -32,6 +32,20 @@ const schools = (await getCollection('universities')).map((u) => ({
       <p class="muted" id="favEmpty" hidden>
         还没有收藏任何学校。去<a href="/universities/">大学库</a>逛逛，点卡片左上角 ★ 收藏吧。
       </p>
+      <div class="card filters" id="favFilters" hidden>
+        <div class="filter-group">
+          <label>
+            省份
+            <select id="favProvince"><option value="">全部省份</option></select>
+          </label>
+        </div>
+        <div class="filter-group">
+          <label>
+            类型
+            <select id="favType"><option value="">全部类型</option></select>
+          </label>
+        </div>
+      </div>
       <div class="grid grid-universities" id="favGrid"></div>
     </div>
 
@@ -46,6 +60,9 @@ const schools = (await getCollection('universities')).map((u) => ({
   const grid = document.getElementById('favGrid');
   const empty = document.getElementById('favEmpty');
   const exportBtn = document.getElementById('exportFavs');
+  const favFilters = document.getElementById('favFilters');
+  const favProvince = document.getElementById('favProvince');
+  const favType = document.getElementById('favType');
 
   let favs = [];
   try {
@@ -63,6 +80,8 @@ const schools = (await getCollection('universities')).map((u) => ({
     picked.forEach((s) => {
       const wrap = document.createElement('div');
       wrap.className = 'u-item';
+      wrap.dataset.province = s.province;
+      wrap.dataset.type = s.type;
       const label = document.createElement('label');
       label.className = 'compare-check';
       label.title = '加入对比';
@@ -91,7 +110,39 @@ const schools = (await getCollection('universities')).map((u) => ({
       wrap.appendChild(a);
       grid.appendChild(wrap);
     });
+
+    const provinces = [...new Set(picked.map((s) => s.province))].sort((a, b) =>
+      a.localeCompare(b, 'zh'),
+    );
+    const types = [...new Set(picked.map((s) => s.type))].sort((a, b) =>
+      a.localeCompare(b, 'zh'),
+    );
+    provinces.forEach((p) => {
+      const opt = document.createElement('option');
+      opt.value = p;
+      opt.textContent = p;
+      favProvince?.appendChild(opt);
+    });
+    types.forEach((t) => {
+      const opt = document.createElement('option');
+      opt.value = t;
+      opt.textContent = `${t}类`;
+      favType?.appendChild(opt);
+    });
+    if (favFilters) favFilters.hidden = false;
   }
+
+  function applyFavFilter() {
+    const pv = favProvince?.value ?? '';
+    const tp = favType?.value ?? '';
+    document.querySelectorAll('#favGrid .u-item').forEach((el) => {
+      const okP = !pv || el.dataset.province === pv;
+      const okT = !tp || el.dataset.type === tp;
+      el.style.display = okP && okT ? '' : 'none';
+    });
+  }
+  favProvince?.addEventListener('change', applyFavFilter);
+  favType?.addEventListener('change', applyFavFilter);
 
   const exportJsonBtn = document.getElementById('exportJson');
   exportJsonBtn?.addEventListener('click', () => {

@@ -37,6 +37,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       </p>
       <button class="btn btn-ghost" id="copyCompareLink" type="button">复制对比链接</button>
       <button class="btn btn-ghost" id="copySummary" type="button" hidden>复制差异摘要</button>
+      <button class="btn btn-ghost" id="printCompare" type="button">打印 / 导出 PDF</button>
     </div>
 
     <div id="compareApp">
@@ -56,6 +57,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const table = document.getElementById('compareTable');
   const copyBtn = document.getElementById('copyCompareLink');
   const summaryBtn = document.getElementById('copySummary');
+  const printBtn = document.getElementById('printCompare');
 
   copyBtn?.addEventListener('click', () => {
     navigator.clipboard
@@ -66,6 +68,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       })
       .catch(() => {});
   });
+  printBtn?.addEventListener('click', () => window.print());
 
   const params = new URLSearchParams(window.location.search);
   const slugs = (params.get('u') ?? '')
