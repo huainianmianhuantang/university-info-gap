@@ -76,9 +76,13 @@ export async function POST({ request }): Promise<Response> {
 
   let body: AdviceBody;
   try {
-    body = (await request.json()) as AdviceBody;
-  } catch {
-    return json({ error: '参数格式错误' }, 400);
+    const raw = await request.text();
+    body = raw ? (JSON.parse(raw) as AdviceBody) : {};
+  } catch (e) {
+    return json(
+      { error: '参数格式错误', detail: e instanceof Error ? e.message : String(e) },
+      400,
+    );
   }
 
   try {
@@ -111,6 +115,11 @@ export async function POST({ request }): Promise<Response> {
       .filter(Boolean);
     return json({ text, points, model });
   } catch (e) {
-    return json({ error: e instanceof Error ? e.message : String(e) }, 502);
+    const err = e instanceof Error ? e : new Error(String(e));
+    const cause = (err.cause as { message?: string } | undefined)?.message;
+    return json(
+      { error: err.message, cause: cause ?? null, keySet: Boolean(key) },
+      502,
+    );
   }
 }
