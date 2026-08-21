@@ -182,7 +182,7 @@
     }
   }
 
-  skipBtn.addEventListener('click', () => {
+  function doSkip() {
     try {
       localStorage.setItem(KEY, JSON.stringify({ skipped: true, doneAt: Date.now() }));
     } catch {
@@ -192,6 +192,11 @@
     mask.hidden = true;
     document.body.style.overflow = '';
     if (window.location.pathname !== '/') window.location.href = '/';
+  }
+
+  skipBtn.addEventListener('click', doSkip);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !mask.hidden) doSkip();
   });
 
   document.querySelectorAll('[data-onboard-redo]').forEach((n) => {
@@ -237,6 +242,11 @@
     position: relative;
     animation: ob-pop 0.3s ease;
     -webkit-overflow-scrolling: touch;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ob-card {
+      animation: none;
+    }
   }
   @keyframes ob-pop {
     from {

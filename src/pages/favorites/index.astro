@@ -17,6 +17,7 @@ const schools = (await getCollection('universities')).map((u) => ({
 <BaseLayout
   title="我的收藏"
   description="你收藏的大学列表，支持一键导出，方便和家人一起商量。"
+  robots="noindex,follow"
 >
   <div class="container page">
     <div class="page-hero">
@@ -101,6 +102,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       img.src = s.cover;
       img.alt = `${s.name} 校徽`;
       img.loading = 'lazy';
+      img.decoding = 'async';
       a.appendChild(img);
       const body = document.createElement('div');
       body.className = 'university-body';

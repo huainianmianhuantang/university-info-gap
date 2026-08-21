@@ -9,9 +9,10 @@ import HelpButton from '../components/HelpButton.astro';
 interface Props {
   title?: string;
   description?: string;
+  robots?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, robots } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
 const pageDescription = description ?? SITE.description;
 ---
@@ -35,6 +36,11 @@ const pageDescription = description ?? SITE.description;
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <meta name="theme-color" content="#1f5eff" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content={SITE.title} />
+    <meta name="format-detection" content="telephone=no" />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://player.bilibili.com" crossorigin />
@@ -53,6 +59,11 @@ const pageDescription = description ?? SITE.description;
     <meta name="twitter:image" content={`${SITE.url.replace(/\/$/, '')}/images/og-default.svg`} />
   </head>
   <body>
+    <noscript>
+      <p style="text-align:center;padding:12px;background:#fff3cd;color:#7a5b00;">
+        本站部分功能（测评、搜索、视频）需要启用 JavaScript 才能正常使用。
+      </p>
+    </noscript>
     <a class="skip-link" href="#main">跳到主要内容</a>
     <Nav />
     <main id="main">

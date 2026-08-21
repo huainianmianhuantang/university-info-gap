@@ -1903,3 +1903,21 @@ html[data-theme='dark'] .tier-保 {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- 无障碍：键盘焦点与减少动效 ---------- */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -17,6 +17,7 @@ const schools = (await getCollection('universities')).map((u) => ({
 <BaseLayout
   title="选校测评"
   description="通过 12 道兴趣问卷，帮你找到适合的专业方向与 985 高校，并生成个性化建议。"
+  robots="noindex,follow"
 >
   <div class="container page">
     <div class="page-hero">
@@ -35,7 +36,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         <button class="btn btn-ghost resume-note" id="resumeNote" type="button" hidden>
           已恢复上次未完成的问卷 · 点击重新开始
         </button>
-        <div class="quiz-step-info" id="stepInfo">1 / 12</div>
+        <div class="quiz-step-info" id="stepInfo" aria-live="polite">1 / 12</div>
         <h2 class="quiz-question" id="quizTitle"></h2>
         <p class="muted quiz-subtitle" id="quizSubtitle"></p>
         <div class="quiz-options" id="quizOptions"></div>
@@ -458,6 +459,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       img.src = s.profile.cover;
       img.alt = `${s.profile.name} 校徽`;
       img.loading = 'lazy';
+      img.decoding = 'async';
       a.appendChild(img);
       const body = document.createElement('div');
       body.className = 'university-body';

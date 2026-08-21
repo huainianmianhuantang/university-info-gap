@@ -1,0 +1,5 @@
+Contact: mailto:your-email@example.com
+Expires: 2027-08-21T00:00:00.000Z
+Preferred-Languages: zh, en
+Canonical: https://ivory-tower-xray.pages.dev/.well-known/security.txt
+Policy: https://ivory-tower-xray.pages.dev/about/

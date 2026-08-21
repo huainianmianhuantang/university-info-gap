@@ -29,7 +29,7 @@ const categories = [
     <form class="card form-card" id="submitForm">
       <div class="form-field">
         <label for="school">学校名称 *</label>
-        <input id="school" name="school" type="text" required placeholder="如：浙江大学" />
+        <input id="school" name="school" type="text" required placeholder="如：浙江大学" oninvalid="this.setCustomValidity('先填一下学校名称嘛～')" oninput="this.setCustomValidity('')" />
       </div>
       <div class="form-field">
         <label for="category">栏目 *</label>
@@ -39,11 +39,11 @@ const categories = [
       </div>
       <div class="form-field">
         <label for="title">标题 *</label>
-        <input id="title" name="title" type="text" required placeholder="一句话概括，如：2026 年转专业政策要点" />
+        <input id="title" name="title" type="text" required placeholder="一句话概括，如：2026 年转专业政策要点" oninvalid="this.setCustomValidity('标题不能空着哦，一句话就好')" oninput="this.setCustomValidity('')" />
       </div>
       <div class="form-field">
         <label for="content">内容 / 链接 *</label>
-        <textarea id="content" name="content" required placeholder="详细描述，或填写资料链接、视频链接、提取码等"></textarea>
+        <textarea id="content" name="content" required placeholder="详细描述，或填写资料链接、视频链接、提取码等" oninvalid="this.setCustomValidity('内容至少写几行，方便审核～')" oninput="this.setCustomValidity('')"></textarea>
       </div>
       <div class="form-field">
         <label for="source">信息来源 / 出处（选填，便于核实）</label>
