@@ -124,6 +124,9 @@
     render();
     mask.hidden = false;
     document.body.style.overflow = 'hidden';
+    setTimeout(() => {
+      (document.querySelector('.acct-field input') as HTMLInputElement | null)?.focus();
+    }, 60);
   }
 
   function closeModal() {

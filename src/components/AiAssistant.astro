@@ -30,7 +30,10 @@
 <script>
   import { getProfile } from '../lib/account';
 
-  const KEY = 'ai-chat';
+  function chatKey() {
+    const p = getProfile();
+    return p ? `ai-chat-${p.uid}` : 'ai-chat';
+  }
   const fab = document.getElementById('aiFab') as HTMLButtonElement;
   const dock = document.getElementById('aiDock') as HTMLButtonElement;
   const panel = document.getElementById('aiPanel') as HTMLElement;
@@ -43,7 +46,7 @@
 
   let history: { role: 'user' | 'assistant'; content: string }[] = [];
   try {
-    const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+    const saved = JSON.parse(localStorage.getItem(chatKey()) || '[]');
     if (Array.isArray(saved)) history = saved.slice(-20);
   } catch {
     history = [];
@@ -93,7 +96,7 @@
 
   function save() {
     try {
-      localStorage.setItem(KEY, JSON.stringify(history.slice(-20)));
+      localStorage.setItem(chatKey(), JSON.stringify(history.slice(-20)));
     } catch {
       /* ignore */
     }
@@ -212,11 +215,22 @@
   clear.addEventListener('click', () => {
     history = [];
     try {
-      localStorage.removeItem(KEY);
+      localStorage.removeItem(chatKey());
     } catch {
       /* ignore */
     }
     renderHistory();
+  });
+
+  window.addEventListener('account:change', () => {
+    history = [];
+    try {
+      const saved = JSON.parse(localStorage.getItem(chatKey()) || '[]');
+      if (Array.isArray(saved)) history = saved.slice(-20);
+    } catch {
+      history = [];
+    }
+    if (!panel.hidden) renderHistory();
   });
 </script>
 

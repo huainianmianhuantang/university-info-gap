@@ -20,6 +20,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <div class="acct-profile-info">
             <b id="acctNickname"></b>
             <span class="muted" id="acctPhone"></span>
+            <span class="muted" id="acctSince"></span>
           </div>
           <button class="btn btn-ghost btn-xs" id="editNick" type="button">改昵称</button>
         </div>
@@ -97,6 +98,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   const avatar = document.getElementById('acctAvatar') as HTMLElement;
   const nickname = document.getElementById('acctNickname') as HTMLElement;
   const phone = document.getElementById('acctPhone') as HTMLElement;
+  const since = document.getElementById('acctSince') as HTMLElement;
 
   function count(key: string): number {
     try {
@@ -119,6 +121,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     avatar.textContent = '👤';
     nickname.textContent = profile?.nickname ?? '';
     phone.textContent = profile?.phone ? `已绑定手机：${maskPhone(profile.phone)}` : '';
+    since.textContent = profile?.createdAt
+      ? `注册于 ${new Date(profile.createdAt).toLocaleDateString('zh-CN')}`
+      : '';
     (document.getElementById('statFavs') as HTMLElement).textContent = String(count('fav-universities'));
     (document.getElementById('statQuiz') as HTMLElement).textContent = String(count('quiz-history'));
     (document.getElementById('statChat') as HTMLElement).textContent = String(count('ai-chat'));

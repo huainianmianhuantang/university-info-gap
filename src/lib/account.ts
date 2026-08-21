@@ -144,6 +144,7 @@ export function loginWithCode(phone: string, code: string, expectedCode: string)
   const acc = read();
   if (!acc || acc.profile.phone !== phone) return { ok: false, error: '该手机号还没有注册哦' };
   if (code !== expectedCode) return { ok: false, error: '验证码不对，再看看～' };
+  clearFails(phone);
   acc.profile.lastLogin = Date.now();
   write(acc);
   notifyChange();
