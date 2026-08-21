@@ -13,6 +13,17 @@ brief: 以教师教育、教育科学和文理基础学科为主要特色的全�
 featured: false
 cover: /images/logo-bnu-512.webp
 
+materials:
+  - title: "北京师范大学本科生转专业管理办法"
+    description: 校方发布的《本科生转专业管理办法》全文
+    category: transfer-policy
+    type: 其他
+    link: https://jwb.bnu.edu.cn/pygc/xygl/jxap/010994a043cb4299bd874f577ef1b9ca.htm
+  - title: "北京师范大学2026年本科招生章程及体检实施细则"
+    description: 2026 年本科招生章程与体检实施细则官方发布页
+    category: admission
+    type: 其他
+    link: https://admission.bnu.edu.cn/zszc/ae38868c24064dab993597b5ab750a1b.html
 videos:
   - title: "男寝公共浴室大合唱？北师大海华苑6人间宿舍实拍"
     platform: bilibili
@@ -26,6 +37,13 @@ videos:
     source: "B站转载（UP：乘风望山河）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+  - title: "??????????"
+    platform: bilibili
+    id: BV1Tq7ozKEH8
+    source: "B????UP??????????"
+    description: "????????????????????????????????????????"
+    tags: [????]
+
 ---
 
 北京师范大学前身为 1902 年创办的京师大学堂师范馆，是我国师范教育的最高学府之一，校训为“学为人师、行为世范”。学校在心理学、教育学、中国语言文学、数学等学科优势突出，主校区位于北京市海淀区，另设珠海校区。

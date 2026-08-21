@@ -13,6 +13,17 @@ brief: 学科门类齐全的综合性大学，校训“求实创新、励志图�
 featured: false
 cover: /images/logo-jilin-university-512.webp
 
+materials:
+  - title: "吉林大学2026年本科生集中考核转专业工作通知"
+    description: 关于开展 2026 年本科生集中考核转专业工作的通知
+    category: transfer-policy
+    type: 其他
+    link: https://kgxy.jlu.edu.cn/info/1026/5353.htm
+  - title: "吉林大学本科招生章程（招生网汇总）"
+    description: 吉林大学招生网发布的本科招生章程与专业目录
+    category: admission
+    type: 其他
+    link: https://zsb.jlu.edu.cn/list/2/p/
 videos:
   - title: "2024 招生宣传片《青春向北》"
     platform: bilibili

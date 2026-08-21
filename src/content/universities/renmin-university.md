@@ -13,6 +13,17 @@ brief: 人文社会科学领域的顶尖学府，校训“实事求是”。
 featured: false
 cover: /images/logo-renmin-university-512.webp
 
+materials:
+  - title: "中国人民大学中法学院2025年度本科生转专业管理工作实施细则"
+    description: 依据《中国人民大学本科生转专业管理办法》制定的学院实施细则
+    category: transfer-policy
+    type: pdf
+    link: https://sc.ruc.edu.cn/docs/2025-04/38df9a3ec8bb46729a598f899076285a.pdf
+  - title: "中国人民大学本科生招生章程（2026年实行）"
+    description: 2026 年实行版本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://rdzs.ruc.edu.cn/f/newsCenter/article/f5056b57e1dd4c38ae6acc38d8cfc10d
 videos:
   - title: "2024 招生宣传片"
     platform: bilibili

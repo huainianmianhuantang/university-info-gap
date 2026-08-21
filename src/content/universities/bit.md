@@ -13,6 +13,17 @@ brief: 国防特色工科强校，兵器、车辆、信息方向突出。
 featured: false
 cover: /images/logo-bit-512.webp
 
+materials:
+  - title: "北京理工大学材料学院2025-2026学年本科生转专业实施细则"
+    description: 学院级转专业实施细则，含接收名额与考核要求
+    category: transfer-policy
+    type: 其他
+    link: https://mse.bit.edu.cn/tzgg/ce6cd7310bff49ad8517c3a7dd335ae3.htm
+  - title: "北京理工大学招生章程（招生信息网汇总）"
+    description: 招生信息网发布的招生章程与招生简章汇总页
+    category: admission
+    type: 其他
+    link: https://search.bit.edu.cn/f/newsCenter/articles/0278fac54ee5438f8d16717a277d38eb?pageSize=9
 videos:
   - title: "2023 招生宣传片《北极星》"
     platform: bilibili

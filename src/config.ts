@@ -37,6 +37,8 @@ export const LEVELS = ['985', '211', '双一流', '普通'] as const;
  * 新学校只需往对应类别中添加条目即可。
  */
 export const RESOURCE_CATEGORIES = [
+  { id: 'transfer-policy', label: '转专业政策', description: '转专业实施办法、工作通知与院系考核规则' },
+  { id: 'admission', label: '招生章程', description: '本科招生章程、招生计划与录取规则' },
   { id: 'training-plan', label: '培养方案', description: '各学院本科生专业培养方案与专业简介' },
   { id: 'postgrad-rec', label: '保研政策', description: '推荐免试攻读研究生实施细则与通知' },
   { id: 'scholarship', label: '奖学金与评优', description: '综合素质评价与奖学金评定办法' },

@@ -13,6 +13,12 @@ brief: 工科长期位居国内前列的综合性研究型大学，校训“自�
 featured: true
 cover: /images/logo-tsinghua-university-512.webp
 
+materials:
+  - title: "清华大学本科生学籍管理规定（含转专业条款）"
+    description: 校方发布的本科生学籍管理规定，第七章为转专业与转学规则
+    category: transfer-policy
+    type: 其他
+    link: https://www.tsinghua.edu.cn/info/1142/1108.htm
 videos:
   - title: "2024 招生宣传片《奇迹》"
     platform: bilibili

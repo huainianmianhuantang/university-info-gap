@@ -13,6 +13,17 @@ brief: 航空航天特色鲜明的工科强校，校训“德才兼备、知行�
 featured: false
 cover: /images/logo-buaa-512.webp
 
+materials:
+  - title: "关于2025级本科生跨大类转专业工作安排的通知"
+    description: 教务部发布的跨大类转专业工作安排通知
+    category: transfer-policy
+    type: 其他
+    link: https://jiaowu.buaa.edu.cn/info/1956/8990.htm
+  - title: "北京航空航天大学2026年招生章程"
+    description: 2026 年招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zs.buaa.edu.cn/info/1047/3584.htm
 videos:
   - title: "2023 招生宣传片《择一凌云志》"
     platform: bilibili

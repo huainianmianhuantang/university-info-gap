@@ -13,6 +13,17 @@ brief: 文理并重的百年名校，周恩来总理母校。
 featured: false
 cover: /images/logo-nankai-512.webp
 
+materials:
+  - title: "南开大学2026年本科生转专业工作通知"
+    description: 教务部发布的年度转专业工作通知（含申请范围与安排）
+    category: transfer-policy
+    type: 其他
+    link: https://jwc.nankai.edu.cn/2026/0323/c35436a591198/page.htm
+  - title: "南开大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zsb.nankai.edu.cn/2026-05-27/1813
 videos:
   - title: "2019 招生宣传片《遇见南开》"
     platform: bilibili

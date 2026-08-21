@@ -13,6 +13,17 @@ brief: 建筑土木电子见长的工科强校，校训“止于至善”。
 featured: false
 cover: /images/logo-seu-512.webp
 
+materials:
+  - title: "东南大学全日制本科生转专业工作实施办法"
+    description: 教务处发布的转专业工作实施办法全文
+    category: transfer-policy
+    type: pdf
+    link: https://jwc.seu.edu.cn/_upload/article/files/84/77/c712dddc455f85636fe5d9bff350/c80776a7-ad66-4ff7-88dc-1ae90df60e94.pdf
+  - title: "东南大学2026年本科生招生章程"
+    description: 2026 年本科生招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zsb.seu.edu.cn/2026/0529/c4889a569354/pagem.htm
 videos:
   - title: "招生宣传片《至善宣言》"
     platform: bilibili

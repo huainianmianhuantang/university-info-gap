@@ -13,6 +13,17 @@ brief: 中国第一所现代大学，工科传统深厚，校训“实事求是�
 featured: false
 cover: /images/logo-tju-512.webp
 
+materials:
+  - title: "2026年“天大四条”招生新政（含转专业政策）"
+    description: 校方发布的 2026 招生新政，明确大类分流专业任选、转专业无次数与名额统一上限
+    category: transfer-policy
+    type: 其他
+    link: http://news.tju.edu.cn/info/1003/601499.htm
+  - title: "天津大学2026年本科生招生章程"
+    description: 2026 年本科生招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zs.tju.edu.cn/info/1116/4549.htm
 videos:
   - title: "2022 招生宣传片《我们的一天》"
     platform: bilibili

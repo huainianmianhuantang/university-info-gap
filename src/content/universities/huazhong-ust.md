@@ -79,6 +79,16 @@ materials:
     link: https://pan.example.com/hust-qiming
     code: qm2026
 
+  - title: "华中科技大学2024级本科生学科大类及院内转专业工作通知"
+    description: 关于做好 2024 级本科生学科大类及院（系）内转专业工作的通知
+    category: transfer-policy
+    type: 其他
+    link: http://sjic.hust.edu.cn/info/1230/14151.htm
+  - title: "华中科技大学2026年普通本科招生章程"
+    description: 2026 年普通本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zsb.hust.edu.cn/info/1006/3065.htm
 videos:
   - title: "《学在华科大》宣传片（示例视频）"
     platform: bilibili

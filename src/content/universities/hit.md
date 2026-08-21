@@ -13,6 +13,17 @@ brief: 航天特色鲜明的工科名校，校训“规格严格、功夫到家�
 featured: false
 cover: /images/logo-hit-512.webp
 
+materials:
+  - title: "哈尔滨工业大学生命科学和医学学部转专业实施细则"
+    description: 依据《本科生专业选择管理办法》制定的学部转专业实施细则
+    category: transfer-policy
+    type: pdf
+    link: http://life.hit.edu.cn/_upload/article/files/14/2c/a633ebde42c997c3d75b86214749/5beb6036-1bb1-4716-a717-baec65e3bef9.pdf
+  - title: "哈尔滨工业大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zsb.hit.edu.cn/article/read/c6615f467530827fb19246dce601b931
 videos:
   - title: "2025 招生宣传片《参天》"
     platform: bilibili

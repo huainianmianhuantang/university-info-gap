@@ -79,6 +79,16 @@ materials:
     link: https://pan.example.com/zju-major
     code: div24
 
+  - title: "浙江大学建筑工程学院2026-2027学年秋冬学期转专业工作通知"
+    description: 依据《本科生主修专业确认及转专业管理办法》发布的学院转专业安排
+    category: transfer-policy
+    type: 其他
+    link: http://www.ccea.zju.edu.cn/2026/0630/c18411a3183800/page.htm
+  - title: "浙江大学2026年本科招生章程（招生官网）"
+    description: 招生官网发布的最新本科招生章程与招生专业目录
+    category: admission
+    type: 其他
+    link: https://zdzsc.zju.edu.cn/main.htm
 videos:
   - title: "招生宣传片《志愿》（示例视频）"
     platform: bilibili

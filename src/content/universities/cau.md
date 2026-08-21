@@ -13,6 +13,17 @@ brief: 农业与生命科学领域的顶尖学府，校训“解民生之多艰�
 featured: false
 cover: /images/logo-cau-512.webp
 
+materials:
+  - title: "中国农业大学2025-2026学年春季学期转专业工作通知"
+    description: 本科生院发布的学期转专业工作通知
+    category: transfer-policy
+    type: 其他
+    link: https://yt.cau.edu.cn/art/2025/12/30/art_43337_1095785.html
+  - title: "中国农业大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://jwzs.cau.edu.cn/art/2026/5/28/art_42837_1115831.html
 videos:
   - title: "2024 招生宣传片《看见》"
     platform: bilibili

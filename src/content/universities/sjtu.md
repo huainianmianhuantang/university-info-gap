@@ -13,6 +13,17 @@ brief: 百年工科名校，工科、医学、经管并举。
 featured: false
 cover: /images/logo-sjtu-512.webp
 
+materials:
+  - title: "上海交通大学2025年本科生转专业工作通知"
+    description: 教务处发布的转专业工作通知，附实施办法与时间安排
+    category: transfer-policy
+    type: 其他
+    link: https://jwc.sjtu.edu.cn/info/1222/120221.htm
+  - title: "上海交通大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://admissions.sjtu.edu.cn/newDetails?contentsID=3810000004270
 videos:
   - title: "2019 招生宣传片"
     platform: bilibili

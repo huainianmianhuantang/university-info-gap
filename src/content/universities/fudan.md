@@ -13,6 +13,17 @@ brief: 文、理、医、经管全面发展的综合性名校，校训“博学�
 featured: false
 cover: /images/logo-fudan-512.webp
 
+materials:
+  - title: "复旦大学本科生转专业实施细则"
+    description: 教务处发布的转专业实施细则，含申请条件、考核与学分认定
+    category: transfer-policy
+    type: doc
+    link: https://jwc.fudan.edu.cn/_upload/article/files/d4/56/707002a8413b8a3cc690244c1118/2e73dd98-b606-49ba-bb07-cca0ab5fb69b.docx
+  - title: "复旦大学招生章程（历年汇总页）"
+    description: 本科招生章程、招生专业（类）目录与招生政策汇总页
+    category: admission
+    type: 其他
+    link: https://ao.fudan.edu.cn/zszc/list.htm
 videos:
   - title: "2026 本科生招生宣传片《无用之用》"
     platform: bilibili

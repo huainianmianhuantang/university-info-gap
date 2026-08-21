@@ -13,6 +13,17 @@ brief: 中国近现代第一所国立综合性大学，人文社科与基础理�
 featured: true
 cover: /images/logo-peking-university-512.webp
 
+materials:
+  - title: "北京大学2026年本科生转专业工作通知"
+    description: 2026 年转专业工作官方通知 PDF，含接收专业、学业要求与考核安排
+    category: transfer-policy
+    type: pdf
+    link: https://dean.pku.edu.cn/userfiles/upload/ckeditor/202604171727177356.pdf
+  - title: "北京大学本科生学籍管理有关规定（含转专业、保研办法）"
+    description: 学籍管理汇编，收录《转院（系）转专业实施办法（试行）》与推免工作实施办法
+    category: transfer-policy
+    type: pdf
+    link: https://dean.pku.edu.cn/userfiles/upload/download/202210061459418103.pdf
 videos:
   - title: "2024 招生宣传片《一朵小花》"
     platform: bilibili

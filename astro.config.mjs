@@ -5,6 +5,9 @@ export default defineConfig({
   site: 'https://ivory-tower-xray.pages.dev',
   adapter: cloudflare(),
   compressHTML: true,
+  server: {
+    allowedHosts: true,
+  },
   env: {
     schema: {
       AI_API_KEY: envField.string({

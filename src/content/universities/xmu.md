@@ -13,6 +13,17 @@ brief: 陈嘉庚先生创办的百年名校，校训“自强不息、止于至�
 featured: false
 cover: /images/logo-xmu-512.webp
 
+materials:
+  - title: "厦门大学2024-2025学年第二学期转专业工作安排通知"
+    description: 教务处发布的学期转专业工作安排通知
+    category: transfer-policy
+    type: 其他
+    link: https://jwc.xmu.edu.cn/info/1911/66902.htm
+  - title: "厦门大学2026年本科招生章程"
+    description: 2026 年本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://zs.xmu.edu.cn/info/1042/36352.htm
 videos:
   - title: "2025 招生宣传片《学在厦大 2》"
     platform: bilibili

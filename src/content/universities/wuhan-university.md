@@ -79,6 +79,16 @@ materials:
     link: https://pan.example.com/whu-hongyi
     code: hy2026
 
+  - title: "武汉大学经济与管理学院2025年转专业工作实施细则"
+    description: 学院级转专业实施细则，含申请条件与考核流程
+    category: transfer-policy
+    type: 其他
+    link: https://ems.whu.edu.cn/info/1588/263441.htm
+  - title: "武汉大学全日制普通本科招生章程（2026年修订）"
+    description: 2026 年修订版本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://aoff.whu.edu.cn/info/1067/26992.htm
 videos:
   - title: "招生宣传片《课堂》（示例视频）"
     platform: bilibili

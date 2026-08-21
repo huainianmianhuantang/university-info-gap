@@ -13,6 +13,17 @@ brief: 文理基础扎实的百年名校，天文、地质、文学等学科传�
 featured: false
 cover: /images/logo-nju-512.webp
 
+materials:
+  - title: "南京大学学生手册（含专业准入与转专业细则）"
+    description: 官方学生手册，含专业准入准出与转专业相关规定
+    category: transfer-policy
+    type: pdf
+    link: https://jw.nju.edu.cn/_upload/article/files/7b/8f/6af8c2b749968eca4c4e18d09417/84ab2eb4-d2cd-4ca8-8fbb-b9b8b233d4d5.pdf
+  - title: "南京大学2026年普通本科招生章程"
+    description: 2026 年普通本科招生章程官方发布页
+    category: admission
+    type: 其他
+    link: https://mbkzs.nju.edu.cn/static/front/nju/basic/html_cms/frontViewArticle1.html?id=6db627dbcd2a400caa8a872c6e8734bf
 videos:
   - title: "2020 双一流宣传片（30 院唯美视频）"
     platform: bilibili
