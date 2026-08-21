@@ -72,6 +72,12 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           </label>
         ))}
       </div>
+      <div class="filter-group">
+        <label>
+          <input type="checkbox" id="favOnly" />
+          ★ 只看收藏
+        </label>
+      </div>
     </form>
 
     <p class="result-count" id="resultCount">共 {universities.length} 所大学</p>
@@ -88,6 +94,10 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
           data-videos={u.data.videos.length}
           data-materials={u.data.materials.length}
         >
+          <label class="fav-check" title="收藏该学校">
+            <input type="checkbox" class="fav-box" value={u.id} aria-label={`收藏${u.data.name}`} />
+            <span>★</span>
+          </label>
           <label class="compare-check" title="加入对比">
             <input type="checkbox" class="compare-box" value={u.id} aria-label={`对比${u.data.name}`} />
             <span>对比</span>
@@ -120,12 +130,37 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   const compareBtn = document.getElementById('compareBtn');
   const compareBoxes = Array.from(document.querySelectorAll('.compare-box'));
   const sortSelect = document.getElementById('sortBy');
+  const favOnly = document.getElementById('favOnly');
+  const favBoxes = Array.from(document.querySelectorAll('.fav-box'));
+
+  const FAV_KEY = 'fav-universities';
+  let favs = new Set();
+  try {
+    favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+  } catch {
+    favs = new Set();
+  }
+
+  favBoxes.forEach((c) => {
+    c.checked = favs.has(c.value);
+    c.addEventListener('change', () => {
+      if (c.checked) favs.add(c.value);
+      else favs.delete(c.value);
+      try {
+        localStorage.setItem(FAV_KEY, JSON.stringify([...favs]));
+      } catch {
+        /* ignore */
+      }
+      applyFilters();
+    });
+  });
 
   function applyFilters() {
     const keyword = (qInput?.value ?? '').trim().toLowerCase();
     const province = provinceSelect?.value ?? '';
     const type = typeSelect?.value ?? '';
     const selectedLevels = levelChecks.filter((c) => c.checked).map((c) => c.value);
+    const favOnlyChecked = favOnly?.checked ?? false;
 
     let visible = 0;
     for (const item of items) {
@@ -136,7 +171,8 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
       const okProvince = !province || item.dataset.province === province;
       const okType = !type || item.dataset.type === type;
       const okLevel = selectedLevels.length === 0 || selectedLevels.some((l) => levels.includes(l));
-      const ok = okKeyword && okProvince && okType && okLevel;
+      const okFav = !favOnlyChecked || favs.has(item.querySelector('.fav-box')?.value ?? '');
+      const ok = okKeyword && okProvince && okType && okLevel && okFav;
       item.style.display = ok ? '' : 'none';
       if (ok) visible++;
     }
@@ -180,6 +216,7 @@ const initialQuery = Astro.url.searchParams.get('q') ?? '';
   levelChecks.forEach((c) => c.addEventListener('change', applyFilters));
   compareBoxes.forEach((c) => c.addEventListener('change', updateCompare));
   sortSelect?.addEventListener('change', applySort);
+  favOnly?.addEventListener('change', applyFilters);
   applyFilters();
   applySort();
 </script>

@@ -410,6 +410,38 @@ svg {
   accent-color: var(--primary);
 }
 
+.fav-check {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.fav-check input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fav-check span {
+  color: #94a3b8;
+}
+
+.fav-check:has(input:checked) span {
+  color: #f59e0b;
+}
+
 .compare-bar {
   position: fixed;
   left: 50%;
@@ -459,6 +491,26 @@ svg {
 
 .back-to-top[hidden] {
   display: none;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.fav-btn:hover {
+  background: rgba(255, 255, 255, 0.24);
 }
 
 /* ---------- 筛选区 ---------- */
@@ -511,6 +563,7 @@ svg {
   border-radius: var(--radius);
   padding: 28px 26px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .uni-hero h1 {

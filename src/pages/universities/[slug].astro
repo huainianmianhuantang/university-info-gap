@@ -78,6 +78,7 @@ const related = allUniversities
   <div class="container page">
     <div class="uni-hero">
       <h1>{u.name}</h1>
+      <button class="fav-btn" id="favBtn" type="button" aria-pressed="false">☆ 收藏</button>
       {u.nameEn && <div class="uni-en">{u.nameEn}</div>}
       <div class="chip-row">
         {u.levels.map((level) => <span class={`chip level-${level}`}>{level}</span>)}
@@ -266,6 +267,34 @@ const related = allUniversities
 </BaseLayout>
 
 <script>
+  const favBtn = document.getElementById('favBtn');
+  const FAV_KEY = 'fav-universities';
+  const slug = window.location.pathname.split('/').filter(Boolean)[1] ?? '';
+  let favs = new Set();
+  try {
+    favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+  } catch {
+    favs = new Set();
+  }
+  if (favBtn) {
+    const refresh = () => {
+      const has = favs.has(slug);
+      favBtn.textContent = has ? '★ 已收藏' : '☆ 收藏';
+      favBtn.setAttribute('aria-pressed', has ? 'true' : 'false');
+    };
+    favBtn.addEventListener('click', () => {
+      if (favs.has(slug)) favs.delete(slug);
+      else favs.add(slug);
+      try {
+        localStorage.setItem(FAV_KEY, JSON.stringify([...favs]));
+      } catch {
+        /* ignore */
+      }
+      refresh();
+    });
+    refresh();
+  }
+
   const tabs = Array.from(document.querySelectorAll('.uni-tabs a'));
   const sections = tabs
     .map((a) => document.getElementById((a.getAttribute('href') ?? '').slice(1)))
