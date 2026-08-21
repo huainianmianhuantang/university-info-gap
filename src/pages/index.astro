@@ -84,6 +84,7 @@ const categories = [
     <section class="section" id="recentSection" hidden>
       <div class="section-head">
         <h2>最近浏览</h2>
+        <button class="btn btn-ghost" id="clearRecent" type="button">清除</button>
       </div>
       <div class="chip-row" id="recentList"></div>
     </section>
@@ -174,6 +175,7 @@ const categories = [
 <script define:vars={{ schoolBriefs }}>
   const recentSection = document.getElementById('recentSection');
   const recentList = document.getElementById('recentList');
+  const clearRecent = document.getElementById('clearRecent');
   try {
     const recent = JSON.parse(localStorage.getItem('recent-universities') || '[]');
     const items = recent
@@ -192,4 +194,12 @@ const categories = [
   } catch {
     /* ignore */
   }
+  clearRecent?.addEventListener('click', () => {
+    try {
+      localStorage.removeItem('recent-universities');
+    } catch {
+      /* ignore */
+    }
+    if (recentSection) recentSection.hidden = true;
+  });
 </script>

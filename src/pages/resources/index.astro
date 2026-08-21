@@ -96,14 +96,12 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
     </p>
 
     <div id="by-university">
-      {withMaterials.map((group) => (
-        <section class="section">
-          <div class="section-head">
-            <h2>
-              <a href={`/universities/${group.university.id}/`}>{group.university.data.name}</a>
-            </h2>
+      {withMaterials.map((group, index) => (
+        <details class="card video-group" open={index < 3}>
+          <summary>
+            <a href={`/universities/${group.university.id}/`}>{group.university.data.name}</a>
             <span class="small muted">{group.items.length} 份</span>
-          </div>
+          </summary>
           <div
             class="grid"
             style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"
@@ -123,7 +121,7 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
               </div>
             ))}
           </div>
-        </section>
+        </details>
       ))}
       {withMaterials.length < universities.length && (
         <div class="card section-block">

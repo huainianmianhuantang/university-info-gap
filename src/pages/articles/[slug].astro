@@ -22,6 +22,14 @@ const next = idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
 ---
 
 <BaseLayout title={article.data.title} description={article.data.summary}>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.data.title,
+    description: article.data.summary,
+    datePublished: article.data.date.toISOString(),
+    keywords: article.data.tags.join(','),
+  })}></script>
   <div class="container page">
     <nav class="breadcrumb" aria-label="面包屑">
       <a href="/">首页</a> › <a href="/articles/">专题文章</a> › <span>{article.data.title}</span>

@@ -46,6 +46,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         还没有选择学校。前往<a href="/universities/">大学库</a>勾选 2-3 所后对比。
       </p>
       <div class="table-wrap" id="compareTableWrap" hidden>
+        <p class="table-swipe-hint">← 左右滑动查看更多列 →</p>
         <table class="compare-table" id="compareTable"></table>
       </div>
     </div>

@@ -1470,6 +1470,44 @@ html[data-theme='dark'] mark {
   border: 1px solid rgba(37, 99, 235, 0.25);
 }
 
+.dim-bars {
+  display: grid;
+  gap: 8px;
+}
+
+.dim-bar {
+  display: grid;
+  grid-template-columns: 150px 1fr 36px;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.dim-bar .bar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.dim-bar .bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.dim-bar b {
+  text-align: right;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .dim-bar {
+    grid-template-columns: 108px 1fr 30px;
+  }
+}
+
 .advice-box {
   background: var(--primary-soft, #e8efff);
   border-left: 4px solid var(--primary, #2563eb);
@@ -1840,6 +1878,19 @@ html[data-theme='dark'] .tier-保 {
   flex: 1;
   padding: 12px 16px;
   font-size: 14px;
+}
+
+.table-swipe-hint {
+  display: none;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0 0 6px;
+}
+
+@media (max-width: 768px) {
+  .table-swipe-hint {
+    display: block;
+  }
 }
 
 .form-card {

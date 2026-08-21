@@ -46,6 +46,10 @@ const categories = [
         <textarea id="content" name="content" required placeholder="详细描述，或填写资料链接、视频链接、提取码等"></textarea>
       </div>
       <div class="form-field">
+        <label for="source">信息来源 / 出处（选填，便于核实）</label>
+        <input id="source" name="source" type="text" placeholder="如：教务处官网通知、个人实拍（可留空）" />
+      </div>
+      <div class="form-field">
         <label for="contact">你的联系方式（邮箱 / 微信，便于我们核实与反馈）</label>
         <input id="contact" name="contact" type="text" placeholder={CONTACT.email} />
       </div>
@@ -71,12 +75,14 @@ const categories = [
     const title = data.get('title')?.toString().trim() ?? '';
     const content = data.get('content')?.toString().trim() ?? '';
     const contact = data.get('contact')?.toString().trim() ?? '';
+    const source = data.get('source')?.toString().trim() ?? '';
     return [
       `学校：${school}`,
       `栏目：${category}`,
       `标题：${title}`,
       '',
       `内容：${content}`,
+      `信息来源：${source || '（未填写）'}`,
       '',
       `联系方式：${contact}`,
     ].join('\n');

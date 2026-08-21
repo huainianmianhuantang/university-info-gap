@@ -45,7 +45,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         </div>
       </div>
 
-      <div class="card section-block" id="resultCard" hidden>
+      <div class="card section-block" id="resultCard" hidden aria-live="polite">
         <div class="section-head">
           <h2>你的测评结果</h2>
           <div class="result-actions">
@@ -345,12 +345,18 @@ const schools = (await getCollection('universities')).map((u) => ({
 
     const dimsEl = document.getElementById('resultDims');
     dimsEl.innerHTML = '';
-    result.dims.forEach(({ dim }, i) => {
-      const chip = document.createElement('span');
-      chip.className = 'chip result-chip';
-      chip.textContent = `${DIM_LABELS[dim]}${i === 0 ? ' ★' : ''}`;
-      dimsEl.appendChild(chip);
-    });
+    if (result.dims.length > 0) {
+      const max = result.dims[0].score || 1;
+      const wrap = document.createElement('div');
+      wrap.className = 'dim-bars';
+      result.dims.forEach(({ dim, score }, i) => {
+        const row = document.createElement('div');
+        row.className = 'dim-bar';
+        row.innerHTML = `<span>${DIM_LABELS[dim]}${i === 0 ? ' ★' : ''}</span><div class="bar"><i style="width:${Math.round((score / max) * 100)}%"></i></div><b>${score}</b>`;
+        wrap.appendChild(row);
+      });
+      dimsEl.appendChild(wrap);
+    }
 
     const majorsEl = document.getElementById('resultMajors');
     majorsEl.innerHTML = '';
