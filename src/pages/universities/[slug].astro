@@ -121,13 +121,13 @@ const related = allUniversities
       <h1>{u.name}</h1>
       <button class="fav-btn" id="favBtn" type="button" aria-pressed="false">☆ 收藏</button>
       <a class="btn btn-ghost report-btn" href={`/submit/?school=${encodeURIComponent(u.name)}`}>
-        ✎ 纠错 / 补充此页
+        ✏️ 纠错 / 补充此页
       </a>
       <button class="btn btn-ghost" id="detailCompareBtn" type="button" data-slug={university.id}>
-        ＋ 加入对比
+        ➕ 加入对比
       </button>
       <a class="btn btn-primary" id="detailCompareLink" href="/compare/" hidden>去对比 →</a>
-      <button class="btn btn-ghost" id="copyPageLink" type="button">复制链接</button>
+      <button class="btn btn-ghost" id="copyPageLink" type="button">🔗 复制链接</button>
       {u.nameEn && <div class="uni-en">{u.nameEn}</div>}
       <div class="chip-row">
         {u.levels.map((level) => <span class={`chip level-${level}`}>{level}</span>)}
@@ -148,7 +148,7 @@ const related = allUniversities
     </div>
 
     <div class="note-banner">
-      ℹ️ 内容持续整理中，部分栏目待补充；政策类信息请以高校官方发布为准。
+      🌱 内容正在持续生长，部分栏目待补充；政策类信息请以高校官方发布为准。
     </div>
     <div class="note-banner quiz-match-note" id="quizMatchNote" hidden>
       🎯 你上次的选校测评推荐了这所大学，<a href="/quiz/">重新测评</a>或直接查看下方内容。
@@ -161,7 +161,7 @@ const related = allUniversities
     </nav>
 
     <section id="overview" class="card section-block">
-      <h2>学校概况</h2>
+      <h2>🏫 学校概况</h2>
       <div class="prose">
         <Content />
       </div>
@@ -169,7 +169,7 @@ const related = allUniversities
 
     {channels.length > 0 && (
     <section class="card section-block">
-      <h2>关注与信息渠道</h2>
+      <h2>📡 关注与信息渠道</h2>
       <p class="muted">
         官网以学校官方发布为准；已核实账号按粉丝量取影响力最大的官方号，其余平台提供搜索入口。
       </p>
@@ -189,19 +189,19 @@ const related = allUniversities
     {u.transferPolicy && (
       <SectionBlock
         id="transfer"
-        title="转专业政策"
+        title="🔄 转专业政策"
         summary={u.transferPolicy.summary}
         items={u.transferPolicy.points}
         sources={u.transferPolicy.sources}
       />
     )}
     {!u.transferPolicy && (
-      <SectionPending id="transfer" label="转专业政策" school={u.name} category="转专业政策" />
+      <SectionPending id="transfer" label="🔄 转专业政策" school={u.name} category="转专业政策" />
     )}
 
     {u.secondarySelection && (
       <section id="secondary" class="card section-block">
-        <h2>二次选拔</h2>
+        <h2>🎯 二次选拔</h2>
         {u.secondarySelection.summary && <p>{u.secondarySelection.summary}</p>}
         <ul class="point-list">
           {u.secondarySelection.programs.map((p) => (
@@ -222,25 +222,25 @@ const related = allUniversities
       </section>
     )}
     {!u.secondarySelection && (
-      <SectionPending id="secondary" label="二次选拔" school={u.name} category="二次选拔" />
+      <SectionPending id="secondary" label="🎯 二次选拔" school={u.name} category="二次选拔" />
     )}
 
     {u.trainingPlan && (
       <SectionBlock
         id="training"
-        title="专业培养计划"
+        title="📘 专业培养计划"
         summary={u.trainingPlan.summary}
         items={u.trainingPlan.points}
         sources={u.trainingPlan.sources}
       />
     )}
     {!u.trainingPlan && (
-      <SectionPending id="training" label="专业培养计划" school={u.name} category="培养计划" />
+      <SectionPending id="training" label="📘 专业培养计划" school={u.name} category="培养计划" />
     )}
 
     {u.dorm && (
       <section id="dorm" class="card section-block">
-        <h2>寝室情况</h2>
+        <h2>🛏️ 寝室情况</h2>
         {u.dorm.summary && <p>{u.dorm.summary}</p>}
         <ul class="point-list">
           {u.dorm.items.map((item) => (
@@ -261,25 +261,25 @@ const related = allUniversities
       </section>
     )}
     {!u.dorm && (
-      <SectionPending id="dorm" label="寝室情况" school={u.name} category="寝室情况" />
+      <SectionPending id="dorm" label="🛏️ 寝室情况" school={u.name} category="寝室情况" />
     )}
 
     {u.classes && (
       <SectionBlock
         id="classes"
-        title="上课情况"
+        title="🏫 上课情况"
         summary={u.classes.summary}
         items={u.classes.points}
         sources={u.classes.sources}
       />
     )}
     {!u.classes && (
-      <SectionPending id="classes" label="上课情况" school={u.name} category="上课情况" />
+      <SectionPending id="classes" label="🏫 上课情况" school={u.name} category="上课情况" />
     )}
 
     {u.materials.length > 0 && (
       <section id="materials" class="card section-block">
-        <h2>学习资料</h2>
+        <h2>📚 学习资料</h2>
         {hasCloudMaterials && (
           <div class="note-banner">
             🗂️ 部分资料存放于网盘：点击"获取资料"打开网盘，输入对应提取码即可查看或下载。
@@ -332,13 +332,13 @@ const related = allUniversities
       </section>
     )}
     {u.materials.length === 0 && (
-      <SectionPending id="materials" label="学习资料" school={u.name} category="学习资料" />
+      <SectionPending id="materials" label="📚 学习资料" school={u.name} category="学习资料" />
     )}
 
     {u.videos.length > 0 && (
       <section id="videos" class="section">
         <div class="section-head">
-          <h2>视频（共 {u.videos.length} 条）</h2>
+          <h2>🎬 视频（共 {u.videos.length} 条）</h2>
         </div>
         <div class="grid grid-videos">
           {sortedVideos.map((video) => <VideoEmbed video={video} />)}
@@ -346,7 +346,7 @@ const related = allUniversities
       </section>
     )}
     {u.videos.length === 0 && (
-      <SectionPending id="videos" label="校园视频" school={u.name} category="视频" />
+      <SectionPending id="videos" label="🎬 校园视频" school={u.name} category="视频" />
     )}
 
     {parentConcern.materials.length + parentConcern.videos.length > 0 ? (
@@ -417,7 +417,7 @@ const related = allUniversities
 
     {missingSections.length > 0 && (
       <section class="card section-block">
-        <h2>待补充信息</h2>
+        <h2>🪴 待补充信息</h2>
         <p class="small muted" style="margin:0 0 10px;">
           全站进度：学校概况 {allUniversities.length}/{allUniversities.length} · 校园/政策视频 {withVideosCount}/{allUniversities.length} · 学习资料 {withMaterialsCount}/{allUniversities.length}
         </p>
@@ -438,7 +438,7 @@ const related = allUniversities
     {related.length > 0 && (
       <section class="card section-block">
         <div class="section-head">
-          <h2>相关学校</h2>
+          <h2>🤝 相关学校</h2>
           <a class="more" href="/universities/">查看全部 →</a>
         </div>
         <div class="grid grid-universities">

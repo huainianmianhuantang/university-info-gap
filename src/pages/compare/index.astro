@@ -36,19 +36,19 @@ const schools = (await getCollection('universities')).map((u) => ({
     <div class="page-hero">
       <h1>大学对比</h1>
       <p>
-        在<a href="/universities/">大学库</a>勾选 2-3 所学校后即可并排对比。
+        在<a href="/universities/">大学库</a>勾选 2-3 所心仪的学校，并排比一比 ⚖️——
         也可以直接在地址栏追加参数，如 <code>?u=peking-university,tsinghua-university</code>。
       </p>
-      <button class="btn btn-ghost" id="copyCompareLink" type="button">复制对比链接</button>
-      <button class="btn btn-ghost" id="copySummary" type="button" hidden>复制差异摘要</button>
-      <button class="btn btn-ghost" id="printCompare" type="button">打印 / 导出 PDF</button>
-      <button class="btn btn-ghost" id="onlyDiff" type="button" hidden>只看差异</button>
+      <button class="btn btn-ghost" id="copyCompareLink" type="button">🔗 复制对比链接</button>
+      <button class="btn btn-ghost" id="copySummary" type="button" hidden>📋 复制差异摘要</button>
+      <button class="btn btn-ghost" id="printCompare" type="button">🖨️ 打印 / 导出 PDF</button>
+      <button class="btn btn-ghost" id="onlyDiff" type="button" hidden>👀 只看差异</button>
     </div>
 
     <div id="compareApp">
       <div class="card empty-state" id="compareEmpty">
         <span class="empty-emoji">⚖️</span>
-        <p id="compareEmptyText">还没有选择学校。前往大学库勾选 2-3 所后对比。</p>
+        <p id="compareEmptyText">还没选学校呢～去大学库勾选 2-3 所，并排比一比！</p>
         <a class="btn btn-primary" href="/universities/">去大学库勾选 →</a>
       </div>
       <div class="table-wrap" id="compareTableWrap" hidden>

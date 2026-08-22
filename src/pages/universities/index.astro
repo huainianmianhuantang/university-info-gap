@@ -38,8 +38,8 @@ const slugs = universities.map((u) => u.id);
     </nav>
     <div class="page-hero">
       <h1>大学库</h1>
-      <p>当前收录 {universities.length} 所 985 高校，每所大学的政策、实况与资料都在详情页里。</p>
-      <button class="btn btn-ghost" id="viewToggle" type="button">列表视图</button>
+      <p>已收录 {universities.length} 所 985 高校 🎓，政策、实况与资料都藏在详情页里——逛一逛，就知道选校的信息差在哪。</p>
+      <button class="btn btn-ghost" id="viewToggle" type="button">🖼️ 列表视图</button>
       <button class="btn btn-ghost" id="randomBtn" type="button">🎲 随机逛一所</button>
     </div>
 
@@ -162,13 +162,13 @@ const slugs = universities.map((u) => u.id);
 
     <div class="card empty-state" id="emptyState" hidden>
       <span class="empty-emoji">🔍</span>
-      <p>没有匹配的大学，试试调整搜索或筛选条件。</p>
-      <button class="btn btn-ghost" id="resetFilters" type="button">清除全部筛选</button>
+      <p>没找到匹配的大学～放宽筛选条件，或者换个关键词再试试！</p>
+      <button class="btn btn-ghost" id="resetFilters" type="button">🧹 清除全部筛选</button>
     </div>
 
     <div class="compare-bar" id="compareBar" hidden>
       <span id="compareCount">已选 0 所</span>
-      <a class="btn btn-primary" id="compareBtn" href="/compare/?u=">开始对比</a>
+      <a class="btn btn-primary" id="compareBtn" href="/compare/?u=">📌 开始对比</a>
     </div>
   </div>
 </BaseLayout>
@@ -355,7 +355,7 @@ import { scopedKey } from '../../lib/account';
   });
   viewToggle?.addEventListener('click', () => {
     const listMode = grid?.classList.toggle('list-view') ?? false;
-    if (viewToggle) viewToggle.textContent = listMode ? '卡片视图' : '列表视图';
+    if (viewToggle) viewToggle.textContent = listMode ? '🃏 卡片视图' : '🖼️ 列表视图';
     try {
       localStorage.setItem('uni-view', listMode ? 'list' : 'card');
     } catch {

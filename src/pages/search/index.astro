@@ -38,7 +38,7 @@ const materials = (await getCollection('universities')).flatMap((u) =>
     </nav>
     <div class="page-hero">
       <h1>站内搜索</h1>
-      <p>搜索大学、文章与资料。输入关键词后即时显示结果。</p>
+      <p>想找大学、文章还是资料？输入关键词，马上帮你挖出来～</p>
       <form class="hero-search" action="/search/" method="get">
         <input
           type="search"
@@ -47,16 +47,16 @@ const materials = (await getCollection('universities')).flatMap((u) =>
           placeholder="搜索：东北大学 / 转专业 / 宿舍 / 保研…"
           aria-label="全站搜索"
         />
-        <button type="submit">搜索</button>
+        <button type="submit">🔍 搜索</button>
       </form>
     </div>
 
     <div id="searchApp">
-      <p class="muted" id="searchHint">输入关键词开始搜索。</p>
+      <p class="muted" id="searchHint">🔍 输入关键词，开始挖宝～</p>
       <div class="card empty-state" id="searchEmpty" hidden>
         <span class="empty-emoji">🤔</span>
-        <p>没有找到匹配的内容，换个关键词试试。</p>
-        <button class="btn btn-ghost" id="searchReset" type="button">清空关键词</button>
+        <p>没找到匹配的内容，换个关键词再试试～</p>
+        <button class="btn btn-ghost" id="searchReset" type="button">🧹 清空关键词</button>
       </div>
       <div class="chip-row" id="searchSuggest" hidden>
         <span class="small muted">试试这些话题：</span>

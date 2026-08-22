@@ -71,8 +71,8 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
     <div class="page-hero">
       <h1>资料库</h1>
       <p>
-        文件资料与视频资料分开归档。文件按大学挂在各自名下、按类别归类；视频同样按大学存放。
-        其他学校后续直接往对应类别中添加即可。
+        文件资料与视频资料分开归档 📂——文件按大学挂在各自名下、按类别归类，视频同样按大学存放。
+        想看哪所大学的"内幕资料"，进来翻就对了！
       </p>
     </div>
 
@@ -92,7 +92,7 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
         文件 · 按类别
       </button>
       <button class="tab-btn" data-view="videos" role="tab" aria-selected="false" aria-controls="videos">
-        视频资料
+        🎬 视频资料
       </button>
     </div>
 
@@ -100,7 +100,7 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       <button class="video-filter-btn active" data-aud="all" aria-pressed="true">全部</button>
       <button class="video-filter-btn" data-aud="parent" aria-pressed="false">家长关心</button>
       <button class="video-filter-btn" data-aud="student" aria-pressed="false">学生关心</button>
-      <span class="small muted" style="margin-left:auto;">共同关心的资料会在家长/学生视角都出现</span>
+      <span class="small muted" style="margin-left:auto;">💡 共同关心的资料会在家长/学生视角都出现</span>
     </div>
 
     <p class="result-count">

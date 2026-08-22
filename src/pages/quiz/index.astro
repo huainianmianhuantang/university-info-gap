@@ -61,16 +61,16 @@ const schools = (await getCollection('universities')).map((u) => ({
         <div class="section-head">
           <h2>你的测评结果</h2>
           <div class="result-actions">
-            <button class="btn btn-ghost" id="copyBtn" type="button">复制结果</button>
-            <button class="btn btn-ghost" id="shareBtn" type="button">复制结果链接</button>
-            <button class="btn btn-ghost" id="printResult" type="button">打印结果</button>
-            <button class="btn btn-ghost" id="restartBtn" type="button">重新测评</button>
+            <button class="btn btn-ghost" id="copyBtn" type="button">📋 复制结果</button>
+            <button class="btn btn-ghost" id="shareBtn" type="button">🔗 复制结果链接</button>
+            <button class="btn btn-ghost" id="printResult" type="button">🖨️ 打印结果</button>
+            <button class="btn btn-ghost" id="restartBtn" type="button">🔄 重新测评</button>
           </div>
         </div>
 
         <p class="small muted" id="loginTip" hidden>💡 登录后，测评结果会保存在你的账号下。</p>
         <p class="small muted">
-          ⚠️ 匹配基于公开资料与学校画像推断，仅供信息参考，不构成志愿填报建议。
+          🎯 匹配基于公开资料与学校画像推断，仅供信息参考，不构成志愿填报建议。
         </p>
 
         <section class="result-section">
@@ -726,7 +726,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       .then(() => {
         copyBtn.textContent = '已复制 ✓';
         window.showToast?.('结果已复制到剪贴板');
-        setTimeout(() => (copyBtn.textContent = '复制结果'), 1600);
+        setTimeout(() => (copyBtn.textContent = '📋 复制结果'), 1600);
       })
       .catch(() => {});
   });
@@ -754,7 +754,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         .then(() => {
           shareBtn.textContent = '已复制 ✓';
           window.showToast?.('分享内容已复制');
-          setTimeout(() => (shareBtn.textContent = '复制结果链接'), 1600);
+          setTimeout(() => (shareBtn.textContent = '🔗 复制结果链接'), 1600);
         })
         .catch(() => {});
     } catch {
