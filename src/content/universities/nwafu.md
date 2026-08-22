@@ -6,7 +6,7 @@ province: 陕西
 city: 杨凌
 type: 农林
 levels: ['985', '211', '双一流']
-tags: [农林强校]
+tags: [农林强校, 生活成本低]
 established: 1934
 campuses: ['北校区', '南校区']
 brief: 农科特色鲜明，中国西北现代农业教育的重要基地。

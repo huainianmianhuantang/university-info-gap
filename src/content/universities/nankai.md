@@ -6,7 +6,7 @@ province: 天津
 city: 天津
 type: 综合
 levels: ['985', '211', '双一流']
-tags: [综合性大学]
+tags: [综合性大学, 保研率高, 转专业宽松, 金融强校]
 established: 1919
 campuses: ['八里台校区', '津南校区']
 brief: 文理并重的百年名校，周恩来总理母校。

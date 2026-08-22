@@ -6,7 +6,7 @@ province: 北京
 city: 北京
 type: 综合
 levels: ['985', '211', '双一流']
-tags: [人文社科强校]
+tags: [人文社科强校, 保研率高, 金融强校]
 established: 1937
 campuses: ['中关村校区']
 brief: 人文社会科学领域的顶尖学府，校训“实事求是”。

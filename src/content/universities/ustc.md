@@ -6,7 +6,7 @@ province: 安徽
 city: 合肥
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [C9, 华东五校]
+tags: [C9, 华东五校, 保研率高, 计算机强校, 生活成本低]
 established: 1958
 campuses: ['东校区', '西校区', '高新校区']
 brief: 以基础理科和前沿科技见长的小而精研究型大学。

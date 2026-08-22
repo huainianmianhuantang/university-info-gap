@@ -6,7 +6,7 @@ province: 上海
 city: 上海
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [建筑老八校]
+tags: [建筑老八校, 保研率高, 宿舍条件好]
 established: 1907
 campuses: ['四平路校区', '嘉定校区']
 brief: 以土木建筑闻名的综合性大学，校训“同舟共济”。

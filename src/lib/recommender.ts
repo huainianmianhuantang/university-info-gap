@@ -705,6 +705,7 @@ export function recommend(
     .map((profile) => {
       let score = 0;
       const majors: string[] = [];
+      const tags = new Set(profile.tags ?? []);
       dims.slice(0, 3).forEach(([dim], idx) => {
         const weight = [4, 2, 1][idx] ?? 0;
         const hit = DIM_SCHOOLS[dim]?.find((s) => s.slug === profile.id);
@@ -715,6 +716,9 @@ export function recommend(
       });
       if (cityMatch(profile)) score += 2;
       if (typeMatch(profile)) score += 1.5;
+      const wantsDorm =
+        answers.dormPref === 0 || answers.dormPref === 1 || answers.life === 0;
+      if (wantsDorm && tags.has('宿舍条件好')) score += 1.5;
       if (dims.length === 0) {
         // 无兴趣维度作答（如家长问卷）时，以实力 + 城市兜底排序
         score += tierValue(profile.id) * 1.5;
@@ -729,6 +733,7 @@ export function recommend(
       let score = 0;
       const majors: string[] = [];
       const cats = new Set(profile.materialCategories ?? []);
+      const tags = new Set(profile.tags ?? []);
       const hasPostgrad = cats.has('postgrad-rec');
       const hasTransfer = cats.has('transfer-policy');
       const tier = tierValue(profile.id);
@@ -737,8 +742,11 @@ export function recommend(
 
       score += prefs.postgrad * (hasPostgrad ? 2 : 0);
       score += prefs.postgrad * (tier >= 1 ? 1 : 0);
+      score += prefs.postgrad * (tags.has('保研率高') ? 1.5 : 0);
       score += prefs.job * (tier * 1.2 + (profile.type === '理工' || profile.type === '综合' ? 0.8 : 0));
+      score += prefs.job * (tags.has('计算机强校') || tags.has('金融强校') || tags.has('军工对口') ? 1 : 0);
       score += prefs.transfer * (hasTransfer ? 2 : 0);
+      score += prefs.transfer * (tags.has('转专业宽松') ? 1.5 : 0);
       score += prefs.fame * tier;
       if (prefs.majorOverFame > 0) {
         const topDims = (Object.entries(prefs.dims) as [Dim, number][])
@@ -755,6 +763,7 @@ export function recommend(
         }
       }
       if (prefs.cost === 'low') score += inCheap ? 2 : 0;
+      if (prefs.cost === 'low') score += tags.has('生活成本低') ? 1.5 : 0;
       if (prefs.cost === 'high') score += inExpensive ? 1 : 0;
       score += prefs.strict * ((profile.type === '理工' ? 1.5 : 0.5) + (tier >= 1 ? 0.5 : 0));
       if (prefs.ratio === 'male') score += profile.type === '理工' ? 2 : profile.type === '综合' ? 1 : 0;

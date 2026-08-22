@@ -6,7 +6,7 @@ province: 山东
 city: 青岛
 type: 综合
 levels: ['985', '211', '双一流']
-tags: [海洋特色]
+tags: [海洋特色, 转专业宽松]
 established: 1924
 campuses: ['崂山校区', '鱼山校区', '浮山校区']
 brief: 以海洋和水产学科为特色的大学，校训“海纳百川、取则行远”。

@@ -6,7 +6,7 @@ province: 天津
 city: 天津
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [建筑老八校]
+tags: [建筑老八校, 宿舍条件好]
 established: 1895
 campuses: ['卫津路校区', '北洋园校区']
 brief: 中国第一所现代大学，工科传统深厚，校训“实事求是”。

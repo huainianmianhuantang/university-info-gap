@@ -6,7 +6,7 @@ province: 陕西
 city: 西安
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [国防七子]
+tags: [国防七子, 军工对口]
 established: 1938
 campuses: ['友谊校区', '长安校区']
 brief: 以航空、航天、航海“三航”为特色的国防工科强校。

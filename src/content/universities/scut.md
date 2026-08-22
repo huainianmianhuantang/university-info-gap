@@ -6,7 +6,7 @@ province: 广东
 city: 广州
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [建筑老八校]
+tags: [建筑老八校, 宿舍条件好]
 established: 1952
 campuses: ['五山校区', '大学城校区', '广州国际校区']
 brief: 华南地区老牌工科强校，轻工、建筑、材料等方向突出。

@@ -6,7 +6,7 @@ province: 甘肃
 city: 兰州
 type: 综合
 levels: ['985', '211', '双一流']
-tags: [综合性大学]
+tags: [综合性大学, 转专业宽松, 生活成本低]
 established: 1909
 campuses: ['城关校区', '榆中校区']
 brief: 西北地区老牌综合性大学，草学、化学等学科实力突出。

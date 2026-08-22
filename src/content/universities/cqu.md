@@ -6,7 +6,7 @@ province: 重庆
 city: 重庆
 type: 综合
 levels: ['985', '211', '双一流']
-tags: [综合性大学]
+tags: [综合性大学, 生活成本低]
 established: 1929
 campuses: ['A区', 'B区', 'C区', '虎溪校区']
 brief: 西南地区综合性大学，建筑、电气、机械等工科传统深厚。

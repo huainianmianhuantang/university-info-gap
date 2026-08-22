@@ -6,7 +6,7 @@ province: 湖南
 city: 长沙
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [军事院校]
+tags: [军事院校, 军工对口]
 established: 1953
 campuses: ['长沙校区']
 brief: 军事科技特色鲜明的国防名校，前身可溯至 1953 年创办的哈尔滨军事工程学院。

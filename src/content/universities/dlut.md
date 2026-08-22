@@ -6,7 +6,7 @@ province: 辽宁
 city: 大连
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [老牌工科]
+tags: [老牌工科, 宿舍条件好, 生活成本低]
 established: 1949
 campuses: ['凌水校区']
 brief: 东北地区老牌工科强校，化工、机械、土木等方向突出。

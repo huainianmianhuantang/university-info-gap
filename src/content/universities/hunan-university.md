@@ -6,7 +6,7 @@ province: 湖南
 city: 长沙
 type: 综合
 levels: ['985', '211', '双一流']
-tags: [建筑老八校]
+tags: [建筑老八校, 生活成本低]
 established: 1903
 campuses: ['南校区', '北校区']
 brief: 坐拥千年学府岳麓书院传承的综合性大学，校训“实事求是、敢为人先”。

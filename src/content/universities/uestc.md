@@ -6,7 +6,7 @@ province: 四川
 city: 成都
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [电子信息]
+tags: [电子信息, 宿舍条件好, 计算机强校, 生活成本低]
 established: 1956
 campuses: ['清水河校区', '沙河校区']
 brief: 电子信息领域的特色强校，校训“求实求真、大气大为”。

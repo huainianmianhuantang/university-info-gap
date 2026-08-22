@@ -6,7 +6,7 @@ province: 陕西
 city: 西安
 type: 综合
 levels: ['985', '211', '双一流']
-tags: [C9]
+tags: [C9, 保研率高, 宿舍条件好, 生活成本低, 计算机强校]
 established: 1896
 campuses: ['兴庆校区', '雁塔校区', '创新港校区']
 brief: 1896 年创办、1956 年西迁西安的工科名校。

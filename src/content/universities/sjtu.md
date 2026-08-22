@@ -6,7 +6,7 @@ province: 上海
 city: 上海
 type: 综合
 levels: ['985', '211', '双一流']
-tags: [C9, 华东五校]
+tags: [C9, 华东五校, 保研率高, 计算机强校, 金融强校]
 established: 1896
 campuses: ['闵行校区', '徐汇校区']
 brief: 百年工科名校，工科、医学、经管并举。

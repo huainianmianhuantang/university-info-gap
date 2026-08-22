@@ -6,7 +6,7 @@ province: 北京
 city: 北京
 type: 理工
 levels: ['985', '211', '双一流']
-tags: [国防七子]
+tags: [国防七子, 保研率高, 计算机强校, 军工对口]
 established: 1940
 campuses: ['中关村校区', '良乡校区']
 brief: 国防特色工科强校，兵器、车辆、信息方向突出。
