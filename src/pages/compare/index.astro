@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sticker from '../../components/Sticker.astro';
 
 const schools = (await getCollection('universities')).map((u) => ({
   id: u.id,
@@ -47,7 +48,7 @@ const schools = (await getCollection('universities')).map((u) => ({
 
     <div id="compareApp">
       <div class="card empty-state" id="compareEmpty">
-        <span class="empty-emoji">⚖️</span>
+        <Sticker emoji="⚖️" animate="wiggle" label="还没有对比" />
         <p id="compareEmptyText">还没选学校呢～去大学库勾选 2-3 所，并排比一比！</p>
         <a class="btn btn-primary" href="/universities/">去大学库勾选 →</a>
       </div>

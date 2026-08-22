@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sticker from '../../components/Sticker.astro';
 
 const universities = (await getCollection('universities')).map((u) => ({
   id: u.id,
@@ -54,7 +55,7 @@ const materials = (await getCollection('universities')).flatMap((u) =>
     <div id="searchApp">
       <p class="muted" id="searchHint">🔍 输入关键词，开始挖宝～</p>
       <div class="card empty-state" id="searchEmpty" hidden>
-        <span class="empty-emoji">🤔</span>
+        <Sticker emoji="🤔" animate="wiggle" label="没有结果" />
         <p>没找到匹配的内容，换个关键词再试试～</p>
         <button class="btn btn-ghost" id="searchReset" type="button">🧹 清空关键词</button>
       </div>

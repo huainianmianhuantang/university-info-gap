@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import UniversityCard from '../../components/UniversityCard.astro';
+import Sticker from '../../components/Sticker.astro';
 import { LEVELS } from '../../config';
 
 const universities = (await getCollection('universities')).sort((a, b) =>
@@ -161,7 +162,7 @@ const slugs = universities.map((u) => u.id);
     </div>
 
     <div class="card empty-state" id="emptyState" hidden>
-      <span class="empty-emoji">🔍</span>
+      <Sticker emoji="🔍" animate="wiggle" label="搜索无结果" />
       <p>没找到匹配的大学～放宽筛选条件，或者换个关键词再试试！</p>
       <button class="btn btn-ghost" id="resetFilters" type="button">🧹 清除全部筛选</button>
     </div>

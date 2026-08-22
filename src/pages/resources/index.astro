@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import Sticker from '../../components/Sticker.astro';
 import { RESOURCE_CATEGORIES } from '../../config';
 
 const universities = (await getCollection('universities')).sort((a, b) =>
@@ -242,7 +243,10 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
         </details>
       ))}
       {withVideos.length === 0 && (
-        <p class="muted">暂无视频资料，欢迎投稿。</p>
+        <div class="empty-state">
+          <Sticker emoji="🎬" animate="wiggle" label="暂无视频" />
+          <p class="muted">视频还在路上，欢迎投稿～</p>
+        </div>
       )}
     </div>
   </div>

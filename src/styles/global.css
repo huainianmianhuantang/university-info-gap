@@ -822,6 +822,84 @@ a.chip:hover {
   font-size: 34px;
 }
 
+/* 表情贴纸 */
+.sticker {
+  display: inline-grid;
+  place-items: center;
+  width: var(--sticker-size);
+  height: var(--sticker-size);
+  border-radius: 28%;
+  font-size: calc(var(--sticker-size) * 0.52);
+  line-height: 1;
+  background: linear-gradient(135deg, var(--primary-soft), rgba(10, 165, 181, 0.16));
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.75),
+    0 8px 20px rgba(31, 94, 255, 0.12);
+  user-select: none;
+}
+
+.sticker-wiggle {
+  animation: sticker-wiggle 2.4s ease-in-out infinite;
+}
+
+.sticker-bounce {
+  animation: sticker-bounce 1.8s ease-in-out infinite;
+}
+
+.sticker-pop {
+  animation: sticker-pop 0.55s var(--ease-pop) both;
+}
+
+.sticker-spin {
+  animation: sticker-spin 7s linear infinite;
+}
+
+@keyframes sticker-wiggle {
+  0%,
+  100% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes sticker-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-9px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes sticker-pop {
+  from {
+    transform: scale(0.3) rotate(-12deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sticker-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker {
+    animation: none !important;
+  }
+}
+
 .empty-state p {
   margin: 4px 0 10px;
   color: var(--text-secondary);

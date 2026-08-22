@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Sticker from '../components/Sticker.astro';
 ---
 
 <BaseLayout title="页面不存在" description="你访问的页面不存在或已移动。">
   <div class="container page">
     <div class="page-hero">
+      <Sticker emoji="🌪️" animate="spin" size={72} label="页面被风吹走" />
       <h1>404 · 页面走丢了</h1>
       <p>哎呀，这页被风吹走了～回<a href="/">首页</a>，或去<a href="/universities/">大学库</a>逛逛吧！</p>
       <form class="hero-search" action="/search/" method="get">

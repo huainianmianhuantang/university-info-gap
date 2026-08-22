@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sticker from '../../components/Sticker.astro';
 
 const schools = (await getCollection('universities')).map((u) => ({
   id: u.id,
@@ -59,7 +60,10 @@ const schools = (await getCollection('universities')).map((u) => ({
 
       <div class="card section-block" id="resultCard" hidden aria-live="polite">
         <div class="section-head">
-          <h2>你的测评结果</h2>
+          <h2 style="display:flex;align-items:center;gap:10px;">
+            <Sticker emoji="🎉" animate="pop" size={36} label="完成" />
+            你的测评结果
+          </h2>
           <div class="result-actions">
             <button class="btn btn-ghost" id="copyBtn" type="button">📋 复制结果</button>
             <button class="btn btn-ghost" id="shareBtn" type="button">🔗 复制结果链接</button>
@@ -205,7 +209,7 @@ const schools = (await getCollection('universities')).map((u) => ({
         <span class="quiz-type-icon">${t.icon}</span>
         <b>${esc(t.label)}</b>
         <span class="small muted">${esc(t.desc)}</span>
-        <span class="chip result-chip">${esc(t.duration)}</span>
+        <span class="chip result-chip">⏱️ ${esc(t.duration)}</span>
       `;
       btn.addEventListener('click', () => {
         state.typeId = t.id;

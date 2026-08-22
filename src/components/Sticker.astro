@@ -1,0 +1,20 @@
+---
+interface Props {
+  emoji: string;
+  size?: number;
+  animate?: 'wiggle' | 'bounce' | 'pop' | 'spin' | 'none';
+  delay?: string;
+  label?: string;
+}
+
+const { emoji, size = 64, animate = 'wiggle', delay = '0s', label } = Astro.props;
+---
+
+<span
+  class={`sticker sticker-${animate}`}
+  style={`--sticker-size:${size}px;animation-delay:${delay};`}
+  role="img"
+  aria-label={label ?? emoji}
+>
+  {emoji}
+</span>
