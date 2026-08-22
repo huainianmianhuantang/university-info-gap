@@ -17,26 +17,31 @@ materials:
   - title: "天津大学2024级本科生培养方案（管理与经济学部）"
     description: 管理与经济学部官网发布的 2024 级财务管理、电子商务等专业培养方案页
     category: training-plan
+    audience: both
     type: 其他
     link: http://come.tju.edu.cn/info/1044/11113.htm
   - title: "天津大学软件工程专业培养方案（2022-2025级）"
     description: 智能与计算学部官网发布的软件工程专业各年级培养方案页
     category: training-plan
+    audience: both
     type: 其他
     link: http://scs.tju.edu.cn/info/1551/1611.htm
   - title: "天津大学本科指导性培养计划（2024级，智能与计算学部）"
     description: 计算机科学与技术（拔尖班）等专业 2024 级指导性培养计划官方 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: http://cic.tju.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1518250116&wbfileid=E9684EC6E48887B5B73EE7582FE42419
   - title: "2026年“天大四条”招生新政（含转专业政策）"
     description: 校方发布的 2026 招生新政，明确大类分流专业任选、转专业无次数与名额统一上限
     category: transfer-policy
+    audience: both
     type: 其他
     link: https://news.tju.edu.cn/info/1003/601499.htm
   - title: "天津大学2026年本科生招生章程"
     description: 2026 年本科生招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://zs.tju.edu.cn/info/1116/4549.htm
 videos:
@@ -46,18 +51,21 @@ videos:
     source: "天津大学官方账号"
     description: "天津大学 2022 年招生宣传片。"
     tags: [宣传片]
+    audience: both
   - title: "天津大学研究生沉浸式开学｜豪华宿舍/北洋园鸭/超大图书馆"
     platform: bilibili
     id: BV19e4y1Z7fr
     source: "天津大学官方B站账号"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "天津大学研究生日常，看完你还想考研吗？"
     platform: bilibili
     id: BV1iuYizZEKv
     source: "天津大学官方B站账号"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 天津大学前身为 1895 年创办的北洋大学堂，是中国第一所现代大学，校训为“实事求是”。学校在化工、建筑、精密仪器、机械等工科方向实力深厚，主校区位于天津市南开区（卫津路校区）与津南区（北洋园校区）。

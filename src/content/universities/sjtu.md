@@ -17,21 +17,25 @@ materials:
   - title: "上海交通大学本科人才培养方案修订指导性意见（2025）"
     description: 教务处 2025 年发布的本科人才培养方案修订指导意见，含培养方案构成与学分框架
     category: training-plan
+    audience: both
     type: 其他
     link: https://www.jwc.sjtu.edu.cn/info/3631/121651.htm
   - title: "上海交通大学关于落实“101计划”加强专业建设的指导意见"
     description: 教务处〔2025〕1号，含持续优化培养方案、专业建设相关要求
     category: training-plan
+    audience: both
     type: 其他
     link: https://jwc.sjtu.edu.cn/info/3631/121421.htm
   - title: "上海交通大学2025年本科生转专业工作通知"
     description: 教务处发布的转专业工作通知，附实施办法与时间安排
     category: transfer-policy
+    audience: both
     type: 其他
     link: https://jwc.sjtu.edu.cn/info/1222/120221.htm
   - title: "上海交通大学2026年本科招生章程"
     description: 2026 年本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://admissions.sjtu.edu.cn/newDetails?contentsID=3810000004270
 videos:
@@ -41,18 +45,21 @@ videos:
     source: "B站转载（UP：江南制造总局）"
     description: "上海交通大学 2019 年招生宣传片。"
     tags: [宣传片]
+    audience: both
   - title: "交大Vlog｜研究生报道第一天｜二人间宿舍/吃食堂/校园生活"
     platform: bilibili
     id: BV1GZ4y1T7cZ
     source: "B站转载（UP待核实）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "交大医学生的一天｜学习vlog｜study with me"
     platform: bilibili
     id: BV1Ja4y1D73c
     source: "B站转载（UP待核实）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 上海交通大学前身为 1896 年创办的南洋公学，是历史悠久的工科名校，校训为“饮水思源、爱国荣校”。学校在计算机、机械、船舶海洋、临床医学、工商管理等方向实力突出，主校区位于上海市闵行区，另设徐汇、张江等校区。

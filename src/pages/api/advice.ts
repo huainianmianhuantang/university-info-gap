@@ -73,8 +73,12 @@ function buildPrompt(body: AdviceBody): string {
   const r = body.result ?? {};
   const dims = (r.dims ?? []).map((d) => `${d.dim}:${d.score}`).join('、');
   const majors = (r.majors ?? []).join('、');
-  const schools = (r.schools ?? [])
-    .map((s) => `${s.name}（${(s.majors ?? []).slice(0, 3).join('/')}）`)
+  const persSchools = [
+    ...(r.student?.top3 ?? []),
+    ...(r.parent?.top3 ?? []),
+  ];
+  const schools = (persSchools.length > 0 ? persSchools : (r.schools ?? []))
+    .map((s) => `${s.profile?.name ?? s.name ?? ''}（${(s.majors ?? []).slice(0, 3).join('/')}）`)
     .join('、');
 
   return [

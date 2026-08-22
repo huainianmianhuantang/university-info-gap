@@ -64,12 +64,13 @@ export function getAdvice(input: AdviceInput): Advice {
       : '建议结合分数与兴趣进一步细化专业方向。';
   points.push(majorsLine);
 
+  const schoolNames = [
+    ...(result.student?.top3 ?? []),
+    ...(result.parent?.top3 ?? []),
+  ].map((s) => s.profile.name);
   const schoolLine =
-    result.schools.length > 0
-      ? `推荐优先了解：${result.schools
-          .slice(0, 5)
-          .map((s) => s.profile.name)
-          .join('、')}。可以点开学校详情页查看转专业政策、培养计划与宿舍/课堂实拍视频。`
+    schoolNames.length > 0
+      ? `推荐优先了解：${[...new Set(schoolNames)].slice(0, 6).join('、')}。可以点开学校详情页查看转专业政策、培养计划与宿舍/课堂实拍视频。`
       : '暂时没有高匹配学校，建议回到大学库按省份、类型浏览。';
   points.push(schoolLine);
 

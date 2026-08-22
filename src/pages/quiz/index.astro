@@ -11,12 +11,13 @@ const schools = (await getCollection('universities')).map((u) => ({
   city: u.data.city,
   tags: u.data.tags,
   levels: u.data.levels,
+  materialCategories: [...new Set(u.data.materials.map((m) => m.category))],
 }));
 ---
 
 <BaseLayout
   title="选校测评"
-  description="通过 12 道兴趣问卷，帮你找到适合的专业方向与 985 高校，并生成个性化建议。"
+  description="四套问卷（学生/家长 × 轻量/全面）可选，从学生与家长双视角为你各推荐 3 所 985 高校，并生成个性化建议。"
   robots="noindex,follow"
 >
   <div class="container page">
@@ -26,13 +27,19 @@ const schools = (await getCollection('universities')).map((u) => ({
     <div class="page-hero">
       <h1>选校测评</h1>
       <p>
-        回答 12 道关于兴趣、性格与生活偏好的题目，约 2 分钟。
-        完成后会为你推荐专业方向、匹配高校，并生成一份建议。结果只保存在你的浏览器本地。
+        先选择一套问卷，回答完会自动从「学生视角」和「家长视角」各推荐 3 所 985 高校，
+        并生成一份个性化建议。结果只保存在你的浏览器本地。
       </p>
     </div>
 
     <div id="quizApp" class="quiz-app">
-      <div class="card quiz-card" id="quizCard">
+      <div class="card section-block" id="typeCard">
+        <h2>选择问卷</h2>
+        <p class="muted">学生问卷偏重兴趣与校园生活，家长问卷偏重就业、深造与成本；轻量与全面按时间自由选。</p>
+        <div class="quiz-type-grid" id="quizTypes"></div>
+      </div>
+
+      <div class="card quiz-card" id="quizCard" hidden>
         <div class="quiz-progress" aria-hidden="true">
           <div class="quiz-progress-bar" id="progressBar"></div>
         </div>
@@ -60,8 +67,12 @@ const schools = (await getCollection('universities')).map((u) => ({
           </div>
         </div>
 
-              <p class="small muted" id="loginTip" hidden>💡 登录后，测评结果会保存在你的账号下。</p>
-<section class="result-section">
+        <p class="small muted" id="loginTip" hidden>💡 登录后，测评结果会保存在你的账号下。</p>
+        <p class="small muted">
+          ⚠️ 匹配基于公开资料与学校画像推断，仅供信息参考，不构成志愿填报建议。
+        </p>
+
+        <section class="result-section">
           <h3>兴趣画像</h3>
           <div class="chip-row" id="resultDims"></div>
         </section>
@@ -71,31 +82,30 @@ const schools = (await getCollection('universities')).map((u) => ({
           <div class="chip-row" id="resultMajors"></div>
         </section>
 
-        <section class="result-section">
-          <h3>推荐高校</h3>
-          <p class="muted">
-            点进学校详情页，可查看转专业政策、培养计划、宿舍实况与课堂/校园视频。
-          </p>
-          <div class="grid grid-universities" id="resultSchools"></div>
+        <section class="result-section" id="studentSection">
+          <div class="result-section-head">
+            <h3>🎒 学生视角 · 推荐 3 所</h3>
+            <span class="small muted">更贴合兴趣、学习方式与生活偏好</span>
+          </div>
+          <p class="small muted">点进学校详情页，可查看转专业政策、培养计划、宿舍实况与课堂/校园视频。</p>
+          <div class="grid grid-universities" id="studentSchools"></div>
+          <details class="more-matches" id="studentMore" hidden>
+            <summary>更多匹配（<span id="studentMoreCount">0</span> 所）</summary>
+            <div class="grid grid-universities" id="studentMoreSchools"></div>
+          </details>
         </section>
 
-        <section class="result-section">
-          <h3>冲 / 稳 / 保 分档（可选）</h3>
-          <p class="muted">
-            输入你的预估全省位次（理科参考值），为推荐学校粗略分档；仅供参考，最终以官方数据为准。
-          </p>
-          <div class="rank-input">
-            <input type="number" id="rankInput" min="1" max="99999" placeholder="如 5000" aria-label="预估全省位次" />
-            <select id="rankType" aria-label="科类">
-              <option value="physics">物理类（理科）</option>
-              <option value="history">历史类（文科）</option>
-            </select>
-            <button class="btn" id="rankApply" type="button">分档</button>
+        <section class="result-section" id="parentSection">
+          <div class="result-section-head">
+            <h3>🏛️ 家长视角 · 推荐 3 所</h3>
+            <span class="small muted">更看重就业、深造、成本与城市</span>
           </div>
-          <p class="small muted" id="rankWarn" hidden>
-            ⚠️ 历史类（文科）位次与物理类口径不同，请先按本省一分一段表自行换算，再参考下方分档。
-          </p>
-          <div class="chip-row" id="rankLegend"></div>
+          <p class="small muted">结合学校资料齐全度与公开画像推断，仅供信息参考。</p>
+          <div class="grid grid-universities" id="parentSchools"></div>
+          <details class="more-matches" id="parentMore" hidden>
+            <summary>更多匹配（<span id="parentMoreCount">0</span> 所）</summary>
+            <div class="grid grid-universities" id="parentMoreSchools"></div>
+          </details>
         </section>
 
         <section class="result-section">
@@ -120,10 +130,16 @@ const schools = (await getCollection('universities')).map((u) => ({
   </div>
 </BaseLayout>
 
-<script define:vars={{ schools }}>
-  import { QUESTIONS, recommend, DIM_LABELS, tierOf } from '../../lib/recommender';
+<script is:inline define:vars={{ schools }}>
+  window.__QUIZ_SCHOOLS__ = schools;
+</script>
+
+<script>
+  import { QUIZ_TYPES, questionsOf, recommend, DIM_LABELS } from '../../lib/recommender';
   import { getAdvice } from '../../lib/ai';
-import { scopedKey } from '../../lib/account';
+  import { scopedKey } from '../../lib/account';
+
+  const schools = (window as unknown as { __QUIZ_SCHOOLS__?: typeof window.__QUIZ_SCHOOLS__ }).__QUIZ_SCHOOLS__ ?? [];
 
   function esc(s: string): string {
     return String(s ?? '').replace(/[&<>"']/g, (c) =>
@@ -131,16 +147,17 @@ import { scopedKey } from '../../lib/account';
     );
   }
 
-
   const LS_ANSWERS = 'quiz-answers';
   const LS_RESULT = scopedKey('quiz-result');
+  const LS_TYPE = 'quiz-type';
 
   const state = {
+    typeId: null as string | null,
     step: 0,
-    answers: {},
-    rank: null,
+    answers: {} as Record<string, number>,
   };
 
+  const typeCard = document.getElementById('typeCard');
   const quizCard = document.getElementById('quizCard');
   const resultCard = document.getElementById('resultCard');
   const titleEl = document.getElementById('quizTitle');
@@ -152,29 +169,62 @@ import { scopedKey } from '../../lib/account';
   const stepInfo = document.getElementById('stepInfo');
   const resumeNote = document.getElementById('resumeNote');
   const restartBtn = document.getElementById('restartBtn');
-  const rankInput = document.getElementById('rankInput');
-  const rankApply = document.getElementById('rankApply');
-  const rankType = document.getElementById('rankType');
-  const rankWarn = document.getElementById('rankWarn');
-  const rankLegend = document.getElementById('rankLegend');
   const historySection = document.getElementById('historySection');
   const historyList = document.getElementById('historyList');
   const clearHistoryBtn = document.getElementById('clearHistory');
-  let currentResult = null;
-  const HISTORY_KEY = scopedKey('quiz-history');
   const loginTip = document.getElementById('loginTip');
-  if (loginTip) {
-    import('../../lib/account').then((m) => {
-      loginTip.hidden = m.isLoggedIn();
-    });
-  }
   const copyBtn = document.getElementById('copyBtn');
   const shareBtn = document.getElementById('shareBtn');
   const printResultBtn = document.getElementById('printResult');
   const regenBtn = document.getElementById('regenBtn');
   const copyAdviceBtn = document.getElementById('copyAdviceBtn');
+  let currentResult: any = null;
+  const HISTORY_KEY = scopedKey('quiz-history');
 
-  async function fetchLLMAdvice(answers, result) {
+  if (loginTip) {
+    import('../../lib/account').then((m) => {
+      loginTip.hidden = m.isLoggedIn();
+    });
+  }
+
+  function questions() {
+    return state.typeId ? questionsOf(state.typeId as any) : [];
+  }
+
+  function renderTypeSelect() {
+    if (!typeCard || !quizCard) return;
+    const grid = document.getElementById('quizTypes');
+    if (!grid) return;
+    grid.innerHTML = '';
+    QUIZ_TYPES.forEach((t) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'card quiz-type-card';
+      btn.innerHTML = `
+        <span class="quiz-type-icon">${t.icon}</span>
+        <b>${esc(t.label)}</b>
+        <span class="small muted">${esc(t.desc)}</span>
+        <span class="chip result-chip">${esc(t.duration)}</span>
+      `;
+      btn.addEventListener('click', () => {
+        state.typeId = t.id;
+        state.step = 0;
+        state.answers = {};
+        try {
+          localStorage.setItem(LS_TYPE, state.typeId);
+          localStorage.removeItem(LS_ANSWERS);
+        } catch {
+          /* ignore */
+        }
+        typeCard.hidden = true;
+        quizCard.hidden = false;
+        renderQuestion();
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  async function fetchLLMAdvice(answers: Record<string, number>, result: any) {
     const resp = await fetch('/api/advice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -183,11 +233,8 @@ import { scopedKey } from '../../lib/account';
         result: {
           dims: result.dims,
           majors: result.majors,
-          schools: result.schools.map((s) => ({
-            name: s.profile?.name ?? s.name,
-            majors: s.majors,
-            city: s.profile?.city ?? s.city,
-          })),
+          student: { top3: result.student?.top3 ?? [] },
+          parent: { top3: result.parent?.top3 ?? [] },
         },
       }),
     });
@@ -200,19 +247,36 @@ import { scopedKey } from '../../lib/account';
     };
   }
 
-  function loadSaved() {
+  /** 兼容旧版 localStorage 结果（旧结构只有 schools 列表） */
+  function normalizeResult(result: any): any {
+    if (!result || (result.student && result.parent)) return result;
+    if (Array.isArray(result.schools)) {
+      const split = (list: any[]) => ({ top3: list.slice(0, 3), more: list.slice(3) });
+      return {
+        ...result,
+        student: split(result.schools),
+        parent: split(result.schools),
+        order: ['student', 'parent'],
+      };
+    }
+    return result;
+  }
+
+  function loadSaved(): boolean {
     try {
+      const savedType = localStorage.getItem(LS_TYPE);
       const savedAnswers = JSON.parse(localStorage.getItem(LS_ANSWERS) || 'null');
       const savedResult = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
+      if (savedType && QUIZ_TYPES.some((t) => t.id === savedType)) state.typeId = savedType;
       if (savedAnswers && savedResult) {
         Object.assign(state.answers, savedAnswers);
-        showResult(savedResult);
+        const normalized = normalizeResult(savedResult.result);
+        showResult({ ...savedResult, result: normalized });
         if (savedResult.advice?.provider !== 'llm') {
-          const result = savedResult.result;
-          fetchLLMAdvice(state.answers, result)
+          fetchLLMAdvice(state.answers, normalized)
             .then((advice) => {
               if (advice) {
-                const upgraded = { result, advice, at: Date.now() };
+                const upgraded = { result: normalized, advice, at: Date.now() };
                 try {
                   localStorage.setItem(LS_RESULT, JSON.stringify(upgraded));
                 } catch {
@@ -225,10 +289,11 @@ import { scopedKey } from '../../lib/account';
         }
         return true;
       }
-      if (savedAnswers) {
+      if (savedAnswers && state.typeId) {
         Object.assign(state.answers, savedAnswers);
-        const last = QUESTIONS.findIndex((q) => !(q.id in savedAnswers));
-        state.step = last === -1 ? QUESTIONS.length - 1 : last;
+        const qs = questions();
+        const last = qs.findIndex((q) => !(q.id in savedAnswers));
+        state.step = last === -1 ? qs.length - 1 : last;
       }
     } catch {
       /* ignore corrupted storage */
@@ -237,12 +302,18 @@ import { scopedKey } from '../../lib/account';
   }
 
   function renderQuestion() {
-    const q = QUESTIONS[state.step];
+    const qs = questions();
+    if (!state.typeId || qs.length === 0) {
+      typeCard.hidden = false;
+      quizCard.hidden = true;
+      return;
+    }
+    const q = qs[state.step];
     titleEl.textContent = q.title;
     subtitleEl.textContent = q.subtitle ?? '';
     subtitleEl.style.display = q.subtitle ? '' : 'none';
-    const pct = Math.round(((state.step + 1) / QUESTIONS.length) * 100);
-    stepInfo.textContent = `${state.step + 1} / ${QUESTIONS.length} · ${pct}%`;
+    const pct = Math.round(((state.step + 1) / qs.length) * 100);
+    stepInfo.textContent = `${state.step + 1} / ${qs.length} · ${pct}%`;
     progressBar.style.width = `${pct}%`;
 
     optionsEl.innerHTML = '';
@@ -257,19 +328,18 @@ import { scopedKey } from '../../lib/account';
         optionsEl.querySelectorAll('.quiz-option').forEach((b) =>
           b.classList.toggle('selected', b === btn),
         );
+        nextBtn.disabled = false;
         saveAnswers();
       });
       optionsEl.appendChild(btn);
     });
 
     prevBtn.disabled = state.step === 0;
-    nextBtn.textContent = state.step === QUESTIONS.length - 1 ? '查看结果' : '下一步';
-    nextBtn.disabled = !(state.answers[q.id] !== undefined);
+    nextBtn.textContent = state.step === qs.length - 1 ? '查看结果' : '下一步';
+    nextBtn.disabled = state.answers[q.id] === undefined;
     quizCard.hidden = false;
     resultCard.hidden = true;
-    if (resumeNote) {
-      resumeNote.hidden = Object.keys(state.answers).length === 0;
-    }
+    if (resumeNote) resumeNote.hidden = Object.keys(state.answers).length === 0;
   }
 
   function saveAnswers() {
@@ -288,22 +358,33 @@ import { scopedKey } from '../../lib/account';
     }
   }
 
+  function resultSchoolNames(result: any): string[] {
+    const names: string[] = [];
+    for (const key of ['student', 'parent']) {
+      for (const s of result?.[key]?.top3 ?? []) {
+        if (s?.profile?.name) names.push(s.profile.name);
+      }
+    }
+    if (names.length === 0) {
+      for (const s of result?.schools ?? []) {
+        if (s?.profile?.name) names.push(s.profile.name);
+      }
+    }
+    return [...new Set(names)];
+  }
+
   function renderHistory() {
     const h = readHistory();
     if (!historySection || !historyList) return;
     historySection.hidden = h.length === 0;
     historyList.innerHTML = '';
-    h.forEach((item, idx) => {
+    h.forEach((item) => {
       const li = document.createElement('li');
       li.className = 'point-item';
       const dims = (item.result?.dims ?? [])
-        .map((d) => DIM_LABELS[d.dim] ?? d.dim)
+        .map((d: any) => DIM_LABELS[d.dim] ?? d.dim)
         .join('、');
-      const schools = (item.result?.schools ?? [])
-        .slice(0, 3)
-        .map((s) => s.profile?.name ?? '')
-        .filter(Boolean)
-        .join('、');
+      const schools = resultSchoolNames(item.result).slice(0, 4).join('、');
       const when = new Date(item.at ?? Date.now()).toLocaleString('zh-CN');
       const btn = document.createElement('button');
       btn.type = 'button';
@@ -316,7 +397,7 @@ import { scopedKey } from '../../lib/account';
     });
   }
 
-  function saveHistory(saved) {
+  function saveHistory(saved: any) {
     try {
       const h = readHistory();
       h.unshift({ at: saved.at ?? Date.now(), result: saved.result, advice: saved.advice });
@@ -328,8 +409,8 @@ import { scopedKey } from '../../lib/account';
   }
 
   async function compute() {
-    const result = recommend(state.answers, schools);
-    const ruleAdvice = getAdvice({ answers: state.answers, result, schools });
+    const result = recommend(state.answers, schools as any, state.typeId ?? undefined);
+    const ruleAdvice = getAdvice({ answers: state.answers, result: result as any, schools: schools as any });
     let saved = { result, advice: ruleAdvice, at: Date.now() };
     try {
       localStorage.setItem(LS_RESULT, JSON.stringify(saved));
@@ -359,9 +440,11 @@ import { scopedKey } from '../../lib/account';
     saveHistory(saved);
   }
 
-  function showResult(saved) {
-    const { result, advice } = saved;
+  function showResult(saved: any) {
+    const { result: raw, advice } = saved;
+    const result = normalizeResult(raw);
     quizCard.hidden = true;
+    typeCard.hidden = true;
     resultCard.hidden = false;
 
     const dimsEl = document.getElementById('resultDims');
@@ -370,7 +453,7 @@ import { scopedKey } from '../../lib/account';
       const max = result.dims[0].score || 1;
       const wrap = document.createElement('div');
       wrap.className = 'dim-bars';
-      result.dims.forEach(({ dim, score }, i) => {
+      result.dims.forEach(({ dim, score }: any, i: number) => {
         const row = document.createElement('div');
         row.className = 'dim-bar';
         row.innerHTML = `<span>${DIM_LABELS[dim]}${i === 0 ? ' ★' : ''}</span><div class="bar"><i style="width:${Math.round((score / max) * 100)}%"></i></div><b>${score}</b>`;
@@ -381,7 +464,7 @@ import { scopedKey } from '../../lib/account';
 
     const majorsEl = document.getElementById('resultMajors');
     majorsEl.innerHTML = '';
-    result.majors.forEach((m) => {
+    result.majors.forEach((m: string) => {
       const chip = document.createElement('span');
       chip.className = 'chip';
       chip.textContent = m;
@@ -389,11 +472,11 @@ import { scopedKey } from '../../lib/account';
     });
 
     currentResult = result;
-    renderSchools(result);
+    renderPerspectives(result);
 
     const adviceEl = document.getElementById('resultAdvice');
     adviceEl.innerHTML = '';
-    advice.points.forEach((p) => {
+    (advice?.points ?? []).forEach((p: string) => {
       const item = document.createElement('p');
       item.className = 'advice-point';
       item.textContent = p;
@@ -402,11 +485,11 @@ import { scopedKey } from '../../lib/account';
     const badge = document.getElementById('adviceBadge');
     if (badge) {
       badge.textContent =
-        advice.provider === 'llm'
+        advice?.provider === 'llm'
           ? 'AI 建议（DeepSeek 大模型生成）'
           : 'AI 建议（规则引擎生成）';
     }
-    if (regenBtn) regenBtn.hidden = advice.provider !== 'llm';
+    if (regenBtn) regenBtn.hidden = advice?.provider !== 'llm';
 
     try {
       localStorage.setItem(LS_RESULT, JSON.stringify(saved));
@@ -416,120 +499,145 @@ import { scopedKey } from '../../lib/account';
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function renderSchools(result) {
-    const schoolsEl = document.getElementById('resultSchools');
-    schoolsEl.innerHTML = '';
-    if (!result || result.schools.length === 0) {
-      const p = document.createElement('p');
-      p.className = 'muted';
-      p.textContent = '暂无高匹配学校，建议前往大学库按省份与类型浏览。';
-      schoolsEl.appendChild(p);
-      return;
-    }
-    const maxScore = result.schools[0]?.score ?? 1;
-    result.schools.forEach((s) => {
-      const wrap = document.createElement('div');
-      wrap.className = 'u-item';
-      const actions = document.createElement('div');
-      actions.className = 'result-actions result-card-actions';
-      const favBtn = document.createElement('button');
-      favBtn.type = 'button';
-      favBtn.className = 'btn btn-ghost';
-      favBtn.textContent = '☆ 收藏';
-      favBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        try {
-          const favs = new Set(JSON.parse(localStorage.getItem(scopedKey('fav-universities')) || '[]'));
-          if (favs.has(s.profile.id)) favs.delete(s.profile.id);
-          else favs.add(s.profile.id);
-          localStorage.setItem(scopedKey('fav-universities'), JSON.stringify([...favs]));
-          favBtn.textContent = favs.has(s.profile.id) ? '★ 已收藏' : '☆ 收藏';
-        } catch {
-          /* ignore */
-        }
-      });
-      const cmpBtn = document.createElement('button');
-      cmpBtn.type = 'button';
-      cmpBtn.className = 'btn btn-ghost';
-      cmpBtn.textContent = '＋ 对比';
-      cmpBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        try {
-          const list = JSON.parse(localStorage.getItem(scopedKey('compare-list')) || '[]');
-          if (list.includes(s.profile.id)) {
-            const next = list.filter((x) => x !== s.profile.id);
-            localStorage.setItem(scopedKey('compare-list'), JSON.stringify(next));
-            cmpBtn.textContent = '＋ 对比';
-          } else {
-            const next = list.length >= 3 ? [...list.slice(1), s.profile.id] : [...list, s.profile.id];
-            localStorage.setItem(scopedKey('compare-list'), JSON.stringify(next));
-            cmpBtn.textContent = `已选 ${next.length}/3`;
-          }
-        } catch {
-          /* ignore */
-        }
-      });
-      actions.appendChild(favBtn);
-      actions.appendChild(cmpBtn);
-      wrap.appendChild(actions);
-      const a = document.createElement('a');
-      a.className = 'card university-card';
-      a.href = `/universities/${s.profile.id}/`;
-      const img = document.createElement('img');
-      img.className = 'university-cover';
-      img.src = s.profile.cover;
-      img.alt = `${s.profile.name} 校徽`;
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      a.appendChild(img);
-      const body = document.createElement('div');
-      body.className = 'university-body';
-      const pct = Math.round((s.score / maxScore) * 100);
-      const tier = state.rank ? tierOf(state.rank, s.profile.id) : null;
-      const tierHtml = tier
-        ? `<span class="chip tier-badge tier-${tier}">${tier}</span>`
-        : '';
-      body.innerHTML = `
-        <h3>${s.profile.name}</h3>
-        <p class="small muted">${s.profile.type} · ${s.profile.province} ${s.profile.city}</p>
-        <p class="small">匹配方向：${s.majors.slice(0, 4).join(' / ')}</p>
-        <div class="chip-row"><span class="chip result-chip">匹配度 ${pct}%</span>${tierHtml}</div>
-      `;
-      a.appendChild(body);
-      wrap.appendChild(a);
-      schoolsEl.appendChild(wrap);
+  function schoolCard(s: any, maxScore: number): HTMLElement {
+    const wrap = document.createElement('div');
+    wrap.className = 'u-item';
+    const actions = document.createElement('div');
+    actions.className = 'result-actions result-card-actions';
+    const favBtn = document.createElement('button');
+    favBtn.type = 'button';
+    favBtn.className = 'btn btn-ghost';
+    favBtn.textContent = '☆ 收藏';
+    favBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        const favs = new Set(JSON.parse(localStorage.getItem(scopedKey('fav-universities')) || '[]'));
+        if (favs.has(s.profile.id)) favs.delete(s.profile.id);
+        else favs.add(s.profile.id);
+        localStorage.setItem(scopedKey('fav-universities'), JSON.stringify([...favs]));
+        favBtn.textContent = favs.has(s.profile.id) ? '★ 已收藏' : '☆ 收藏';
+      } catch {
+        /* ignore */
+      }
     });
+    const cmpBtn = document.createElement('button');
+    cmpBtn.type = 'button';
+    cmpBtn.className = 'btn btn-ghost';
+    cmpBtn.textContent = '＋ 对比';
+    cmpBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        const list = JSON.parse(localStorage.getItem(scopedKey('compare-list')) || '[]');
+        if (list.includes(s.profile.id)) {
+          const next = list.filter((x: string) => x !== s.profile.id);
+          localStorage.setItem(scopedKey('compare-list'), JSON.stringify(next));
+          cmpBtn.textContent = '＋ 对比';
+        } else {
+          const next = list.length >= 3 ? [...list.slice(1), s.profile.id] : [...list, s.profile.id];
+          localStorage.setItem(scopedKey('compare-list'), JSON.stringify(next));
+          cmpBtn.textContent = `已选 ${next.length}/3`;
+        }
+      } catch {
+        /* ignore */
+      }
+    });
+    actions.appendChild(favBtn);
+    actions.appendChild(cmpBtn);
+    wrap.appendChild(actions);
+    const a = document.createElement('a');
+    a.className = 'card university-card';
+    a.href = `/universities/${s.profile.id}/`;
+    const img = document.createElement('img');
+    img.className = 'university-cover';
+    img.src = s.profile.cover;
+    img.alt = `${s.profile.name} 校徽`;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    a.appendChild(img);
+    const body = document.createElement('div');
+    body.className = 'university-body';
+    const pct = Math.round((s.score / maxScore) * 100);
+    body.innerHTML = `
+      <h3>${esc(s.profile.name)}</h3>
+      <p class="small muted">${esc(s.profile.type)} · ${esc(s.profile.province)} ${esc(s.profile.city)}</p>
+      <p class="small">匹配方向：${s.majors.slice(0, 4).map(esc).join(' / ')}</p>
+      <div class="chip-row"><span class="chip result-chip">匹配度 ${pct}%</span></div>
+    `;
+    a.appendChild(body);
+    wrap.appendChild(a);
+    return wrap;
   }
 
-  function renderLegend() {
-    if (!rankLegend) return;
-    rankLegend.innerHTML = '';
-    if (!state.rank) return;
-    [
-      ['冲', '位次略高于该校往年门槛，可尝试'],
-      ['稳', '位次基本达到往年门槛'],
-      ['保', '位次有明显余量，比较稳妥'],
-    ].forEach(([label, desc]) => {
-      const chip = document.createElement('span');
-      chip.className = `chip tier-badge tier-${label}`;
-      chip.textContent = `${label}：${desc}`;
-      rankLegend.appendChild(chip);
-    });
+  function renderPerspectives(result: any) {
+    const defs: Record<string, { listId: string; moreId: string; moreCountId: string; moreListId: string; sectionId: string }> = {
+      student: {
+        sectionId: 'studentSection',
+        listId: 'studentSchools',
+        moreId: 'studentMore',
+        moreCountId: 'studentMoreCount',
+        moreListId: 'studentMoreSchools',
+      },
+      parent: {
+        sectionId: 'parentSection',
+        listId: 'parentSchools',
+        moreId: 'parentMore',
+        moreCountId: 'parentMoreCount',
+        moreListId: 'parentMoreSchools',
+      },
+    };
+    const order = result.order ?? ['student', 'parent'];
+    const stuSection = document.getElementById('studentSection');
+    const parSection = document.getElementById('parentSection');
+    if (stuSection && parSection) {
+      const parentFirst = order[0] === 'parent';
+      const isParentBefore = Boolean(stuSection.compareDocumentPosition(parSection) & Node.DOCUMENT_POSITION_FOLLOWING);
+      if (parentFirst && isParentBefore) {
+        stuSection.parentNode?.insertBefore(parSection, stuSection);
+      } else if (!parentFirst && !isParentBefore) {
+        parSection.parentNode?.insertBefore(stuSection, parSection);
+      }
+    }
+    for (const key of order) {
+      const d = defs[key];
+      if (!d) continue;
+      const section = document.getElementById(d.sectionId);
+      const listEl = document.getElementById(d.listId);
+      const moreEl = document.getElementById(d.moreId);
+      const moreCount = document.getElementById(d.moreCountId);
+      const moreList = document.getElementById(d.moreListId);
+      const ranked = result[key] ?? { top3: [], more: [] };
+      const all = [...(ranked.top3 ?? []), ...(ranked.more ?? [])];
+      if (section) section.hidden = all.length === 0;
+      if (!listEl || !moreEl || !moreList) continue;
+      listEl.innerHTML = '';
+      moreList.innerHTML = '';
+      const maxScore = ranked.top3?.[0]?.score ?? ranked.more?.[0]?.score ?? 1;
+      (ranked.top3 ?? []).forEach((s: any) => listEl.appendChild(schoolCard(s, maxScore)));
+      if ((ranked.more ?? []).length > 0) {
+        moreEl.hidden = false;
+        if (moreCount) moreCount.textContent = ranked.more.length;
+        (ranked.more ?? []).forEach((s: any) => moreList.appendChild(schoolCard(s, maxScore)));
+      } else {
+        moreEl.hidden = true;
+      }
+    }
   }
 
   function restart() {
     state.step = 0;
     state.answers = {};
-    state.rank = null;
-    if (rankInput) rankInput.value = '';
-    if (rankWarn) rankWarn.hidden = true;
+    state.typeId = null;
     try {
       localStorage.removeItem(LS_ANSWERS);
       localStorage.removeItem(LS_RESULT);
+      localStorage.removeItem(LS_TYPE);
     } catch {
       /* ignore */
     }
-    renderQuestion();
+    resultCard.hidden = true;
+    quizCard.hidden = true;
+    renderTypeSelect();
+    typeCard.hidden = false;
   }
 
   prevBtn.addEventListener('click', () => {
@@ -540,9 +648,10 @@ import { scopedKey } from '../../lib/account';
   });
 
   nextBtn.addEventListener('click', () => {
-    const q = QUESTIONS[state.step];
-    if (state.answers[q.id] === undefined) return;
-    if (state.step < QUESTIONS.length - 1) {
+    const qs = questions();
+    const q = qs[state.step];
+    if (!q || state.answers[q.id] === undefined) return;
+    if (state.step < qs.length - 1) {
       state.step++;
       renderQuestion();
     } else {
@@ -570,45 +679,32 @@ import { scopedKey } from '../../lib/account';
     }
     renderHistory();
   });
-  rankApply?.addEventListener('click', () => {
-    const v = Number(rankInput?.value ?? '');
-    state.rank = Number.isFinite(v) && v > 0 ? v : null;
-    renderSchools(currentResult);
-    renderLegend();
-    if (rankWarn) rankWarn.hidden = rankType?.value !== 'history';
-  });
-  rankType?.addEventListener('change', () => {
-    if (rankWarn) rankWarn.hidden = rankType.value !== 'history';
-  });
-  rankInput?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') rankApply?.click();
-  });
 
   document.addEventListener('keydown', (e) => {
     if (e.key < '1' || e.key > '9') return;
     const tag = (e.target as HTMLElement)?.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-    const quizCard = document.getElementById('quizCard');
-    const resultCard = document.getElementById('resultCard');
     if (quizCard?.hidden || !resultCard?.hidden) return;
     const opts = Array.from(document.querySelectorAll('#quizOptions .quiz-option'));
     const idx = Number(e.key) - 1;
     if (idx < opts.length) (opts[idx] as HTMLButtonElement).click();
   });
+
   copyBtn.addEventListener('click', () => {
     const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
     if (!saved) return;
     const { result, advice } = saved;
     const lines = [
       '【象牙塔透视镜·选校测评结果】',
-      `兴趣画像：${result.dims.map((d) => DIM_LABELS[d.dim]).join('、')}`,
-      `匹配专业：${result.majors.slice(0, 8).join('、')}`,
-      `推荐高校：${result.schools.slice(0, 5).map((s) => s.profile.name).join('、')}`,
+      `兴趣画像：${(result.dims ?? []).map((d: any) => DIM_LABELS[d.dim]).join('、')}`,
+      `匹配专业：${(result.majors ?? []).slice(0, 8).join('、')}`,
+      `学生视角推荐：${resultSchoolNames(result).slice(0, 3).join('、')}`,
+      `家长视角推荐：${resultSchoolNames(result).slice(3, 6).join('、') || resultSchoolNames(result).slice(0, 3).join('、')}`,
       '',
       'AI 建议：',
       advice?.text ?? '',
       '',
-      '来自：象牙塔透视镜（仅供参考）',
+      '来自：象牙塔透视镜（匹配基于公开资料推断，仅供参考）',
     ].join('\n');
     navigator.clipboard
       ?.writeText(lines)
@@ -635,7 +731,8 @@ import { scopedKey } from '../../lib/account';
 
   shareBtn?.addEventListener('click', () => {
     try {
-      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(state.answers))));
+      const payload = { typeId: state.typeId, answers: state.answers };
+      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
       const url = `${window.location.origin}/quiz/?r=${encoded}`;
       navigator.clipboard
         ?.writeText(url)
@@ -676,22 +773,36 @@ import { scopedKey } from '../../lib/account';
 
   const params = new URLSearchParams(window.location.search);
   const shared = params.get('r');
+  let started = false;
   if (shared) {
     try {
-      const ans = JSON.parse(decodeURIComponent(escape(atob(shared))));
-      if (ans && QUESTIONS.every((q) => ans[q.id] !== undefined)) {
+      const decoded = JSON.parse(decodeURIComponent(escape(atob(shared))));
+      const typeId = decoded?.typeId && QUIZ_TYPES.some((t) => t.id === decoded.typeId) ? decoded.typeId : 'student-full';
+      const ans = decoded?.answers ?? decoded;
+      if (ans && typeof ans === 'object') {
+        state.typeId = typeId;
         Object.assign(state.answers, ans);
-        saveAnswers();
-        compute();
-        history.replaceState(null, '', '/quiz/');
-      } else if (!loadSaved()) {
-        renderQuestion();
+        const qs = questionsOf(typeId as any);
+        if (qs.every((q) => ans[q.id] !== undefined)) {
+          started = true;
+          saveAnswers();
+          localStorage.setItem(LS_TYPE, typeId);
+          compute();
+          history.replaceState(null, '', '/quiz/');
+        }
       }
     } catch {
-      if (!loadSaved()) renderQuestion();
+      /* ignore */
     }
-  } else if (!loadSaved()) {
-    renderQuestion();
+  }
+  if (!started) {
+    if (!loadSaved()) {
+      renderTypeSelect();
+      typeCard.hidden = false;
+    } else if (!state.typeId) {
+      renderTypeSelect();
+      typeCard.hidden = false;
+    }
   }
   renderHistory();
 </script>

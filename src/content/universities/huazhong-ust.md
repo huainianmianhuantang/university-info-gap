@@ -68,21 +68,25 @@ materials:
   - title: "华中科技大学2024级本科专业人才培养方案（土木与水利类）"
     description: 土木与水利工程学院发布的 2024 级本科专业人才培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: http://civil.hust.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1322301378&wbfileid=13264437
   - title: "华中科技大学本科专业人才培养方案质量标准（本科生院〔2024〕16号）"
     description: 本科生院发布的人才培养方案质量标准文件
     category: training-plan
+    audience: both
     type: 其他
     link: http://cpa.hust.edu.cn/info/2261/13402.htm
   - title: "华中科技大学2024级本科生学科大类及院内转专业工作通知"
     description: 关于做好 2024 级本科生学科大类及院（系）内转专业工作的通知
     category: transfer-policy
+    audience: both
     type: 其他
     link: https://sjic.hust.edu.cn/info/1230/14151.htm
   - title: "华中科技大学2026年普通本科招生章程"
     description: 2026 年普通本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://zsb.hust.edu.cn/info/1006/3065.htm
 videos:
@@ -92,18 +96,21 @@ videos:
     source: "华中科技大学官方账号"
     description: "官方宣传片，展示华科大的学习氛围与校园文化。"
     tags: [宣传片]
+    audience: both
   - title: "华中科技大学（研究生）宿舍（之一）实览"
     platform: bilibili
     id: BV1M7411N7bS
     source: "B站转载（UP待核实）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "王牌教授的高考人生——华中科技大学第一临床学院 董念国教授"
     platform: bilibili
     id: BV1oZ4y1e7cx
     source: "华中科技大学招生办"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 华中科技大学于 2000 年由原华中理工大学、同济医科大学、武汉城市建设学院合并组建，校训为“明德厚学、求是创新”。学校在机械工程、光学工程、电气工程、临床医学等方向实力突出，主校区位于湖北省武汉市。

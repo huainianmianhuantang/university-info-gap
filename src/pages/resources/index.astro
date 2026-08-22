@@ -11,6 +11,7 @@ const universities = (await getCollection('universities')).sort((a, b) =>
 interface ResourceItem {
   category: string;
   categoryLabel: string;
+  audience: 'parent' | 'student' | 'both';
   title: string;
   description: string;
   type: string;
@@ -25,6 +26,7 @@ const all = universities.flatMap<ResourceItem>((u) =>
     category: m.category,
     categoryLabel:
       RESOURCE_CATEGORIES.find((c) => c.id === m.category)?.label ?? m.category,
+    audience: m.audience ?? 'both',
     title: m.title,
     description: m.description,
     type: m.type,
@@ -94,6 +96,13 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
       </button>
     </div>
 
+    <div class="video-filter-bar" role="group" aria-label="按关注视角筛选文件资料">
+      <button class="video-filter-btn active" data-aud="all" aria-pressed="true">全部</button>
+      <button class="video-filter-btn" data-aud="parent" aria-pressed="false">家长关心</button>
+      <button class="video-filter-btn" data-aud="student" aria-pressed="false">学生关心</button>
+      <span class="small muted" style="margin-left:auto;">共同关心的资料会在家长/学生视角都出现</span>
+    </div>
+
     <p class="result-count">
       文件资料 {total} 份 · {withMaterials.length} 所学校已收录；视频 {totalVideos} 个
     </p>
@@ -110,7 +119,7 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
             style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"
           >
             {group.items.map((m) => (
-              <div class="card material-card">
+              <div class="card material-card" data-audience={m.audience ?? 'both'}>
                 <div class="title-row">
                   <h3>{m.title}</h3>
                   <span class="type-chip category-chip">{m.categoryLabel}</span>
@@ -160,7 +169,7 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
               style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"
             >
               {cat.items.map((m) => (
-                <div class="card material-card">
+                <div class="card material-card" data-audience={m.audience ?? 'both'}>
                   <div class="title-row">
                     <h3>{m.title}</h3>
                     <span class="type-chip school-chip">{m.school}</span>
@@ -383,17 +392,33 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
   const searchInput = document.getElementById('materialSearch');
   const resultCount = document.querySelector('.result-count');
   const defaultCountText = resultCount?.textContent ?? '';
-  searchInput?.addEventListener('input', () => {
+  let currentAud = 'all';
+  const audBtns = Array.from(document.querySelectorAll('[data-aud]'));
+  audBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      audBtns.forEach((b) => {
+        b.classList.toggle('active', b === btn);
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      currentAud = btn.dataset.aud ?? 'all';
+      applyMaterialFilter();
+    });
+  });
+  function applyMaterialFilter() {
     const kw = searchInput.value.trim().toLowerCase();
     let visible = 0;
     document.querySelectorAll('.material-card').forEach((card) => {
+      const aud = card.dataset.audience ?? 'both';
+      const audOk = currentAud === 'all' || aud === currentAud || aud === 'both';
       const text = (card.textContent ?? '').toLowerCase();
-      const show = !kw || text.includes(kw);
+      const show = audOk && (!kw || text.includes(kw));
       card.style.display = show ? '' : 'none';
       if (show) visible++;
     });
     if (resultCount) {
-      resultCount.textContent = kw ? `匹配 ${visible} 份资料` : defaultCountText;
+      resultCount.textContent =
+        kw || currentAud !== 'all' ? `匹配 ${visible} 份资料` : defaultCountText;
     }
-  });
+  }
+  searchInput?.addEventListener('input', applyMaterialFilter);
 </script>

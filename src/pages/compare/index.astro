@@ -59,8 +59,13 @@ const schools = (await getCollection('universities')).map((u) => ({
   </div>
 </BaseLayout>
 
-<script define:vars={{ schools }}>
+<script is:inline define:vars={{ schools }}>
+  window.__CMP_SCHOOLS__ = schools;
+</script>
+
+<script>
 import { scopedKey } from '../../lib/account';
+  const schools = (window as unknown as { __CMP_SCHOOLS__?: typeof window.__CMP_SCHOOLS__ }).__CMP_SCHOOLS__ ?? [];
   const wrap = document.getElementById('compareTableWrap');
   const empty = document.getElementById('compareEmpty');
   const table = document.getElementById('compareTable');

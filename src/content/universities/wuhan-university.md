@@ -69,21 +69,25 @@ materials:
   - title: "武汉大学本科人才培养方案（本科生院专栏）"
     description: 本科生院本科人才培养方案专栏，含中英文培养方案与课程大纲查询入口
     category: training-plan
+    audience: both
     type: 其他
     link: https://uc.whu.edu.cn/js/kchjxgg/bkrcpyfa.htm
   - title: "武汉大学弘毅学堂各年级培养方案"
     description: 弘毅学堂官网发布的 2021-2025 级培养方案（试行）汇总页
     category: training-plan
+    audience: both
     type: 其他
     link: https://hyxt.whu.edu.cn/rcpy/pyfa.htm
   - title: "武汉大学经济与管理学院2025年转专业工作实施细则"
     description: 学院级转专业实施细则，含申请条件与考核流程
     category: transfer-policy
+    audience: both
     type: 其他
     link: https://ems.whu.edu.cn/info/1588/263441.htm
   - title: "武汉大学全日制普通本科招生章程（2026年修订）"
     description: 2026 年修订版本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://aoff.whu.edu.cn/info/1067/26992.htm
 videos:
@@ -93,18 +97,21 @@ videos:
     source: "武汉大学官方账号"
     description: "官方招生宣传片，带你走进武大课堂。"
     tags: [宣传片]
+    audience: both
   - title: "上新了，武大湖滨新宿舍！"
     platform: bilibili
     id: BV1Uo4y1X7ZQ
     source: "武汉大学官方B站账号"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "你知道武汉大学图书馆长啥样吗？"
     platform: bilibili
     id: BV1WD4y1272z
     source: "武汉大学官方B站账号"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 武汉大学前身为 1893 年创办的自强学堂，1928 年定名国立武汉大学，校训为“自强、弘毅、求是、拓新”。学校在测绘科学与技术、法学、生命科学、经济学等方向实力突出，校园坐落于武汉市珞珈山，樱花大道闻名全国。

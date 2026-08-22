@@ -17,26 +17,31 @@ materials:
   - title: "中南大学本科教学工作基本要求（含培养方案管理规定）"
     description: 本科生院发布的教学工作基本要求，第一章为培养方案制定与执行规定
     category: training-plan
+    audience: both
     type: 其他
     link: https://bksy.csu.edu.cn/info/1168/3345.htm
   - title: "中南大学2012版本科专业培养方案（上中下册）"
     description: 本科生院上级文件栏目收录的 2012 版本科专业培养方案汇编
     category: training-plan
+    audience: both
     type: 其他
     link: https://bksy.csu.edu.cn/ssjgy.jsp?a71280t=130&a71280p=12&a71280c=15&urltype=tree.TreeTempUrl&wbtreeid=1156
   - title: "中南大学土木工程专业2018版本科培养方案（修订版）"
     description: 土木工程学院官网发布的土木工程专业本科培养方案
     category: training-plan
+    audience: both
     type: 其他
     link: https://civil.csu.edu.cn/bksjy/7.htm
   - title: "中南大学机电工程学院2025级本科生转专业接收实施细则"
     description: 学院级转专业接收实施细则
     category: transfer-policy
+    audience: both
     type: 其他
     link: https://cmee.csu.edu.cn/info/1090/7305.htm
   - title: "中南大学2026年全日制普通本科招生章程"
     description: 2026 年全日制普通本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://zhaosheng.csu.edu.cn/info/1218/2622.htm
 videos:
@@ -46,18 +51,21 @@ videos:
     source: "B站转载（UP：马克思微博）"
     description: "中南大学校园宣传片（非招生办原发，待核实）。"
     tags: [宣传片]
+    audience: both
   - title: "中南大学1200元研究生宿舍到底如何？入住一年后的真实感受"
     platform: bilibili
     id: BV1xX4y1x7sL
     source: "B站转载（UP：Stephen_Leung）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "【全英VLOG】在中南大学读研是种什么体验｜Presentation 支配的一天"
     platform: bilibili
     id: BV1te4y147dc
     source: "B站转载（UP：Stephen_Leung）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 中南大学于 2000 年由原中南工业大学、湖南医科大学（湘雅医学院）与长沙铁道学院合并组建，校训为“知行合一、经世致用”。学校在临床医学、冶金工程、材料科学、轨道交通等方向实力突出，主校区位于湖南省长沙市岳麓区。

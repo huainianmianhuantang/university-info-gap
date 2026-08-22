@@ -68,8 +68,13 @@ const categories = [
   </div>
 </BaseLayout>
 
-<script define:vars={{ submitEmail: CONTACT.email }}>
+<script is:inline define:vars={{ submitEmail: CONTACT.email }}>
+  window.__SUBMIT_EMAIL__ = submitEmail;
+</script>
+
+<script>
   import { getProfile } from '../lib/account';
+  const submitEmail = (window as unknown as { __SUBMIT_EMAIL__?: string }).__SUBMIT_EMAIL__ ?? '';
   const form = document.getElementById('submitForm');
 
   const acctProfile = getProfile();

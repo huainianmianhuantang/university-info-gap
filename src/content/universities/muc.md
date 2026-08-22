@@ -17,26 +17,31 @@ materials:
   - title: "中央民族大学法学本科人才培养方案"
     description: 法学院官网发布的法学本科人才培养方案官方 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://law.muc.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1779811220&wbfileid=F376D877EBD06B662061E225A908A070
   - title: "中央民族大学教育学本科专业人才培养方案"
     description: 教育学院官网发布的教育学本科专业人才培养方案
     category: training-plan
+    audience: both
     type: 其他
     link: https://edu.muc.edu.cn/xspy/zsgz/bkszs1.htm
   - title: "中央民族大学本科专业人才培养方案（2022版）修订指南与解读"
     description: 校网新闻发布的 2022 版人才培养方案修订指南与培训解读
     category: training-plan
+    audience: both
     type: 其他
     link: https://news.muc.edu.cn/info/1201/21433.htm
   - title: "中央民族大学本科生专业调整实施办法"
     description: 校方发布的本科生专业调整（转专业）实施办法
     category: transfer-policy
+    audience: both
     type: 其他
     link: https://jw.muc.edu.cn/info/1008/2952.htm
   - title: "中央民族大学2026年本、预科招生章程"
     description: 2026 年本、预科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://zb.muc.edu.cn/content/zs/93108d8f-5802-11f1-98a5-6c92bf4353bb.htm
 videos:
@@ -46,18 +51,21 @@ videos:
     source: "中央民族大学官方账号"
     description: "有一种美，生生不息。2025，我们在民大期待一个你。"
     tags: [宣传片]
+    audience: both
   - title: "中央民族大学还有这么大的宿舍？民大宿舍 roomtour"
     platform: bilibili
     id: BV1zt4y1t7wJ
     source: "B站转载（UP：雪鹅是Shire）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "【瓶】央民读研vlog#4：图书馆教室宿舍食堂四点一线"
     platform: bilibili
     id: BV1bL411s7Rj
     source: "B站转载（UP待核实）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 中央民族大学前身为 1941 年创办的延安民族学院，是我国民族类高等教育的代表性学府，校训为“美美与共、知行合一”。学校在民族学、人类学、中国少数民族语言文学等方向特色鲜明，主校区位于北京市海淀区，另设丰台校区与海南校区。

@@ -16,21 +16,25 @@ materials:
   - title: "西北农林科技大学2022级本科培养方案（教务处专业建设栏目）"
     description: 教务处专业建设栏目发布的农学、植物科学与技术、种子科学与工程等专业培养方案
     category: training-plan
+    audience: both
     type: 其他
     link: https://jiaowu.nwsuaf.edu.cn/jxjsB/zyB/15a95efa1e6c4267b64e55c84759e43c.htm
   - title: "西北农林科技大学关于修订本科人才培养方案的指导意见（2025）"
     description: 校发文件，2025 年校长办公会议审议通过的本科人才培养方案修订指导意见
     category: training-plan
+    audience: both
     type: pdf
     link: https://zhxy.nwsuaf.edu.cn/docs/2025-04/376a0ff2131347cba8a48ca05402a5d3.pdf
   - title: "西北农林科技大学资源环境学院转专业考核办法（2025-2026学年）"
     description: 学院级本科生转专业考核办法官方文件
     category: transfer-policy
+    audience: both
     type: pdf
     link: https://jiaowu.nwafu.edu.cn/docs//2026-01/2360b446e1774930967a78ddaf870c1d.pdf
   - title: "西北农林科技大学2026年本科招生章程"
     description: 2026 年本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://zhshw.nwafu.edu.cn/zszn/zszc/966116f1e8934abc8f21f73b0c0e7a59.htm
 videos:
@@ -40,18 +44,21 @@ videos:
     source: "B站转载（UP待核实）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "西北农林科技大学【水资】大三小学期实习vlog"
     platform: bilibili
     id: BV1Dz4y1E7ok
     source: "B站转载（UP待核实）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
   - title: "???????? ?????985?????"
     platform: bilibili
     id: BV1SWbR6jEf2
     source: "B????UP????????"
     description: "????????????????? 985 ???????????"
     tags: [????]
+    audience: both
 
 ---
 

@@ -252,8 +252,13 @@ const categories = [
   </div>
 </BaseLayout>
 
-<script define:vars={{ schoolBriefs }}>
+<script is:inline define:vars={{ schoolBriefs }}>
+  window.__SCHOOL_BRIEFS__ = schoolBriefs;
+</script>
+
+<script>
   import { getProfile } from '../lib/account';
+  const schoolBriefs = (window as unknown as { __SCHOOL_BRIEFS__?: typeof window.__SCHOOL_BRIEFS__ }).__SCHOOL_BRIEFS__ ?? [];
   const welcomeBanner = document.getElementById('welcomeBanner');
   const profileNow = getProfile();
   if (welcomeBanner && profileNow) {

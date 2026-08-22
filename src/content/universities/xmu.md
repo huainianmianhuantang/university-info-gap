@@ -17,21 +17,25 @@ materials:
   - title: "厦门大学信息学院2022级本科各专业培养方案"
     description: 信息学院官网发布的 2022 级计算机、网安、人工智能等专业培养方案页
     category: training-plan
+    audience: both
     type: 其他
     link: https://informatics.xmu.edu.cn/info/1075/2962.htm
   - title: "厦门大学电子科学与技术学院本科专业培养方案"
     description: 电子科学与技术学院发布的电子信息工程等专业 2019-2021 级培养方案页
     category: training-plan
+    audience: both
     type: 其他
     link: https://ese.xmu.edu.cn/info/1032/15499.htm
   - title: "厦门大学2024-2025学年第二学期转专业工作安排通知"
     description: 教务处发布的学期转专业工作安排通知
     category: transfer-policy
+    audience: both
     type: 其他
     link: https://jwc.xmu.edu.cn/info/1911/66902.htm
   - title: "厦门大学2026年本科招生章程"
     description: 2026 年本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://zs.xmu.edu.cn/info/1042/36352.htm
 videos:
@@ -41,18 +45,21 @@ videos:
     source: "厦门大学招生与考试办公室"
     description: "自强不息，止于至善。"
     tags: [宣传片]
+    audience: both
   - title: "在厦大的一天如何度过！"
     platform: bilibili
     id: BV1JL411m7AP
     source: "B站转载（UP待核实）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "在厦大的一天，希望不要卷到你！"
     platform: bilibili
     id: BV1K24y147fM
     source: "B站转载（UP：Annyinn）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 厦门大学由著名爱国华侨陈嘉庚先生于 1921 年创办，校训为“自强不息、止于至善”。学校在经济学、会计学、化学、海洋科学等方向实力突出，校园被誉为“中国最美大学之一”，主校区位于福建省厦门市思明区，另设翔安校区。

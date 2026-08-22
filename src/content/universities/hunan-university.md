@@ -17,26 +17,31 @@ materials:
   - title: "湖南大学2024版本科专业培养方案修订指导意见（湖大教字〔2023〕65号）"
     description: 教务处发布的 2024 版本科专业培养方案修订指导意见
     category: training-plan
+    audience: both
     type: 其他
     link: https://jwc.hnu.edu.cn/info/1141/12014.htm
   - title: "湖南大学本科专业培养方案修订意见（湖大教字〔2019〕29号）"
     description: 教务处发布的 2019 版本科专业培养方案修订意见，含课程体系框架
     category: training-plan
+    audience: both
     type: 其他
     link: http://jwc.hnu.edu.cn/info/1141/8897.htm
   - title: "湖南大学本科专业培养方案与教学计划管理办法"
     description: 湖大教字〔2015〕39号，培养方案与教学计划管理官方办法
     category: training-plan
+    audience: both
     type: 其他
     link: http://jwc.hnu.edu.cn/info/1141/1536.htm
   - title: "湖南大学工商管理学院2026年本科生转专业工作细则"
     description: 学院级转专业（专业分流）工作细则
     category: transfer-policy
+    audience: both
     type: 其他
     link: http://ibschool.hnu.edu.cn/info/11247/98847.htm
   - title: "湖南大学2026年本科招生章程"
     description: 2026 年本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://admi.hnu.edu.cn/info/1187/7333.htm
 videos:
@@ -46,18 +51,21 @@ videos:
     source: "湖南大学党委宣传部"
     description: "从湖南大学走向世界。"
     tags: [宣传片]
+    audience: both
   - title: "【细节控】湖南大学天马学生公寓，正在成为一件艺术品"
     platform: bilibili
     id: BV1WhKczkECA
     source: "B站转载（UP：greatre嘉瑞特）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "Vlog004 湖南大学播音生的日常｜满课的日子"
     platform: bilibili
     id: BV1dE41197Hp
     source: "B站转载（UP待核实）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 湖南大学办学可追溯至千年学府岳麓书院，1926 年正式定名，校训为“实事求是、敢为人先”。学校在土木工程、机械工程、化学等方向实力突出，校园依岳麓山、临湘江，位于湖南省长沙市。

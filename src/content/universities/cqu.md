@@ -17,26 +17,31 @@ materials:
   - title: "重庆大学2025版本科各专业人才培养方案（土木工程学院）"
     description: 土木工程学院官网发布的 2025 版本科各专业人才培养方案（适用于 2025 级）
     category: training-plan
+    audience: both
     type: 其他
     link: https://civil.cqu.edu.cn/info/1257/20061.htm
   - title: "重庆大学2023级集成电路设计与集成系统本科培养方案"
     description: 微电子与通信工程学院官网发布的 2023 级集成电路设计与集成系统培养方案
     category: training-plan
+    audience: both
     type: pdf
     link: http://www.ccee.cqu.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1343593663&wbfileid=14573135
   - title: "重庆大学2022级车辆工程本科培养方案"
     description: 机械与运载工程学院官网发布的 2022 级车辆工程培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://cme.cqu.edu.cn/__local/A/56/FC/B82984D5C21AAC235559CA1D87B_73781A75_AEC1C.pdf
   - title: "重庆大学普通本科学生转专业管理办法"
     description: 校方发布的转专业管理办法全文
     category: transfer-policy
+    audience: both
     type: pdf
     link: https://jwc.cqu.edu.cn/__local/3/CC/D0/150A6E569C933DB821C0B46B5AE_601E96AE_2A587.pdf?e=.pdf
   - title: "重庆大学2026年本科招生章程"
     description: 2026 年本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://zhaosheng.cqu.edu.cn/pub/desktopend/contentpage/1190
 videos:
@@ -46,18 +51,21 @@ videos:
     source: "重庆大学官方账号"
     description: "重庆大学邀您共执时代之笔。"
     tags: [宣传片]
+    audience: both
   - title: "【研究生开学】重庆大学开学的一天"
     platform: bilibili
     id: BV17f4y1n7U6
     source: "B站转载（UP：泰国王老丝）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "【重庆大学】一位本科生的Vlog-1 自习·上课·科研·锻炼"
     platform: bilibili
     id: BV1xv411u7ht
     source: "B站转载（UP待核实）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 重庆大学创办于 1929 年，是西南地区学科门类齐全的综合性大学，校训为“耐劳苦、尚俭朴、勤学业、爱国家”。学校在电气工程、建筑学、机械工程等方向实力突出，主校区位于重庆市沙坪坝区，另有虎溪校区。

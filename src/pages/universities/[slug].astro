@@ -30,6 +30,8 @@ const tabs = [
   { id: 'classes', label: '上课' },
   { id: 'materials', label: '学习资料' },
   { id: 'videos', label: '视频' },
+  { id: 'parent-concern', label: '家长关心' },
+  { id: 'student-concern', label: '学生关心' },
 ];
 
 const materialsByCategory = RESOURCE_CATEGORIES.map((c) => ({
@@ -58,6 +60,17 @@ const sortedVideos = [...u.videos].sort(
   (a, b) =>
     (TAG_ORDER[a.tags?.[0]] ?? 9) - (TAG_ORDER[b.tags?.[0]] ?? 9),
 );
+
+const concernItems = (aud: 'parent' | 'student') => {
+  const match = (m: { audience?: 'parent' | 'student' | 'both' }) =>
+    (m.audience ?? 'both') === 'both' || m.audience === aud;
+  return {
+    materials: u.materials.filter(match),
+    videos: u.videos.filter(match),
+  };
+};
+const parentConcern = concernItems('parent');
+const studentConcern = concernItems('student');
 const officialUrl = OFFICIAL_SITES[university.id]
   ? `https://www.${OFFICIAL_SITES[university.id]}`
   : null;
@@ -334,6 +347,72 @@ const related = allUniversities
     )}
     {u.videos.length === 0 && (
       <SectionPending id="videos" label="校园视频" school={u.name} category="视频" />
+    )}
+
+    {parentConcern.materials.length + parentConcern.videos.length > 0 ? (
+      <section id="parent-concern" class="card section-block">
+        <h2>👨‍👩‍👧 家长关心</h2>
+        <p class="muted">
+          就业、深造、学费与转专业等家长常关注的信息，结合公开资料整理，请以官方发布为准。
+        </p>
+        <div class="concern-list">
+          {parentConcern.materials.map((m) => (
+            <a
+              class="concern-item"
+              href={m.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📄 {m.title}
+            </a>
+          ))}
+          {parentConcern.videos.map((v) => (
+            <a
+              class="concern-item"
+              href={`https://www.bilibili.com/video/${v.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              🎬 {v.title}
+            </a>
+          ))}
+        </div>
+      </section>
+    ) : (
+      <SectionPending id="parent-concern" label="家长关心" school={u.name} category="其他" />
+    )}
+
+    {studentConcern.materials.length + studentConcern.videos.length > 0 ? (
+      <section id="student-concern" class="card section-block">
+        <h2>🎒 学生关心</h2>
+        <p class="muted">
+          宿舍、食堂、社团与课业节奏等学生视角关注的信息，结合公开资料整理，请以官方发布为准。
+        </p>
+        <div class="concern-list">
+          {studentConcern.materials.map((m) => (
+            <a
+              class="concern-item"
+              href={m.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📄 {m.title}
+            </a>
+          ))}
+          {studentConcern.videos.map((v) => (
+            <a
+              class="concern-item"
+              href={`https://www.bilibili.com/video/${v.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              🎬 {v.title}
+            </a>
+          ))}
+        </div>
+      </section>
+    ) : (
+      <SectionPending id="student-concern" label="学生关心" school={u.name} category="其他" />
     )}
 
     {missingSections.length > 0 && (

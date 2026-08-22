@@ -17,26 +17,31 @@ materials:
   - title: "北京师范大学关于优化公费师范生培养方案的通知"
     description: 教务部 2024 年通知，含本研衔接公费师范生培养方案指导意见与模板
     category: training-plan
+    audience: both
     type: 其他
     link: https://jwb.bnu.edu.cn/jsjy/jspymsgg/61a0ebd0d43544218387361f84ca9ff6.htm
   - title: "北京师范大学本科生培养方案专栏（教务部）"
     description: 教务部培养方案专栏，说明各专业培养方案查询方式
     category: training-plan
+    audience: both
     type: 其他
     link: https://jwb.bnu.edu.cn/zyykc/pyfa/bkspyfa/7fe8c2702419432aa19611fb89cba589.htm
   - title: "北京师范大学未来教育学院本科生培养方案管理办法"
     description: 未来教育学院培养方案管理官方文件 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://cef.bnu.edu.cn/docs/20190823182602996857.pdf
   - title: "北京师范大学本科生转专业管理办法（2025年印发）"
     description: 校方发布的《本科生转专业管理办法》全文
     category: transfer-policy
+    audience: both
     type: 其他
     link: https://jwb.bnu.edu.cn/pygc/xygl/jxap/010994a043cb4299bd874f577ef1b9ca.htm
   - title: "北京师范大学2026年本科招生章程及体检实施细则"
     description: 2026 年本科招生章程与体检实施细则官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://admission.bnu.edu.cn/zszc/ae38868c24064dab993597b5ab750a1b.html
 videos:
@@ -46,18 +51,21 @@ videos:
     source: "B站转载（UP待核实）"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "北京师范大学珠海校区图书馆总馆寒假实拍"
     platform: bilibili
     id: BV1SM411a7rf
     source: "B站转载（UP：乘风望山河）"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
   - title: "??????????"
     platform: bilibili
     id: BV1Tq7ozKEH8
     source: "B????UP??????????"
     description: "????????????????????????????????????????"
     tags: [????]
+    audience: both
 
 ---
 

@@ -69,9 +69,14 @@ const schools = (await getCollection('universities')).map((u) => ({
   </div>
 </BaseLayout>
 
-<script define:vars={{ schools }}>
+<script is:inline define:vars={{ schools }}>
+  window.__FAV_SCHOOLS__ = schools;
+</script>
+
+<script>
 import { scopedKey } from '../../lib/account';
 
+  const schools = (window as unknown as { __FAV_SCHOOLS__?: typeof window.__FAV_SCHOOLS__ }).__FAV_SCHOOLS__ ?? [];
   const grid = document.getElementById('favGrid');
   const empty = document.getElementById('favEmpty');
   const exportBtn = document.getElementById('exportFavs');

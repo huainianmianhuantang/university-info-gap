@@ -52,174 +52,203 @@ materials:
   - title: 工商管理学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 信息科学与工程学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 理学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 机械工程与自动化学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 文法学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 软件学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 冶金学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 马克思主义学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 医学与生物信息工程学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 外国语学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 生命科学与健康学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 江河建筑学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 机器人科学与工程学院本科生各专业培养方案
     description: 官方培养方案 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 专业简介汇总（方案打印）
     description: 各专业简介汇总文档
     category: training-plan
+    audience: both
     type: doc
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 理学院保研实施细则（化学拔尖班）2026
     description: 2026 年推荐免试攻读研究生实施细则
     category: postgrad-rec
+    audience: parent
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 生命科学与健康学院保研通知 2026
     description: 2026 年推荐免试攻读研究生工作通知
     category: postgrad-rec
+    audience: parent
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 信息学院保研实施细则 2025
     description: 2025 年推荐免试攻读研究生工作实施细则
     category: postgrad-rec
+    audience: parent
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 材料学院本科生综合素质评价实施办法
     description: 材料院字〔2024〕4 号
     category: scholarship
+    audience: parent
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 资源与土木工程学院本科生奖学金评定实施办法
     description: 学院奖学金评定办法
     category: scholarship
+    audience: parent
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 《大学英语》课程分级教学实施办法（试行）
     description: 官方通知 PDF
     category: courses
+    audience: student
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 东北大学本科生选课指导手册
     description: 官方选课指导
     category: courses
+    audience: student
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 选修课榜单（学生整理）
     description: 学长学姐整理的选修课神榜/黑榜（含讨论区）
     category: courses
+    audience: student
     type: xlsx
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 东大高数（上）习题全解指南（答案）
     description: 高数教材配套习题答案
     category: courses
+    audience: student
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 《高等数学（上）》东北大学
     description: 学校教材电子版
     category: courses
+    audience: student
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 新生入学指南 freshman4NEU 2026
     description: 2026 级新生入学指南
     category: freshman
+    audience: both
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 新生入学宣讲 PPT（8.12）
     description: 新生入学教育宣讲课件
     category: freshman
+    audience: both
     type: ppt
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 东北大学宿舍床尺寸
     description: 宿舍床铺尺寸参考（买床品前必看）
     category: campus-life
+    audience: student
     type: pdf
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 沈阳美食必吃榜
     description: 沈阳本地美食清单
     category: campus-life
+    audience: student
     type: xlsx
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
   - title: 竞赛星级分类
     description: 学科竞赛等级与分类参考
     category: competition
+    audience: student
     type: doc
     link: https://pan.quark.cn/s/96875988ef30
     code: DKVL
@@ -231,18 +260,21 @@ videos:
     source: "东北大学官方账号"
     description: "人生的课题不是考卷，每一个因选择而诞生的困惑，都有被称作“希望”的另一面。"
     tags: [宣传片]
+    audience: both
   - title: "东北大学宿舍空调，给你清凉一夏"
     platform: bilibili
     id: BV1eU3EzQENp
     source: "东北大学官方B站账号"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "NEUer，请选择你的学院！（一）"
     platform: bilibili
     id: BV1c6jyzQEEi
     source: "东北大学官方B站账号"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 东北大学创办于 1923 年，张学良曾兼任校长，是东北地区历史悠久的工科强校，校训为“自强不息、知行合一”。学校在控制科学与工程、冶金工程、计算机科学与技术等方向实力突出，主校区位于辽宁省沈阳市南湖，另设浑南校区。

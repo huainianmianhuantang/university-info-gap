@@ -80,6 +80,7 @@ const universities = defineCollection({
       .array(
         z.object({
           category: z.enum(resourceCategoryIds),
+          audience: z.enum(['parent', 'student', 'both']).default('both'),
           title: z.string(),
           description: z.string().default(''),
           type: z.enum(['pdf', 'doc', 'ppt', 'xlsx', '其他']).default('其他'),
@@ -92,6 +93,7 @@ const universities = defineCollection({
     videos: z
       .array(
         z.object({
+          audience: z.enum(['parent', 'student', 'both']).default('both'),
           title: z.string(),
           platform: z.enum(['bilibili', 'youku', 'tencent', '其他']).default('bilibili'),
           id: z.string().default(''),

@@ -17,26 +17,31 @@ materials:
   - title: "兰州大学2023版本科人才培养方案修订工作方案"
     description: 教务处印发的 2023 版本科人才培养方案修订工作方案（校教发〔2022〕22号）
     category: training-plan
+    audience: both
     type: pdf
     link: https://jwc.lzu.edu.cn/jwc/upload/files/N20220506085249.pdf
   - title: "兰州大学管理学院2023版本科专业人才培养方案"
     description: 管理学院官网发布的 2023 版各本科专业人才培养方案
     category: training-plan
+    audience: both
     type: 其他
     link: https://ms.lzu.edu.cn/jxxm/bk/tzgg/content_11600
   - title: "兰州大学“基础学科拔尖学生培养试验计划”物理学专业人才培养方案"
     description: 萃英学院拔尖计划物理学专业人才培养方案官方 PDF
     category: training-plan
+    audience: both
     type: pdf
     link: https://cycollege.lzu.edu.cn/__local/9/22/85/DF3FBAD2FD7B38E33BBEA83B861_AF5C466A_15586B.pdf
   - title: "兰州大学本科生转专业管理办法（2025年修订）"
     description: 2025 年 5 月校长办公会议审议通过的转专业管理办法全文
     category: transfer-policy
+    audience: both
     type: pdf
     link: https://chem.lzu.edu.cn/ueditor/php/upload/file/20250520/1747712582636350.pdf
   - title: "兰州大学2026年本科招生章程"
     description: 2026 年本科招生章程官方发布页
     category: admission
+    audience: parent
     type: 其他
     link: https://zsb.lzu.edu.cn/zhaoshengdongtai/tongzhigonggao/2026/0526/332173.html
 videos:
@@ -46,18 +51,21 @@ videos:
     source: "兰州大学官方账号"
     description: "这是你人生独树一帜的决定。"
     tags: [宣传片]
+    audience: both
   - title: "兰大数学专业“播音系”学长的日常"
     platform: bilibili
     id: BV1nW4y1r7dJ
     source: "兰州大学招办"
     description: "宿舍/校园生活实拍，帮你提前了解真实的居住与生活环境。"
     tags: [宿舍生活]
+    audience: student
   - title: "兰大物理学专业“文武双全”学姐的一天"
     platform: bilibili
     id: BV1f94y1y7no
     source: "兰州大学招办"
     description: "课堂/学习日常记录，感受真实的学习节奏与专业氛围。"
     tags: [学习日常]
+    audience: student
 ---
 
 兰州大学前身为 1909 年创办的甘肃法政学堂，是西北地区历史悠久的综合性大学，校训为“自强不息、独树一帜”。学校在草学、化学、大气科学、生态学等方向实力突出，主校区位于甘肃省兰州市。

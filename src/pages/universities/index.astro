@@ -173,9 +173,14 @@ const slugs = universities.map((u) => u.id);
   </div>
 </BaseLayout>
 
-<script define:vars={{ slugs }}>
+<script is:inline define:vars={{ slugs }}>
+  window.__UNI_SLUGS__ = slugs;
+</script>
+
+<script>
 import { scopedKey } from '../../lib/account';
 
+  const slugs = (window as unknown as { __UNI_SLUGS__?: string[] }).__UNI_SLUGS__ ?? [];
   const grid = document.getElementById('universityGrid');
   const count = document.getElementById('resultCount');
   const qInput = document.getElementById('q');
