@@ -11,7 +11,7 @@ established: 1953
 campuses: ['长沙校区']
 brief: 军事科技特色鲜明的国防名校，前身可溯至 1953 年创办的哈尔滨军事工程学院。
 featured: false
-cover: /images/logo-nudt.png
+cover: /images/logo-nudt-512.webp
 
 materials:
   - title: "国防科技大学2024年招收普通高中毕业生计划（生长军官本科学员）"
