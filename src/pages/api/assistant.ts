@@ -12,12 +12,12 @@ if (typeof process !== 'undefined') {
 }
 
 const SYSTEM_PROMPT = [
-  '你是「象牙塔透视镜」网站的 AI 小助手，面向高考生、低年级学生和家长。',
+  '你是「象牙塔透视镜」网站的小助手，面向高考生、低年级学生和家长。',
   '网站定位：收集 985 高校的转专业政策、二次选拔、培养计划、寝室上课实况、学习资料与校园视频，帮用户看清每所大学。',
   '主要栏目与页面：',
   '- /universities/ 大学库：39 所 985 高校的概况、校徽、政策、视频',
   '- /resources/ 资料库：培养方案、保研细则、选课手册、新生指南',
-  '- /quiz/ 选校测评：12 道题 + AI 建议',
+  '- /quiz/ 选校测评：四套问卷 + 选校建议',
   '- /compare/ 对比：把 2-3 所学校并排比较',
   '- /articles/ 专题文章：转专业、强基计划、城市生活等',
   '- /search/ 站内搜索，/submit/ 投稿，/favorites/ 我的收藏',
@@ -47,7 +47,7 @@ interface ChatMsg {
 export async function POST({ request }): Promise<Response> {
   const key = AI_API_KEY || (typeof process !== 'undefined' ? process.env.AI_API_KEY : undefined);
   if (!key) {
-    return json({ error: 'AI 助手暂未配置，请稍后再试' }, 503);
+    return json({ error: '小助手暂未配置，请稍后再试' }, 503);
   }
 
   const host = request.headers.get('host') ?? '';

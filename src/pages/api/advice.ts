@@ -108,7 +108,7 @@ export async function POST({ request }): Promise<Response> {
   const model = AI_MODEL || 'deepseek-chat';
 
   if (!key) {
-    return json({ error: 'AI 未配置：请在 .env 中填写 AI_API_KEY' });
+    return json({ error: '个性化建议暂未配置，请稍后再试' });
   }
 
   let body: AdviceBody;

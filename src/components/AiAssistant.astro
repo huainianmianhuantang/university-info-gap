@@ -1,12 +1,12 @@
-<button class="ai-fab" id="aiFab" type="button" aria-label="打开 AI 小助手" aria-expanded="false">🤖</button>
-<button class="ai-dock" id="aiDock" hidden type="button" aria-label="展开 AI 小助手">🤖<span>小助手</span></button>
+<button class="ai-fab" id="aiFab" type="button" aria-label="打开小助手" aria-expanded="false">💬</button>
+<button class="ai-dock" id="aiDock" hidden type="button" aria-label="展开小助手">💬<span>小助手</span></button>
 
-<div class="ai-panel" id="aiPanel" hidden role="dialog" aria-modal="false" aria-label="AI 小助手">
+<div class="ai-panel" id="aiPanel" hidden role="dialog" aria-modal="false" aria-label="小助手">
   <div class="ai-head">
-    <span class="ai-avatar">🤖</span>
+    <span class="ai-avatar">💬</span>
     <div class="ai-head-text">
-      <b>AI 小助手</b>
-      <span class="ai-status">在线 · 帮你快速了解网站和大学</span>
+      <b>选校小助手</b>
+      <span class="ai-status">随时帮你快速了解网站和大学</span>
     </div>
     <button class="ai-close" id="aiClose" type="button" aria-label="关闭">×</button>
   </div>
@@ -22,7 +22,7 @@
     <button class="ai-send" id="aiSend" type="button">发送</button>
   </div>
   <div class="ai-foot">
-    <span>内容由 AI 生成，仅供参考，请以学校官方发布为准</span>
+    <span>内容仅供参考，请以学校官方发布为准</span>
     <button id="aiClear" type="button">清空对话</button>
   </div>
 </div>
@@ -85,8 +85,8 @@
       const profile = getProfile();
       hi.innerHTML =
         (profile
-          ? `你好呀 ${escapeHtml(profile.nickname)}，我是小助手 🤖 `
-          : '你好呀，我是小助手 🤖 ') +
+          ? `你好呀 ${escapeHtml(profile.nickname)}，我是小助手 💬 `
+          : '你好呀，我是小助手 💬 ') +
         '可以问我：这个网站怎么用、怎么选专业方向、<strong>转专业</strong>要注意什么……' +
         (profile ? '' : '（登录后对话会按账号保存）');
       msgs.appendChild(hi);

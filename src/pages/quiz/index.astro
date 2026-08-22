@@ -115,12 +115,12 @@ const schools = (await getCollection('universities')).map((u) => ({
 
         <section class="result-section">
           <div class="result-section-head">
-            <h3>AI 建议</h3>
+            <h3>📝 选校建议</h3>
             <button class="btn btn-ghost" id="regenBtn" type="button" hidden>换一批建议</button>
             <button class="btn btn-ghost" id="copyAdviceBtn" type="button">复制建议</button>
           </div>
           <div class="advice-box" id="resultAdvice"></div>
-          <p class="small muted" id="adviceBadge">AI 建议生成中…</p>
+          <p class="small muted" id="adviceBadge">选校建议生成中…</p>
         </section>
       </div>
 
@@ -450,11 +450,11 @@ const schools = (await getCollection('universities')).map((u) => ({
         showResult(saved);
       } else {
         const badge = document.getElementById('adviceBadge');
-        if (badge) badge.textContent = 'AI 建议（规则引擎生成）';
+        if (badge) badge.textContent = '选校建议（根据你的作答生成）';
       }
     } catch {
       const badge = document.getElementById('adviceBadge');
-      if (badge) badge.textContent = 'AI 建议（规则引擎生成）';
+      if (badge) badge.textContent = '选校建议（根据你的作答生成）';
     }
     saveHistory(saved);
   }
@@ -505,8 +505,8 @@ const schools = (await getCollection('universities')).map((u) => ({
     if (badge) {
       badge.textContent =
         advice?.provider === 'llm'
-          ? 'AI 建议（DeepSeek 大模型生成）'
-          : 'AI 建议（规则引擎生成）';
+          ? '选校建议（结合你的作答生成）'
+          : '选校建议（根据你的作答生成）';
     }
     if (regenBtn) regenBtn.hidden = advice?.provider !== 'llm';
 
@@ -720,7 +720,7 @@ const schools = (await getCollection('universities')).map((u) => ({
       `学生视角推荐：${resultSchoolNames(result).slice(0, 3).join('、')}`,
       `家长视角推荐：${resultSchoolNames(result).slice(3, 6).join('、') || resultSchoolNames(result).slice(0, 3).join('、')}`,
       '',
-      'AI 建议：',
+      '选校建议：',
       advice?.text ?? '',
       '',
       '来自：象牙塔透视镜（匹配基于公开资料推断，仅供参考）',

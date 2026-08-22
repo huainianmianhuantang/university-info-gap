@@ -2,7 +2,7 @@ import type { QuizAnswer, RecommendResult, SchoolProfile } from './recommender';
 import { DIM_LABELS, QUESTIONS } from './recommender';
 
 /**
- * AI 建议引擎（v1 = 规则引擎）。
+ * 选校建议引擎（v1 = 规则引擎）。
  *
  * 预留升级路径：把 AI_PROVIDER 从 'rule' 改为 'llm' 并实现 callLLM() 后，
  * 将站点部署到支持服务端函数的平台（Vercel / Netlify / Cloudflare Pages），
@@ -101,7 +101,7 @@ export async function getLLMAdvice(
   _apiKey?: string,
 ): Promise<Advice> {
   throw new Error(
-    'LLM 模式未启用：请在服务端配置 API Key 后启用（见 README「AI 建议升级说明」）。',
+    '建议服务未启用：请在服务端配置 API Key 后启用（见 README「个性化建议接口」）。',
   );
 }
 
