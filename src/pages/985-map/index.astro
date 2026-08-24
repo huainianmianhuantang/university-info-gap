@@ -13,6 +13,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <nav class="m985-filters" id="m985Filters" aria-label="地区筛选"></nav>
 
+    <div class="m985-legend" id="m985Legend"></div>
+
     <div class="m985-card">
       <div id="m985Map"></div>
       <div class="m985-loading" id="m985Loading">⏳ 正在加载中国地图与学校点位…</div>
@@ -102,10 +104,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     box-shadow: var(--shadow);
     overflow: hidden;
   }
+  .m985-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(31, 94, 255, 0.07), transparent 42%),
+      radial-gradient(circle at 86% 82%, rgba(10, 165, 181, 0.07), transparent 46%),
+      radial-gradient(rgba(31, 94, 255, 0.10) 1px, transparent 1.6px);
+    background-size: auto, auto, 26px 26px;
+  }
   #m985Map {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: calc(100vh - 200px);
     min-height: 480px;
+  }
+  .m985-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    justify-content: center;
+    margin: 0 0 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .m985-legend i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    margin-right: 5px;
+    vertical-align: -1px;
   }
   .m985-loading,
   .m985-error {
@@ -766,8 +799,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   let chart: any = null;
   let currentRegion = '全部';
-  let spotlightPool: any[] = [];
-  let spotlightTimer: number | null = null;
   const EASTER_LINES = [
     '听说这所学校的食堂，能让南方人也爱上北方菜。',
     '在校园里迷路，可能是新生的必修课。',
@@ -781,36 +812,32 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     '它的校园角落，藏着一百个可以发朋友圈的机位。'
   ];
 
-  function pickSpotlight() {
-    if (!chart || spotlightPool.length === 0) return;
-    const s = spotlightPool[Math.floor(Math.random() * spotlightPool.length)];
-    chart.setOption({
-      series: [{}, {
-        type: 'effectScatter',
-        coordinateSystem: 'geo',
-        zlevel: 4,
-        data: [{ name: s.name, value: [s.lng, s.lat], school: s }],
-        symbolSize: 34,
-        rippleEffect: { brushType: 'stroke', scale: 3.2, period: 3 },
-        itemStyle: { color: '#ff7a45', shadowBlur: 10, shadowColor: 'rgba(255,122,69,0.6)' },
-        label: { show: true, position: 'top', color: '#d9480f', fontSize: 12, fontWeight: 600, textShadowBlur: 3, textShadowColor: '#ffffff' },
-        tooltip: { show: false },
-        emphasis: { scale: 1.1 }
-      }]
-    });
-  }
-  function startSpotlight(list: any[]) {
-    spotlightPool = list && list.length ? list.slice() : SCHOOLS.slice();
-    if (spotlightTimer) clearInterval(spotlightTimer);
-    pickSpotlight();
-    spotlightTimer = window.setInterval(pickSpotlight, 3000);
+  const REGION_COLORS = {
+    light: { 华北:'#dbe9ff', 华东:'#d9f2e4', 华中:'#e6ddf5', 华南:'#fde3ea', 西南:'#f4ead2', 西北:'#e3ebf4', 东北:'#dde8f0' },
+    dark: { 华北:'#24406b', 华东:'#244f44', 华中:'#4a3a63', 华南:'#5b3a52', 西南:'#4a4630', 西北:'#3b4a5b', 东北:'#35495e' }
+  };
+  function geoRegions(region: string): any[] {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const pal = REGION_COLORS[dark ? 'dark' : 'light'];
+    const dim = dark ? '#101a2c' : '#eef2f8';
+    const base = dark ? '#1a2740' : '#eaf1fb';
+    const out: any[] = [];
+    for (const p in PROV_FULL) {
+      let r: string | null = null;
+      for (const rk in REGION_PROVS) {
+        if (REGION_PROVS[rk].indexOf(p) !== -1) { r = rk; break; }
+      }
+      const isSel = region === '全部' || r === region;
+      out.push({ name: PROV_FULL[p], itemStyle: { areaColor: isSel ? (r ? (pal as any)[r] : base) : dim, opacity: isSel ? 1 : 0.45 } });
+    }
+    return out;
   }
 
   function themeColors() {
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
     return dark
-      ? { area:'#1a2740', border:'#2b3b57', hover:'#27406b', dim:'#101a2c', tooltipBg:'#16213a', tooltipColor:'#e5edf8', mute:'#9db0c8' }
-      : { area:'#eaf1fb', border:'#b9cbea', hover:'#d9e7ff', dim:'#eef2f8', tooltipBg:'#ffffff', tooltipColor:'#1e293b', mute:'#5b6b84' };
+      ? { area:'#1a2740', border:'#2b3b57', hover:'#27406b', dim:'#101a2c', tooltipBg:'#16213a', tooltipColor:'#e5edf8', mute:'#9db0c8', label:'#8fa6c8', labelStrong:'#e5edf8' }
+      : { area:'#eaf1fb', border:'#b9cbea', hover:'#d9e7ff', dim:'#eef2f8', tooltipBg:'#ffffff', tooltipColor:'#1e293b', mute:'#5b6b84', label:'#7c8ba5', labelStrong:'#12336e' };
   }
 
   function buildItems(list: any[]) {
@@ -823,14 +850,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }));
   }
 
-  function dimRegions(region: string): any[] {
-    if (region === '全部') return [];
-    const keep = (REGION_PROVS[region] || []).map((p) => PROV_FULL[p]);
-    return Object.keys(PROV_FULL)
-      .filter((p) => keep.indexOf(PROV_FULL[p]) === -1)
-      .map((p) => ({ name: PROV_FULL[p], itemStyle: { areaColor: themeColors().dim, opacity: 0.45 } }));
-  }
-
   function applyFilter(region: string) {
     currentRegion = region;
     document.querySelectorAll('#m985Filters .m985-chip').forEach((b) => {
@@ -841,10 +860,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     if (stat) stat.textContent = region + ' ' + list.length + ' 所 / 共 ' + SCHOOLS.length + ' 所';
     if (chart) {
       chart.setOption({
-        geo: { regions: dimRegions(region) },
+        geo: { regions: geoRegions(region) },
         series: [{ data: buildItems(list) }]
       });
-      startSpotlight(list);
     }
   }
 
@@ -875,10 +893,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         roam: true,
         zoom: 1.12,
         center: [104.5, 36.2],
-        label: { show: false },
+        label: { show: true, fontSize: 10, color: c.label },
         itemStyle: { areaColor: c.area, borderColor: c.border, borderWidth: 0.8 },
-        emphasis: { itemStyle: { areaColor: c.hover }, label: { show: false } },
-        regions: dimRegions(currentRegion)
+        emphasis: { itemStyle: { areaColor: c.hover }, label: { show: true, fontSize: 11, color: c.labelStrong, fontWeight: 600 } },
+        regions: geoRegions(currentRegion)
       },
       series: [{
         type: 'scatter',
@@ -889,24 +907,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         itemStyle: { shadowBlur: 8, shadowColor: 'rgba(31, 94, 255, 0.35)' },
         label: { show: false },
         zlevel: 3
-      }, {
-        type: 'effectScatter',
-        coordinateSystem: 'geo',
-        zlevel: 4,
-        data: [],
-        symbolSize: 34,
-        rippleEffect: { brushType: 'stroke', scale: 3.2, period: 3 },
-        itemStyle: { color: '#ff7a45', shadowBlur: 10, shadowColor: 'rgba(255,122,69,0.6)' },
-        label: { show: true, position: 'top', color: '#d9480f', fontSize: 12, fontWeight: 600 },
-        tooltip: { show: false },
-        emphasis: { scale: 1.1 }
       }]
     });
     chart.on('click', (params: any) => {
       const s = params.data && params.data.school;
       if (s) openPanel(s);
     });
-    startSpotlight(currentRegion === '全部' ? SCHOOLS : SCHOOLS.filter((s) => s.region === currentRegion));
   }
 
   function applyThemeToChart() {
@@ -916,10 +922,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       tooltip: { backgroundColor: c.tooltipBg, borderColor: c.border, textStyle: { color: c.tooltipColor } },
       geo: {
         itemStyle: { areaColor: c.area, borderColor: c.border },
-        emphasis: { itemStyle: { areaColor: c.hover } },
-        regions: dimRegions(currentRegion)
+        label: { show: true, fontSize: 10, color: c.label },
+        emphasis: { itemStyle: { areaColor: c.hover }, label: { show: true, fontSize: 11, color: c.labelStrong, fontWeight: 600 } },
+        regions: geoRegions(currentRegion)
       }
     });
+    buildLegend();
   }
 
   function openPanel(s: any) {
@@ -1001,6 +1009,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     stat.id = 'm985Stat';
     stat.textContent = '共 ' + SCHOOLS.length + ' 所';
     wrap.appendChild(stat);
+  }
+  function buildLegend() {
+    const el = document.getElementById('m985Legend');
+    if (!el) return;
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const pal = REGION_COLORS[dark ? 'dark' : 'light'];
+    el.innerHTML = '';
+    ['华北','华东','华中','华南','西南','西北','东北'].forEach((r) => {
+      const s = document.createElement('span');
+      s.innerHTML = '<i style="background:' + (pal as any)[r] + '"></i>' + r;
+      el.appendChild(s);
+    });
   }
 
   /* ============ AI 小导游（规则优先，未命中接 DeepSeek） ============ */
@@ -1274,6 +1294,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     (window as any).__m985Obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     buildFilters();
+    buildLegend();
     initBot();
     initFlip();
     boot();

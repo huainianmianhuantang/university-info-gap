@@ -83,7 +83,36 @@
     box-shadow: 0 4px 18px rgba(30, 64, 175, 0.06);
     overflow: hidden;
   }
-  #map { width: 100%; height: calc(100vh - 172px); min-height: 480px; }
+  .map-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(31, 94, 255, 0.07), transparent 42%),
+      radial-gradient(circle at 86% 82%, rgba(10, 165, 181, 0.07), transparent 46%),
+      radial-gradient(rgba(31, 94, 255, 0.10) 1px, transparent 1.6px);
+    background-size: auto, auto, 26px 26px;
+  }
+  #map { position: relative; z-index: 1; width: 100%; height: calc(100vh - 172px); min-height: 480px; }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    margin-right: 5px;
+    vertical-align: -1px;
+  }
   .loading, .error {
     position: absolute;
     inset: 0;
@@ -381,6 +410,7 @@
   </main>
 
   <footer class="foot">
+    <div class="legend" id="regionLegend"></div>
     共 39 所 985 高校 · 内容为公开资料整理，仅供信息参考，请以各校官方发布为准
     <span id="flipCount" style="margin-left:8px"></span>
   </footer>
@@ -747,8 +777,6 @@
 
   var chart = null;
   var currentRegion = '全部';
-  var spotlightPool = [];
-  var spotlightTimer = null;
   var EASTER_LINES = [
     '听说这所学校的食堂，能让南方人也爱上北方菜。',
     '在校园里迷路，可能是新生的必修课。',
@@ -762,29 +790,25 @@
     '它的校园角落，藏着一百个可以发朋友圈的机位。'
   ];
 
-  function pickSpotlight() {
-    if (!chart || spotlightPool.length === 0) return;
-    var s = spotlightPool[Math.floor(Math.random() * spotlightPool.length)];
-    chart.setOption({
-      series: [{}, {
-        type: 'effectScatter',
-        coordinateSystem: 'geo',
-        zlevel: 4,
-        data: [{ name: s.name, value: [s.lng, s.lat], school: s }],
-        symbolSize: 34,
-        rippleEffect: { brushType: 'stroke', scale: 3.2, period: 3 },
-        itemStyle: { color: '#ff7a45', shadowBlur: 10, shadowColor: 'rgba(255,122,69,0.6)' },
-        label: { show: true, position: 'top', color: '#d9480f', fontSize: 12, fontWeight: 600, textShadowBlur: 3, textShadowColor: '#ffffff' },
-        tooltip: { show: false },
-        emphasis: { scale: 1.1 }
-      }]
-    });
-  }
-  function startSpotlight(list) {
-    spotlightPool = list && list.length ? list.slice() : SCHOOLS.slice();
-    if (spotlightTimer) clearInterval(spotlightTimer);
-    pickSpotlight();
-    spotlightTimer = setInterval(pickSpotlight, 3000);
+  var REGION_COLORS = {
+    light: { 华北:'#dbe9ff', 华东:'#d9f2e4', 华中:'#e6ddf5', 华南:'#fde3ea', 西南:'#f4ead2', 西北:'#e3ebf4', 东北:'#dde8f0' },
+    dark: { 华北:'#24406b', 华东:'#244f44', 华中:'#4a3a63', 华南:'#5b3a52', 西南:'#4a4630', 西北:'#3b4a5b', 东北:'#35495e' }
+  };
+  function geoRegions(region) {
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var pal = REGION_COLORS[dark ? 'dark' : 'light'];
+    var dim = dark ? '#101a2c' : '#eef2f8';
+    var base = dark ? '#1a2740' : '#eaf1fb';
+    var out = [];
+    for (var p in PROV_FULL) {
+      var r = null;
+      for (var rk in REGION_PROVS) {
+        if (REGION_PROVS[rk].indexOf(p) !== -1) { r = rk; break; }
+      }
+      var isSel = region === '全部' || r === region;
+      out.push({ name: PROV_FULL[p], itemStyle: { areaColor: isSel ? (r ? pal[r] : base) : dim, opacity: isSel ? 1 : 0.45 } });
+    }
+    return out;
   }
 
   /* ============ 筛选按钮 ============ */
@@ -815,6 +839,16 @@
     stat.textContent = '共 ' + SCHOOLS.length + ' 所';
     filterEl.appendChild(stat);
   }
+  function buildLegend() {
+    var el = document.getElementById('regionLegend');
+    if (!el) return;
+    el.innerHTML = '';
+    ['华北','华东','华中','华南','西南','西北','东北'].forEach(function (r) {
+      var s = document.createElement('span');
+      s.innerHTML = '<i style="background:' + REGION_COLORS.light[r] + '"></i>' + r;
+      el.appendChild(s);
+    });
+  }
 
   /* ============ 地图 ============ */
   function buildItems(list) {
@@ -829,15 +863,6 @@
     });
   }
 
-  function dimRegions(region) {
-    if (region === '全部') return [];
-    var keep = REGION_PROVS[region] || [];
-    var keepFull = keep.map(function (p) { return PROV_FULL[p]; });
-    return Object.keys(PROV_FULL)
-      .filter(function (p) { return keepFull.indexOf(PROV_FULL[p]) === -1; })
-      .map(function (p) { return { name: PROV_FULL[p], itemStyle: { areaColor: '#eef2f8', opacity: 0.45 } }; });
-  }
-
   function applyFilter(region) {
     currentRegion = region;
     filterEl.querySelectorAll('.chip').forEach(function (b) {
@@ -848,10 +873,9 @@
     if (stat) stat.textContent = region + ' ' + list.length + ' 所 / 共 ' + SCHOOLS.length + ' 所';
     if (chart) {
       chart.setOption({
-        geo: { regions: dimRegions(region) },
+        geo: { regions: geoRegions(region) },
         series: [{ data: buildItems(list) }]
       });
-      startSpotlight(list);
     }
   }
 
@@ -878,10 +902,10 @@
         roam: true,
         zoom: 1.12,
         center: [104.5, 36.2],
-        label: { show: false },
+        label: { show: true, fontSize: 10, color: '#7c8ba5' },
         itemStyle: { areaColor: '#eaf1fb', borderColor: '#b9cbea', borderWidth: 0.8 },
-        emphasis: { itemStyle: { areaColor: '#d9e7ff' }, label: { show: false } },
-        regions: []
+        emphasis: { itemStyle: { areaColor: '#cfe0ff' }, label: { show: true, fontSize: 11, color: '#12336e', fontWeight: 600 } },
+        regions: geoRegions('全部')
       },
       series: [{
         type: 'scatter',
@@ -892,17 +916,6 @@
         itemStyle: { shadowBlur: 8, shadowColor: 'rgba(31, 94, 255, 0.35)' },
         label: { show: false },
         zlevel: 3
-      }, {
-        type: 'effectScatter',
-        coordinateSystem: 'geo',
-        zlevel: 4,
-        data: [],
-        symbolSize: 34,
-        rippleEffect: { brushType: 'stroke', scale: 3.2, period: 3 },
-        itemStyle: { color: '#ff7a45', shadowBlur: 10, shadowColor: 'rgba(255,122,69,0.6)' },
-        label: { show: true, position: 'top', color: '#d9480f', fontSize: 12, fontWeight: 600 },
-        tooltip: { show: false },
-        emphasis: { scale: 1.1 }
       }]
     });
 
@@ -911,7 +924,6 @@
       if (s) openPanel(s);
     });
     chart.on('mouseout', function () {});
-    startSpotlight(SCHOOLS);
     window.addEventListener('resize', function () { chart && chart.resize(); });
   }
 
@@ -1201,6 +1213,7 @@
   }
   document.getElementById('retryBtn').addEventListener('click', boot);
   buildFilters();
+  buildLegend();
   initBot();
   initFlip();
   boot();
