@@ -96,6 +96,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     unbindThirdParty,
   } from '../../lib/account';
 
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initAccount() {
+    const pageRoot = document.getElementById('acctProfile');
+    if (!pageRoot || pageRoot.dataset.appInit === '1') return;
+    pageRoot.dataset.appInit = '1';
+
   const profileEl = document.getElementById('acctProfile') as HTMLElement;
   const dataEl = document.getElementById('acctData') as HTMLElement;
   const guestEl = document.getElementById('acctGuest') as HTMLElement;
@@ -239,8 +249,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     render();
   });
 
+  window.removeEventListener('account:change', render);
   window.addEventListener('account:change', render);
   render();
+  }
+
+  appWin.__appReady?.(initAccount);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAccount);
+  } else {
+    initAccount();
+  }
 </script>
 
 <style>

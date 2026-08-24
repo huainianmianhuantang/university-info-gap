@@ -13,35 +13,48 @@
     scoreLevel,
   } from '../lib/onboarding';
 
-  const KEY = 'onboarding';
-  const mask = document.getElementById('obMask') as HTMLElement;
-  const body = document.getElementById('obBody') as HTMLElement;
-  const skipBtn = document.getElementById('obSkip') as HTMLButtonElement;
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+    __appBind?: (el: Element | null, key: string, type: string, fn: EventListener) => void;
+  };
+  const appWin = window as AppWindow;
+  const bind = (el: Element | null, key: string, type: string, fn: EventListener) =>
+    appWin.__appBind?.(el, key, type, fn);
 
-  let saved: Record<string, unknown> | null = null;
-  try {
-    saved = JSON.parse(localStorage.getItem(KEY) || 'null');
-  } catch {
-    saved = null;
-  }
+  function initOb() {
+    const KEY = 'onboarding';
+    const mask = document.getElementById('obMask') as HTMLElement | null;
+    const body = document.getElementById('obBody') as HTMLElement | null;
+    const skipBtn = document.getElementById('obSkip') as HTMLButtonElement | null;
+    if (!mask || !body || !skipBtn) return;
 
-  // 仅在首页自动弹出；其他页面（如选校测评）首访时不让引导层劫持浏览
-  if (!saved && window.location.pathname === '/') {
-    requestAnimationFrame(() => {
-      mask.hidden = false;
-      mask.classList.add('ob-show');
-      document.body.style.overflow = 'hidden';
-    });
-  }
+    let saved: Record<string, unknown> | null = null;
+    try {
+      saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+    } catch {
+      saved = null;
+    }
 
-  const state: {
-    identityId: string | null;
-    gradeId: string | null;
-    answers: Record<string, number>;
-    qi: number;
-    score: number;
-    level: string;
-  } = { identityId: null, gradeId: null, answers: {}, qi: 0, score: 0, level: 'newbie' };
+    // 会话内只自动弹出/开始一次，避免客户端跳转后重复重置流程
+    if (!saved && !window.__obSessionActive) {
+      // 仅在首页自动弹出；其他页面（如选校测评）首访时不让引导层劫持浏览
+      if (window.location.pathname === '/') {
+        requestAnimationFrame(() => {
+          mask.hidden = false;
+          mask.classList.add('ob-show');
+          document.body.style.overflow = 'hidden';
+        });
+      }
+    }
+
+    const state: {
+      identityId: string | null;
+      gradeId: string | null;
+      answers: Record<string, number>;
+      qi: number;
+      score: number;
+      level: string;
+    } = { identityId: null, gradeId: null, answers: {}, qi: 0, score: 0, level: 'newbie' };
 
   function identityOf() {
     return IDENTITIES.find((i) => i.id === state.identityId)!;
@@ -195,24 +208,37 @@
     if (window.location.pathname !== '/') window.location.href = '/';
   }
 
-  skipBtn.addEventListener('click', doSkip);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !mask.hidden) doSkip();
-  });
+    bind(skipBtn, 'appObSkip', 'click', doSkip);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !mask.hidden) doSkip();
+    };
+    document.removeEventListener('keydown', onKey);
+    document.addEventListener('keydown', onKey);
 
-  document.querySelectorAll('[data-onboard-redo]').forEach((n) => {
-    n.addEventListener('click', (e) => {
-      e.preventDefault();
-      try {
-        localStorage.removeItem(KEY);
-      } catch {
-        /* ignore */
-      }
-      window.location.reload();
+    document.querySelectorAll('[data-onboard-redo]').forEach((n) => {
+      bind(n, 'appObRedo', 'click', (e) => {
+        e.preventDefault();
+        try {
+          localStorage.removeItem(KEY);
+        } catch {
+          /* ignore */
+        }
+        window.location.reload();
+      });
     });
-  });
 
-  if (!saved) showIdentity();
+    if (!saved && !window.__obSessionActive) {
+      window.__obSessionActive = true;
+      showIdentity();
+    }
+  }
+
+  appWin.__appReady?.(initOb);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initOb);
+  } else {
+    initOb();
+  }
 </script>
 
 <style is:global>

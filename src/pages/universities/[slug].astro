@@ -452,6 +452,16 @@ const related = allUniversities
 <script>
 import { scopedKey } from '../../lib/account';
 
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initDetail() {
+    const pageRoot = document.querySelector('.uni-tabs');
+    if (!pageRoot || pageRoot.dataset.appInit === '1') return;
+    pageRoot.dataset.appInit = '1';
+
   const RECENT_KEY = 'recent-universities';
   try {
     const recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
@@ -510,6 +520,7 @@ import { scopedKey } from '../../lib/account';
       a.classList.toggle('active', a.getAttribute('href') === `#${current?.id}`);
     });
   }
+  window.removeEventListener('scroll', onScroll);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
@@ -589,7 +600,15 @@ import { scopedKey } from '../../lib/account';
             1600,
           );
         })
-        .catch(() => {});
+      .catch(() => {});
     });
   });
+  }
+
+  appWin.__appReady?.(initDetail);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDetail);
+  } else {
+    initDetail();
+  }
 </script>

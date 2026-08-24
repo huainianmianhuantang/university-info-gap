@@ -38,12 +38,20 @@
     register,
   } from '../lib/account';
 
-  const mask = document.getElementById('acctMask') as HTMLElement;
-  const title = document.getElementById('acctTitle') as HTMLElement;
-  const sub = document.getElementById('acctSub') as HTMLElement;
-  const body = document.getElementById('acctBody') as HTMLElement;
-  const close = document.getElementById('acctClose') as HTMLButtonElement;
-  const tabs = Array.from(document.querySelectorAll('.acct-tab')) as HTMLButtonElement[];
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+    __appBind?: (el: Element | null, key: string, type: string, fn: EventListener) => void;
+  };
+  const appWin = window as AppWindow;
+  const bind = (el: Element | null, key: string, type: string, fn: EventListener) =>
+    appWin.__appBind?.(el, key, type, fn);
+
+  let mask = document.getElementById('acctMask') as HTMLElement;
+  let title = document.getElementById('acctTitle') as HTMLElement;
+  let sub = document.getElementById('acctSub') as HTMLElement;
+  let body = document.getElementById('acctBody') as HTMLElement;
+  let close = document.getElementById('acctClose') as HTMLButtonElement;
+  let tabs = Array.from(document.querySelectorAll('.acct-tab')) as HTMLButtonElement[];
 
   let mode: 'login' | 'register' = 'login';
   let currentCode = devCode();
@@ -137,35 +145,55 @@
     document.body.style.overflow = '';
   }
 
-  tabs.forEach((t) =>
-    t.addEventListener('click', () => {
-      mode = (t.dataset.tab as 'login' | 'register') || 'login';
-      render();
-    }),
-  );
+  function initAcct() {
+    mask = document.getElementById('acctMask') as HTMLElement;
+    title = document.getElementById('acctTitle') as HTMLElement;
+    sub = document.getElementById('acctSub') as HTMLElement;
+    body = document.getElementById('acctBody') as HTMLElement;
+    close = document.getElementById('acctClose') as HTMLButtonElement;
+    tabs = Array.from(document.querySelectorAll('.acct-tab')) as HTMLButtonElement[];
 
-  close.addEventListener('click', closeModal);
-  mask.addEventListener('click', (e) => {
-    if (e.target === mask) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !mask.hidden) closeModal();
-  });
+    tabs.forEach((t) =>
+      bind(t, 'appAcctTab', 'click', () => {
+        mode = (t.dataset.tab as 'login' | 'register') || 'login';
+        render();
+      }),
+    );
 
-  document.querySelectorAll('[data-third]').forEach((b) => {
-    b.addEventListener('click', () => {
-      const type = (b as HTMLElement).dataset.third as 'qq' | 'wechat';
-      const profile = getProfile();
-      if (!profile) {
-        window.showToast?.('请先注册 / 登录手机号账号，再模拟绑定第三方');
-        return;
-      }
-      bindThirdParty(type, type + '_demo_' + profile.uid);
-      window.showToast?.(type === 'qq' ? '已模拟绑定 QQ（演示）' : '已模拟绑定 微信（演示）');
+    bind(close, 'appAcctClose', 'click', closeModal);
+    bind(mask, 'appAcctMask', 'click', (e) => {
+      if (e.target === mask) closeModal();
     });
-  });
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !mask.hidden) closeModal();
+    };
+    document.removeEventListener('keydown', onKey);
+    document.addEventListener('keydown', onKey);
 
-  window.addEventListener('account:open', () => open());
+    document.querySelectorAll('[data-third]').forEach((b) => {
+      bind(b, 'appAcctThird', 'click', () => {
+        const type = (b as HTMLElement).dataset.third as 'qq' | 'wechat';
+        const profile = getProfile();
+        if (!profile) {
+          window.showToast?.('请先注册 / 登录手机号账号，再模拟绑定第三方');
+          return;
+        }
+        bindThirdParty(type, type + '_demo_' + profile.uid);
+        window.showToast?.(type === 'qq' ? '已模拟绑定 QQ（演示）' : '已模拟绑定 微信（演示）');
+      });
+    });
+
+    const onOpen = () => open();
+    window.removeEventListener('account:open', onOpen);
+    window.addEventListener('account:open', onOpen);
+  }
+
+  appWin.__appReady?.(initAcct);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAcct);
+  } else {
+    initAcct();
+  }
 </script>
 
 <style>

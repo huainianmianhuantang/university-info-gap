@@ -12,30 +12,50 @@
 </div>
 
 <script>
-  const fab = document.getElementById('helpFab') as HTMLButtonElement;
-  const pop = document.getElementById('helpPop') as HTMLElement;
-  const close = document.getElementById('helpClose') as HTMLButtonElement;
-  const openAi = document.getElementById('helpOpenAi') as HTMLAnchorElement;
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+    __appBind?: (el: Element | null, key: string, type: string, fn: EventListener) => void;
+  };
+  const appWin = window as AppWindow;
+  const bind = (el: Element | null, key: string, type: string, fn: EventListener) =>
+    appWin.__appBind?.(el, key, type, fn);
 
-  function toggle(open?: boolean) {
-    const next = open ?? pop.hidden;
-    pop.hidden = !next;
-    fab.setAttribute('aria-expanded', next ? 'true' : 'false');
+  function initHelp() {
+    const fab = document.getElementById('helpFab') as HTMLButtonElement | null;
+    const pop = document.getElementById('helpPop') as HTMLElement | null;
+    const close = document.getElementById('helpClose') as HTMLButtonElement | null;
+    const openAi = document.getElementById('helpOpenAi') as HTMLAnchorElement | null;
+    if (!fab || !pop) return;
+
+    const toggle = (open?: boolean) => {
+      const next = open ?? pop.hidden;
+      pop.hidden = !next;
+      fab.setAttribute('aria-expanded', next ? 'true' : 'false');
+    };
+
+    bind(fab, 'appHelpFab', 'click', () => toggle());
+    bind(close, 'appHelpClose', 'click', () => toggle(false));
+    bind(openAi, 'appHelpAi', 'click', (e) => {
+      e.preventDefault();
+      toggle(false);
+      window.dispatchEvent(new CustomEvent('ai:open'));
+    });
+    // 点击外部收起：每次 init 先移除再添加，避免堆叠
+    const onDoc = (e: Event) => {
+      if (!pop.hidden && !pop.contains(e.target as Node) && !fab.contains(e.target as Node)) {
+        toggle(false);
+      }
+    };
+    document.removeEventListener('click', onDoc);
+    document.addEventListener('click', onDoc);
   }
 
-  fab.addEventListener('click', () => toggle());
-  close.addEventListener('click', () => toggle(false));
-  openAi.addEventListener('click', (e) => {
-    e.preventDefault();
-    toggle(false);
-    window.dispatchEvent(new CustomEvent('ai:open'));
-  });
-  document.addEventListener('click', (e) => {
-    if (!pop.hidden && !pop.contains(e.target as Node) && !fab.contains(e.target as Node)) {
-      toggle(false);
-    }
-  });
-
+  appWin.__appReady?.(initHelp);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHelp);
+  } else {
+    initHelp();
+  }
 </script>
 
 <style>

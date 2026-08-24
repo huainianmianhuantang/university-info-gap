@@ -35,6 +35,16 @@ const allTags = [...new Set(articles.flatMap((a) => a.data.tags))];
 </BaseLayout>
 
 <script>
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initArticles() {
+    const pageRoot = document.getElementById('tagFilter');
+    if (!pageRoot || pageRoot.dataset.appInit === '1') return;
+    pageRoot.dataset.appInit = '1';
+
   const filter = document.getElementById('tagFilter');
   const cards = Array.from(document.querySelectorAll('.article-card'));
   function applyTag(tag) {
@@ -59,4 +69,12 @@ const allTags = [...new Set(articles.flatMap((a) => a.data.tags))];
     applyTag(tag);
     history.replaceState(null, '', tag === '全部' ? location.pathname : '#tag-' + encodeURIComponent(tag));
   });
+  }
+
+  appWin.__appReady?.(initArticles);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initArticles);
+  } else {
+    initArticles();
+  }
 </script>

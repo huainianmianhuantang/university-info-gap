@@ -25,6 +25,34 @@ const pageDescription = description ?? SITE.description;
   <head>
     <script is:inline>
       (function () {
+        // 全局 page-ready 注册表：每个脚本把幂等 init 注册进来，
+        // 在页面加载和每次客户端跳转（astro:page-load）后统一执行，
+        // 解决视图过渡下共享/页面脚本不重跑导致监听器丢失的问题。
+        window.__appInits = window.__appInits || [];
+        window.__appReady = function (fn) {
+          if (typeof fn === 'function') window.__appInits.push(fn);
+        };
+        window.__appBind = function (el, key, type, fn) {
+          if (!el || el.dataset[key]) return;
+          el.dataset[key] = '1';
+          el.addEventListener(type, fn);
+        };
+        function runAppInits() {
+          var list = window.__appInits || [];
+          for (var i = 0; i < list.length; i++) {
+            try {
+              list[i]();
+            } catch (e) {
+              /* 单个 init 出错不阻塞其他 */
+            }
+          }
+        }
+        if (!window.__appReadyBound) {
+          window.__appReadyBound = true;
+          document.addEventListener('DOMContentLoaded', runAppInits);
+          document.addEventListener('astro:page-load', runAppInits);
+        }
+
         function applyTheme() {
           try {
             var t = localStorage.getItem('theme');
@@ -50,7 +78,10 @@ const pageDescription = description ?? SITE.description;
         }
         applyTheme();
         // 视图过渡（客户端导航）会清掉 <html> 上的 data-theme，这里在每次切换后恢复
-        document.addEventListener('astro:page-load', applyTheme);
+        if (!window.__themeRestoreBound) {
+          window.__themeRestoreBound = true;
+          document.addEventListener('astro:page-load', applyTheme);
+        }
         // 未手动选择主题时，实时跟随系统深浅色（避免重复绑定）
         if (!window.__themeSystemBound) {
           window.__themeSystemBound = true;
@@ -128,72 +159,106 @@ const pageDescription = description ?? SITE.description;
 </html>
 
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+    __appBind?: (el: Element | null, key: string, type: string, fn: EventListener) => void;
+    showToast?: (msg: string) => void;
+  };
+  const appWin = window as AppWindow;
+  const bind = (el: Element | null, key: string, type: string, fn: EventListener) =>
+    appWin.__appBind?.(el, key, type, fn);
+
+  let deferredPrompt: any = null;
+
+  function initShell() {
+    document.documentElement.classList.add('js');
+
+    // 回到顶部
+    const btn = document.getElementById('backToTop');
+    const onScroll = () => {
+      if (btn) btn.hidden = window.scrollY < 400;
+    };
+    window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    bind(btn, 'appBackTop', 'click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // 滚动渐显
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('reveal-in');
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -30px 0px' },
+      );
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((el) => el.classList.add('reveal-in'));
+    }
+
+    // 安装横幅按钮（窗口事件一次性注册）
+    bind(document.getElementById('installBtn'), 'appInstall', 'click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      try {
+        await deferredPrompt.userChoice;
+      } catch {
+        /* ignore */
+      }
+      deferredPrompt = null;
+      const banner = document.getElementById('installBanner');
+      if (banner) banner.hidden = true;
+    });
+    bind(document.getElementById('installClose'), 'appInstallClose', 'click', () => {
+      const banner = document.getElementById('installBanner');
+      if (banner) banner.hidden = true;
     });
   }
 
-  const btn = document.getElementById('backToTop');
-  document.documentElement.classList.add('js');
-
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('reveal-in');
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -30px 0px' },
-    );
-    revealEls.forEach((el) => io.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add('reveal-in'));
-  }
-
-  const toast = document.getElementById('toast');
-  (window as unknown as { showToast?: (msg: string) => void }).showToast = (msg: string) => {
-    if (!toast) return;
-    toast.textContent = msg;
-    toast.hidden = false;
-    clearTimeout((toast as HTMLElement & { _t?: number })._t);
-    (toast as HTMLElement & { _t?: number })._t = window.setTimeout(() => {
-      toast.hidden = true;
-    }, 2000);
-  };
-  if (btn) {
-    const onScroll = () => {
-      btn.hidden = window.scrollY < 400;
+  // toast 只注册一次，调用时按 id 查找当前 DOM
+  if (!appWin.showToast) {
+    appWin.showToast = (msg: string) => {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.hidden = false;
+      clearTimeout((toast as HTMLElement & { _t?: number })._t);
+      (toast as HTMLElement & { _t?: number })._t = window.setTimeout(() => {
+        toast.hidden = true;
+      }, 2000);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 
-  let deferredPrompt = null;
-  const installBanner = document.getElementById('installBanner');
-  const installBtn = document.getElementById('installBtn');
-  const installClose = document.getElementById('installClose');
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    if (installBanner) installBanner.hidden = false;
-  });
-  installBtn?.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    if (installBanner) installBanner.hidden = true;
-  });
-  installClose?.addEventListener('click', () => {
-    if (installBanner) installBanner.hidden = true;
-  });
-  window.addEventListener('appinstalled', () => {
-    if (installBanner) installBanner.hidden = true;
-  });
+  // 一次性窗口级监听：SW 注册、PWA 安装提示
+  if (!window.__installBound) {
+    window.__installBound = true;
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const banner = document.getElementById('installBanner');
+      if (banner) banner.hidden = false;
+    });
+    window.addEventListener('appinstalled', () => {
+      const banner = document.getElementById('installBanner');
+      if (banner) banner.hidden = true;
+    });
+  }
+
+  appWin.__appReady?.(initShell);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShell);
+  } else {
+    initShell();
+  }
 </script>

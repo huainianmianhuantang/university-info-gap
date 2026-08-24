@@ -77,6 +77,16 @@ const schools = (await getCollection('universities')).map((u) => ({
 <script>
 import { scopedKey } from '../../lib/account';
 
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initFavs() {
+    const pageRoot = document.getElementById('favGrid');
+    if (!pageRoot || pageRoot.dataset.appInit === '1') return;
+    pageRoot.dataset.appInit = '1';
+
   const schools = (window as unknown as { __FAV_SCHOOLS__?: typeof window.__FAV_SCHOOLS__ }).__FAV_SCHOOLS__ ?? [];
   const grid = document.getElementById('favGrid');
   const empty = document.getElementById('favEmpty');
@@ -253,4 +263,12 @@ import { scopedKey } from '../../lib/account';
       })
       .catch(() => {});
   });
+  }
+
+  appWin.__appReady?.(initFavs);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFavs);
+  } else {
+    initFavs();
+  }
 </script>

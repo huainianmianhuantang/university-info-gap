@@ -258,6 +258,17 @@ const categories = [
 
 <script>
   import { getProfile } from '../lib/account';
+
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initHome() {
+    const hero = document.querySelector('.hero');
+    if (!hero || hero.dataset.appInit === '1') return;
+    hero.dataset.appInit = '1';
+
   const schoolBriefs = (window as unknown as { __SCHOOL_BRIEFS__?: typeof window.__SCHOOL_BRIEFS__ }).__SCHOOL_BRIEFS__ ?? [];
   const welcomeBanner = document.getElementById('welcomeBanner');
   const profileNow = getProfile();
@@ -326,5 +337,13 @@ const categories = [
     statNums.forEach((n) => {
       n.textContent = String((n as HTMLElement).dataset.count ?? '0');
     });
+  }
+  }
+
+  appWin.__appReady?.(initHome);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHome);
+  } else {
+    initHome();
   }
 </script>

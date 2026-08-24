@@ -253,6 +253,16 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
 </BaseLayout>
 
 <script>
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initResources() {
+    const searchEl = document.getElementById('materialSearch');
+    if (!searchEl || searchEl.dataset.appInit === '1') return;
+    searchEl.dataset.appInit = '1';
+
   document.querySelectorAll('[data-copy-code]').forEach((b) => {
     b.addEventListener('click', () => {
       navigator.clipboard
@@ -425,4 +435,12 @@ const totalVideos = withVideos.reduce((sum, g) => sum + g.items.length, 0);
     }
   }
   searchInput?.addEventListener('input', applyMaterialFilter);
+  }
+
+  appWin.__appReady?.(initResources);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initResources);
+  } else {
+    initResources();
+  }
 </script>

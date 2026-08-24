@@ -30,19 +30,18 @@
 <script>
   import { getProfile } from '../lib/account';
 
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+    __appBind?: (el: Element | null, key: string, type: string, fn: EventListener) => void;
+  };
+  const appWin = window as AppWindow;
+  const bind = (el: Element | null, key: string, type: string, fn: EventListener) =>
+    appWin.__appBind?.(el, key, type, fn);
+
   function chatKey() {
     const p = getProfile();
     return p ? `ai-chat-${p.uid}` : 'ai-chat';
   }
-  const fab = document.getElementById('aiFab') as HTMLButtonElement;
-  const dock = document.getElementById('aiDock') as HTMLButtonElement;
-  const panel = document.getElementById('aiPanel') as HTMLElement;
-  const close = document.getElementById('aiClose') as HTMLButtonElement;
-  const chips = document.getElementById('aiChips') as HTMLElement;
-  const msgs = document.getElementById('aiMsgs') as HTMLElement;
-  const input = document.getElementById('aiInput') as HTMLTextAreaElement;
-  const send = document.getElementById('aiSend') as HTMLButtonElement;
-  const clear = document.getElementById('aiClear') as HTMLButtonElement;
 
   let history: { role: 'user' | 'assistant'; content: string }[] = [];
   try {
@@ -69,170 +68,195 @@
     return t;
   }
 
-  function addMsg(role: 'user' | 'assistant', content: string) {
-    const wrap = document.createElement('div');
-    wrap.className = `ai-msg ${role}`;
-    wrap.innerHTML = role === 'user' ? escapeHtml(content) : renderMarkdown(content);
-    msgs.appendChild(wrap);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
+  function initAi() {
+    const fab = document.getElementById('aiFab') as HTMLButtonElement | null;
+    const dock = document.getElementById('aiDock') as HTMLButtonElement | null;
+    const panel = document.getElementById('aiPanel') as HTMLElement | null;
+    const close = document.getElementById('aiClose') as HTMLButtonElement | null;
+    const chips = document.getElementById('aiChips') as HTMLElement | null;
+    const msgs = document.getElementById('aiMsgs') as HTMLElement | null;
+    const input = document.getElementById('aiInput') as HTMLTextAreaElement | null;
+    const send = document.getElementById('aiSend') as HTMLButtonElement | null;
+    const clear = document.getElementById('aiClear') as HTMLButtonElement | null;
+    if (!fab || !dock || !panel || !close || !chips || !msgs || !input || !send || !clear) return;
 
-  function renderHistory() {
-    msgs.innerHTML = '';
-    if (history.length === 0) {
-      const hi = document.createElement('div');
-      hi.className = 'ai-msg assistant ai-hello';
-      const profile = getProfile();
-      hi.innerHTML =
-        (profile
-          ? `你好呀 ${escapeHtml(profile.nickname)}，我是小助手 💬 `
-          : '你好呀，我是小助手 💬 ') +
-        '可以问我：这个网站怎么用、怎么选专业方向、<strong>转专业</strong>要注意什么……' +
-        (profile ? '' : '（登录后对话会按账号保存）');
-      msgs.appendChild(hi);
-    } else {
-      history.forEach((m) => addMsg(m.role, m.content));
+    function addMsg(role: 'user' | 'assistant', content: string) {
+      const wrap = document.createElement('div');
+      wrap.className = `ai-msg ${role}`;
+      wrap.innerHTML = role === 'user' ? escapeHtml(content) : renderMarkdown(content);
+      msgs.appendChild(wrap);
+      msgs.scrollTop = msgs.scrollHeight;
     }
-  }
 
-  function save() {
-    try {
-      localStorage.setItem(chatKey(), JSON.stringify(history.slice(-20)));
-    } catch {
-      /* ignore */
+    function renderHistory() {
+      msgs.innerHTML = '';
+      if (history.length === 0) {
+        const hi = document.createElement('div');
+        hi.className = 'ai-msg assistant ai-hello';
+        const profile = getProfile();
+        hi.innerHTML =
+          (profile
+            ? `你好呀 ${escapeHtml(profile.nickname)}，我是小助手 💬 `
+            : '你好呀，我是小助手 💬 ') +
+          '可以问我：这个网站怎么用、怎么选专业方向、<strong>转专业</strong>要注意什么……' +
+          (profile ? '' : '（登录后对话会按账号保存）');
+        msgs.appendChild(hi);
+      } else {
+        history.forEach((m) => addMsg(m.role, m.content));
+      }
     }
-  }
 
-  function showTyping() {
-    const t = document.createElement('div');
-    t.className = 'ai-msg assistant ai-typing';
-    t.innerHTML = '<i></i><i></i><i></i>';
-    msgs.appendChild(t);
-    msgs.scrollTop = msgs.scrollHeight;
-    return t;
-  }
+    function save() {
+      try {
+        localStorage.setItem(chatKey(), JSON.stringify(history.slice(-20)));
+      } catch {
+        /* ignore */
+      }
+    }
 
-  async function ask(text: string) {
-    const content = text.trim();
-    if (!content || send.disabled) return;
-    history.push({ role: 'user', content });
-    addMsg('user', content);
-    input.value = '';
-    autoGrow();
-    save();
+    function showTyping() {
+      const t = document.createElement('div');
+      t.className = 'ai-msg assistant ai-typing';
+      t.innerHTML = '<i></i><i></i><i></i>';
+      msgs.appendChild(t);
+      msgs.scrollTop = msgs.scrollHeight;
+      return t;
+    }
 
-    const typing = showTyping();
-    send.disabled = true;
-    input.disabled = true;
-    try {
-      const res = await fetch('/api/assistant', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history, userName: getProfile()?.nickname }),
-      });
-      const data = await res.json();
-      typing.remove();
-      if (!res.ok || !data.reply) {
+    async function ask(text: string) {
+      const content = text.trim();
+      if (!content || send.disabled) return;
+      history.push({ role: 'user', content });
+      addMsg('user', content);
+      input.value = '';
+      autoGrow();
+      save();
+
+      const typing = showTyping();
+      send.disabled = true;
+      input.disabled = true;
+      try {
+        const res = await fetch('/api/assistant', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: history, userName: getProfile()?.nickname }),
+        });
+        const data = await res.json();
+        typing.remove();
+        if (!res.ok || !data.reply) {
+          const err = document.createElement('div');
+          err.className = 'ai-msg assistant ai-err';
+          err.innerHTML = `😵 ${escapeHtml(data?.error || '出错了，请稍后再试')} <button type="button" class="ai-retry">重试</button>`;
+          msgs.appendChild(err);
+          const retry = err.querySelector('.ai-retry') as HTMLButtonElement;
+          retry.addEventListener('click', () => {
+            history.pop();
+            msgs.removeChild(err);
+            ask(content);
+          });
+          msgs.scrollTop = msgs.scrollHeight;
+          return;
+        }
+        history.push({ role: 'assistant', content: data.reply });
+        addMsg('assistant', data.reply);
+        save();
+      } catch {
+        typing.remove();
         const err = document.createElement('div');
         err.className = 'ai-msg assistant ai-err';
-        err.innerHTML = `😵 ${escapeHtml(data?.error || '出错了，请稍后再试')} <button type="button" class="ai-retry">重试</button>`;
+        err.textContent = '😵 网络开小差了，请稍后再试。';
         msgs.appendChild(err);
-        const retry = err.querySelector('.ai-retry') as HTMLButtonElement;
-        retry.addEventListener('click', () => {
-          history.pop();
-          msgs.removeChild(err);
-          ask(content);
-        });
         msgs.scrollTop = msgs.scrollHeight;
-        return;
+      } finally {
+        send.disabled = false;
+        input.disabled = false;
+        input.focus();
       }
-      history.push({ role: 'assistant', content: data.reply });
-      addMsg('assistant', data.reply);
-      save();
-    } catch {
-      typing.remove();
-      const err = document.createElement('div');
-      err.className = 'ai-msg assistant ai-err';
-      err.textContent = '😵 网络开小差了，请稍后再试。';
-      msgs.appendChild(err);
-      msgs.scrollTop = msgs.scrollHeight;
-    } finally {
-      send.disabled = false;
-      input.disabled = false;
-      input.focus();
     }
-  }
 
-  function autoGrow() {
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-  }
-
-  function open() {
-    panel.hidden = false;
-    dock.hidden = true;
-    fab.hidden = false;
-    fab.setAttribute('aria-expanded', 'true');
-    renderHistory();
-    requestAnimationFrame(() => input.focus());
-  }
-
-  function closePanel() {
-    panel.hidden = true;
-    dock.hidden = true;
-    fab.hidden = false;
-    fab.setAttribute('aria-expanded', 'false');
-  }
-
-  function minimize() {
-    panel.hidden = true;
-    dock.hidden = false;
-    fab.hidden = true;
-    fab.setAttribute('aria-expanded', 'false');
-  }
-
-  fab.addEventListener('click', () => (panel.hidden ? open() : closePanel()));
-  dock.addEventListener('click', () => open());
-  window.addEventListener('ai:open', () => open());
-  close.addEventListener('click', minimize);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !panel.hidden) closePanel();
-  });
-
-  send.addEventListener('click', () => ask(input.value));
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      ask(input.value);
+    function autoGrow() {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 120) + 'px';
     }
-  });
-  input.addEventListener('input', autoGrow);
 
-  chips.addEventListener('click', (e) => {
-    const b = (e.target as HTMLElement).closest('button');
-    if (b) ask(b.textContent || '');
-  });
-
-  clear.addEventListener('click', () => {
-    history = [];
-    try {
-      localStorage.removeItem(chatKey());
-    } catch {
-      /* ignore */
+    function open() {
+      panel.hidden = false;
+      dock.hidden = true;
+      fab.hidden = false;
+      fab.setAttribute('aria-expanded', 'true');
+      renderHistory();
+      requestAnimationFrame(() => input.focus());
     }
-    renderHistory();
-  });
 
-  window.addEventListener('account:change', () => {
-    history = [];
-    try {
-      const saved = JSON.parse(localStorage.getItem(chatKey()) || '[]');
-      if (Array.isArray(saved)) history = saved.slice(-20);
-    } catch {
+    function closePanel() {
+      panel.hidden = true;
+      dock.hidden = true;
+      fab.hidden = false;
+      fab.setAttribute('aria-expanded', 'false');
+    }
+
+    function minimize() {
+      panel.hidden = true;
+      dock.hidden = false;
+      fab.hidden = true;
+      fab.setAttribute('aria-expanded', 'false');
+    }
+
+    bind(fab, 'appAiFab', 'click', () => (panel.hidden ? open() : closePanel()));
+    bind(dock, 'appAiDock', 'click', () => open());
+    bind(close, 'appAiClose', 'click', minimize);
+    bind(send, 'appAiSend', 'click', () => ask(input.value));
+    bind(input, 'appAiInputKey', 'keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        ask(input.value);
+      }
+    });
+    bind(input, 'appAiInputGrow', 'input', autoGrow);
+    bind(chips, 'appAiChips', 'click', (e) => {
+      const b = (e.target as HTMLElement).closest('button');
+      if (b) ask(b.textContent || '');
+    });
+    bind(clear, 'appAiClear', 'click', () => {
       history = [];
-    }
-    if (!panel.hidden) renderHistory();
-  });
+      try {
+        localStorage.removeItem(chatKey());
+      } catch {
+        /* ignore */
+      }
+      renderHistory();
+    });
+
+    const onOpen = () => open();
+    window.removeEventListener('ai:open', onOpen);
+    window.addEventListener('ai:open', onOpen);
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !panel.hidden) closePanel();
+    };
+    document.removeEventListener('keydown', onKey);
+    document.addEventListener('keydown', onKey);
+
+    const onAcct = () => {
+      history = [];
+      try {
+        const saved = JSON.parse(localStorage.getItem(chatKey()) || '[]');
+        if (Array.isArray(saved)) history = saved.slice(-20);
+      } catch {
+        history = [];
+      }
+      if (!panel.hidden) renderHistory();
+    };
+    window.removeEventListener('account:change', onAcct);
+    window.addEventListener('account:change', onAcct);
+  }
+
+  appWin.__appReady?.(initAi);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAi);
+  } else {
+    initAi();
+  }
 </script>
 
 <style>

@@ -150,6 +150,16 @@ const schools = (await getCollection('universities')).map((u) => ({
   import { getAdvice } from '../../lib/ai';
   import { scopedKey } from '../../lib/account';
 
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initQuiz() {
+    const appEl = document.getElementById('quizApp');
+    if (!appEl || appEl.dataset.appInit === '1') return;
+    appEl.dataset.appInit = '1';
+
   const schools = (window as unknown as { __QUIZ_SCHOOLS__?: typeof window.__QUIZ_SCHOOLS__ }).__QUIZ_SCHOOLS__ ?? [];
 
   function esc(s: string): string {
@@ -763,7 +773,7 @@ const schools = (await getCollection('universities')).map((u) => ({
     renderHistory();
   });
 
-  document.addEventListener('keydown', (e) => {
+  const onKey = (e: KeyboardEvent) => {
     if (e.key < '1' || e.key > '9') return;
     const tag = (e.target as HTMLElement)?.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
@@ -771,7 +781,9 @@ const schools = (await getCollection('universities')).map((u) => ({
     const opts = Array.from(document.querySelectorAll('#quizOptions .quiz-option'));
     const idx = Number(e.key) - 1;
     if (idx < opts.length) (opts[idx] as HTMLButtonElement).click();
-  });
+  };
+  document.removeEventListener('keydown', onKey);
+  document.addEventListener('keydown', onKey);
 
   copyBtn.addEventListener('click', () => {
     const saved = JSON.parse(localStorage.getItem(LS_RESULT) || 'null');
@@ -888,4 +900,12 @@ const schools = (await getCollection('universities')).map((u) => ({
     }
   }
   renderHistory();
+  }
+
+  appWin.__appReady?.(initQuiz);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initQuiz);
+  } else {
+    initQuiz();
+  }
 </script>

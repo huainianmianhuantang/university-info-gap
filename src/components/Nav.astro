@@ -52,26 +52,16 @@ const currentPath = Astro.url.pathname;
 <script>
   import { getProfile, logout } from '../lib/account';
 
-  const toggle = document.getElementById('navToggle');
-  const header = document.querySelector('.site-header');
-  toggle?.addEventListener('click', () => {
-    const open = header?.classList.toggle('nav-open') ?? false;
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    toggle.textContent = open ? '✕' : '☰';
-  });
-
-  header?.querySelectorAll('.nav a').forEach((a) =>
-    a.addEventListener('click', () => {
-      header.classList.remove('nav-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.textContent = '☰';
-    }),
-  );
-
-  const themeBtn = document.getElementById('themeToggle');
-  const acctWrap = document.getElementById('acctWrap');
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+    __appBind?: (el: Element | null, key: string, type: string, fn: EventListener) => void;
+  };
+  const appWin = window as AppWindow;
+  const bind = (el: Element | null, key: string, type: string, fn: EventListener) =>
+    appWin.__appBind?.(el, key, type, fn);
 
   function renderAcct() {
+    const acctWrap = document.getElementById('acctWrap');
     if (!acctWrap) return;
     const profile = getProfile();
     const logged = Boolean(profile);
@@ -111,18 +101,16 @@ const currentPath = Astro.url.pathname;
     }
   }
 
-  window.addEventListener('account:change', renderAcct);
-  renderAcct();
-
   const setTheme = (t) => {
     const root = document.documentElement;
     // 切换时暂时禁用过渡：整页元素同时变色容易卡顿，改为瞬时切换
     root.classList.add('theme-switching');
     root.setAttribute('data-theme', t);
     requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('theme-switching')));
-    if (themeBtn) {
-      themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
-      themeBtn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.textContent = t === 'dark' ? '☀️' : '🌙';
+      btn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
     }
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', t === 'dark' ? '#0d1526' : '#1f5eff');
@@ -153,32 +141,63 @@ const currentPath = Astro.url.pathname;
     setTheme(next);
   };
 
-  const savedTheme = (() => {
+  const savedTheme = () => {
     try {
       return localStorage.getItem('theme');
     } catch {
       return null;
     }
-  })();
-  setTheme(
-    savedTheme ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
-  );
-  themeBtn?.addEventListener('click', toggleTheme);
+  };
 
-  const favBadge = document.getElementById('favNavBadge');
-  if (favBadge) {
-    const updateBadge = () => {
-      try {
-        const n = JSON.parse(localStorage.getItem('fav-universities') || '[]').length;
-        favBadge.textContent = n > 0 ? n : '';
-        favBadge.hidden = n === 0;
-      } catch {
-        favBadge.hidden = true;
-      }
-    };
-    updateBadge();
-    window.addEventListener('storage', updateBadge);
-    window.addEventListener('focus', updateBadge);
+  function updateFavBadge() {
+    const favBadge = document.getElementById('favNavBadge');
+    if (!favBadge) return;
+    try {
+      const n = JSON.parse(localStorage.getItem('fav-universities') || '[]').length;
+      favBadge.textContent = n > 0 ? n : '';
+      favBadge.hidden = n === 0;
+    } catch {
+      favBadge.hidden = true;
+    }
+  }
+
+  function initNav() {
+    const header = document.querySelector('.site-header');
+    const toggle = document.getElementById('navToggle');
+    bind(toggle, 'appNavToggle', 'click', () => {
+      const open = header?.classList.toggle('nav-open') ?? false;
+      toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (toggle) toggle.textContent = open ? '✕' : '☰';
+    });
+
+    header?.querySelectorAll('.nav a').forEach((a) =>
+      bind(a, 'appNavLink', 'click', () => {
+        header.classList.remove('nav-open');
+        const t = document.getElementById('navToggle');
+        t?.setAttribute('aria-expanded', 'false');
+        if (t) t.textContent = '☰';
+      }),
+    );
+
+    bind(document.getElementById('themeToggle'), 'appThemeToggle', 'click', toggleTheme);
+
+    setTheme(
+      savedTheme() ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+    );
+    renderAcct();
+    updateFavBadge();
+  }
+
+  // 窗口级监听只注册一次，处理函数每次按当前 DOM 查询
+  window.addEventListener('account:change', renderAcct);
+  window.addEventListener('storage', updateFavBadge);
+  window.addEventListener('focus', updateFavBadge);
+
+  appWin.__appReady?.(initNav);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNav);
+  } else {
+    initNav();
   }
 </script>

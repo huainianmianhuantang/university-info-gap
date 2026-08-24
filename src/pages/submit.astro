@@ -74,6 +74,17 @@ const categories = [
 
 <script>
   import { getProfile } from '../lib/account';
+
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initSubmit() {
+    const pageRoot = document.getElementById('submitForm');
+    if (!pageRoot || pageRoot.dataset.appInit === '1') return;
+    pageRoot.dataset.appInit = '1';
+
   const submitEmail = (window as unknown as { __SUBMIT_EMAIL__?: string }).__SUBMIT_EMAIL__ ?? '';
   const form = document.getElementById('submitForm');
 
@@ -157,4 +168,12 @@ const categories = [
       })
       .catch(() => {});
   });
+  }
+
+  appWin.__appReady?.(initSubmit);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSubmit);
+  } else {
+    initSubmit();
+  }
 </script>

@@ -59,12 +59,30 @@ const readMinutes = Math.max(
 </BaseLayout>
 
 <script>
-  const bar = document.getElementById('readingProgress');
-  function updateProgress() {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const p = max > 0 ? (window.scrollY / max) * 100 : 0;
-    if (bar) bar.style.width = `${Math.min(100, p)}%`;
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initArticle() {
+    const bar = document.getElementById('readingProgress');
+    if (!bar || bar.dataset.appInit === '1') return;
+    bar.dataset.appInit = '1';
+
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? (window.scrollY / max) * 100 : 0;
+      if (bar) bar.style.width = `${Math.min(100, p)}%`;
+    }
+    window.removeEventListener('scroll', updateProgress);
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
   }
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
+
+  appWin.__appReady?.(initArticle);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initArticle);
+  } else {
+    initArticle();
+  }
 </script>

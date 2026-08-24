@@ -88,6 +88,16 @@ const materials = (await getCollection('universities')).flatMap((u) =>
 </BaseLayout>
 
 <script define:vars={{ universities, articles, materials }}>
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initSearch() {
+    const inputEl = document.getElementById('searchInput');
+    if (!inputEl || inputEl.dataset.appInit === '1') return;
+    inputEl.dataset.appInit = '1';
+
   const input = document.getElementById('searchInput');
   const hint = document.getElementById('searchHint');
   const empty = document.getElementById('searchEmpty');
@@ -216,4 +226,12 @@ const materials = (await getCollection('universities')).flatMap((u) =>
   const q = params.get('q') ?? '';
   if (input) input.value = q;
   render();
+  }
+
+  appWin.__appReady?.(initSearch);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearch);
+  } else {
+    initSearch();
+  }
 </script>

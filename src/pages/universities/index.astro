@@ -181,6 +181,16 @@ const slugs = universities.map((u) => u.id);
 <script>
 import { scopedKey } from '../../lib/account';
 
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initUni() {
+    const pageRoot = document.getElementById('universityGrid');
+    if (!pageRoot || pageRoot.dataset.appInit === '1') return;
+    pageRoot.dataset.appInit = '1';
+
   const slugs = (window as unknown as { __UNI_SLUGS__?: string[] }).__UNI_SLUGS__ ?? [];
   const grid = document.getElementById('universityGrid');
   const count = document.getElementById('resultCount');
@@ -396,4 +406,12 @@ import { scopedKey } from '../../lib/account';
   applyFilters();
   applySort();
   updateCompare();
+  }
+
+  appWin.__appReady?.(initUni);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initUni);
+  } else {
+    initUni();
+  }
 </script>

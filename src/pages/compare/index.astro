@@ -66,6 +66,16 @@ const schools = (await getCollection('universities')).map((u) => ({
 
 <script>
 import { scopedKey } from '../../lib/account';
+  type AppWindow = Window & {
+    __appReady?: (fn: () => void) => void;
+  };
+  const appWin = window as AppWindow;
+
+  function initCompare() {
+    const pageRoot = document.getElementById('compareTableWrap');
+    if (!pageRoot || pageRoot.dataset.appInit === '1') return;
+    pageRoot.dataset.appInit = '1';
+
   const schools = (window as unknown as { __CMP_SCHOOLS__?: typeof window.__CMP_SCHOOLS__ }).__CMP_SCHOOLS__ ?? [];
   const wrap = document.getElementById('compareTableWrap');
   const empty = document.getElementById('compareEmpty');
@@ -263,5 +273,13 @@ import { scopedKey } from '../../lib/account';
     legend.className = 'small muted compare-legend';
     legend.innerHTML = '图例：<span class="legend-diff">黄色</span> = 校际差异项，<span class="legend-same">灰色</span> = 各校一致项。';
     wrap.parentNode?.insertBefore(legend, wrap.nextSibling);
+  }
+  }
+
+  appWin.__appReady?.(initCompare);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCompare);
+  } else {
+    initCompare();
   }
 </script>
