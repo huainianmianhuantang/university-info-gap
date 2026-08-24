@@ -28,8 +28,9 @@ const schools = (await getCollection('universities')).map((u) => ({
     <div class="page-hero">
       <h1>选校测评</h1>
       <p>
-        先选择一套问卷，回答完会自动从「学生视角」和「家长视角」各推荐 3 所 985 高校，
-        并生成一份个性化建议。结果只保存在你的浏览器本地。
+        先选择一套问卷；单选题点一下就自动进入下一题，标注「可多选」的题可以勾选多个。
+        回答完会自动从「学生视角」和「家长视角」各推荐 3 所 985 高校，并生成一份个性化建议。
+        结果只保存在你的浏览器本地。
       </p>
     </div>
 
@@ -48,11 +49,14 @@ const schools = (await getCollection('universities')).map((u) => ({
           <button class="btn btn-ghost resume-note" id="resumeNote" type="button" hidden>
             已恢复上次未完成的问卷 · 点击重新开始
           </button>
-          <div class="quiz-step-info" id="stepInfo" aria-live="polite">1 / 12</div>
+          <div class="quiz-step-row">
+            <div class="quiz-step-info" id="stepInfo" aria-live="polite">1 / 12</div>
+            <span class="quiz-multi-badge" id="multiBadge" hidden>可多选</span>
+          </div>
           <h2 class="quiz-question" id="quizTitle"></h2>
           <p class="muted quiz-subtitle" id="quizSubtitle"></p>
           <div class="quiz-options" id="quizOptions"></div>
-          <p class="quiz-kbd-hint" aria-hidden="true">⌨️ 按数字键 1-9 可快速选择</p>
+        <p class="quiz-kbd-hint" aria-hidden="true">⌨️ 按数字键 1-9 快速选择 · 可多选的题可多按几个</p>
           <div class="quiz-nav">
             <button class="btn btn-ghost" id="prevBtn" type="button">上一步</button>
             <button class="btn btn-primary" id="nextBtn" type="button">下一步</button>
@@ -172,6 +176,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const optionsEl = document.getElementById('quizOptions');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
+  const multiBadge = document.getElementById('multiBadge');
   const progressBar = document.getElementById('progressBar');
   const stepInfo = document.getElementById('stepInfo');
   const resumeNote = document.getElementById('resumeNote');
@@ -187,6 +192,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   const copyAdviceBtn = document.getElementById('copyAdviceBtn');
   let currentResult: any = null;
   const HISTORY_KEY = scopedKey('quiz-history');
+  let advanceTimer: number | null = null;
 
   if (loginTip) {
     import('../../lib/account').then((m) => {
@@ -310,7 +316,47 @@ const schools = (await getCollection('universities')).map((u) => ({
     return false;
   }
 
+  /** 兼容旧版单一数字答案：统一返回索引数组 */
+  function currentSelection(q: any): number[] {
+    const v = state.answers[q.id];
+    if (Array.isArray(v)) return v;
+    if (typeof v === 'number') return [v];
+    return [];
+  }
+
+  function setOptionStates(selected: number[]) {
+    optionsEl.querySelectorAll('.quiz-option').forEach((b) => {
+      const j = Number((b as HTMLElement).dataset.idx);
+      const active = selected.includes(j);
+      b.classList.toggle('selected', active);
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      const arr = b.querySelector('.quiz-opt-arrow');
+      if (arr) arr.textContent = active ? '✓' : '→';
+    });
+  }
+
+  /** 单选：选中后稍作停留，自动进入下一题（模仿 Netlify 注册流程） */
+  function scheduleAdvance() {
+    if (advanceTimer !== null) clearTimeout(advanceTimer);
+    advanceTimer = window.setTimeout(() => {
+      advanceTimer = null;
+      const qs = questions();
+      const q = qs[state.step];
+      if (!q || q.multiple) return;
+      if (state.step < qs.length - 1) {
+        state.step++;
+        renderQuestion();
+      } else {
+        compute();
+      }
+    }, 380);
+  }
+
   function renderQuestion() {
+    if (advanceTimer !== null) {
+      clearTimeout(advanceTimer);
+      advanceTimer = null;
+    }
     const qs = questions();
     if (!state.typeId || qs.length === 0) {
       typeCard.hidden = false;
@@ -318,20 +364,24 @@ const schools = (await getCollection('universities')).map((u) => ({
       return;
     }
     const q = qs[state.step];
+    const multi = q.multiple === true;
     titleEl.textContent = q.title;
     subtitleEl.textContent = q.subtitle ?? '';
     subtitleEl.style.display = q.subtitle ? '' : 'none';
     const pct = Math.round(((state.step + 1) / qs.length) * 100);
     stepInfo.textContent = `${state.step + 1} / ${qs.length} · ${pct}%`;
+    if (multiBadge) multiBadge.hidden = !multi;
     progressBar.style.width = `${pct}%`;
 
+    const selected = currentSelection(q);
     optionsEl.innerHTML = '';
     const KEYS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
     q.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'quiz-option';
-      btn.setAttribute('aria-pressed', 'false');
+      btn.dataset.idx = String(idx);
+      btn.setAttribute('aria-pressed', selected.includes(idx) ? 'true' : 'false');
       const key = document.createElement('span');
       key.className = 'quiz-opt-key';
       key.textContent = KEYS[idx] ?? '';
@@ -341,32 +391,35 @@ const schools = (await getCollection('universities')).map((u) => ({
       const arrow = document.createElement('span');
       arrow.className = 'quiz-opt-arrow';
       arrow.setAttribute('aria-hidden', 'true');
-      arrow.textContent = state.answers[q.id] === idx ? '✓' : '→';
+      arrow.textContent = selected.includes(idx) ? '✓' : '→';
       btn.appendChild(key);
       btn.appendChild(label);
       btn.appendChild(arrow);
-      if (state.answers[q.id] === idx) {
-        btn.classList.add('selected');
-        btn.setAttribute('aria-pressed', 'true');
-      }
+      if (selected.includes(idx)) btn.classList.add('selected');
       btn.addEventListener('click', () => {
-        state.answers[q.id] = idx;
-        optionsEl.querySelectorAll('.quiz-option').forEach((b) => {
-          const active = b === btn;
-          b.classList.toggle('selected', active);
-          b.setAttribute('aria-pressed', active ? 'true' : 'false');
-          const arr = b.querySelector('.quiz-opt-arrow');
-          if (arr) arr.textContent = active ? '✓' : '→';
-        });
-        nextBtn.disabled = false;
-        saveAnswers();
+        if (multi) {
+          const sel = currentSelection(q);
+          const i = sel.indexOf(idx);
+          if (i >= 0) sel.splice(i, 1);
+          else sel.push(idx);
+          state.answers[q.id] = [...sel].sort((a, b) => a - b);
+          setOptionStates(state.answers[q.id] as number[]);
+          nextBtn.disabled = (state.answers[q.id] as number[]).length === 0;
+          saveAnswers();
+        } else {
+          state.answers[q.id] = idx;
+          setOptionStates([idx]);
+          saveAnswers();
+          scheduleAdvance();
+        }
       });
       optionsEl.appendChild(btn);
     });
 
     prevBtn.disabled = state.step === 0;
-    nextBtn.textContent = state.step === qs.length - 1 ? '查看结果' : '下一步';
-    nextBtn.disabled = state.answers[q.id] === undefined;
+    nextBtn.hidden = !multi;
+    nextBtn.textContent = state.step === qs.length - 1 ? '查看结果' : '继续';
+    nextBtn.disabled = selected.length === 0;
     quizCard.hidden = false;
     resultCard.hidden = true;
     if (resumeNote) resumeNote.hidden = Object.keys(state.answers).length === 0;
@@ -680,7 +733,7 @@ const schools = (await getCollection('universities')).map((u) => ({
   nextBtn.addEventListener('click', () => {
     const qs = questions();
     const q = qs[state.step];
-    if (!q || state.answers[q.id] === undefined) return;
+    if (!q || currentSelection(q).length === 0) return;
     if (state.step < qs.length - 1) {
       state.step++;
       renderQuestion();

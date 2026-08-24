@@ -12,7 +12,7 @@ import { DIM_LABELS, QUESTIONS } from './recommender';
 export const AI_PROVIDER: 'rule' | 'llm' = 'rule';
 
 export interface AdviceInput {
-  answers: Record<string, number>;
+  answers: Record<string, number | number[]>;
   result: RecommendResult;
   schools: SchoolProfile[];
 }
@@ -43,8 +43,10 @@ const DISTANCE_TIPS: Record<number, string> = {
   2: '你对地域不敏感，按专业与平台实力排序即可。',
 };
 
-function pick(answers: Record<string, number>, key: string): number {
-  return typeof answers[key] === 'number' ? answers[key] : 0;
+function pick(answers: Record<string, number | number[]>, key: string): number {
+  const v = answers[key];
+  if (Array.isArray(v)) return v[0] ?? 0;
+  return typeof v === 'number' ? v : 0;
 }
 
 export function getAdvice(input: AdviceInput): Advice {

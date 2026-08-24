@@ -25,6 +25,8 @@ export interface QuizQuestion {
   title: string;
   subtitle?: string;
   audience?: 'student' | 'parent';
+  /** 是否允许多选（单选题目选中后自动进入下一题） */
+  multiple?: boolean;
   options: QuizOption[];
 }
 
@@ -66,7 +68,8 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'interest',
     audience: 'student',
     title: '你平时对哪类内容最感兴趣？',
-    subtitle: '选一个最贴近的',
+    subtitle: '可多选，越贴近的越靠前',
+    multiple: true,
     options: [
       { label: '数学、物理、逻辑推理', score: { 理: 3, 工: 1 } },
       { label: '动手做实验、拆装创造', score: { 工: 3, 理: 1 } },
@@ -80,6 +83,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'strength',
     audience: 'student',
     title: '高中阶段你最擅长的科目是？',
+    multiple: true,
     options: [
       { label: '数学 / 物理', score: { 理: 2, 工: 2 } },
       { label: '化学 / 生物', score: { 医: 2, 农: 2 } },
@@ -92,6 +96,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'studyStyle',
     audience: 'student',
     title: '你更喜欢哪种学习方式？',
+    multiple: true,
     options: [
       { label: '推导公式、刷题、钻研原理', score: { 理: 3 } },
       { label: '做实验、动手实操', score: { 工: 2, 医: 1, 农: 2 } },
@@ -104,6 +109,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'career',
     audience: 'student',
     title: '未来你更向往哪类职业？',
+    multiple: true,
     options: [
       { label: '科研人员、高校教师', score: { 理: 3, 医: 1 } },
       { label: '工程师、技术研发', score: { 工: 3 } },
@@ -127,7 +133,8 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'city',
     audience: 'student',
     title: '你对城市有偏好吗？',
-    subtitle: '影响学校推荐排序',
+    subtitle: '可多选，影响学校推荐排序',
+    multiple: true,
     options: [
       { label: '北京', cities: ['北京'] },
       { label: '上海', cities: ['上海'] },
@@ -145,6 +152,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'life',
     audience: 'student',
     title: '住宿与生活条件，你最在意什么？',
+    multiple: true,
     options: [
       { label: '独立卫浴、空调、新宿舍' },
       { label: '食堂好吃、生活便利' },
@@ -178,6 +186,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'transfer',
     audience: 'student',
     title: '关于转专业和二次选拔，你的想法是？',
+    multiple: true,
     options: [
       { label: '想先冲名校，入学后转专业' },
       { label: '想进拔尖班 / 实验班' },
@@ -199,6 +208,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'personality',
     audience: 'student',
     title: '你的性格更接近？',
+    multiple: true,
     options: [
       { label: '坐得住、喜欢钻研', score: { 理: 2, 医: 1 } },
       { label: '动手能力强、闲不住', score: { 工: 2 } },
@@ -211,7 +221,8 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'dormPref',
     audience: 'student',
     title: '宿舍条件你优先要什么？',
-    subtitle: '仅用于结果里的生活偏好提示',
+    subtitle: '可多选，仅用于结果里的生活偏好提示',
+    multiple: true,
     options: [
       { label: '独立卫浴 + 空调' },
       { label: '上床下桌、空间大' },
@@ -223,7 +234,8 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'canteen',
     audience: 'student',
     title: '对食堂和周边生活，你的期待是？',
-    subtitle: '仅用于结果里的生活偏好提示',
+    subtitle: '可多选，仅用于结果里的生活偏好提示',
+    multiple: true,
     options: [
       { label: '食堂好吃很重要' },
       { label: '周边商业便利优先' },
@@ -235,6 +247,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'social',
     audience: 'student',
     title: '你期待怎样的大学生活氛围？',
+    multiple: true,
     options: [
       { label: '社团活动丰富、爱交朋友', score: { 文: 1, 经: 1 } },
       { label: '安静专注、适合自习研究', score: { 理: 1 } },
@@ -257,6 +270,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'pJob',
     audience: 'parent',
     title: '您更希望孩子未来的就业方向是？',
+    multiple: true,
     options: [
       { label: '稳定就业（考公 / 国企 / 事业单位）', parent: { job: 1 } },
       { label: '高薪行业（互联网 / 金融 / 大厂）', parent: { job: 1, cost: 'high' } },
@@ -289,7 +303,8 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'pCity',
     audience: 'parent',
     title: '希望孩子在哪个区域读书？',
-    subtitle: '影响学校推荐排序',
+    subtitle: '可多选，影响学校推荐排序',
+    multiple: true,
     options: [
       { label: '北京', cities: ['北京'] },
       { label: '上海', cities: ['上海'] },
@@ -307,6 +322,7 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'pTransfer',
     audience: 'parent',
     title: '您是否关注学校的转专业政策？',
+    multiple: true,
     options: [
       { label: '关注，希望转专业政策宽松', parent: { transfer: 1 } },
       { label: '希望孩子一步到位读心仪专业', parent: {} },
@@ -377,7 +393,8 @@ export const QUESTIONS: QuizQuestion[] = [
     id: 'pMajorStrength',
     audience: 'parent',
     title: '如果按专业方向选，您倾向哪一类？',
-    subtitle: '用于专业实力优先时的匹配',
+    subtitle: '可多选，用于专业实力优先时的匹配',
+    multiple: true,
     options: [
       { label: '理科基础（数学 / 物理 / 化学）', parent: { majorOverFame: 1, dims: { 理: 2 } } },
       { label: '工科（计算机 / 电子 / 机械等）', parent: { majorOverFame: 1, dims: { 工: 2 } } },
@@ -587,7 +604,8 @@ export const SCHOOL_TIERS: Record<string, { tier: 'top' | 'mid' | 'other'; bound
   'nwafu': { tier: 'other', bound: 18000 },
 };
 
-export type QuizAnswer = Record<string, number>;
+/** 单选存索引；多选存索引数组（兼容旧版单一数字答案） */
+export type QuizAnswer = Record<string, number | number[]>;
 
 export interface PerspectiveSchool {
   profile: SchoolProfile;
@@ -646,8 +664,22 @@ function emptyPrefs(): ParentPrefs {
   };
 }
 
+function optionIndices(v: number | number[] | undefined): number[] {
+  if (Array.isArray(v)) return v;
+  if (typeof v === 'number') return [v];
+  return [];
+}
+
+export function hasOption(
+  answers: Record<string, number | number[]>,
+  key: string,
+  idx: number,
+): boolean {
+  return optionIndices(answers[key]).includes(idx);
+}
+
 export function recommend(
-  answers: Record<string, number>,
+  answers: Record<string, number | number[]>,
   schools: SchoolProfile[],
   quizTypeId?: string,
 ): RecommendResult {
@@ -656,32 +688,34 @@ export function recommend(
   let typePref = '其他';
   const prefs = emptyPrefs();
 
-  for (const [qid, optIdx] of Object.entries(answers)) {
+  for (const [qid, raw] of Object.entries(answers)) {
     const q = QUESTION_BY_ID.get(qid);
     if (!q) continue;
-    const opt = q.options[optIdx];
-    if (!opt) continue;
-    if (opt.score) {
-      for (const [dim, v] of Object.entries(opt.score)) {
-        dimScore[dim as Dim] += v ?? 0;
+    for (const optIdx of optionIndices(raw)) {
+      const opt = q.options[optIdx];
+      if (!opt) continue;
+      if (opt.score) {
+        for (const [dim, v] of Object.entries(opt.score)) {
+          dimScore[dim as Dim] += v ?? 0;
+        }
       }
-    }
-    if (opt.cities) cities.push(...opt.cities);
-    if (opt.typePref) typePref = opt.typePref;
-    const p = opt.parent;
-    if (p) {
-      prefs.postgrad += p.postgrad ?? 0;
-      prefs.job += p.job ?? 0;
-      prefs.transfer += p.transfer ?? 0;
-      prefs.fame += p.fame ?? 0;
-      prefs.majorOverFame += p.majorOverFame ?? 0;
-      prefs.strict += p.strict ?? 0;
-      if (p.cost) prefs.cost = p.cost;
-      if (p.ratio) prefs.ratio = p.ratio;
-      if (p.cityTier) prefs.cityTier = p.cityTier;
-      if (p.dims) {
-        for (const [dim, v] of Object.entries(p.dims)) {
-          prefs.dims[dim as Dim] = (prefs.dims[dim as Dim] ?? 0) + (v ?? 0);
+      if (opt.cities) cities.push(...opt.cities);
+      if (opt.typePref) typePref = opt.typePref;
+      const p = opt.parent;
+      if (p) {
+        prefs.postgrad += p.postgrad ?? 0;
+        prefs.job += p.job ?? 0;
+        prefs.transfer += p.transfer ?? 0;
+        prefs.fame += p.fame ?? 0;
+        prefs.majorOverFame += p.majorOverFame ?? 0;
+        prefs.strict += p.strict ?? 0;
+        if (p.cost) prefs.cost = p.cost;
+        if (p.ratio) prefs.ratio = p.ratio;
+        if (p.cityTier) prefs.cityTier = p.cityTier;
+        if (p.dims) {
+          for (const [dim, v] of Object.entries(p.dims)) {
+            prefs.dims[dim as Dim] = (prefs.dims[dim as Dim] ?? 0) + (v ?? 0);
+          }
         }
       }
     }
@@ -717,7 +751,9 @@ export function recommend(
       if (cityMatch(profile)) score += 2;
       if (typeMatch(profile)) score += 1.5;
       const wantsDorm =
-        answers.dormPref === 0 || answers.dormPref === 1 || answers.life === 0;
+        hasOption(answers, 'dormPref', 0) ||
+        hasOption(answers, 'dormPref', 1) ||
+        hasOption(answers, 'life', 0);
       if (wantsDorm && tags.has('宿舍条件好')) score += 1.5;
       if (dims.length === 0) {
         // 无兴趣维度作答（如家长问卷）时，以实力 + 城市兜底排序
