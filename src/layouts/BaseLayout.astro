@@ -38,7 +38,10 @@ const pageDescription = description ?? SITE.description;
               });
             });
             var btn = document.getElementById('themeToggle');
-            if (btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
+            if (btn) {
+              btn.textContent = t === 'dark' ? '☀️' : '🌙';
+              btn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+            }
             var meta = document.querySelector('meta[name="theme-color"]');
             if (meta) meta.setAttribute('content', t === 'dark' ? '#0d1526' : '#1f5eff');
           } catch (e) {
@@ -48,6 +51,23 @@ const pageDescription = description ?? SITE.description;
         applyTheme();
         // 视图过渡（客户端导航）会清掉 <html> 上的 data-theme，这里在每次切换后恢复
         document.addEventListener('astro:page-load', applyTheme);
+        // 未手动选择主题时，实时跟随系统深浅色（避免重复绑定）
+        if (!window.__themeSystemBound) {
+          window.__themeSystemBound = true;
+          var sysMq = window.matchMedia('(prefers-color-scheme: dark)');
+          var onSysChange = function () {
+            try {
+              if (!localStorage.getItem('theme')) applyTheme();
+            } catch (e) {
+              /* ignore */
+            }
+          };
+          if (typeof sysMq.addEventListener === 'function') {
+            sysMq.addEventListener('change', onSysChange);
+          } else if (typeof sysMq.addListener === 'function') {
+            sysMq.addListener(onSysChange);
+          }
+        }
       })();
     </script>
     <meta charset="UTF-8" />

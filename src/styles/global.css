@@ -25,6 +25,7 @@
 }
 
 html[data-theme='dark'] {
+  color-scheme: dark;
   --bg: #0d1526;
   --surface: #16213a;
   --card-bg: #16213a;
@@ -100,6 +101,27 @@ html.theme-switching *::after {
   transition: none !important;
 }
 
+/* 主题切换时的整页交叉淡化（仅用户手动切换时生效，不随页面导航触发） */
+html.theme-vt::view-transition-old(root) {
+  animation: theme-fade-out 0.18s ease both;
+}
+
+html.theme-vt::view-transition-new(root) {
+  animation: theme-fade-in 0.18s ease both;
+}
+
+@keyframes theme-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes theme-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
 /* ---------- 无跳转感导航：内容区平滑过渡，外壳原位交叉淡化 ---------- */
 ::view-transition-old(root) {
   animation: vt-page-out 0.16s ease-in both;
@@ -126,6 +148,8 @@ html.theme-switching *::after {
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root),
+  html.theme-vt::view-transition-old(root),
+  html.theme-vt::view-transition-new(root),
   ::view-transition-old(site-header),
   ::view-transition-new(site-header),
   ::view-transition-old(site-footer),

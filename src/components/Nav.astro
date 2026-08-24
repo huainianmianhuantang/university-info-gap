@@ -25,7 +25,7 @@ const currentPath = Astro.url.pathname;
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="打开菜单">
       ☰
     </button>
-    <button class="theme-toggle" id="themeToggle" aria-label="切换深浅色模式">🌙</button>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深浅色模式" aria-pressed="false" title="切换深色 / 浅色模式">🌙</button>
     <nav class="nav" id="siteNav" aria-label="主导航">
       {links.map((link) => (
         <a
@@ -114,13 +114,16 @@ const currentPath = Astro.url.pathname;
   window.addEventListener('account:change', renderAcct);
   renderAcct();
 
-  const applyTheme = (t) => {
+  const setTheme = (t) => {
     const root = document.documentElement;
     // 切换时暂时禁用过渡：整页元素同时变色容易卡顿，改为瞬时切换
     root.classList.add('theme-switching');
     root.setAttribute('data-theme', t);
     requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('theme-switching')));
-    if (themeBtn) themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+    if (themeBtn) {
+      themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+      themeBtn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+    }
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', t === 'dark' ? '#0d1526' : '#1f5eff');
     try {
@@ -129,6 +132,27 @@ const currentPath = Astro.url.pathname;
       /* ignore */
     }
   };
+
+  const toggleTheme = () => {
+    const next =
+      document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const root = document.documentElement;
+    if (document.startViewTransition && !reduced) {
+      root.classList.add('theme-vt');
+      try {
+        const vt = document.startViewTransition(() => setTheme(next));
+        vt.finished
+          .then(() => root.classList.remove('theme-vt'))
+          .catch(() => root.classList.remove('theme-vt'));
+        return;
+      } catch {
+        root.classList.remove('theme-vt');
+      }
+    }
+    setTheme(next);
+  };
+
   const savedTheme = (() => {
     try {
       return localStorage.getItem('theme');
@@ -136,15 +160,11 @@ const currentPath = Astro.url.pathname;
       return null;
     }
   })();
-  applyTheme(
+  setTheme(
     savedTheme ||
       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
   );
-  themeBtn?.addEventListener('click', () => {
-    const next =
-      document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-  });
+  themeBtn?.addEventListener('click', toggleTheme);
 
   const favBadge = document.getElementById('favNavBadge');
   if (favBadge) {
