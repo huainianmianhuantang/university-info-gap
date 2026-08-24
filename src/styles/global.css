@@ -66,6 +66,40 @@ html[data-theme='dark'] textarea {
   color-scheme: dark;
 }
 
+html[data-theme='dark'] .filters input[type='search'],
+html[data-theme='dark'] .filters select,
+html[data-theme='dark'] .form-field input,
+html[data-theme='dark'] .form-field select,
+html[data-theme='dark'] .form-field textarea {
+  background: #1a2740;
+  color: #e5edf8;
+}
+
+html[data-theme='dark'] .tab-btn.active {
+  background: #1a2740;
+  color: #7ab0ff;
+  box-shadow: none;
+}
+
+html[data-theme='dark'] .note-banner {
+  background: rgba(255, 213, 128, 0.1);
+  border-color: rgba(255, 213, 128, 0.24);
+  color: #ffd98a;
+}
+
+html[data-theme='dark'] .compare-table td.diff,
+html[data-theme='dark'] .legend-diff {
+  background: rgba(255, 213, 128, 0.1);
+  border-color: rgba(255, 213, 128, 0.3);
+}
+
+/* 主题切换瞬间禁用过渡，避免整页元素同时变色导致卡顿 */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
+}
+
 * {
   box-sizing: border-box;
 }
