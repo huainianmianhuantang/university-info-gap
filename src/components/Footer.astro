@@ -4,7 +4,7 @@ import { SITE } from '../config';
 const updated = new Date().toISOString().slice(0, 10);
 ---
 
-<footer class="site-footer">
+<footer class="site-footer" transition:name="site-footer">
   <div class="container">
     <span>
       © 2026 {SITE.title} · 内容仅供学习参考，请以官方发布为准 · 最后更新 {updated}

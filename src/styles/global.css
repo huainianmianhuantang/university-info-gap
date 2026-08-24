@@ -100,6 +100,40 @@ html.theme-switching *::after {
   transition: none !important;
 }
 
+/* ---------- 无跳转感导航：内容区平滑过渡，外壳原位交叉淡化 ---------- */
+::view-transition-old(root) {
+  animation: vt-page-out 0.16s ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: vt-page-in 0.22s ease-out both;
+}
+
+@keyframes vt-page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes vt-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-old(site-header),
+  ::view-transition-new(site-header),
+  ::view-transition-old(site-footer),
+  ::view-transition-new(site-footer) {
+    animation: none !important;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

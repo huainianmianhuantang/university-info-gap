@@ -15,7 +15,7 @@ const links = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="site-header">
+<header class="site-header" transition:name="site-header">
   <div class="container">
     <a class="logo" href="/">
       <span class="logo-mark">镜</span>
@@ -30,10 +30,15 @@ const currentPath = Astro.url.pathname;
       {links.map((link) => (
         <a
           href={link.href}
+          data-astro-prefetch
           aria-current={
-            link.href === '/' ? currentPath === '/' : currentPath.startsWith(link.href)
-              ? 'page'
-              : undefined
+            link.href === '/'
+              ? currentPath === '/'
+                ? 'page'
+                : undefined
+              : currentPath.startsWith(link.href)
+                ? 'page'
+                : undefined
           }
         >
           {link.label}

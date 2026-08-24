@@ -25,13 +25,29 @@ const pageDescription = description ?? SITE.description;
   <head>
     <script is:inline>
       (function () {
-        try {
-          var t = localStorage.getItem('theme');
-          if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          document.documentElement.setAttribute('data-theme', t);
-        } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'light');
+        function applyTheme() {
+          try {
+            var t = localStorage.getItem('theme');
+            if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            var root = document.documentElement;
+            root.classList.add('theme-switching');
+            root.setAttribute('data-theme', t);
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                root.classList.remove('theme-switching');
+              });
+            });
+            var btn = document.getElementById('themeToggle');
+            if (btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', t === 'dark' ? '#0d1526' : '#1f5eff');
+          } catch (e) {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
         }
+        applyTheme();
+        // 视图过渡（客户端导航）会清掉 <html> 上的 data-theme，这里在每次切换后恢复
+        document.addEventListener('astro:page-load', applyTheme);
       })();
     </script>
     <meta charset="UTF-8" />
