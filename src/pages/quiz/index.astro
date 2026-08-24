@@ -35,26 +35,28 @@ const schools = (await getCollection('universities')).map((u) => ({
 
     <div id="quizApp" class="quiz-app">
       <div class="card section-block" id="typeCard">
-        <h2>选择问卷</h2>
+        <h2>先选一套问卷</h2>
         <p class="muted">学生问卷偏重兴趣与校园生活，家长问卷偏重就业、深造与成本；轻量与全面按时间自由选。</p>
-        <div class="quiz-type-grid" id="quizTypes"></div>
+        <div class="quiz-type-list" id="quizTypes"></div>
       </div>
 
       <div class="card quiz-card" id="quizCard" hidden>
         <div class="quiz-progress" aria-hidden="true">
           <div class="quiz-progress-bar" id="progressBar"></div>
         </div>
-        <button class="btn btn-ghost resume-note" id="resumeNote" type="button" hidden>
-          已恢复上次未完成的问卷 · 点击重新开始
-        </button>
-        <div class="quiz-step-info" id="stepInfo" aria-live="polite">1 / 12</div>
-        <h2 class="quiz-question" id="quizTitle"></h2>
-        <p class="muted quiz-subtitle" id="quizSubtitle"></p>
-        <div class="quiz-options" id="quizOptions"></div>
-        <p class="quiz-kbd-hint" aria-hidden="true">⌨️ 按数字键 1-9 可快速选择</p>
-        <div class="quiz-nav">
-          <button class="btn btn-ghost" id="prevBtn" type="button">上一步</button>
-          <button class="btn btn-primary" id="nextBtn" type="button">下一步</button>
+        <div class="quiz-body">
+          <button class="btn btn-ghost resume-note" id="resumeNote" type="button" hidden>
+            已恢复上次未完成的问卷 · 点击重新开始
+          </button>
+          <div class="quiz-step-info" id="stepInfo" aria-live="polite">1 / 12</div>
+          <h2 class="quiz-question" id="quizTitle"></h2>
+          <p class="muted quiz-subtitle" id="quizSubtitle"></p>
+          <div class="quiz-options" id="quizOptions"></div>
+          <p class="quiz-kbd-hint" aria-hidden="true">⌨️ 按数字键 1-9 可快速选择</p>
+          <div class="quiz-nav">
+            <button class="btn btn-ghost" id="prevBtn" type="button">上一步</button>
+            <button class="btn btn-primary" id="nextBtn" type="button">下一步</button>
+          </div>
         </div>
       </div>
 
@@ -204,12 +206,14 @@ const schools = (await getCollection('universities')).map((u) => ({
     QUIZ_TYPES.forEach((t) => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'card quiz-type-card';
+      btn.className = 'quiz-type-row';
       btn.innerHTML = `
         <span class="quiz-type-icon">${t.icon}</span>
-        <b>${esc(t.label)}</b>
-        <span class="small muted">${esc(t.desc)}</span>
-        <span class="chip result-chip">⏱️ ${esc(t.duration)}</span>
+        <span class="quiz-type-text">
+          <b>${esc(t.label)}</b>
+          <small>${esc(t.desc)}</small>
+        </span>
+        <span class="quiz-type-arrow" aria-hidden="true">→</span>
       `;
       btn.addEventListener('click', () => {
         state.typeId = t.id;
@@ -334,8 +338,13 @@ const schools = (await getCollection('universities')).map((u) => ({
       const label = document.createElement('span');
       label.className = 'quiz-opt-label';
       label.textContent = opt.label;
+      const arrow = document.createElement('span');
+      arrow.className = 'quiz-opt-arrow';
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = state.answers[q.id] === idx ? '✓' : '→';
       btn.appendChild(key);
       btn.appendChild(label);
+      btn.appendChild(arrow);
       if (state.answers[q.id] === idx) {
         btn.classList.add('selected');
         btn.setAttribute('aria-pressed', 'true');
@@ -346,6 +355,8 @@ const schools = (await getCollection('universities')).map((u) => ({
           const active = b === btn;
           b.classList.toggle('selected', active);
           b.setAttribute('aria-pressed', active ? 'true' : 'false');
+          const arr = b.querySelector('.quiz-opt-arrow');
+          if (arr) arr.textContent = active ? '✓' : '→';
         });
         nextBtn.disabled = false;
         saveAnswers();

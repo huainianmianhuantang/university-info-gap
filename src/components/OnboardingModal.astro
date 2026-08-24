@@ -25,7 +25,8 @@
     saved = null;
   }
 
-  if (!saved) {
+  // 仅在首页自动弹出；其他页面（如选校测评）首访时不让引导层劫持浏览
+  if (!saved && window.location.pathname === '/') {
     requestAnimationFrame(() => {
       mask.hidden = false;
       mask.classList.add('ob-show');
