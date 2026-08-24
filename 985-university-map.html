@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>全国985高校信息交互地图</title>
+<style>
+  :root {
+    --accent: #1f5eff;
+    --accent-soft: #e8efff;
+    --bg: #f5f8fd;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #5b6b84;
+    --border: #dbe4f2;
+    --radius: 14px;
+    --shadow: 0 10px 32px rgba(30, 64, 175, 0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .top {
+    padding: 22px 22px 14px;
+    text-align: center;
+    background: linear-gradient(135deg, #eaf1ff, #f7fbff);
+    border-bottom: 1px solid var(--border);
+  }
+  .top h1 { font-size: 24px; letter-spacing: 0.5px; color: #12336e; }
+  .top p { margin-top: 6px; font-size: 13.5px; color: var(--muted); }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 12px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(245, 248, 253, 0.92);
+    backdrop-filter: blur(6px);
+  }
+  .chip {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(31, 94, 255, 0.28);
+  }
+  .stat { align-self: center; font-size: 12.5px; color: var(--muted); margin-left: 6px; }
+  .map-wrap {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 8px 14px 12px;
+    min-height: 0;
+  }
+  .map-card {
+    position: relative;
+    width: 100%;
+    max-width: 1180px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 18px rgba(30, 64, 175, 0.06);
+    overflow: hidden;
+  }
+  #map { width: 100%; height: calc(100vh - 172px); min-height: 480px; }
+  .loading, .error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--card);
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+    padding: 20px;
+  }
+  .error b { color: #c0392b; }
+  .error button {
+    margin-top: 6px;
+    border: 0;
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .foot {
+    text-align: center;
+    padding: 10px 14px 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  /* 右侧详情面板 */
+  .panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(420px, 94vw);
+    background: var(--card);
+    box-shadow: var(--shadow);
+    transform: translateX(105%);
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+    z-index: 60;
+    border-radius: 16px 0 0 16px;
+    overflow: hidden;
+  }
+  .panel.open { transform: translateX(0); }
+  .panel-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 18px 14px;
+    background: linear-gradient(135deg, var(--accent-soft), #f4f8ff);
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-emoji { font-size: 38px; }
+  .panel-head h2 { font-size: 20px; color: #12336e; }
+  .panel-head p { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .close {
+    margin-left: auto;
+    border: 0;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--muted);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .close:hover { background: #fff; color: var(--accent); transform: rotate(90deg); }
+  .panel-body { flex: 1; overflow-y: auto; padding: 16px 18px 24px; }
+  .sec { margin-bottom: 16px; }
+  .sec h4 {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sec p { font-size: 13.5px; line-height: 1.7; color: var(--text); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span {
+    background: var(--accent-soft);
+    color: #20449e;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .mask {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.32);
+    z-index: 50;
+  }
+  /* 移动端：底部抽屉 */
+  @media (max-width: 640px) {
+    .top { padding: 16px 12px 10px; }
+    .top h1 { font-size: 19px; }
+    .filters { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding: 10px; }
+    .chip { flex: 0 0 auto; }
+    .stat { display: none; }
+    #map { height: calc(100vh - 168px); min-height: 380px; }
+    .panel {
+      top: auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-height: 78vh;
+      border-radius: 18px 18px 0 0;
+      transform: translateY(105%);
+    }
+    .panel.open { transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>🗺️ 全国985高校信息交互地图</h1>
+    <p>点击地图上的学校图标查看资料库；按地区筛选，快速锁定心仪高校。</p>
+  </header>
+
+  <nav class="filters" id="filters" aria-label="地区筛选"></nav>
+
+  <main class="map-wrap">
+    <div class="map-card">
+      <div id="map"></div>
+      <div class="loading" id="loading">⏳ 正在加载中国地图与学校点位…</div>
+      <div class="error" id="error" hidden>
+        <b>😵 资源加载失败</b>
+        <span>请检查网络后重试（需要联网加载地图组件）。</span>
+        <button id="retryBtn" type="button">重新加载</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot">共 39 所 985 高校 · 内容为公开资料整理，仅供信息参考，请以各校官方发布为准</footer>
+
+  <div class="mask" id="mask" hidden></div>
+  <aside class="panel" id="panel" role="dialog" aria-modal="false" aria-label="高校资料库">
+    <div class="panel-head">
+      <span class="panel-emoji" id="pEmoji"></span>
+      <div>
+        <h2 id="pName"></h2>
+        <p id="pMeta"></p>
+      </div>
+      <button class="close" id="closeBtn" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="panel-body" id="pBody"></div>
+  </aside>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============ 39 所 985 数据（经纬度为代表性校区，仅供地图定位） ============ */
+  var SCHOOLS = [
+    { name:'北京大学', province:'北京', city:'北京', region:'华北', lat:39.991, lng:116.307, emoji:'🎓',
+      intro:'中国顶尖综合性研究型大学，人文与理学底蕴深厚，未名湖与博雅塔是标志。',
+      feature:'通识教育与书院制探索，元培学院等试验班提供跨学科自由；学术氛围极浓，自由选课。',
+      majors:['哲学','中文','历史','数学','物理','化学','法学','经济','临床医学'],
+      life:'燕园古色古香，未名湖四季皆景；社团与讲座资源全国顶尖，竞争激烈、需要自律。',
+      apply:'录取分数居全国最高梯队；强基计划、筑梦计划（专项）等多元通道。' },
+    { name:'清华大学', province:'北京', city:'北京', region:'华北', lat:40.001, lng:116.326, emoji:'⚙️',
+      intro:'工科与理科并重的世界一流大学，工程师的摇篮，校风严谨务实。',
+      feature:'大类招生与书院制，强基计划与学堂班培养拔尖人才；创新创业氛围浓，国际化平台多。',
+      majors:['计算机','电子','机械','自动化','建筑','经济管理','数学','物理'],
+      life:'清华园大而美，紫荆食堂远近闻名；“无体育不清华”，节奏快、压力大。',
+      apply:'与北大并列全国顶尖；强基计划、领军计划等，参考本省位次前茅。' },
+    { name:'中国人民大学', province:'北京', city:'北京', region:'华北', lat:39.970, lng:116.318, emoji:'📜',
+      intro:'人文社会科学领域的顶尖学府，经济、法学、新闻等见长。',
+      feature:'人文社科专业体系完整，注重理论与实践结合，政企实习资源丰富。',
+      majors:['经济','金融','法学','新闻传播','公共管理','统计'],
+      life:'校园精致紧凑，地处中关村繁华地段；食堂与宿舍口碑好，人文气息浓厚。',
+      apply:'文科顶尖分数；理科也可报统计、大数据等强项专业。' },
+    { name:'北京航空航天大学', province:'北京', city:'北京', region:'华北', lat:40.077, lng:116.347, emoji:'✈️',
+      intro:'航空航天领域王牌高校，国防七子之一，工科实力突出。',
+      feature:'大类招生与书院制；航空航天大类全国第一梯队，强调“空天报国”，实验与实践环节多。',
+      majors:['航空宇航','计算机','软件','仪器','材料','自动化'],
+      life:'沙河校区大而新，学院路校区便利；学风扎实，作业与实验压力不小。',
+      apply:'理科高分段；强基计划（航空航天类）值得关注。' },
+    { name:'北京理工大学', province:'北京', city:'北京', region:'华北', lat:39.961, lng:116.320, emoji:'🚀',
+      intro:'国防特色鲜明的理工强校，兵器、车辆、信息方向全国领先。',
+      feature:'书院制大类培养，军工背景科研平台多；中关村校区与良乡校区双校区办学。',
+      majors:['兵器科学与技术','车辆','信息与通信','计算机','光学'],
+      life:'良乡校区设施新、宿舍条件好；军工与竞赛氛围浓。',
+      apply:'理科高分段；强基计划聚焦基础学科与前沿交叉。' },
+    { name:'中国农业大学', province:'北京', city:'北京', region:'华北', lat:40.031, lng:116.286, emoji:'🌾',
+      intro:'农业与生命科学领域顶尖高校，农学、食品科学全国第一。',
+      feature:'农科基础深厚，卓越农林人才班培养拔尖人才；注重田间实践与科研结合。',
+      majors:['农学','园艺','植物保护','食品科学','动物医学'],
+      life:'校园绿化好、食堂实惠量大；西校区开阔，氛围踏实不浮夸。',
+      apply:'分数相对亲民，适合对生命科学、农业食品感兴趣的理科生。' },
+    { name:'北京师范大学', province:'北京', city:'北京', region:'华北', lat:39.962, lng:116.357, emoji:'🧑‍🏫',
+      intro:'中国师范类高校天花板，教育学、心理学全国第一，文理基础扎实。',
+      feature:'师范与非师范并行培养，励耘实验班等拔尖项目；教师教育资源全国领先。',
+      majors:['教育学','心理学','中文','历史','数学','地理'],
+      life:'校园紧邻北太平庄，古木参天；师范生补贴与就业对口优势明显。',
+      apply:'文理科均可报考，公费师范生需注意协议条款。' },
+    { name:'中央民族大学', province:'北京', city:'北京', region:'华北', lat:39.951, lng:116.320, emoji:'🏮',
+      intro:'民族类最高学府，民族文化研究特色鲜明，多民族学生交融。',
+      feature:'民族学、人类学全国领先；校园文化多元，民族节日与社团活动丰富。',
+      majors:['民族学','社会学','中文','法学','音乐舞蹈'],
+      life:'校园小而美，毗邻紫竹院；食堂汇聚多民族风味。',
+      apply:'少数民族聚居地区有专项政策，分数相对友好。' },
+    { name:'南开大学', province:'天津', city:'天津', region:'华北', lat:39.103, lng:117.171, emoji:'⭐',
+      intro:'老牌综合名校“学府北辰”，理科基础与经管并重。',
+      feature:'数学、化学等理科基础扎实；大类培养与二次选拔灵活。',
+      majors:['数学','化学','金融','经济','历史','物理'],
+      life:'八里台校区古朴、津南校区现代；天津生活节奏舒适、成本适中。',
+      apply:'分数适中偏上，性价比高的老牌名校。' },
+    { name:'天津大学', province:'天津', city:'天津', region:'华北', lat:39.108, lng:117.174, emoji:'🛠️',
+      intro:'中国第一所现代大学，工科底蕴深厚，校训“实事求是”。',
+      feature:'化工、精仪、建筑等工科强势；大类招生，转专业机制较灵活。',
+      majors:['化学工程','精密仪器','建筑','土木','机械'],
+      life:'卫津路校区位于市区，北洋园校区设施新；天津就业落户友好。',
+      apply:'理科中高分段；强基计划基础学科可选。' },
+    { name:'复旦大学', province:'上海', city:'上海', region:'华东', lat:31.298, lng:121.504, emoji:'🏫',
+      intro:'文理医均衡的顶尖综合大学，“日月光华，旦复旦兮”。',
+      feature:'通识教育与书院制，学术氛围自由；医学（上医）实力强劲。',
+      majors:['临床医学','经济','新闻','数学','物理','哲学'],
+      life:'邯郸校区闹中取静，光华楼是地标；上海平台开阔、实习机会多。',
+      apply:'全国顶尖分数；强基计划、专项计划等。' },
+    { name:'上海交通大学', province:'上海', city:'上海', region:'华东', lat:31.202, lng:121.431, emoji:'🚢',
+      intro:'工科与医科并强的顶尖大学，钱学森的母校，创新创业活跃。',
+      feature:'理工医交叉培养，致远学院拔尖计划；国际化交流项目丰富。',
+      majors:['船舶海洋','机械','电子','计算机','临床医学','经管'],
+      life:'闵行校区超大，新建宿舍条件好；上海实习就业优势明显。',
+      apply:'全国顶尖分数；强基计划聚焦基础学科。' },
+    { name:'同济大学', province:'上海', city:'上海', region:'华东', lat:31.284, lng:121.502, emoji:'🏗️',
+      intro:'以建筑、土木、交通闻名的工科强校，风格严谨务实。',
+      feature:'建筑与城市规划全国第一梯队；中德合作项目多，工程实践扎实。',
+      majors:['建筑','土木','交通','车辆','环境','设计'],
+      life:'四平路校区地处市中心，樱花大道是春日打卡地；上海就业面广。',
+      apply:'理科中高分段；建筑类通常对美术基础有要求。' },
+    { name:'华东师范大学', province:'上海', city:'上海', region:'华东', lat:31.229, lng:121.405, emoji:'🌸',
+      intro:'师范类双子星之一，教育、心理、地理等学科全国领先。',
+      feature:'师范教育金字招牌，非师范专业同样扎实；国际化书院项目。',
+      majors:['教育学','心理学','地理','中文','数学','软件'],
+      life:'闵行校区现代开阔，中北校区市区便利；上海生活多彩。',
+      apply:'文理科皆可，公费师范生与自费培养并行。' },
+    { name:'南京大学', province:'江苏', city:'南京', region:'华东', lat:32.060, lng:118.961, emoji:'📖',
+      intro:'“诚朴雄伟”的顶尖综合大学，天文学、地质学等特色突出。',
+      feature:'三三制本科培养与大类招生；文理见长，学风朴实干练。',
+      majors:['天文','地质','中文','物理','化学','计算机'],
+      life:'鼓楼校区古韵犹存，仙林校区现代；南京人文气息浓、生活成本适中。',
+      apply:'华东顶尖分数；强基计划覆盖基础学科。' },
+    { name:'东南大学', province:'江苏', city:'南京', region:'华东', lat:32.058, lng:118.790, emoji:'🧭',
+      intro:'建筑老八校之一，电子、信息、生物医学工程等工科强劲。',
+      feature:'大类培养与书院制，工科实验班选择多；科研平台扎实。',
+      majors:['建筑','电子科学与技术','信息与通信','生物医学工程','土木'],
+      life:'九龙湖校区大而新，四牌楼校区梧桐成荫；南京就业资源好。',
+      apply:'理科中高分段；强基计划与吴健雄学院可关注。' },
+    { name:'浙江大学', province:'浙江', city:'杭州', region:'华东', lat:30.262, lng:120.122, emoji:'🌈',
+      intro:'综合实力顶尖的“东方剑桥”，学科门类齐全、发展迅猛。',
+      feature:'大类招生与求是学院；竺可桢学院拔尖班、交叉创新平台多。',
+      majors:['计算机','控制','光学','农学','临床医学','软件'],
+      life:'紫金港校区巨大且现代化，食堂选择多；杭州互联网氛围浓厚。',
+      apply:'全国顶尖分数；强基计划、三位一体（浙江）等。' },
+    { name:'中国科学技术大学', province:'安徽', city:'合肥', region:'华东', lat:31.837, lng:117.273, emoji:'🔬',
+      intro:'“千生一院士”的科研型大学，理科基础全国顶尖，小而精。',
+      feature:'少年班、创新班闻名；书院式管理，本科科研参与度高，转专业自由。',
+      majors:['数学','物理','化学','地球物理','计算机'],
+      life:'校园紧凑、学术氛围浓；合肥生活成本低、节奏慢。',
+      apply:'顶尖理科分数；少年班/创新班需提前关注。' },
+    { name:'厦门大学', province:'福建', city:'厦门', region:'华东', lat:24.435, lng:118.105, emoji:'🌴',
+      intro:'“中国最美大学”之一，山海之间的综合名校，经济管理见长。',
+      feature:'经济学院全国知名，会计金融强；国际化程度高。',
+      majors:['经济','金融','会计','化学','海洋','新闻'],
+      life:'面朝大海、依山而建，白城沙滩近在咫尺；厦门气候宜人。',
+      apply:'中高分段；马来西亚分校单独招生可关注。' },
+    { name:'山东大学', province:'山东', city:'济南', region:'华东', lat:36.684, lng:117.054, emoji:'⛰️',
+      intro:'一校三地的综合性老牌名校，文史哲与医学底蕴深厚。',
+      feature:'强基计划与拔尖班覆盖文理医工；转专业与双学位政策较宽松。',
+      majors:['数学','中文','临床医学','材料','控制','药学'],
+      life:'中心校区在济南市区，青岛校区为海滨新校区；齐鲁美食性价比高。',
+      apply:'中高分段，招生规模大、录取位次相对友好。' },
+    { name:'中国海洋大学', province:'山东', city:'青岛', region:'华东', lat:36.062, lng:120.329, emoji:'🐬',
+      intro:'海洋领域唯一985，海洋科学、水产全国第一，特色鲜明。',
+      feature:'海洋科学实验班、水产卓越班；涉海科研平台强。',
+      majors:['海洋科学','水产','食品科学','海洋工程'],
+      life:'崂山校区近海，红瓦绿树；青岛啤酒节与海滨生活惬意。',
+      apply:'中分段友好，适合对海洋、生物感兴趣的理科生。' },
+    { name:'武汉大学', province:'湖北', city:'武汉', region:'华中', lat:30.542, lng:114.362, emoji:'🏯',
+      intro:'樱花名门，综合实力稳居前列，测绘、遥感世界一流。',
+      feature:'大类招生与弘毅学堂；学风自由浪漫，转专业政策较宽松。',
+      majors:['测绘','遥感','法学','经济','生物','水利'],
+      life:'珞珈山樱花大道春日盛景；武汉美食多、生活成本低。',
+      apply:'中高分段；强基计划与弘毅学堂可关注。' },
+    { name:'华中科技大学', province:'湖北', city:'武汉', region:'华中', lat:30.512, lng:114.412, emoji:'🏭',
+      intro:'“森林大学”，工科与医学并强，光电、机械全国领先。',
+      feature:'大类培养与启明学院；工程实践扎实，附属同济医院实力强。',
+      majors:['机械','光电','计算机','电气','临床医学'],
+      life:'校园绿树成荫，学风勤奋；武汉生活成本低。',
+      apply:'中高分段；强基计划与实验班选择多。' },
+    { name:'湖南大学', province:'湖南', city:'长沙', region:'华中', lat:28.181, lng:112.954, emoji:'📐',
+      intro:'千年学府岳麓书院所在地，工科基础扎实的综合性大学。',
+      feature:'书院文化底蕴深厚，土木、机械、电气传统强势；创新创业氛围好。',
+      majors:['土木','机械','电气','化学','金融'],
+      life:'岳麓山下、湘江之滨；长沙“夜生活”丰富、美食多。',
+      apply:'中高分段；长沙房价物价友好。' },
+    { name:'中南大学', province:'湖南', city:'长沙', region:'华中', lat:28.167, lng:112.940, emoji:'🏥',
+      intro:'湘雅医学与工科并重的综合性大学，合并组建后实力攀升。',
+      feature:'湘雅医学院全国知名，材料、冶金、铁道传统强；大类招生。',
+      majors:['临床医学','材料','冶金','矿业','交通运输'],
+      life:'校本部与湘雅校区分布在长沙城区；长沙生活节奏舒适。',
+      apply:'中高分段；医学类分数较高。' },
+    { name:'国防科技大学', province:'湖南', city:'长沙', region:'华中', lat:28.219, lng:112.997, emoji:'🛡️',
+      intro:'军中清华，军队唯一985，国防科技与计算机领域顶尖。',
+      feature:'军事化管理加本硕博贯通培养，强基计划面向国防关键领域。',
+      majors:['计算机','软件','航天','电子','兵器'],
+      life:'纪律严格、待遇优厚（军校保障）；适合目标明确的考生。',
+      apply:'需通过军检、政审，提前批招生；对身体条件有要求。' },
+    { name:'中山大学', province:'广东', city:'广州', region:'华南', lat:23.092, lng:113.302, emoji:'🌺',
+      intro:'华南第一学府，三校区五校园，文理医工全面发展。',
+      feature:'大类招生与书院制，深圳/珠海校区新兴学科多；医学实力强。',
+      majors:['临床医学','经管','中文','电子','海洋','哲学'],
+      life:'康乐园古木参天；广州是美食之都，深圳校区就业近水楼台。',
+      apply:'华南高分段；强基计划覆盖基础学科。' },
+    { name:'华南理工大学', province:'广东', city:'广州', region:'华南', lat:23.155, lng:113.354, emoji:'🧱',
+      intro:'轻工食品与建筑强校，就业口碑好，被称为“工程师的摇篮”。',
+      feature:'工科大类培养与创新创业学院；广州国际校区新工科全英文教学。',
+      majors:['轻工','食品','建筑','材料','机械','自动化'],
+      life:'五山校区交通便利，大学城校区现代；珠三角就业优势大。',
+      apply:'华南中高分段；国际校区录取分数相对独立。' },
+    { name:'四川大学', province:'四川', city:'成都', region:'西南', lat:30.630, lng:104.088, emoji:'🌶️',
+      intro:'西南地区综合实力第一，口腔医学全国顶尖，学科齐全。',
+      feature:'大类招生与吴玉章学院；华西医学中心实力雄厚。',
+      majors:['口腔','临床医学','材料','中文','高分子','软件'],
+      life:'望江校区位于成都一环，美食之都名不虚传；生活安逸节奏慢。',
+      apply:'西南高分段；强基计划与医学类分数较高。' },
+    { name:'电子科技大学', province:'四川', city:'成都', region:'西南', lat:30.750, lng:104.061, emoji:'💻',
+      intro:'电子信息领域王牌，电子通信、计算机全国顶尖，“两电一邮”之一。',
+      feature:'大类招生与英才实验学院；信息类竞赛与就业极强。',
+      majors:['电子科学与技术','通信','计算机','软件','集成电路'],
+      life:'清水河校区现代化，理工氛围浓；成都生活安逸。',
+      apply:'理科中高分段，电子信息类专业就业回报高。' },
+    { name:'重庆大学', province:'重庆', city:'重庆', region:'西南', lat:29.569, lng:106.456, emoji:'🌉',
+      intro:'建筑老八校之一，机械、电气、建筑强势的山城名校。',
+      feature:'大类招生与弘深学院；工科基础扎实，实验班培养拔尖人才。',
+      majors:['建筑','机械','电气','土木','车辆','能动'],
+      life:'虎溪校区宽阔现代，A区位于市区；重庆火锅与山城夜景。',
+      apply:'中高分段；重庆生活成本较低。' },
+    { name:'西安交通大学', province:'陕西', city:'西安', region:'西北', lat:34.247, lng:108.984, emoji:'🚄',
+      intro:'交通大学源头之一，电气、能动、管理全国顶尖的西部名校。',
+      feature:'钱学森学院、越杰计划等拔尖培养；西迁精神，学风严谨。',
+      majors:['电气','能动','机械','管理','数学','计算机'],
+      life:'兴庆校区在城墙内，创新港校区设施一流；西安文化厚重、成本低。',
+      apply:'中高分段，西北顶尖；强基计划可关注。' },
+    { name:'西北工业大学', province:'陕西', city:'西安', region:'西北', lat:34.255, lng:108.916, emoji:'🛰️',
+      intro:'航空、航天、航海“三航”特色鲜明的国防名校，总师摇篮。',
+      feature:'三航与材料强基；国防科研项目多，毕业生多进入航天院所。',
+      majors:['航空航天','材料','计算机','兵器','力学'],
+      life:'长安校区大而新，友谊校区位于市区；西安生活成本低。',
+      apply:'中高分段；对国防军工感兴趣的理科生首选。' },
+    { name:'西北农林科技大学', province:'陕西', city:'咸阳·杨凌', region:'西北', lat:34.289, lng:108.070, emoji:'🌳',
+      intro:'农林水领域985，葡萄酒、农学、水土保持特色鲜明。',
+      feature:'卓越农林人才班，实践基地广阔；保研率与科研平台不错。',
+      majors:['农学','园艺','林学','葡萄酒','动物科学'],
+      life:'杨凌小城安静，校园田园风；节奏慢，适合沉心科研。',
+      apply:'985中录取分数最亲民之一，性价比高。' },
+    { name:'兰州大学', province:'甘肃', city:'兰州', region:'西北', lat:36.047, lng:103.860, emoji:'🍜',
+      intro:'西北高等教育的一面旗帜，化学、草学、大气科学实力突出。',
+      feature:'萃英学院拔尖班，基础学科培养扎实；学风苦读、质朴。',
+      majors:['化学','草学','大气科学','物理','生态','数学'],
+      life:'榆中校区开阔，城关校区在市区；兰州牛肉面名不虚传。',
+      apply:'分数友好、保研率可观，适合想冲名校平台的考生。' },
+    { name:'哈尔滨工业大学', province:'黑龙江', city:'哈尔滨', region:'东北', lat:45.743, lng:126.633, emoji:'❄️',
+      intro:'航天强校、工程师摇篮，C9之一，深圳校区就业近水楼台。',
+      feature:'大类招生与院士班，航天、焊接等专业全国顶尖；一校三区。',
+      majors:['航天','机械','焊接','计算机','材料','控制'],
+      life:'哈尔滨冰雪季浪漫，暖气充足；食堂量大实惠。',
+      apply:'中高分段，深圳校区分数较高；工科性价比高。' },
+    { name:'吉林大学', province:'吉林', city:'长春', region:'东北', lat:43.830, lng:125.295, emoji:'🌲',
+      intro:'学科门类最全的巨无霸大学，化学、车辆、医学底蕴深厚。',
+      feature:'唐敖庆班等拔尖班，转专业与双学位灵活；招生规模大。',
+      majors:['化学','车辆工程','法学','临床医学','数学'],
+      life:'六个校区遍布长春，校园绿意浓；东北生活成本低。',
+      apply:'中分段友好，录取位次宽松，平台性价比高。' },
+    { name:'大连理工大学', province:'辽宁', city:'大连', region:'东北', lat:38.880, lng:121.528, emoji:'⚓',
+      intro:'东北工科重镇，化工、船舶、力学强势的海滨名校。',
+      feature:'大类招生与盘锦校区；工程实践扎实，学风勤奋。',
+      majors:['化工','船舶海洋','力学','机械','建筑'],
+      life:'面朝大海，主校区绿树成荫；大连气候宜人、海鲜丰富。',
+      apply:'中高分段；东北地区工科首选之一。' },
+    { name:'东北大学', province:'辽宁', city:'沈阳', region:'东北', lat:41.767, lng:123.416, emoji:'🤖',
+      intro:'老牌工科强校，自动化与控制全国领先，软件学院口碑好。',
+      feature:'大类招生与实验班；创新创业竞赛氛围浓，浑南校区设施新。',
+      majors:['自动化','计算机','软件','冶金','材料'],
+      life:'南湖校区市区便利，浑南校区现代；沈阳物价低、生活实在。',
+      apply:'中分段友好，性价比高的老牌985。' }
+  ];
+
+  var REGION_PROVS = {
+    华北:['北京','天津','河北','山西','内蒙古'],
+    华东:['上海','江苏','浙江','安徽','福建','江西','山东'],
+    华中:['河南','湖北','湖南'],
+    华南:['广东','广西','海南'],
+    西南:['重庆','四川','贵州','云南','西藏'],
+    西北:['陕西','甘肃','青海','宁夏','新疆'],
+    东北:['辽宁','吉林','黑龙江']
+  };
+  var PROV_FULL = { 北京:'北京市', 天津:'天津市', 河北:'河北省', 山西:'山西省', 内蒙古:'内蒙古自治区', 辽宁:'辽宁省', 吉林:'吉林省', 黑龙江:'黑龙江省', 上海:'上海市', 江苏:'江苏省', 浙江:'浙江省', 安徽:'安徽省', 福建:'福建省', 江西:'江西省', 山东:'山东省', 河南:'河南省', 湖北:'湖北省', 湖南:'湖南省', 广东:'广东省', 广西:'广西壮族自治区', 海南:'海南省', 重庆:'重庆市', 四川:'四川省', 贵州:'贵州省', 云南:'云南省', 西藏:'西藏自治区', 陕西:'陕西省', 甘肃:'甘肃省', 青海:'青海省', 宁夏:'宁夏回族自治区', 新疆:'新疆维吾尔自治区' };
+
+  /* ============ 工具 ============ */
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = function () { s.remove(); reject(new Error('script fail: ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+  function loadJSON(url) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    });
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+  function symbolFor(emoji) {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">'
+      + '<circle cx="20" cy="20" r="17" fill="#ffffff" fill-opacity="0.96" stroke="#1f5eff" stroke-width="2.5"/>'
+      + '<circle cx="20" cy="20" r="13.5" fill="#e8efff" fill-opacity="0.7"/>'
+      + '<text x="20" y="20" font-size="19" text-anchor="middle" dominant-baseline="central">' + emoji + '</text>'
+      + '</svg>';
+    return 'image://data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  var chart = null;
+  var currentRegion = '全部';
+
+  /* ============ 筛选按钮 ============ */
+  var filterEl = document.getElementById('filters');
+  var regions = ['全部', '华北', '华东', '华中', '华南', '西南', '西北', '东北'];
+  function buildFilters() {
+    filterEl.innerHTML = '';
+    regions.forEach(function (r) {
+      var b = document.createElement('button');
+      b.className = 'chip' + (r === currentRegion ? ' active' : '');
+      b.type = 'button';
+      b.dataset.region = r;
+      var n = r === '全部' ? SCHOOLS.length : SCHOOLS.filter(function (s) { return s.region === r; }).length;
+      b.textContent = r + ' (' + n + ')';
+      b.addEventListener('click', function () { applyFilter(r); });
+      filterEl.appendChild(b);
+    });
+    var stat = document.createElement('span');
+    stat.className = 'stat';
+    stat.id = 'statCount';
+    stat.textContent = '共 ' + SCHOOLS.length + ' 所';
+    filterEl.appendChild(stat);
+  }
+
+  /* ============ 地图 ============ */
+  function buildItems(list) {
+    return list.map(function (s) {
+      return {
+        name: s.name,
+        value: [s.lng, s.lat],
+        school: s,
+        symbol: symbolFor(s.emoji),
+        symbolSize: 34
+      };
+    });
+  }
+
+  function dimRegions(region) {
+    if (region === '全部') return [];
+    var keep = REGION_PROVS[region] || [];
+    var keepFull = keep.map(function (p) { return PROV_FULL[p]; });
+    return Object.keys(PROV_FULL)
+      .filter(function (p) { return keepFull.indexOf(PROV_FULL[p]) === -1; })
+      .map(function (p) { return { name: PROV_FULL[p], itemStyle: { areaColor: '#eef2f8', opacity: 0.45 } }; });
+  }
+
+  function applyFilter(region) {
+    currentRegion = region;
+    filterEl.querySelectorAll('.chip').forEach(function (b) {
+      b.classList.toggle('active', b.dataset.region === region);
+    });
+    var stat = document.getElementById('statCount');
+    var list = region === '全部' ? SCHOOLS : SCHOOLS.filter(function (s) { return s.region === region; });
+    if (stat) stat.textContent = region + ' ' + list.length + ' 所 / 共 ' + SCHOOLS.length + ' 所';
+    if (chart) {
+      chart.setOption({
+        geo: { regions: dimRegions(region) },
+        series: [{ data: buildItems(list) }]
+      });
+    }
+  }
+
+  function initMap(geoJson) {
+    if (!window.echarts) return;
+    echarts.registerMap('china', geoJson);
+    chart = echarts.init(document.getElementById('map'));
+    chart.setOption({
+      tooltip: {
+        trigger: 'item',
+        backgroundColor: '#ffffff',
+        borderColor: '#dbe4f2',
+        textStyle: { color: '#1e293b', fontSize: 13 },
+        formatter: function (p) {
+          var s = p.data && p.data.school;
+          if (!s) return p.name;
+          return '<b>' + s.emoji + ' ' + esc(s.name) + '</b><br/>'
+            + esc(s.city) + ' · ' + esc(s.region) + '<br/>'
+            + '<span style="color:#5b6b84">点击查看资料库</span>';
+        }
+      },
+      geo: {
+        map: 'china',
+        roam: true,
+        zoom: 1.12,
+        center: [104.5, 36.2],
+        label: { show: false },
+        itemStyle: { areaColor: '#eaf1fb', borderColor: '#b9cbea', borderWidth: 0.8 },
+        emphasis: { itemStyle: { areaColor: '#d9e7ff' }, label: { show: false } },
+        regions: []
+      },
+      series: [{
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        data: buildItems(SCHOOLS),
+        symbolSize: 34,
+        emphasis: { scale: 1.3 },
+        itemStyle: { shadowBlur: 8, shadowColor: 'rgba(31, 94, 255, 0.35)' },
+        label: { show: false },
+        zlevel: 3
+      }]
+    });
+
+    chart.on('click', function (params) {
+      var s = params.data && params.data.school;
+      if (s) openPanel(s);
+    });
+    chart.on('mouseout', function () {});
+    window.addEventListener('resize', function () { chart && chart.resize(); });
+  }
+
+  /* ============ 详情面板 ============ */
+  var panel = document.getElementById('panel');
+  var mask = document.getElementById('mask');
+  function openPanel(s) {
+    document.getElementById('pEmoji').textContent = s.emoji;
+    document.getElementById('pName').textContent = s.name;
+    document.getElementById('pMeta').textContent = s.city + ' · ' + s.region + '地区 · ' + s.province;
+    var body = document.getElementById('pBody');
+    body.innerHTML = ''
+      + sec('📝 学校简介', '<p>' + esc(s.intro) + '</p>')
+      + sec('🎯 培养特色', '<p>' + esc(s.feature) + '</p>')
+      + sec('⭐ 优势学科', '<div class="chips">' + s.majors.map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('') + '</div>')
+      + sec('🏫 校园生活提示', '<p>' + esc(s.life) + '</p>')
+      + sec('🎟️ 报考相关信息', '<p>' + esc(s.apply) + '</p>')
+      + '<p style="font-size:11.5px;color:#9aa7bd">内容为公开资料整理，仅供信息参考，请以各校官方发布为准。</p>';
+    panel.classList.add('open');
+    mask.hidden = false;
+    panel.setAttribute('aria-hidden', 'false');
+  }
+  function sec(title, html) {
+    return '<section class="sec"><h4>' + title + '</h4>' + html + '</section>';
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    mask.hidden = true;
+    panel.setAttribute('aria-hidden', 'true');
+  }
+  document.getElementById('closeBtn').addEventListener('click', closePanel);
+  mask.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closePanel();
+  });
+
+  /* ============ 启动 ============ */
+  var loading = document.getElementById('loading');
+  var errorBox = document.getElementById('error');
+  function showError() {
+    loading.hidden = true;
+    errorBox.hidden = false;
+  }
+  function boot() {
+    loading.hidden = false;
+    errorBox.hidden = true;
+    var echartsUrls = [
+      'https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js',
+      'https://unpkg.com/echarts@5.5.1/dist/echarts.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.1/echarts.min.js'
+    ];
+    var geoUrls = [
+      'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json',
+      'https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/china.json',
+      'https://unpkg.com/echarts@4.9.0/map/json/china.json'
+    ];
+    var chain = Promise.resolve();
+    if (!window.echarts) {
+      chain = chain.then(function () {
+        return echartsUrls.reduce(function (p, u) {
+          return p.catch(function () { return loadScript(u); });
+        }, Promise.reject(new Error('start')));
+      });
+    }
+    chain
+      .then(function () {
+        return geoUrls.reduce(function (p, u) {
+          return p.catch(function () { return loadJSON(u); });
+        }, Promise.reject(new Error('start')));
+      })
+      .then(function (geo) {
+        loading.hidden = true;
+        initMap(geo);
+      })
+      .catch(function (err) {
+        console.error(err);
+        showError();
+      });
+  }
+  document.getElementById('retryBtn').addEventListener('click', boot);
+  buildFilters();
+  boot();
+})();
+</script>
+</body>
+</html>
