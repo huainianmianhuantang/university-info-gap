@@ -22,7 +22,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <button id="m985Retry" type="button">重新加载</button>
       </div>
     </div>
-    <p class="m985-note">点击地图上的学校图标查看资料库；数据为公开资料整理，仅供信息参考，请以各校官方发布为准。</p>
+    <p class="m985-note">
+      点击地图上的学校图标查看资料库；数据为公开资料整理，仅供信息参考，请以各校官方发布为准
+      <span id="m985FlipCount" style="margin-left:8px"></span>
+    </p>
   </div>
 
   <div class="m985-mask" id="m985Mask" hidden></div>
@@ -37,6 +40,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
     <div class="m985-panel-body" id="m985Body"></div>
   </aside>
+
+  <button class="mbot-fab" id="mbotFab" type="button" aria-label="AI 机器人答疑">🤖</button>
+  <div class="mbot-card" id="mbotCard" hidden>
+    <div class="mbot-head">
+      <span style="font-size:22px">🤖</span>
+      <div>
+        <b>985 地图小导游</b>
+        <div>问我：哪些985、专业强校、某校怎么样</div>
+      </div>
+      <button class="mbot-close" id="mbotClose" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="mbot-chips" id="mbotChips"></div>
+    <div class="mbot-msgs" id="mbotMsgs"></div>
+    <div class="mbot-input-row">
+      <input id="mbotInput" type="text" placeholder="例如：北京有哪些985？" autocomplete="off" />
+      <button id="mbotSend" type="button">发送</button>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
@@ -246,6 +267,163 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     .m985-panel.open {
       transform: translateY(0);
     }
+  }
+  /* 趣味与 AI 机器人 */
+  .m985-flip-banner {
+    margin: -2px 0 14px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fff6e0, #ffe9f3);
+    border: 1px dashed #f2c66d;
+    color: #8a5a00;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .m985-easter {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .mbot-fab {
+    position: fixed;
+    right: 22px;
+    bottom: calc(150px + env(safe-area-inset-bottom, 0px));
+    z-index: 95;
+    width: 52px;
+    height: 52px;
+    border: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(99, 102, 241, 0.4);
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
+  }
+  .mbot-fab:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 28px rgba(99, 102, 241, 0.5);
+  }
+  .mbot-card {
+    position: fixed;
+    right: 18px;
+    bottom: calc(212px + env(safe-area-inset-bottom, 0px));
+    z-index: 96;
+    width: min(340px, calc(100vw - 28px));
+    max-height: 58vh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 16px 44px rgba(30, 41, 59, 0.22);
+    overflow: hidden;
+    transform-origin: bottom right;
+    animation: mbot-pop 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mbot-card[hidden] { display: none; }
+  @keyframes mbot-pop {
+    from { opacity: 0; transform: translateY(12px) scale(0.96); }
+    to { opacity: 1; transform: none; }
+  }
+  .mbot-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, #eef2ff, #faf5ff);
+    border-bottom: 1px solid #e5e7f5;
+  }
+  .mbot-head b { font-size: 14px; color: #3730a3; }
+  .mbot-head div div { font-size: 11.5px; color: #7c7f9e; }
+  .mbot-close {
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    color: #7c7f9e;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .mbot-msgs {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #f8f9fe;
+  }
+  .mbot-msg {
+    max-width: 88%;
+    padding: 8px 11px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    color: #1e293b;
+  }
+  .mbot-msg.mbot-bot { align-self: flex-start; background: #fff; border: 1px solid #e5e7f5; }
+  .mbot-msg.mbot-me { align-self: flex-end; background: #6366f1; color: #fff; }
+  .mbot-school {
+    display: inline-block;
+    margin: 4px 4px 0 0;
+    border: 1px solid #c7d2fe;
+    background: #eef2ff;
+    color: #3730a3;
+    font-size: 12px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .mbot-school:hover { background: #6366f1; color: #fff; transform: translateY(-1px); }
+  .mbot-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 12px 0;
+    background: #f8f9fe;
+  }
+  .mbot-chip {
+    border: 1px solid #dbe0f5;
+    background: #fff;
+    color: #4f5596;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .mbot-chip:hover { border-color: #6366f1; color: #6366f1; }
+  .mbot-input-row {
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px 12px;
+    background: #f8f9fe;
+    border-top: 1px solid #eef0f8;
+  }
+  .mbot-input-row input {
+    flex: 1;
+    border: 1px solid #dbe0f5;
+    border-radius: 999px;
+    padding: 8px 13px;
+    font-size: 13px;
+    outline: none;
+    background: #fff;
+    color: #1e293b;
+  }
+  .mbot-input-row button {
+    border: 0;
+    background: #6366f1;
+    color: #fff;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
   }
 </style>
 
@@ -492,6 +670,52 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       apply:'中分段友好，性价比高的老牌985。' }
   ];
 
+  const NICK_FUN: Record<string, { nick: string; fun: string }> = {
+    '北京大学': { nick:'未名湖畔的文理双雄', fun:'未名湖的名字，恰恰是因为它“没有名字”。' },
+    '清华大学': { nick:'五道口造星工厂', fun:'清华的“水木清华”与紫荆花，是校园里两种常被认错的花。' },
+    '中国人民大学': { nick:'治国理政的摇篮', fun:'人大校园里有一条“实事求是”路，是毕业照的标配打卡点。' },
+    '北京航空航天大学': { nick:'空天报国的追风者', fun:'北航的校徽上有两架飞机，一旧一新，见证航空史。' },
+    '北京理工大学': { nick:'军工硬核实验室', fun:'北理工的“延安根、军工魂”，源自 1939 年的延安自然科学院。' },
+    '中国农业大学': { nick:'丰收在望的试验田', fun:'农大食堂里的很多蔬菜，来自学校自己的试验田。' },
+    '北京师范大学': { nick:'桃李满天下的师范担当', fun:'北师大主楼前的“学为人师，行为世范”，是无数师范生的初心。' },
+    '中央民族大学': { nick:'五十六朵花的会客厅', fun:'民大校庆时的民族服饰巡游，是全校最热闹的场面之一。' },
+    '南开大学': { nick:'学府北辰的算术高手', fun:'南开校徽上的八角星，寓意“日新月异”。' },
+    '天津大学': { nick:'中国第一所现代大学', fun:'天大前身北洋大学堂，比清华还要早几十年。' },
+    '复旦大学': { nick:'日月光华的自由灵魂', fun:'复旦校名取自“旦复旦兮”，意思是日复一日地追求。' },
+    '上海交通大学': { nick:'闵行巨无霸工科战舰', fun:'上交校徽中央是一艘帆船，寓意扬帆远航。' },
+    '同济大学': { nick:'建筑师的摇篮之一', fun:'同济的樱花大道，每年春天都会变成“人从众”打卡地。' },
+    '华东师范大学': { nick:'优雅的师范双子星', fun:'华东师大把“爱”写进培养目标——求实创造，为人师表。' },
+    '南京大学': { nick:'诚朴雄伟的学术深水区', fun:'南大鼓楼校区的北大楼，是影视剧的热门取景地。' },
+    '东南大学': { nick:'四牌楼下的工程师之家', fun:'东大的大礼堂，见证过中国最早的电影放映之一。' },
+    '浙江大学': { nick:'求是创新的六边形战士', fun:'浙大紫金港校区大到需要校内公交。' },
+    '中国科学技术大学': { nick:'千人一院士的科研特种兵', fun:'中科大少年班走出过最年轻的教授。' },
+    '厦门大学': { nick:'面朝大海的最美校园', fun:'厦大演武操场旁就是白城沙滩，下课就能看海。' },
+    '山东大学': { nick:'一校三地的文史重镇', fun:'山大中心校区的“成均馆”，是中国最早大学堂旧址之一。' },
+    '中国海洋大学': { nick:'海洋科学的深蓝基地', fun:'海大校徽上是海浪与白帆，青岛校区出门见海。' },
+    '武汉大学': { nick:'珞珈山上的樱花使者', fun:'武大樱花的种子，最早来自日本友人的赠送。' },
+    '华中科技大学': { nick:'森林大学里的工科猛将', fun:'华科喻家山下的梧桐道，秋天落满一校金黄。' },
+    '湖南大学': { nick:'岳麓山下的千年学府', fun:'湖大没有传统意义上的校门，校园和岳麓山、湘江连成一片。' },
+    '中南大学': { nick:'湘雅医学的南国名门', fun:'“北协和、南湘雅”，中南的湘雅医院是百年老字号。' },
+    '国防科技大学': { nick:'军中清华的硬核担当', fun:'国防科大不对外公开招生，主要走提前批与强基计划。' },
+    '中山大学': { nick:'华南之光的百年学府', fun:'中山大学校名取自孙中山先生，纪念他创办的国立广东大学。' },
+    '华南理工大学': { nick:'工程师的摇篮', fun:'华工五山校区门口的石狮子，是校友合影的标配。' },
+    '四川大学': { nick:'天府之国的全能选手', fun:'川大的华西口腔，是全国口腔医学的“天花板”之一。' },
+    '电子科技大学': { nick:'电子信息的天线宝宝', fun:'电子科大银杏大道秋天美到上热搜。' },
+    '重庆大学': { nick:'山城里的建筑老八校', fun:'重大虎溪校区的缙云湖，被学生戏称“缙云海”。' },
+    '西安交通大学': { nick:'西迁精神的电力先锋', fun:'西交大创新港校区的走廊，像科幻电影里的太空站。' },
+    '西北工业大学': { nick:'三航总师的摇篮', fun:'西工大培养出数十位航空航天总师，人称“总师摇篮”。' },
+    '西北农林科技大学': { nick:'杨凌农科城的大管家', fun:'西农的葡萄酒学院，是国内最早培养酿酒师的院系之一。' },
+    '兰州大学': { nick:'西北大地的知识灯塔', fun:'兰大榆中校区的星空，被天文系学生称为“免费天文台”。' },
+    '哈尔滨工业大学': { nick:'冰雪中的航天强者', fun:'哈工大“规格严格”，让每一届新生都记住什么叫严谨。' },
+    '吉林大学': { nick:'一城六校的巨无霸', fun:'吉大校园大到可以在校内“跨城”上学。' },
+    '大连理工大学': { nick:'海风里的工科重镇', fun:'大连理工的图书馆，是看海景最“卷”的地方。' },
+    '东北大学': { nick:'白山黑水的自动化猛虎', fun:'东北大学前身东北工学院，是新中国成立时的重要工科力量。' }
+  };
+  SCHOOLS.forEach((s: any) => {
+    const nf = NICK_FUN[s.name];
+    if (nf) { s.nick = nf.nick; s.fun = nf.fun; }
+  });
+
   const REGION_PROVS: Record<string, string[]> = {
     华北:['北京','天津','河北','山西','内蒙古'],
     华东:['上海','江苏','浙江','安徽','福建','江西','山东'],
@@ -542,6 +766,45 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   let chart: any = null;
   let currentRegion = '全部';
+  let spotlightPool: any[] = [];
+  let spotlightTimer: number | null = null;
+  const EASTER_LINES = [
+    '听说这所学校的食堂，能让南方人也爱上北方菜。',
+    '在校园里迷路，可能是新生的必修课。',
+    '据说这里的图书馆，期末周一座难求。',
+    '这所学校的社团数量，比你想象的还要多。',
+    '学长学姐说：选它，大概率不后悔。',
+    '它的录取通知书，每年都有人专门晒图。',
+    '据说这里的学习氛围，能让懒人也支棱起来。',
+    '这所学校的学生，总说自己是“卷并快乐着”。',
+    '如果它能说话，大概会先说：欢迎报考！',
+    '它的校园角落，藏着一百个可以发朋友圈的机位。'
+  ];
+
+  function pickSpotlight() {
+    if (!chart || spotlightPool.length === 0) return;
+    const s = spotlightPool[Math.floor(Math.random() * spotlightPool.length)];
+    chart.setOption({
+      series: [{}, {
+        type: 'effectScatter',
+        coordinateSystem: 'geo',
+        zlevel: 4,
+        data: [{ name: s.name, value: [s.lng, s.lat], school: s }],
+        symbolSize: 34,
+        rippleEffect: { brushType: 'stroke', scale: 3.2, period: 3 },
+        itemStyle: { color: '#ff7a45', shadowBlur: 10, shadowColor: 'rgba(255,122,69,0.6)' },
+        label: { show: true, position: 'top', color: '#d9480f', fontSize: 12, fontWeight: 600, textShadowBlur: 3, textShadowColor: '#ffffff' },
+        tooltip: { show: false },
+        emphasis: { scale: 1.1 }
+      }]
+    });
+  }
+  function startSpotlight(list: any[]) {
+    spotlightPool = list && list.length ? list.slice() : SCHOOLS.slice();
+    if (spotlightTimer) clearInterval(spotlightTimer);
+    pickSpotlight();
+    spotlightTimer = window.setInterval(pickSpotlight, 3000);
+  }
 
   function themeColors() {
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -581,6 +844,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         geo: { regions: dimRegions(region) },
         series: [{ data: buildItems(list) }]
       });
+      startSpotlight(list);
     }
   }
 
@@ -625,12 +889,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         itemStyle: { shadowBlur: 8, shadowColor: 'rgba(31, 94, 255, 0.35)' },
         label: { show: false },
         zlevel: 3
+      }, {
+        type: 'effectScatter',
+        coordinateSystem: 'geo',
+        zlevel: 4,
+        data: [],
+        symbolSize: 34,
+        rippleEffect: { brushType: 'stroke', scale: 3.2, period: 3 },
+        itemStyle: { color: '#ff7a45', shadowBlur: 10, shadowColor: 'rgba(255,122,69,0.6)' },
+        label: { show: true, position: 'top', color: '#d9480f', fontSize: 12, fontWeight: 600 },
+        tooltip: { show: false },
+        emphasis: { scale: 1.1 }
       }]
     });
     chart.on('click', (params: any) => {
       const s = params.data && params.data.school;
       if (s) openPanel(s);
     });
+    startSpotlight(currentRegion === '全部' ? SCHOOLS : SCHOOLS.filter((s) => s.region === currentRegion));
   }
 
   function applyThemeToChart() {
@@ -651,8 +927,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     document.getElementById('m985Name')!.textContent = s.name;
     document.getElementById('m985Meta')!.textContent = s.city + ' · ' + s.region + '地区 · ' + s.province;
     const body = document.getElementById('m985Body')!;
+    const easter = EASTER_LINES[Math.floor(Math.random() * EASTER_LINES.length)];
+    const nickHtml = s.nick || s.fun
+      ? sec('🎭 学校昵称 · 冷知识', '<p><b>' + esc(s.nick || s.name) + '</b>' + (s.fun ? ' · ' + esc(s.fun) : '') + '</p>')
+      : '';
     body.innerHTML =
+      '<div class="m985-easter">✨ ' + esc(easter) + '</div>' +
       sec('📝 学校简介', '<p>' + esc(s.intro) + '</p>') +
+      nickHtml +
       sec('🎯 培养特色', '<p>' + esc(s.feature) + '</p>') +
       sec('⭐ 优势学科', '<div class="m985-chips">' + s.majors.map((m: string) => '<span>' + esc(m) + '</span>').join('') + '</div>') +
       sec('🏫 校园生活提示', '<p>' + esc(s.life) + '</p>') +
@@ -667,6 +949,30 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   function closePanel() {
     document.getElementById('m985Panel')!.classList.remove('open');
     document.getElementById('m985Mask')!.hidden = true;
+  }
+  function openFlip() {
+    const pool = currentRegion === '全部' ? SCHOOLS : SCHOOLS.filter((s) => s.region === currentRegion);
+    const s = pool[Math.floor(Math.random() * pool.length)];
+    openPanel(s);
+    let count = 0;
+    try { count = Number(localStorage.getItem('m985-flips') || '0'); } catch { /* ignore */ }
+    count += 1;
+    try { localStorage.setItem('m985-flips', String(count)); } catch { /* ignore */ }
+    const fc = document.getElementById('m985FlipCount');
+    if (fc) fc.textContent = '🎲 已翻牌 ' + count + ' 次';
+    const banner = document.createElement('div');
+    banner.className = 'm985-flip-banner';
+    banner.textContent = '🎲 今日翻牌：' + s.emoji + ' ' + s.name + '（' + s.city + '）——缘分到了就是它！';
+    const body = document.getElementById('m985Body')!;
+    if (body.firstChild) body.insertBefore(banner, body.firstChild);
+    else body.appendChild(banner);
+  }
+  function initFlip() {
+    try {
+      const n = Number(localStorage.getItem('m985-flips') || '0');
+      const fc = document.getElementById('m985FlipCount');
+      if (fc && n > 0) fc.textContent = '🎲 已翻牌 ' + n + ' 次';
+    } catch { /* ignore */ }
   }
 
   function buildFilters() {
@@ -683,11 +989,191 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       b.addEventListener('click', () => applyFilter(r));
       wrap.appendChild(b);
     });
+    const flip = document.createElement('button');
+    flip.type = 'button';
+    flip.className = 'm985-chip';
+    flip.id = 'm985FlipBtn';
+    flip.textContent = '🎲 随机翻牌';
+    flip.addEventListener('click', openFlip);
+    wrap.appendChild(flip);
     const stat = document.createElement('span');
     stat.className = 'm985-stat';
     stat.id = 'm985Stat';
     stat.textContent = '共 ' + SCHOOLS.length + ' 所';
     wrap.appendChild(stat);
+  }
+
+  /* ============ AI 小导游（规则优先，未命中接 DeepSeek） ============ */
+  const BOT_ALIAS: Record<string, string> = {
+    '北大':'北京大学','清华':'清华大学','人大':'中国人民大学','北航':'北京航空航天大学',
+    '北理工':'北京理工大学','北理':'北京理工大学','农大':'中国农业大学','北师大':'北京师范大学',
+    '民大':'中央民族大学','南开':'南开大学','天大':'天津大学','复旦':'复旦大学','上交':'上海交通大学',
+    '上海交大':'上海交通大学','同济':'同济大学','华东师大':'华东师范大学','南大':'南京大学',
+    '东南':'东南大学','东大':'东北大学','浙大':'浙江大学','中科大':'中国科学技术大学','科大':'中国科学技术大学',
+    '厦大':'厦门大学','山大':'山东大学','海大':'中国海洋大学','武大':'武汉大学','华科':'华中科技大学',
+    '华中科大':'华中科技大学','湖大':'湖南大学','中南':'中南大学','国防科大':'国防科技大学',
+    '中山':'中山大学','华工':'华南理工大学','川大':'四川大学','电子科大':'电子科技大学','重大':'重庆大学',
+    '西交':'西安交通大学','西交大':'西安交通大学','西工大':'西北工业大学','西农':'西北农林科技大学',
+    '兰大':'兰州大学','哈工大':'哈尔滨工业大学','吉大':'吉林大学','大工':'大连理工大学'
+  };
+  const BOT_MAJOR_KEYWORDS = [
+    { k:'计算机', words:['计算机','软件'] },
+    { k:'电子信息', words:['电子','通信','集成电路','信息'] },
+    { k:'工科', words:['机械','电气','自动化','材料','土木','建筑','化工','车辆','能源','交通','船舶','航空','航天','冶金'] },
+    { k:'医学', words:['临床医学','口腔','药学','基础医学','公共卫生','护理'] },
+    { k:'口腔', words:['口腔'] },
+    { k:'经管', words:['经济','金融','工商管理','会计','管理'] },
+    { k:'法学', words:['法学'] },
+    { k:'人文社科', words:['中文','历史','哲学','新闻','教育','心理','外语','社会学'] },
+    { k:'师范教育', words:['教育学','师范'] },
+    { k:'农学', words:['农学','园艺','植物','食品','动物','林学'] },
+    { k:'海洋', words:['海洋'] },
+    { k:'建筑', words:['建筑'] },
+    { k:'航空航天', words:['航空','航天','宇航'] },
+    { k:'理科基础', words:['数学','物理','化学','生物','天文','地质','统计'] }
+  ];
+  const PROVS_ALL = ['北京','天津','上海','江苏','浙江','安徽','福建','江西','山东','湖北','湖南','河南','广东','广西','海南','四川','重庆','贵州','云南','陕西','甘肃','青海','宁夏','新疆','辽宁','吉林','黑龙江','河北','山西','内蒙古'];
+
+  function botAdd(text: string, who: string) {
+    const msgs = document.getElementById('mbotMsgs')!;
+    const d = document.createElement('div');
+    d.className = 'mbot-msg ' + who;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function botAddSchools(text: string, list: any[]) {
+    const msgs = document.getElementById('mbotMsgs')!;
+    const wrap = document.createElement('div');
+    wrap.className = 'mbot-msg mbot-bot';
+    const p = document.createElement('div');
+    p.textContent = text;
+    wrap.appendChild(p);
+    list.slice(0, 8).forEach((s) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mbot-school';
+      b.textContent = s.emoji + ' ' + s.name;
+      b.addEventListener('click', () => { openPanel(s); closeBot(); });
+      wrap.appendChild(b);
+    });
+    msgs.appendChild(wrap);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function schoolByName(text: string): any {
+    for (const key in BOT_ALIAS) {
+      if (text.indexOf(key) !== -1) {
+        const hit = SCHOOLS.find((s) => s.name === BOT_ALIAS[key]);
+        if (hit) return hit;
+      }
+    }
+    return SCHOOLS.find((s) => text.indexOf(s.name) !== -1) || null;
+  }
+  async function askLLM(t: string): Promise<string | null> {
+    try {
+      const res = await fetch('/api/assistant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: '985 高校地图问答：' + t }] }),
+      });
+      const data = await res.json();
+      if (res.ok && data.reply) return String(data.reply);
+    } catch { /* ignore */ }
+    return null;
+  }
+  function askBot(text: string) {
+    const t = (text || '').trim();
+    if (!t) return;
+    botAdd(t, 'mbot-me');
+
+    const s = schoolByName(t);
+    if (s && /怎么样|如何|介绍|在哪|什么学校|聊聊/.test(t)) {
+      botAddSchools('这所学校的档案我熟：', [s]);
+      if (s.nick) botAdd('🎭 昵称：' + s.nick, 'mbot-bot');
+      if (s.fun) botAdd('💡 冷知识：' + s.fun, 'mbot-bot');
+      botAdd('点击上面卡片即可打开完整资料库～', 'mbot-bot');
+      return;
+    }
+
+    const regionHit = ['华北','华东','华中','华南','西南','西北','东北'].filter((r) => t.indexOf(r) !== -1);
+    if (regionHit.length) {
+      const list = SCHOOLS.filter((x) => x.region === regionHit[0]);
+      botAddSchools(regionHit[0] + '地区共有 ' + list.length + ' 所 985：', list);
+      return;
+    }
+
+    const provHit = PROVS_ALL.filter((p) => t.indexOf(p) !== -1)[0];
+    if (provHit) {
+      const plist = SCHOOLS.filter((x) => x.province === provHit);
+      botAddSchools(provHit + '共有 ' + plist.length + ' 所 985：', plist);
+      return;
+    }
+
+    for (const mk of BOT_MAJOR_KEYWORDS) {
+      if (mk.words.some((w) => t.indexOf(w) !== -1)) {
+        const mlist = SCHOOLS.filter((x) => mk.words.some((w) => (x.majors || []).join(' ').indexOf(w) !== -1));
+        if (mlist.length) {
+          botAddSchools('「' + mk.k + '」方向值得关注的 985：', mlist);
+          return;
+        }
+      }
+    }
+
+    if (t.indexOf('随机') !== -1 || t.indexOf('推荐') !== -1 || t.indexOf('翻牌') !== -1) {
+      const r = SCHOOLS[Math.floor(Math.random() * SCHOOLS.length)];
+      botAddSchools('帮你翻一张牌，缘分到了就是它：', [r]);
+      return;
+    }
+
+    if (t.indexOf('有哪些985') !== -1 || t.indexOf('全部') !== -1 || t.indexOf('所有') !== -1 || t.indexOf('985') !== -1) {
+      botAddSchools('全国共有 39 所 985（先列 8 所）：', SCHOOLS);
+      return;
+    }
+
+    // 未命中：站内版接 DeepSeek 增强，失败则友好降级
+    botAdd('让我想想…', 'mbot-bot');
+    askLLM(t).then((reply) => {
+      if (reply) {
+        botAdd(reply, 'mbot-bot');
+      } else {
+        botAdd('这个问题我还没学会 😅 试试这些问法：', 'mbot-bot');
+        botAdd('· 北京有哪些985？\n· 推荐几所计算机强校\n· 口腔医学哪家强\n· 川大怎么样\n· 🎲 随机推荐一所', 'mbot-bot');
+      }
+    });
+  }
+  function closeBot() {
+    document.getElementById('mbotCard')!.hidden = true;
+  }
+  function toggleBot() {
+    const card = document.getElementById('mbotCard')!;
+    card.hidden = !card.hidden;
+    if (!card.hidden) (document.getElementById('mbotInput') as HTMLInputElement).focus();
+  }
+  function initBot() {
+    ['北京有哪些985？','推荐几所计算机强校','口腔医学哪家强','川大怎么样？','🎲 随机推荐一所'].forEach((c) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mbot-chip';
+      b.textContent = c;
+      b.addEventListener('click', () => askBot(c));
+      document.getElementById('mbotChips')!.appendChild(b);
+    });
+    document.getElementById('mbotFab')!.addEventListener('click', toggleBot);
+    document.getElementById('mbotClose')!.addEventListener('click', closeBot);
+    document.getElementById('mbotSend')!.addEventListener('click', () => {
+      const input = document.getElementById('mbotInput') as HTMLInputElement;
+      askBot(input.value);
+      input.value = '';
+    });
+    const input = document.getElementById('mbotInput') as HTMLInputElement;
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        askBot(input.value);
+        input.value = '';
+      }
+    });
+    botAdd('你好呀，我是 985 地图小导游 🤖', 'mbot-bot');
+    botAdd('可以问我：北京有哪些985？推荐几所计算机强校？口腔医学哪家强？川大怎么样？', 'mbot-bot');
   }
 
   function initMapPage() {
@@ -697,34 +1183,73 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     const loading = document.getElementById('m985Loading') as HTMLElement;
     const errorBox = document.getElementById('m985Error') as HTMLElement;
+    function setStage(t: string) {
+      loading.innerHTML = '⏳ ' + t;
+    }
     function showError() {
       loading.hidden = true;
       errorBox.hidden = false;
     }
-    function boot() {
-      loading.hidden = false;
-      errorBox.hidden = true;
-      const echartsUrls = [
+    function addPreconnects() {
+      ['https://cdn.jsdelivr.net', 'https://unpkg.com', 'https://geo.datav.aliyun.com', 'https://cdnjs.cloudflare.com'].forEach((h) => {
+        if (!document.querySelector('link[rel="preconnect"][href="' + h + '"]')) {
+          const l = document.createElement('link');
+          l.rel = 'preconnect';
+          l.href = h;
+          document.head.appendChild(l);
+        }
+      });
+    }
+    function loadMapData(): Promise<any> {
+      try {
+        const cached = sessionStorage.getItem('m985-geo-v1');
+        if (cached) {
+          const j = JSON.parse(cached);
+          if (j && j.features) return Promise.resolve(j);
+        }
+      } catch { /* ignore */ }
+      // 优先使用体积更小的省界精简版，DataV 全量版作为后备
+      const urls = [
+        'https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/china.json',
+        'https://unpkg.com/echarts@4.9.0/map/json/china.json',
+        'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json'
+      ];
+      return urls.reduce(
+        (p, u) => p.catch(() => loadJSON(u).then((j) => {
+          if (j && j.features) {
+            try { sessionStorage.setItem('m985-geo-v1', JSON.stringify(j)); } catch { /* ignore */ }
+          }
+          return j;
+        })),
+        Promise.reject(new Error('start')),
+      );
+    }
+    function loadEcharts(): Promise<void> {
+      const urls = [
         'https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js',
         'https://unpkg.com/echarts@5.5.1/dist/echarts.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.1/echarts.min.js'
       ];
-      const geoUrls = [
-        'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json',
-        'https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/china.json',
-        'https://unpkg.com/echarts@4.9.0/map/json/china.json'
-      ];
-      let chain: Promise<any> = Promise.resolve();
-      if (!(window as any).echarts) {
-        chain = chain.then(() =>
-          echartsUrls.reduce((p, u) => p.catch(() => loadScript(u)), Promise.reject(new Error('start')))
-        );
-      }
-      chain
-        .then(() => geoUrls.reduce((p, u) => p.catch(() => loadJSON(u)), Promise.reject(new Error('start'))))
-        .then((geo) => {
+      return urls.reduce(
+        (p, u) => p.catch(() => loadScript(u)),
+        Promise.reject(new Error('start')),
+      );
+    }
+    function boot() {
+      loading.hidden = false;
+      errorBox.hidden = true;
+      addPreconnects();
+      setStage('正在加载地图组件…');
+      const pEcharts = (window as any).echarts ? Promise.resolve() : loadEcharts();
+      const pGeo = loadMapData().then((geo) => {
+        setStage('学校数据已就绪，正在绘制…');
+        return geo;
+      });
+      Promise.all([pEcharts, pGeo])
+        .then((res) => {
+          setStage('正在绘制学校点位…');
           loading.hidden = true;
-          initMap(geo);
+          initMap(res[1]);
         })
         .catch((err) => {
           console.error(err);
@@ -749,6 +1274,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     (window as any).__m985Obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     buildFilters();
+    initBot();
+    initFlip();
     boot();
   }
 
