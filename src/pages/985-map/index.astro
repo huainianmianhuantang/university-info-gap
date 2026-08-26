@@ -62,7 +62,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </div>
 </BaseLayout>
 
-<style>
+<style is:global>
   .m985-filters {
     display: flex;
     flex-wrap: wrap;
@@ -275,17 +275,31 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     .m985-filters {
       flex-wrap: nowrap;
       overflow-x: auto;
+      scrollbar-width: none;
       padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
     }
+    .m985-filters::-webkit-scrollbar { display: none; }
+    .m985-filters #m985FlipBtn { order: -1; }
     .m985-chip {
       flex: 0 0 auto;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 15px;
+      touch-action: manipulation;
     }
+    .m985-chip:active,
+    .mbot-chip:active,
+    .mbot-school:active { transform: scale(0.96); }
     .m985-stat {
       display: none;
     }
     #m985Map {
-      height: calc(100vh - 190px);
-      min-height: 380px;
+      height: calc(100vh - 210px);
+      height: calc(100dvh - 210px);
+      min-height: 360px;
     }
     .m985-panel {
       top: auto;
@@ -299,6 +313,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
     .m985-panel.open {
       transform: translateY(0);
+    }
+    .m985-panel-body { padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+    .mbot-card { max-height: 70vh; }
+    .mbot-input-row input { font-size: 16px; }
+    button,
+    .m985-chip,
+    .mbot-chip,
+    .mbot-school,
+    .m985-close {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
   }
   /* 趣味与 AI 机器人 */
@@ -457,6 +482,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     padding: 8px 16px;
     font-size: 13px;
     cursor: pointer;
+  }
+  /* 移动端兜底覆盖：避免 iOS 聚焦输入框自动缩放 */
+  @media (max-width: 640px) {
+    .mbot-input-row input {
+      font-size: 16px;
+    }
   }
 </style>
 

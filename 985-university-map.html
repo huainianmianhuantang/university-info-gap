@@ -429,21 +429,55 @@
   @media (max-width: 640px) {
     .top { padding: 16px 12px 10px; }
     .top h1 { font-size: 19px; }
-    .filters { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding: 10px; }
-    .chip { flex: 0 0 auto; }
+    .filters {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      padding: 10px 8px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filters::-webkit-scrollbar { display: none; }
+    .filters #flipBtn,
+    .filters #themeBtn { order: -1; }
+    .chip {
+      flex: 0 0 auto;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 15px;
+      touch-action: manipulation;
+    }
+    .chip:active,
+    .bot-chip:active,
+    .bot-school:active { transform: scale(0.96); }
     .stat { display: none; }
-    #map { height: calc(100vh - 168px); min-height: 380px; }
+    #map { height: calc(100vh - 190px); height: calc(100dvh - 190px); min-height: 360px; }
     .panel {
       top: auto;
       left: 0;
       right: 0;
       bottom: 0;
       width: 100%;
-      max-height: 78vh;
+      max-height: 80vh;
       border-radius: 18px 18px 0 0;
       transform: translateY(105%);
     }
     .panel.open { transform: translateY(0); }
+    .panel-body { padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+    .bot-card { max-height: 70vh; }
+    .bot-input-row input { font-size: 16px; }
+  }
+  @media (max-width: 860px) {
+    button,
+    .chip,
+    .bot-chip,
+    .bot-school,
+    .close {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
   }
 </style>
 </head>
