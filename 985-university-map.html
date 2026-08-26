@@ -4,6 +4,14 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>全国985高校信息交互地图</title>
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('m985-theme'); } catch (e) { /* ignore */ }
+    if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 <style>
   :root {
     --accent: #1f5eff;
@@ -16,6 +24,56 @@
     --radius: 14px;
     --shadow: 0 10px 32px rgba(30, 64, 175, 0.14);
   }
+  html[data-theme='dark'] {
+    color-scheme: dark;
+    --accent: #7ab0ff;
+    --accent-soft: #1e3a6e;
+    --bg: #0d1526;
+    --card: #16213a;
+    --text: #e5edf8;
+    --muted: #9db0c8;
+    --border: #2b3b57;
+    --shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+  }
+  html[data-theme='dark'] .top {
+    background: linear-gradient(135deg, #12203d, #101a2e);
+    border-bottom-color: #2b3b57;
+  }
+  html[data-theme='dark'] .top h1 { color: #cfe0ff; }
+  html[data-theme='dark'] .filters { background: rgba(13, 21, 38, 0.92); }
+  html[data-theme='dark'] .panel-head {
+    background: linear-gradient(135deg, #1e3a6e, transparent);
+  }
+  html[data-theme='dark'] .panel-head h2 { color: #cfe0ff; }
+  html[data-theme='dark'] .close { background: #1e2c4a; color: #9db0c8; }
+  html[data-theme='dark'] .close:hover { background: #1e3a6e; color: #cfe0ff; }
+  html[data-theme='dark'] .easter { background: #1e3a6e; color: #cfe0ff; }
+  html[data-theme='dark'] .flip-banner {
+    background: rgba(255, 213, 128, 0.12);
+    border-color: rgba(255, 213, 128, 0.3);
+    color: #ffd98a;
+  }
+  html[data-theme='dark'] .chips span { background: #1e3a6e; color: #c7d2fe; }
+  html[data-theme='dark'] .loading,
+  html[data-theme='dark'] .error { background: #16213a; }
+  html[data-theme='dark'] .bot-card { background: #16213a; }
+  html[data-theme='dark'] .bot-head {
+    background: linear-gradient(135deg, #1e2c4a, #221b3a);
+    border-bottom-color: #2b3b57;
+  }
+  html[data-theme='dark'] .bot-head b { color: #c7d2fe; }
+  html[data-theme='dark'] .bot-head div div { color: #9db0c8; }
+  html[data-theme='dark'] .bot-close { color: #9db0c8; }
+  html[data-theme='dark'] .bot-msgs { background: #101a2e; }
+  html[data-theme='dark'] .bot-msg.bot { background: #16213a; border-color: #2b3b57; color: #e5edf8; }
+  html[data-theme='dark'] .bot-school { background: #1e3a6e; border-color: #3b5b9a; color: #c7d2fe; }
+  html[data-theme='dark'] .bot-school:hover { background: #6366f1; color: #fff; }
+  html[data-theme='dark'] .bot-chips { background: #101a2e; }
+  html[data-theme='dark'] .bot-chip { background: #16213a; border-color: #2b3b57; color: #c7d2fe; }
+  html[data-theme='dark'] .bot-chip:hover { border-color: #818cf8; color: #c7d2fe; }
+  html[data-theme='dark'] .bot-input-row { background: #101a2e; border-top-color: #2b3b57; }
+  html[data-theme='dark'] .bot-input-row input { background: #16213a; border-color: #2b3b57; color: #e5edf8; }
+  html[data-theme='dark'] .sec h4 { color: #7ab0ff; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
@@ -810,6 +868,42 @@
     }
     return out;
   }
+  function themeColors() {
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    return dark
+      ? { area:'#1a2740', border:'#2b3b57', hover:'#27406b', tooltipBg:'#16213a', tooltipColor:'#e5edf8', label:'#8fa6c8', labelStrong:'#e5edf8' }
+      : { area:'#eaf1fb', border:'#b9cbea', hover:'#cfe0ff', tooltipBg:'#ffffff', tooltipColor:'#1e293b', label:'#7c8ba5', labelStrong:'#12336e' };
+  }
+  function applyThemeToMap() {
+    if (!chart) return;
+    var c = themeColors();
+    chart.setOption({
+      tooltip: { backgroundColor: c.tooltipBg, borderColor: c.border, textStyle: { color: c.tooltipColor } },
+      geo: {
+        itemStyle: { areaColor: c.area, borderColor: c.border },
+        label: { show: true, fontSize: 10, color: c.label },
+        emphasis: { itemStyle: { areaColor: c.hover }, label: { show: true, fontSize: 11, color: c.labelStrong, fontWeight: 600 } },
+        regions: geoRegions(currentRegion)
+      }
+    });
+    buildLegend();
+    updateThemeBtn();
+  }
+  function updateThemeBtn() {
+    var b = document.getElementById('themeBtn');
+    if (!b) return;
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    b.textContent = dark ? '☀️ 日间' : '🌙 夜间';
+  }
+  function setMapTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('m985-theme', t); } catch (e) { /* ignore */ }
+    applyThemeToMap();
+  }
+  function toggleMapTheme() {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    setMapTheme(next);
+  }
 
   /* ============ 筛选按钮 ============ */
   var filterEl = document.getElementById('filters');
@@ -833,6 +927,13 @@
     flip.textContent = '🎲 随机翻牌';
     flip.addEventListener('click', openFlip);
     filterEl.appendChild(flip);
+    var themeBtn = document.createElement('button');
+    themeBtn.type = 'button';
+    themeBtn.className = 'chip';
+    themeBtn.id = 'themeBtn';
+    themeBtn.addEventListener('click', toggleMapTheme);
+    filterEl.appendChild(themeBtn);
+    updateThemeBtn();
     var stat = document.createElement('span');
     stat.className = 'stat';
     stat.id = 'statCount';
@@ -843,9 +944,11 @@
     var el = document.getElementById('regionLegend');
     if (!el) return;
     el.innerHTML = '';
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var pal = REGION_COLORS[dark ? 'dark' : 'light'];
     ['华北','华东','华中','华南','西南','西北','东北'].forEach(function (r) {
       var s = document.createElement('span');
-      s.innerHTML = '<i style="background:' + REGION_COLORS.light[r] + '"></i>' + r;
+      s.innerHTML = '<i style="background:' + pal[r] + '"></i>' + r;
       el.appendChild(s);
     });
   }
@@ -883,18 +986,19 @@
     if (!window.echarts) return;
     echarts.registerMap('china', geoJson);
     chart = echarts.init(document.getElementById('map'));
+    var c = themeColors();
     chart.setOption({
       tooltip: {
         trigger: 'item',
-        backgroundColor: '#ffffff',
-        borderColor: '#dbe4f2',
-        textStyle: { color: '#1e293b', fontSize: 13 },
+        backgroundColor: c.tooltipBg,
+        borderColor: c.border,
+        textStyle: { color: c.tooltipColor, fontSize: 13 },
         formatter: function (p) {
           var s = p.data && p.data.school;
           if (!s) return p.name;
           return '<b>' + s.emoji + ' ' + esc(s.name) + '</b><br/>'
             + esc(s.city) + ' · ' + esc(s.region) + '<br/>'
-            + '<span style="color:#5b6b84">点击查看资料库</span>';
+            + '<span style="color:' + c.label + '">点击查看资料库</span>';
         }
       },
       geo: {
@@ -902,9 +1006,9 @@
         roam: true,
         zoom: 1.12,
         center: [104.5, 36.2],
-        label: { show: true, fontSize: 10, color: '#7c8ba5' },
-        itemStyle: { areaColor: '#eaf1fb', borderColor: '#b9cbea', borderWidth: 0.8 },
-        emphasis: { itemStyle: { areaColor: '#cfe0ff' }, label: { show: true, fontSize: 11, color: '#12336e', fontWeight: 600 } },
+        label: { show: true, fontSize: 10, color: c.label },
+        itemStyle: { areaColor: c.area, borderColor: c.border, borderWidth: 0.8 },
+        emphasis: { itemStyle: { areaColor: c.hover }, label: { show: true, fontSize: 11, color: c.labelStrong, fontWeight: 600 } },
         regions: geoRegions('全部')
       },
       series: [{
@@ -1212,10 +1316,23 @@
       });
   }
   document.getElementById('retryBtn').addEventListener('click', boot);
+  // 未手动选择时跟随系统深浅色（只绑定一次）
+  if (!window.__m985SysBound) {
+    window.__m985SysBound = true;
+    var sysMq = window.matchMedia('(prefers-color-scheme: dark)');
+    var onSys = function () {
+      try {
+        if (!localStorage.getItem('m985-theme')) setMapTheme(sysMq.matches ? 'dark' : 'light');
+      } catch (e) { /* ignore */ }
+    };
+    if (typeof sysMq.addEventListener === 'function') sysMq.addEventListener('change', onSys);
+    else if (typeof sysMq.addListener === 'function') sysMq.addListener(onSys);
+  }
   buildFilters();
   buildLegend();
   initBot();
   initFlip();
+  updateThemeBtn();
   boot();
 })();
 </script>
