@@ -88,10 +88,8 @@ const materials = (await getCollection('universities')).flatMap((u) =>
 </BaseLayout>
 
 <script define:vars={{ universities, articles, materials }}>
-  type AppWindow = Window & {
-    __appReady?: (fn: () => void) => void;
-  };
-  const appWin = window as AppWindow;
+  // define:vars 脚本不走 TS 编译，这里保持纯 JS
+  const appWin = window;
 
   function initSearch() {
     const inputEl = document.getElementById('searchInput');

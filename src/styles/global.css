@@ -3427,10 +3427,37 @@ html {
   input,
   select,
   textarea {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   /* 触控目标与按压反馈 */
+  .site-header .acct-chip,
+  .site-header .nav-toggle {
+    min-height: 40px;
+  }
+
+  .site-footer a {
+    display: inline-block;
+    padding: 6px 8px;
+  }
+
+  .btn {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .breadcrumb a {
+    display: inline-block;
+    padding: 6px 4px;
+  }
+
+  .install-close {
+    width: 32px;
+    height: 32px;
+  }
+
   .chip,
   .video-filter-btn {
     min-height: 36px;
