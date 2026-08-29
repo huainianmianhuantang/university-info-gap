@@ -25,6 +25,7 @@ export const SECTIONS = [
   { id: 'training', label: '培养计划', description: '学分要求、课程结构、大类招生与专业分流' },
   { id: 'dorm', label: '寝室情况', description: '几人间、独卫空调、费用与真实体验' },
   { id: 'classes', label: '上课情况', description: '大班小班、考勤方式、课程压力与日常' },
+  { id: 'clubs', label: '社团与学生组织', description: '学生会、社团名录、兴趣组织与招新方式' },
   { id: 'materials', label: '学习资料', description: '网盘资料、内部笔记、复习资料' },
   { id: 'videos', label: '视频', description: '校园实拍、政策解读与在校生分享' },
 ] as const;
@@ -46,6 +47,7 @@ export const RESOURCE_CATEGORIES = [
   { id: 'freshman', label: '新生指南', description: '新生入学指南与入学教育材料' },
   { id: 'campus-life', label: '校园生活', description: '宿舍、食堂与本地生活攻略' },
   { id: 'competition', label: '竞赛', description: '学科竞赛分类与参赛指南' },
+  { id: 'clubs', label: '社团与学生组织', description: '社团名录、招新手册、组织架构与学生活动' },
 ] as const;
 
 export type ResourceCategoryId = (typeof RESOURCE_CATEGORIES)[number]['id'];

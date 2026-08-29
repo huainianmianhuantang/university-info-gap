@@ -76,6 +76,16 @@ const universities = defineCollection({
       })
       .optional(),
 
+    clubs: z
+      .object({
+        summary: z.string().default(''),
+        items: z
+          .array(z.object({ name: z.string(), content: z.string() }))
+          .default([]),
+        sources: z.array(z.string()).default([]),
+      })
+      .optional(),
+
     materials: z
       .array(
         z.object({

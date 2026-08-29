@@ -28,6 +28,7 @@ const tabs = [
   { id: 'training', label: '培养计划' },
   { id: 'dorm', label: '寝室' },
   { id: 'classes', label: '上课' },
+  { id: 'clubs', label: '社团组织' },
   { id: 'materials', label: '学习资料' },
   { id: 'videos', label: '视频' },
   { id: 'parent-concern', label: '家长关心' },
@@ -47,6 +48,7 @@ const missingSections = SECTIONS.filter((s) => {
   if (s.id === 'training') return !u.trainingPlan;
   if (s.id === 'dorm') return !u.dorm;
   if (s.id === 'classes') return !u.classes;
+  if (s.id === 'clubs') return !u.clubs;
   if (s.id === 'materials') return u.materials.length === 0;
   if (s.id === 'videos') return u.videos.length === 0;
   return false;
@@ -275,6 +277,32 @@ const related = allUniversities
     )}
     {!u.classes && (
       <SectionPending id="classes" label="🏫 上课情况" school={u.name} category="上课情况" />
+    )}
+
+    {u.clubs && (
+      <section id="clubs" class="card section-block">
+        <h2>🎭 社团与学生组织</h2>
+        {u.clubs.summary && <p>{u.clubs.summary}</p>}
+        <ul class="point-list">
+          {u.clubs.items.map((item) => (
+            <li class="point-item">
+              <strong>{item.name}</strong>
+              <p>{item.content}</p>
+            </li>
+          ))}
+        </ul>
+        {u.clubs.sources.length > 0 && (
+          <div class="sources">
+            信息来源：
+            <ul>
+              {u.clubs.sources.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+        )}
+      </section>
+    )}
+    {!u.clubs && (
+      <SectionPending id="clubs" label="🎭 社团与学生组织" school={u.name} category="社团与学生组织" />
     )}
 
     {u.materials.length > 0 && (
