@@ -29,13 +29,17 @@ const fallbackUrl =
 <div class:list={['card', 'video-card', className]} data-tags={(video.tags ?? []).join(' ')}>
   <div class="video-frame-wrap">
     {embedUrl ? (
-      <iframe
-        src={embedUrl}
-        title={video.title}
-        loading="lazy"
-        allowfullscreen
-        referrerpolicy="no-referrer"
-      ></iframe>
+      <div
+        class="video-lazy"
+        role="button"
+        tabindex="0"
+        data-src={embedUrl}
+        data-title={video.title}
+        aria-label={`播放视频：${video.title}`}
+      >
+        <span class="video-lazy-play">▶</span>
+        <span class="video-lazy-hint">点击播放 · 更省流量</span>
+      </div>
     ) : (
       <div class="video-placeholder">
         <div>
@@ -61,3 +65,21 @@ const fallbackUrl =
     )}
   </div>
 </div>
+
+<script>
+  // 视频点击才加载：避免页面同时拉取多个 B 站播放器导致卡顿
+  if (!window.__videoLazyBound) {
+    window.__videoLazyBound = true;
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const wrap = target.closest('.video-lazy') as HTMLElement | null;
+      if (!wrap || wrap.dataset.loaded) return;
+      const src = wrap.dataset.src;
+      if (!src) return;
+      wrap.dataset.loaded = '1';
+      const title = wrap.dataset.title || '视频';
+      wrap.innerHTML =
+        `<iframe src="${src}" title="${title}" allowfullscreen referrerpolicy="no-referrer" allow="autoplay; fullscreen"></iframe>`;
+    });
+  }
+</script>
